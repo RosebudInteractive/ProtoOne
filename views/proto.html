@@ -37,6 +37,7 @@
 
             function fixHeight() {
               $('#result').height($(window).height()-90);
+              $('#console').width('100%');
             };
             fixHeight();
             $(window).resize(fixHeight)
@@ -47,7 +48,7 @@
                     event.preventDefault();
                     event.stopPropagation();
                     runCommand($('#console').val());
-                    $('#console').val('');
+                   // $('#console').val('');
                 }
             });
         });
