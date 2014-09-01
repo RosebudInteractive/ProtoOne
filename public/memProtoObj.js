@@ -17,8 +17,7 @@ define(
 				
 			// objTypeId - идентификатор типа объекта ( или ссылка на объект-тип ?)
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
-			// flds - значения полей
-			init: function(objTypeId, parent, flds){
+			init: function(objTypeId, parent){
 				this._objTypeId = objTypeId;
 
 				if (!parent.obj) {	// корневой объект
@@ -30,7 +29,6 @@ define(
 					this._parent = parent.obj;
 					this._col._add(this);
 				}
-				// TODO создать коллекции в наследнике memTypedObj
 								
 			},
 			

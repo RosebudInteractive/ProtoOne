@@ -10,9 +10,9 @@ define(
 		
 			init: function(db, flds){
 			
-				this._super(100000,{ "db": db },flds); // TODO проинициализировать корректно коллекцию
+				this._super(100000,{ "db": db }); 
 				this._fields.push(flds.typeName); // TODO проверка наличия с пустой инициализацией
-				this._fields.push(flds.ancestor);
+				this._fields.push(flds.parentClass);
 				
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
 				this._collections.push(new MemCol("fields",this));
@@ -26,6 +26,7 @@ define(
 					return this._collections[0]; 
 				if (col == "cols")
 					return this._collections[1];
+				return null;
 			},
 			
 

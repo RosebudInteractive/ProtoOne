@@ -4,13 +4,13 @@
 }
 
 define(
-	['./memObj'],
-	function(MemObject) {
-		var MemMetaObjCols = MemObject.extend({
+	['./memProtoObj'],
+	function(MemProtoObj) {
+		var MemMetaObjCols = MemProtoObj.extend({
 		
-			init: function(flds){
+			init: function(parent, flds){
 			
-				this._super(100002,null,flds); // TODO проинициализировать корректно коллекцию
+				this._super(100002,parent); 
 				this._fields.push(flds.name);
 				this._fields.push(flds.ctype);
 			}

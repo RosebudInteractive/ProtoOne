@@ -9,29 +9,19 @@ define(
 		var MemObj = MemProtoObj.extend({
 
 			init: function(objTypeId, parent, flds){
-				this._super(objTypeId, parent, flds);
-				/*
-				this._objTypeId = objTypeId;
+				this._super(objTypeId, parent);
 
-				if (!parent.obj) {			// корневой объект
-					this._db = parent.db;
-					this._db._addRoot(this);					
-				}
-				else { 						// объект в коллекции (не корневой)
-					this._col = parent.obj.getCol(parent.colname);
-					this._parent = parent.obj;
-					this._col._add(this);
-				}
-				// TODO создать коллекции в наследнике memTypedObj
-				*/			
+				// TODO создать коллекции 
+				// TODO заполнить поля
+					
 			},
 			
-			// получить коллекцию по
+			// получить коллекцию по имени
 			getCol: function(col) {
-				if (typeof col == "number")
+				/*if (typeof col == "number")
 					return this._collections[col]; 
 				else 
-					return this._collections[this._objType.getCol(2).getObjIdx(col)];
+					return this._collections[this._objType.getCol(2).getObjIdx(col)];*/
 			},
 			
 			
