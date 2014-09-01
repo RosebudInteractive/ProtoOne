@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        /**
+         * Выполнение команды
+         * @param command Формат comand param1,param2,...paramN
+         */
+        function runCommand(command) {
+            var items = command.split(' ', 2);
+            var func = items[0];
+            var params = items[1];
+            if (eval("typeof " + func) !== 'function'){
+                $('#result').append('<p>Функция `'+func+'` не найдена</p>');
+            }
+
+            var result = eval(func+'('+params+')');
+            $('#result').append('<p>Результат '+ func +'('+params+'): '+result+' </p>');
+
+        }
+
+        function sum(param1, param2) {
+            return param1 + param2;
+        }
+
+    </script>
+</head>
+<body>
+
+
+
+<h3>Псевдоинтерфейс:</h3>
+<div id="result" style="border:1px solid #999;padding: 10px; height: 200px;overflow: auto;"></div>
+
+
+<h3>Консоль:</h3>
+<textarea name="console" id="console" cols="60" rows="3"></textarea><br>
+<input type="button" onclick="runCommand($('#console').val());" value="Выполнить"/>
+<input type="button" onclick="$('#console').val('');" value="Очистить"/>
+</body>
+</html>

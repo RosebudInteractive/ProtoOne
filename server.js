@@ -25,6 +25,11 @@ app.get('/client', function(req, res){
     res.render('index.html');
 });
 
+// отображаем proto.html
+app.get('/proto', function(req, res){
+    res.render('proto.html');
+});
+
 // запросить значение переменной из кеша
 app.get('/getcache', function(req, res){
     memcached.get(req.query.name, function( err, result ){
