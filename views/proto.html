@@ -3,6 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        html, body, table,tr, td {padding:0;margin: 0;}
+        #container {padding:10px;}
+        #result {border:1px solid #999; width: 100%; overflow: auto;height:100%;}
+        #console-block {height: 70px;position:absolute;}
+        #console {padding: 0;margin: 0;}
+    </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
         /**
@@ -27,6 +34,13 @@
         }
 
         $(function(){
+
+            function fixHeight() {
+              $('#result').height($(window).height()-90);
+            };
+            fixHeight();
+            $(window).resize(fixHeight)
+
             // click enter
             $("#console").keyup(function(event){
                 if(event.keyCode == 13){
@@ -41,19 +55,19 @@
     </script>
 </head>
 <body>
-<div id="result" style="border:1px solid #999;padding: 10px; height: 200px;overflow: auto;"></div>
 
-<table>
+<div id="container">
+<div id="result"></div>
+<div id="console-block"><table width="100%">
     <tr>
-        <td><textarea name="console" id="console" cols="60" rows="3"></textarea></td>
-        <td>
-            <input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/>
+        <td width="100%"><textarea name="console" id="console" style="width: 100%;" rows="3"></textarea></td>
+        <td width="120"><input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/><br>
             <input type="button" onclick="$('#console').val('');" value="Очистить"/>
         </td>
-
     </tr>
-
 </table>
+</div>
+</div>
 
 </body>
 </html>
