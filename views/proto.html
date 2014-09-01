@@ -26,19 +26,34 @@
             return param1 + param2;
         }
 
+        $(function(){
+            // click enter
+            $("#console").keyup(function(event){
+                if(event.keyCode == 13){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    runCommand($('#console').val());
+                    $('#console').val('');
+                }
+            });
+        });
+
     </script>
 </head>
 <body>
-
-
-
-<h3>Псевдоинтерфейс:</h3>
 <div id="result" style="border:1px solid #999;padding: 10px; height: 200px;overflow: auto;"></div>
 
+<table>
+    <tr>
+        <td><textarea name="console" id="console" cols="60" rows="3"></textarea></td>
+        <td>
+            <input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/>
+            <input type="button" onclick="$('#console').val('');" value="Очистить"/>
+        </td>
 
-<h3>Консоль:</h3>
-<textarea name="console" id="console" cols="60" rows="3"></textarea><br>
-<input type="button" onclick="runCommand($('#console').val());" value="Выполнить"/>
-<input type="button" onclick="$('#console').val('');" value="Очистить"/>
+    </tr>
+
+</table>
+
 </body>
 </html>
