@@ -21,7 +21,7 @@ define(
 			// добавить объект в коллекцию
 			_add: function(obj) {
 				// TODO проверить корректность типа
-				this._elems.push(rec);
+				this._elems.push(obj);
 			},
 			
 

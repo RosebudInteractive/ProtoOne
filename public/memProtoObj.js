@@ -25,7 +25,7 @@ define(
 					this._db._addRoot(this);					
 				}
 				else { 						// объект в коллекции (не корневой)
-					this._col = parent.obj.getCol(parent.colname);
+					this._col = parent.obj.getCol(parent.colName);
 					this._parent = parent.obj;
 					this._col._add(this);
 				}

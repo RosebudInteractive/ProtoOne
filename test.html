@@ -70,16 +70,17 @@
             socket.send(JSON.stringify({action:'getlistobject', type:type}));
         }
 		
+
 		require(
-            ['memDataBase','memMetaObj'],
-            function( MDb,MemMetaObj){
+            ['memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols'],
+            function( MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols){
                 var db = new MDb("PROTO");
 				//var myCol = myMemDb.newCol();
-				var myRoot = new MemMetaObj(db,{"typeName": "Button", "ancestor":"Control"});
+				var myRoot = new MemMetaObj(db,{"typeName": "Button", "parentClass":"Control"});
 				var flds = myRoot.getCol("fields");
 				var cls = myRoot.getCol("cols");
-				
-                //$('#result').append('<p>База Данных: ' + myCol.getDb().getName() + '</p>');
+				new MemMetaObjFields({"obj": myRoot, "colName": "fields"}, {"name":"Id","ftype":"int"});
+				console.log("FFF");
             }
         );
 		
