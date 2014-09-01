@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="./public/class-extend.js"></script>
+    <script data-main="./public/main.js" src="./public/require.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script>
+        
+        function execServerCode() {
+            $.ajax({
+                url: "http://127.0.0.1:1325/"
+            }).done(function(data) {
+                $('#result').append('<p>Результат серверного кода: ' + data + '</p>');
+            });
+        }
+
+        function setCache(name, value){
+            $.ajax({
+                url: "http://127.0.0.1:1325/setcache",
+                data: {'name':name, 'value':value}
+            }).done(function(data) {
+                $('#result').append('<p>Переменная "'+name+'" установлена: ' + value + '</p>');
+            }).fail(function() {
+                $('#result').html('error');
+            });
+        }
+        function getCache(name){
+            $.ajax({
+                url: "http://127.0.0.1:1325/getcache",
+                data: {'name':name}
+            }).done(function(data) {
+                $('#result').append('<p>Значение переменной "'+name+'" равно: ' + data + '</p>');
+            }).fail(function(err) {
+                $('#result').append('<p>error</p>');
+            });
+        }
+
+
+        // работа с сокетами
+        if (!window.WebSocket) {
+            document.body.innerHTML = 'WebSocket в этом браузере не поддерживается.';
+        }
+        // создать подключение
+        var socket = new WebSocket("ws://localhost:8081");
+
+        // обработчик входящих сообщений
+        socket.onmessage = function(event) {
+            console.log(event)
+            var data = JSON.parse(event.data);
+            switch (data.action) {
+                case 'addobject':
+                    $('#result').append('<p>Объект '+data.type+' c именем "'+data.name+'" добавлен</p>');
+                    break;
+                case 'getlistobject':
+                    $('#result').append('<p>Список объектов '+data.type+'s: "'+data.names+'"</p>');
+                    break;
+                case 'newconn':
+                    $('#result').append('<p>'+data.name+'</p>');
+                    break;
+            }
+        };
+
+        function addObject(name, type){
+            socket.send(JSON.stringify({action:'addobject', type:type, name:name}));
+        }
+        function getListobject(type){
+            socket.send(JSON.stringify({action:'getlistobject', type:type}));
+        }
+		
+		require(
+            ['memDataBase','memMetaObj'],
+            function( MDb,MemMetaObj){
+                var db = new MDb("PROTO");
+				//var myCol = myMemDb.newCol();
+				var myRoot = new MemMetaObj(db,{"typeName": "Button", "ancestor":"Control"});
+				var flds = myRoot.getCol("fields");
+				var cls = myRoot.getCol("cols");
+				
+                //$('#result').append('<p>База Данных: ' + myCol.getDb().getName() + '</p>');
+            }
+        );
+		
+
+    </script>
+</head>
+<body>
+
+<h3>Работа с объектами</h3>
+<form method="post" action="">
+    Имя:<br>
+    <input type="text" value="" id="objName" /><br>
+    <input type="button" value="Add User" onclick="addObject($('#objName').val(), 'user');" /><br>
+    <input type="button" value="Add Admin" onclick="addObject($('#objName').val(), 'admin');" /><br>
+    <input type="button" value="GetList Users" onclick="getListobject('user');" /><br>
+    <input type="button" value="GetList Admins" onclick="getListobject('admin');" /><br>
+</form>
+
+
+
+<h3>Результаты работы:</h3>
+<div id="result" style="border:1px solid #999;padding: 10px; height: 200px;overflow: auto;"></div>
+<input type="button" onclick="$('#result').html('');" value="Очистить"/>
+</body>
+</html>
