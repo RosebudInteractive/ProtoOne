@@ -23,7 +23,7 @@ app.get('/', function(req, res){
 // отображаем index.html
 app.get('/client', function(req, res){
     res.render('index.html');
-});
+}); 
 
 // отображаем proto.html
 app.get('/proto', function(req, res){
