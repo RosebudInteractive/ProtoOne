@@ -58,7 +58,7 @@
             document.body.innerHTML = 'WebSocket в этом браузере не поддерживается.';
         }
         // создать подключение
-        var socket = new WebSocket("ws://localhost:8081");
+        var socket = new WebSocket("ws://"+url('hostname')+":8081");
 
         socket.onopen = function(event) {
             // отправляем сообщение что подключились
