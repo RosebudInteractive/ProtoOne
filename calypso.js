@@ -70,7 +70,6 @@ webSocketServer.on('connection', function(ws) {
                 }
                 sessions[sessionID].addConnect(conn);
                 console.log("новое соединение: " + sessionID);
-                console.log(sessions);
                 break;
             case 'ping':
                 var conn = findConnection(connId);
@@ -82,8 +81,12 @@ webSocketServer.on('connection', function(ws) {
                 for (var i in sessions) {
                     var connects = sessions[i].getConnects();
                     sessObj[i] = [];
-                    for (var j in connects)
-                        sessObj[i].push(connects[j].getParams());
+                    for (var j in connects) {
+                        var params = connects[j].getParams();
+                        params.connectTime = (new Date(params.connectTime)).toISOString();
+                        params.lastPingTime = (new Date(params.lastPingTime)).toISOString();
+                        sessObj[i].push(params);
+                    }
                 }
                 ws.send(JSON.stringify({error:null, action:'sessions', sessions:sessObj}));
                 break;
@@ -99,7 +102,6 @@ webSocketServer.on('connection', function(ws) {
             }
         }
         console.log("отключился клиент: " + connId);
-        console.log(sessions);
     });
 });
 
@@ -110,8 +112,7 @@ setInterval(function(){
         var connects = sessions[i].getConnects();
         for(var j in connects) {
             //  не пинговались дольше 5 секунд
-            console.log(connects[j].params.lastPingTime, now);
-            if (connects[j].params.lastPingTime > now - 5)
+            if (connects[j].params.stateReady == 1 && now - connects[j].params.lastPingTime/1000 > 5)
                 connects[j].setStateReady(0);
         }
     }

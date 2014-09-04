@@ -79,10 +79,10 @@
             }
         };
 
-        // команда SESSIONS
-        function SESSIONS(){
+        // команда SESSIONS (S)
+        var s = S = SESSIONS = function(){
             socket.send(JSON.stringify({action:'sessions', sid: $.url('?sid')}));
-        }
+        };
 
     </script>
 </head>

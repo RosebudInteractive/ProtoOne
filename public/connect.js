@@ -14,7 +14,8 @@ define(function(Connect) {
                 userAgent: params.userAgent || '',
                 numRequest: params.numRequest || 0,
                 stateReady: params.stateReady || 0,
-                lastPingTime: params.numRequest || null
+                lastPingTime: params.numRequest || null,
+                pingCounter: params.pingCounter || 0
             };
         },
 
@@ -36,6 +37,7 @@ define(function(Connect) {
 
         setLastPing: function () {
             this.params.lastPingTime = Date.now();
+            this.params.pingCounter++;
             return this.params.lastPingTime;
         },
 
