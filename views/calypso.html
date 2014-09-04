@@ -17,17 +17,20 @@
          * Выполнение команды
          * @param command Формат comand param1,param2,...paramN
          */
-        function runCommand(command) {
+        function runCommand(command, viewResult, clearConsole) {
             var items = command.split(' ', 2);
             var func = items[0];
+
             var params = items[1];
             if (eval("typeof " + func) !== 'function'){
                 $('#result').append('<p>Функция `'+func+'` не найдена</p>');
             }
 
             var result = eval(func+'('+params+')');
-            $('#result').append('<p>Результат '+ func +'('+params+'): '+result+' </p>');
-
+            if (viewResult)
+                $('#result').append('<p>Результат '+ func +'('+params+'): '+result+' </p>');
+            if (clearConsole)
+                $('#console').val('');
         }
 
 
@@ -71,11 +74,12 @@
             var data = JSON.parse(event.data);
             switch (data.action) {
                 case 'sessions':
-                    $('#result').append(data.sessions);
+                    console.log(data.sessions);
                     break;
             }
         };
 
+        // команда SESSIONS
         function SESSIONS(){
             socket.send(JSON.stringify({action:'sessions', sid: $.url('?sid')}));
         }
@@ -89,7 +93,7 @@
 <div id="console-block"><table width="100%">
     <tr>
         <td width="100%"><textarea name="console" id="console" style="width: 100%;" rows="3"></textarea></td>
-        <td width="120"><input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/><br>
+        <td width="120"><input type="button" onclick="runCommand($('#console').val(), false, true);" value="Выполнить"/><br>
             <input type="button" onclick="$('#console').val('');" value="Очистить"/>
         </td>
     </tr>

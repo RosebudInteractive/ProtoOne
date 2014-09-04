@@ -12,19 +12,14 @@ var Connect = new require('./public/connect');
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
 
-// обработка главной, возвращает случайное число
+// обработка главной
 app.get('/', function(req, res){
     res.render('calypso.html');
-    //res.end(module1.getRandomInt(0, 1000).toString());
 });
 
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 
-
-
-// подключенные клиенты
-var clients = {};
 // сохраненные сессии
 var sessions = {};
 
@@ -64,15 +59,16 @@ webSocketServer.on('connection', function(ws) {
                 // сессионный номер
                 var sessionID = data.sid;
                 if (!sessionID) {
-                    console.log('не указан sid'); break;
+                    console.log('не указан sid');
+                    break;
                 }
 
                 // запоминаем клиента подключенного
-                var conn = new Connect(connId, {ws:ws, time:Date.now(), agent:data.agent});
+                var conn = new Connect(connId, ws,  {userAgent: data.agent, stateReady:1});
                 if (!sessions[sessionID]) {
                     sessions[sessionID] = new Session(sessionID);
                 }
-                sessions[sessionID].addConnect(conn, ws);
+                sessions[sessionID].addConnect(conn);
                 console.log("новое соединение: " + sessionID);
                 console.log(sessions);
                 break;
@@ -82,10 +78,14 @@ webSocketServer.on('connection', function(ws) {
                     conn.setLastPing();
                 break;
             case 'sessions':
-                var sesStr = [];
-                for(var i in sessions)
-                    sesStr.push(i);
-                ws.send(JSON.stringify({error:null, action:'sessions', sessions:sesStr.join(',')}));
+                var sessObj = {};
+                for (var i in sessions) {
+                    var connects = sessions[i].getConnects();
+                    sessObj[i] = [];
+                    for (var j in connects)
+                        sessObj[i].push(connects[j].getParams());
+                }
+                ws.send(JSON.stringify({error:null, action:'sessions', sessions:sessObj}));
                 break;
         }
     });
@@ -101,8 +101,21 @@ webSocketServer.on('connection', function(ws) {
         console.log("отключился клиент: " + connId);
         console.log(sessions);
     });
-
 });
+
+// проверка коннектов на пинг
+setInterval(function(){
+    var now = Date.now()/1000;
+    for(var i in sessions) {
+        var connects = sessions[i].getConnects();
+        for(var j in connects) {
+            //  не пинговались дольше 5 секунд
+            console.log(connects[j].params.lastPingTime, now);
+            if (connects[j].params.lastPingTime > now - 5)
+                connects[j].setStateReady(0);
+        }
+    }
+}, 5000);
 
 // запускаем http сервер
 http.createServer(app).listen(1325);

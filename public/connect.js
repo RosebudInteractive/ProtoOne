@@ -1,36 +1,49 @@
 if (typeof define !== 'function') {
     var define = require('amdefine')(module);
+    var Class = require('class.extend');
 }
 
 define(function(Connect) {
+    var Connect = Class.extend({
 
-    var Connect = function (id, params){
-        this.id = id;
-        this.params = params;
-        this.numRequest = 0;
-        this.lastPingTime = null;
-    }
+        init: function (id, ws, params) {
+            this.id = id;
+            this.ws = ws;
+            this.params = {
+                connectTime: params.connectTime || Date.now(),
+                userAgent: params.userAgent || '',
+                numRequest: params.numRequest || 0,
+                stateReady: params.stateReady || 0,
+                lastPingTime: params.numRequest || null
+            };
+        },
 
-    Connect.prototype.getParams = function(){
-        return this.params;
-    }
+        getParams: function () {
+            return this.params;
+        },
 
-    Connect.prototype.getId = function(){
-        return this.id;
-    }
+        getId: function () {
+            return this.id;
+        },
 
-    Connect.prototype.getRequest = function(){
-        return this.numRequest;
-    }
+        getRequest: function () {
+            return this.params.numRequest;
+        },
 
-    Connect.prototype.addRequest = function(){
-        return ++this.numRequest;
-    }
+        addRequest: function () {
+            return ++this.params.numRequest;
+        },
 
-    Connect.prototype.setLastPing = function(){
-        this.lastPingTime = Date.now();
-        return this.lastPingTime;
-    }
+        setLastPing: function () {
+            this.params.lastPingTime = Date.now();
+            return this.params.lastPingTime;
+        },
+
+        setStateReady: function (stateReady) {
+            this.params.stateReady = stateReady;
+            return this.params.stateReady;
+        }
+    });
 
     return Connect;
 });
