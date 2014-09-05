@@ -19,6 +19,7 @@ app.get('/', function(req, res){
 
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
+app.use("/docs", express.static(__dirname + '/docs'));
 
 // сохраненные сессии
 var sessions = {};
