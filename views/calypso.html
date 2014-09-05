@@ -18,12 +18,12 @@
          * @param command Формат comand param1,param2,...paramN
          */
         function runCommand(command, viewResult, clearConsole) {
-            var items = command.split(' ', 2);
-            var func = items[0];
+            var func = (command.substring(0, command.indexOf(' '))).trim();
+            var params = (command.substring(command.indexOf(' ')+1)).trim();
 
-            var params = items[1];
             if (eval("typeof " + func) !== 'function'){
                 $('#result').append('<p>Функция `'+func+'` не найдена</p>');
+                return false;
             }
 
             var result = eval(func+'('+params+')');
@@ -31,6 +31,7 @@
                 $('#result').append('<p>Результат '+ func +'('+params+'): '+result+' </p>');
             if (clearConsole)
                 $('#console').val('');
+            return true;
         }
 
 
@@ -48,7 +49,7 @@
                 if(event.keyCode == 13){
                     event.preventDefault();
                     event.stopPropagation();
-                    runCommand($('#console').val());
+                    runCommand($('#console').val(), false, true);
                 }
             });
         });
@@ -76,6 +77,9 @@
                 case 'sessions':
                     console.log(data.sessions);
                     break;
+                 case 'send':
+                    console.log(data.str);
+                    break;
             }
         };
 
@@ -89,6 +93,11 @@
         // команда SESSIONS (S)
         var s = S = SESSIONS = function(){
             socket.send(JSON.stringify({action:'sessions', sid: $.url('?sid')}));
+        };
+
+        // команда SEND "СТРОКА"
+        var send = SEND = function(str){
+            socket.send(JSON.stringify({action:'send', sid: $.url('?sid'), str: str}));
         };
 
     </script>

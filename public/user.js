@@ -4,10 +4,24 @@ if (typeof define !== 'function') {
 }
 
 define(function(User) {
+    /**
+     * User class
+     * Модуль пользователей
+     * @exports User
+     */
     var User = Class.extend({
+        /**
+         * Инициализация
+         * @class User
+         * @param {string} name Имя пользователя
+         */
         init: function(name){
             this.name = name;
         },
+        /**
+         * Получить имя пользователя
+         * @returns {string}
+         */
         getName: function(){
             return this.name;
         }

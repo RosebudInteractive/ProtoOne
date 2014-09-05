@@ -77,18 +77,18 @@ webSocketServer.on('connection', function(ws) {
                     conn.setLastPing();
                 break;
             case 'sessions':
-                var sessObj = {};
-                for (var i in sessions) {
-                    var connects = sessions[i].getConnects();
-                    sessObj[i] = [];
-                    for (var j in connects) {
-                        var params = connects[j].getParams();
-                        params.connectTime = (new Date(params.connectTime)).toISOString();
-                        params.lastPingTime = (new Date(params.lastPingTime)).toISOString();
-                        sessObj[i].push(params);
+                ws.send(JSON.stringify({error:null, action:'sessions', sessions:sessObj}));
+                break;
+            case 'send':
+                for(var i in sessions) {
+                    if (sessions[i].getId() == data.sid) {
+                        var connects = sessions[i].getConnects();
+                        for(var j in connects)
+                            if (connects[j].getId() != connId) // отправляем остальным клиентам текущей сессии
+                                connects[j].getConnection().send(JSON.stringify({error:null, action:'send', str:data.str}));
+                        break;
                     }
                 }
-                ws.send(JSON.stringify({error:null, action:'sessions', sessions:sessObj}));
                 break;
         }
     });
