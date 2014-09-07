@@ -7,32 +7,38 @@ define(
 	[],
 	function() {
 		var MemProtoObj = Class.extend({
-			_objTypeId: 0,
-			_objType: null,
-			_fields: [],		// значения полей объекта
-			_collections: [],	// массив дочерних коллекций
+			_objType: null,	
 			_parent: null,
 			_col: null,
-		
+			_db: null,
 				
-			// objTypeId - идентификатор типа объекта ( или ссылка на объект-тип ?)
+			// objType - ссылка на объект-тип
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
-			init: function(objTypeId, parent){
-				this._objTypeId = objTypeId;
-
-				if (!parent.obj) {	// корневой объект
-					this._db = parent.db;
-					this._db._addRoot(this);					
-				}
-				else { 						// объект в коллекции (не корневой)
-					this._col = parent.obj.getCol(parent.colName);
-					this._parent = parent.obj;
-					this._col._add(this);
-				}
-								
+			init: function(objType, parent){
+				this._objType = objType;
+				this._fields = [];			// значения полей объекта
+				this._collections = [];		// массив дочерних коллекций
+				
+										
 			},
 			
-			// получить коллекцию по
+			
+			addChild: function(colName,obj) {
+				
+			},
+			
+			
+			get: function(field) {
+				//this._objType.getCol(
+				//var 
+				//this._fields[i];
+			},
+			
+			getDB: function() {
+				if (!this._col) return this._db;
+				else return this._col.getDB();
+			}
+			
 			/*getCol: function(col) {
 				if (typeof col == "number")
 					return this._collections[col]; 

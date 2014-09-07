@@ -8,21 +8,47 @@ define(
 	function(MemProtoObj) {
 		var MemObj = MemProtoObj.extend({
 
-			init: function(objTypeId, parent, flds){
-				this._super(objTypeId, parent);
+			init: function(objType, parent, flds){
+				this._super(objType, parent);
+				
+				// заполнить поля по метаинформации
+				//var fcol = this._objType.getCol("fields");
+				//this._fields[fcol.count()-1]=null;
+				for (var f in flds) {
+					var i=this._objType._fieldsTable[f].cidx;
+					if (i>=0) this._fields[i] = flds[f]; // TODO проверять типы?
+					//var i=fcol.getIdxByName(f);
+					//if (i>=0) this._fields[i] = flds[f]; // TODO проверять типы?
+				}
 
 				// TODO создать коллекции 
-				// TODO заполнить поля
-					
+
+				if (!parent.obj) {	// корневой объект
+					this._db = parent.db;
+					this._db._addRoot(this);					
+				}
+				else { 				// объект в коллекции (не корневой)
+					this._col = parent.obj.getCol(parent.colName);
+					this._parent = parent.obj;
+					this._col._add(this);
+				}
+
+				
+				
 			},
 			
 			// получить коллекцию по имени
-			getCol: function(col) {
-				/*if (typeof col == "number")
-					return this._collections[col]; 
-				else 
-					return this._collections[this._objType.getCol(2).getObjIdx(col)];*/
+			getChildCol: function(colName) {
+				var i=this._objType.getCol("cols").getIdxByName(colName);
+				return this._collections[i];				
+				//return this._collections[this._objType.getCol(2).getObjIdx(col)];
 			},
+			
+			get: function(field) {
+				var i=this._objType._fieldsTable[field].cidx;
+				//this._objType.getCol("fields").getIdxByName(field);
+				return this._fields[i];
+			}
 			
 			
 

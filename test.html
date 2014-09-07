@@ -72,15 +72,25 @@
 		
 
 		require(
-            ['memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols'],
-            function( MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols){
+            ['memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols','memObj'],
+            function( MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
                 var db = new MDb("PROTO");
 				//var myCol = myMemDb.newCol();
-				var myRoot = new MemMetaObj(db,{"typeName": "Button", "parentClass":"Control"});
-				var flds = myRoot.getCol("fields");
-				var cls = myRoot.getCol("cols");
-				new MemMetaObjFields({"obj": myRoot, "colName": "fields"}, {"name":"Id","ftype":"int"});
-				console.log("FFF");
+				var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
+				var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
+				var flds = myMetaControl.getCol("fields");
+				var cls = myMetaControl.getCol("cols");
+				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
+				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
+				
+				new MemMetaObjFields({"obj": myMetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
+				
+				myMetaControl._bldElemTable(); // temp
+				myMetaButton._bldElemTable();
+				
+				var myRootButton = new MemObj(myMetaButton,{ "db": db },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				
+				console.log(myRootButton);
             }
         );
 		

@@ -10,10 +10,19 @@ define(
 		
 			init: function(parent, flds){
 			
-				this._super(100001,parent); 
-				this._fields.push(flds.name);
+				this._super(null,parent); 
+				this._fields.push(flds.fname);
 				this._fields.push(flds.ftype);
+
+				this._col = parent.obj.getCol(parent.colName);
+				this._parent = parent.obj;
+				this._col._add(this);
 				
+			},
+			
+			get: function(name) {
+				if (name=="fname") return this._fields[0];
+				// TODO другие поля тоже
 			}
 			
 

@@ -13,15 +13,34 @@ define(
 		
 			init: function(name){
 				this._name = name;
+				
+				
+				
 			},
 			
+			// Вернуть название БД
 			getName: function() {
 				return this._name;
 			},
 			
+			// Добавить корневой объект в БД
 			_addRoot: function(obj) {
 				this._robjs.push(obj);
 			},
+			
+			// Сгенерировать "дельты" по логу изменений
+			// (для сервера нужно будет передавать ИД подписчика)
+			// возможно, надо сделать отдельный служебный класс для этого функционала
+			genDeltas: function() {
+				
+			},
+			
+			// применить дельты к БД для синхронизации
+			applyDeltas:function(data) {
+				
+			},
+			
+			
 			/*
 			// новая коллекция
 			newCol: function() {
