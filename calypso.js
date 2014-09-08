@@ -5,8 +5,16 @@ var app = express();
 var WebSocketServer = new require('ws');
 var Session = require('./public/session');
 var Connect = require('./public/connect');
-var Logger = require('./public/logger');
-var logger = new Logger();
+/*var Logger = require('./public/logger');
+var logger = new Logger();*/
+
+// winston for logging
+var winston = require('winston');
+var logger = new (winston.Logger)({
+    transports: [
+        new winston.transports.File({ filename: __dirname + '/logs/protoone.log' })
+    ]
+});
 
 // Подключение сессий
 //app.use(session({keys: ['sid']}));
@@ -94,16 +102,16 @@ webSocketServer.on('connection', function(ws) {
                     }
                 }
                 break;
-            case 'savelog':
+                /*case 'savelog':
                 logger.saveLog(__dirname+'/logs/log.xml', function(str){
                     ws.send(JSON.stringify({error:null, action:'savelog', str:str}));
                 });
-                break;
+                break;*/
         }
 
         // сохраняем все команды кроме пинга и сохранения лога
         if (data.action != 'ping' && data.action != 'savelog') {
-            logger.addLog({session:data.sid, connect:connId, command:data.action, params:data.str?data.str:''});
+            logger.info(JSON.stringify({session:data.sid, connect:connId, command:data.action, params:data.str?data.str:''}));
         }
 
     });
