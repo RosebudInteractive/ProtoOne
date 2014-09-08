@@ -20,6 +20,10 @@
         function runCommand(command, viewResult, clearConsole) {
             var func = (command.substring(0, command.indexOf(' '))).trim();
             var params = (command.substring(command.indexOf(' ')+1)).trim();
+            if (func == "") {
+                func = command.trim();
+                params = "";
+            }
 
             if (eval("typeof " + func) !== 'function'){
                 $('#result').append('<p>Функция `'+func+'` не найдена</p>');
@@ -80,6 +84,9 @@
                  case 'send':
                     console.log(data.str);
                     break;
+                 case 'savelog':
+                    console.log(data.str);
+                    break;
             }
         };
 
@@ -98,6 +105,11 @@
         // команда SEND "СТРОКА"
         var send = SEND = function(str){
             socket.send(JSON.stringify({action:'send', sid: $.url('?sid'), str: str}));
+        };
+
+        // команда SAVELOG
+        var savelog = SAVELOG = function(str){
+            socket.send(JSON.stringify({action:'savelog', sid: $.url('?sid')}));
         };
 
     </script>

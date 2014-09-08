@@ -3,8 +3,10 @@ var express = require('express');
 //var session = require('cookie-session');
 var app = express();
 var WebSocketServer = new require('ws');
-var Session = new require('./public/session');
-var Connect = new require('./public/connect');
+var Session = require('./public/session');
+var Connect = require('./public/connect');
+var Logger = require('./public/logger');
+var logger = new Logger();
 
 // Подключение сессий
 //app.use(session({keys: ['sid']}));
@@ -20,6 +22,7 @@ app.get('/', function(req, res){
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 app.use("/docs", express.static(__dirname + '/docs'));
+app.use("/logs", express.static(__dirname + '/logs'));
 
 // сохраненные сессии
 var sessions = {};
@@ -91,7 +94,18 @@ webSocketServer.on('connection', function(ws) {
                     }
                 }
                 break;
+            case 'savelog':
+                logger.saveLog(__dirname+'/logs/log.xml', function(str){
+                    ws.send(JSON.stringify({error:null, action:'savelog', str:str}));
+                });
+                break;
         }
+
+        // сохраняем все команды кроме пинга и сохранения лога
+        if (data.action != 'ping' && data.action != 'savelog') {
+            logger.addLog({session:data.sid, connect:connId, command:data.action, params:data.str?data.str:''});
+        }
+
     });
 
     ws.on('close', function() {
