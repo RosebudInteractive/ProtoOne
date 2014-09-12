@@ -7,6 +7,9 @@
     <script src="./public/url.js"></script>
     <script src="./public/common.js"></script>
     <script>
+
+        var setTimer = null;
+
         $(function(){
 
             //  значения полей с сервера
@@ -74,7 +77,7 @@
                 if (changed)
                     socket.send(JSON.stringify({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()}));
             }
-            var interval = setInterval(sendValues, 1000); // c интервалом 1000мс
+
 
             // вычисляемое поле
             function setCalcField(){
@@ -85,6 +88,17 @@
                 socket.send(JSON.stringify({action:'inputs', sid: $.url('?sid'), id:$(this).attr('id'), str:$(this).val(), time:Date.now()}));
             });*/
 
+            // Функция таймера
+            var interval = null;
+            setTimer = function(value) {
+                if (interval)
+                    clearInterval(interval);
+                interval = setInterval(sendValues, value);
+            };
+
+            // устанока таймера c интервалом 1000мс по умолчанию
+            setTimer(1000);
+            $('#timer_sett').val(1000)
 
         });
 
@@ -92,6 +106,7 @@
 </head>
 <body>
 
+<h2>Редактируемые поля</h2>
 <input id="i1"> <br>
 <input id="i2"> <br>
 <input id="i3"> <br>
@@ -102,7 +117,11 @@
 <input id="i8"> <br>
 <input id="i9"> <br>
 <input id="i10"> <br>
-1+2 <input id="i1i2"> <br>
+1+2 <input id="i1i2"> <br><br><br>
+
+<h2>Настройки</h2>
+Таймер <input id="timer_sett" value="1000">мс<br>
+<input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());">
 
 </body>
 </html>
