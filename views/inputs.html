@@ -29,9 +29,12 @@
                 switch (data.action) {
                     case 'init': // инициализация с сервера
                     case 'changed': // изменения
+
                         for(var i in data.values) {
+                            if (data.action == 'init' || oldValues[i] == $('#'+i).val()){  // проверяем не изменились ли значения в контролах
+                                $('#'+i).val(data.values[i]); // меняем в контролах
+                            }
                             oldValues[i] = data.values[i];
-                            $('#'+i).val(data.values[i]);
                         }
 
                         // если изменены поля вычисляемого поля
