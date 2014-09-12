@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="./public/url.js"></script>
+    <script src="./public/common.js"></script>
+    <script>
+        $(function(){
+
+            //  значения полей с сервера
+            var oldValues = {};
+
+            // запрашиваем инициализационные данные
+            socket.onopen = function(event) {
+                // отправляем сообщение что подключились
+                socket.send(JSON.stringify({action:'connect', sid: $.url('?sid'), agent:navigator.userAgent}));
+                // отправляем сообщение на инициализацию
+                socket.send(JSON.stringify({action: 'init', sid: $.url('?sid')}));
+            };
+
+            // обработчик входящих сообщений
+            socket.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                switch (data.action) {
+                    case 'init': // инициализация с сервера
+                    case 'changed': // изменения
+                        for(var i in data.values) {
+                            oldValues[i] = data.values[i];
+                            $('#'+i).val(data.values[i]);
+                        }
+
+                        // если изменены поля вычисляемого поля
+                        if (data.values['i1'] || data.values['i2']) {
+                            setCalcField();
+                        }
+
+                        break;
+                    case 'error': // ошибки
+                        console.log(data.error);
+                        break;
+                }
+            };
+
+            // при закрытии сокета убираем пинг
+            socket.onclose = function(){
+                if (interval)
+                    clearInterval(interval);
+                console.log('socket closed');
+            };
+
+            // Отправка изменений на сервер
+            function sendValues(){
+                var values = {};
+                var inputs = $('input');
+                var changed = false;
+                for (var i= 0,len=inputs.length; i<len; i++) {
+                    var input = $(inputs[i]);
+                    var id = input.attr('id');
+                    var newValue = input.val();
+                    if (oldValues[id] != newValue) {
+                        values[input.attr('id')] = {oldValue:oldValues[id], newValue:newValue};
+                        changed = true;
+                    }
+                }
+
+                // если изменено вычисляемое поле
+                if (values['i1i2']) {
+                    values['i1'] = {oldValue:oldValues['i1'], newValue:$('#i1').val()};
+                    values['i2'] = {oldValue:oldValues['i2'], newValue:$('#i2').val()};
+                }
+
+                if (changed)
+                    socket.send(JSON.stringify({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()}));
+            }
+            var interval = setInterval(sendValues, 1000); // c интервалом 1000мс
+
+            // вычисляемое поле
+            function setCalcField(){
+                $('#i1i2').val($('#i1').val()+$('#i2').val());
+            }
+
+           /* $('input').blur(function(){
+                socket.send(JSON.stringify({action:'inputs', sid: $.url('?sid'), id:$(this).attr('id'), str:$(this).val(), time:Date.now()}));
+            });*/
+
+
+        });
+
+    </script>
+</head>
+<body>
+
+<input id="i1"> <br>
+<input id="i2"> <br>
+<input id="i3"> <br>
+<input id="i4"> <br>
+<input id="i5"> <br>
+<input id="i6"> <br>
+<input id="i7"> <br>
+<input id="i8"> <br>
+<input id="i9"> <br>
+<input id="i10"> <br>
+1+2 <input id="i1i2"> <br>
+
+</body>
+</html>

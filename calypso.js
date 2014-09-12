@@ -5,8 +5,6 @@ var app = express();
 var WebSocketServer = new require('ws');
 var Session = require('./public/session');
 var Connect = require('./public/connect');
-/*var Logger = require('./public/logger');
-var logger = new Logger();*/
 
 // winston for logging
 var winston = require('winston');
@@ -16,15 +14,17 @@ var logger = new (winston.Logger)({
     ]
 });
 
-// Подключение сессий
-//app.use(session({keys: ['sid']}));
-
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
 
 // обработка главной
 app.get('/', function(req, res){
     res.render('calypso.html');
+});
+
+// обработка inputs
+app.get('/inputs', function(req, res){
+    res.render('inputs.html');
 });
 
 // статические данные и модули для подгрузки на клиент
@@ -34,6 +34,21 @@ app.use("/logs", express.static(__dirname + '/logs'));
 
 // сохраненные сессии
 var sessions = {};
+
+// сохраненные данные полей
+var inputValues = {
+    'i1':'1',
+    'i2':'2',
+    'i3':'3',
+    'i4':'4',
+    'i5':'5',
+    'i6':'6',
+    'i7':'7',
+    'i8':'8',
+    'i9':'9',
+    'i10':'10',
+    'i1i2':'' // вычисляемое на клиенте
+};
 
 // WebSocket-сервер на порту 8081
 var webSocketServer = new WebSocketServer.Server({port: 8081});
@@ -49,19 +64,19 @@ function findConnection(id){
     return null;
 }
 
+function findSession(id){
+    for(var i in sessions) {
+        if (sessions[i].getId() == id) {
+            return sessions[i];
+        }
+    }
+    return null;
+}
+
 webSocketServer.on('connection', function(ws) {
 
     // id подключения
     var connId = Math.random();
-
-    // получаем сессию
-   /* var sessionID = null;
-    parseCookie(ws.upgradeReq, null, function(err) {
-        sessionID = ws.upgradeReq.cookies['sid'];
-        store.get(sessionID, function(err, session) {
-            // session
-        });
-    });*/
 
     ws.on('message', function(message) {
         var data = JSON.parse(message);
@@ -92,21 +107,47 @@ webSocketServer.on('connection', function(ws) {
                 ws.send(JSON.stringify({error:null, action:'sessions', sessions:sessObj}));
                 break;
             case 'send':
-                for(var i in sessions) {
-                    if (sessions[i].getId() == data.sid) {
-                        var connects = sessions[i].getConnects();
-                        for(var j in connects)
-                            if (connects[j].getId() != connId) // отправляем остальным клиентам текущей сессии
-                                connects[j].getConnection().send(JSON.stringify({error:null, action:'send', str:data.str}));
-                        break;
-                    }
+                var session = findSession(data.sid);
+                if (session){
+                    var connects = session.getConnects();
+                    for(var j in connects)
+                        if (connects[j].getId() != connId) // отправляем остальным клиентам текущей сессии
+                            connects[j].getConnection().send(JSON.stringify({error:null, action:'send', str:data.str, time:Date.now(), timedelta:Date.now()-data.time}));
                 }
                 break;
-                /*case 'savelog':
-                logger.saveLog(__dirname+'/logs/log.xml', function(str){
-                    ws.send(JSON.stringify({error:null, action:'savelog', str:str}));
-                });
-                break;*/
+
+
+           case 'init':
+                ws.send(JSON.stringify({error:null, action:'init', values:inputValues}));
+                break;
+            case 'changed':
+                // Если oldValue ХОТЯ БЫ
+                // одного из полей не равно значениям тех полей что заполнены сервером,
+                // он не применяет это и не рассылает, а отвечает клиенту ошибкой
+                for(var i in data.values) {
+                    if (data.values[i].oldValue != inputValues[i]){
+                        ws.send(JSON.stringify({error:'Ошибка в поле '+i, action:'error'}));
+                        return;
+                    }
+                }
+
+                // сохраняем изменения на сервере
+                var values = {};
+                for(var i in data.values) {
+                    if (data.values[i].newValue != inputValues[i]) {
+                        inputValues[i] = data.values[i].newValue;
+                        values[i] = data.values[i].newValue;
+                    }
+                }
+
+                // отправляем изменения клиентам текущей сессии
+                var session = findSession(data.sid);
+                if (session){
+                    var connects = session.getConnects();
+                    for(var j in connects)
+                        connects[j].getConnection().send(JSON.stringify({error:null, action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time}));
+                }
+                break;
         }
 
         // сохраняем все команды кроме пинга и сохранения лога
