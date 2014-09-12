@@ -124,6 +124,7 @@ webSocketServer.on('connection', function(ws) {
                 // Если oldValue ХОТЯ БЫ
                 // одного из полей не равно значениям тех полей что заполнены сервером,
                 // он не применяет это и не рассылает, а отвечает клиенту ошибкой
+                console.log(data.values, inputValues);
                 for(var i in data.values) {
                     if (data.values[i].oldValue != inputValues[i]){
                         ws.send(JSON.stringify({error:'Ошибка в поле '+i, action:'error'}));

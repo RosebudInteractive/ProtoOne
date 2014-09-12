@@ -56,7 +56,7 @@
             // Отправка изменений на сервер
             function sendValues(){
                 var values = {};
-                var inputs = $('input');
+                var inputs = $('input.edited');
                 var changed = false;
                 for (var i= 0,len=inputs.length; i<len; i++) {
                     var input = $(inputs[i]);
@@ -94,11 +94,16 @@
                 if (interval)
                     clearInterval(interval);
                 interval = setInterval(sendValues, value);
+                $('#curr_timer').html(value);
             };
 
             // устанока таймера c интервалом 1000мс по умолчанию
             setTimer(1000);
             $('#timer_sett').val(1000)
+
+            // текущий id сессии
+            $('#curr_id').html($.url('?sid'))
+
 
         });
 
@@ -107,21 +112,22 @@
 <body>
 
 <h2>Редактируемые поля</h2>
-<input id="i1"> <br>
-<input id="i2"> <br>
-<input id="i3"> <br>
-<input id="i4"> <br>
-<input id="i5"> <br>
-<input id="i6"> <br>
-<input id="i7"> <br>
-<input id="i8"> <br>
-<input id="i9"> <br>
-<input id="i10"> <br>
-1+2 <input id="i1i2"> <br><br><br>
+<input id="i1" class="edited"> <br>
+<input id="i2" class="edited"> <br>
+<input id="i3" class="edited"> <br>
+<input id="i4" class="edited"> <br>
+<input id="i5" class="edited"> <br>
+<input id="i6" class="edited"> <br>
+<input id="i7" class="edited"> <br>
+<input id="i8" class="edited"> <br>
+<input id="i9" class="edited"> <br>
+<input id="i10" class="edited"> <br>
+1+2 <input id="i1i2" class="edited"> <br>
 
 <h2>Настройки</h2>
-Таймер <input id="timer_sett" value="1000">мс<br>
-<input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());">
+Таймер текущий: <span id="curr_timer"></span> <input id="timer_sett" value="1000" style="width:50px">мс <input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());"><br>
+ID клиента: <span id="curr_id"></span><br>
+
 
 </body>
 </html>
