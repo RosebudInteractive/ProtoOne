@@ -69,7 +69,8 @@
                 }
 
                 // если изменено вычисляемое поле
-                if (values['i1i2']) {
+                if (values['i1'] || values['i2'] || values['i1i2']) {
+                    values['i1i2'] = {oldValue:oldValues['i1i2'], newValue:$('#i1i2').val()};
                     values['i1'] = {oldValue:oldValues['i1'], newValue:$('#i1').val()};
                     values['i2'] = {oldValue:oldValues['i2'], newValue:$('#i2').val()};
                 }
