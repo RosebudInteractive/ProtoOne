@@ -43,6 +43,9 @@
                         }
 
                         break;
+                    case 'connect':
+                        $('#curr_conn').html(data.connId);
+                        break;
                     case 'error': // ошибки
                         console.log(data.error);
                         break;
@@ -87,6 +90,8 @@
             function setCalcField(){
                 $('#i1i2').val($('#i1').val()+$('#i2').val());
             }
+            $('#i1').keyup(setCalcField);
+            $('#i2').keyup(setCalcField);
 
            /* $('input').blur(function(){
                 socket.send(JSON.stringify({action:'inputs', sid: $.url('?sid'), id:$(this).attr('id'), str:$(this).val(), time:Date.now()}));
@@ -130,7 +135,8 @@
 
 <h2>Настройки</h2>
 Таймер текущий: <span id="curr_timer"></span> <input id="timer_sett" value="1000" style="width:50px">мс <input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());"><br>
-ID клиента: <span id="curr_id"></span><br>
+ID сессии: <span id="curr_id"></span><br>
+ID коннекта: <span id="curr_conn"></span><br>
 
 
 </body>

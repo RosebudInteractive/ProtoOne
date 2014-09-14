@@ -96,6 +96,10 @@ webSocketServer.on('connection', function(ws) {
                     sessions[sessionID] = new Session(sessionID);
                 }
                 sessions[sessionID].addConnect(conn);
+
+                // отправляем клиенту номер коннекта
+                ws.send(JSON.stringify({error:null, action:'connect', connId:connId}));
+
                 console.log("новое соединение: " + sessionID);
                 break;
             case 'ping':
