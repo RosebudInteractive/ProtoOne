@@ -20,21 +20,31 @@ define(function(Socket) {
          * Инициализация объекта
          * @constructor
          * @alias module:Socket
-         * @param url {string}
+         * @param url {string} url=для клиента, ws=для сервера
          * @param options {object} {}
          */
         init: function (url, options) {
-            this.socket = new WebSocket(url);
-            this.onmessage = $.proxy(this.message, this);
-            this.onclose = $.proxy(this.close, this);
-            this.onopen = $.proxy(this.open, this);
-
+            var that = this;
             // опции
             this.options = {
+                side: options.side?options.side:'client', // создаем объект для сервера или клиента
                 open: options.open?options.open:null,   // вызвать метод при открытии сокета
                 close: options.close?options.close:null,// вызвать метод при закрытии сокета
                 message: options.message?options.message:null // вызвать метод при получении сообщения от сервера
             };
+
+            if (this.options.side == 'client') {
+                this.socket = new WebSocket(url);
+                this.socket.onmessage = function() { that.message.apply(that, arguments); };
+                this.socket.onclose = function() { that.close.apply(that, arguments); };
+                this.socket.onopen = function() { that.open.apply(that, arguments); };
+            } else {
+                this.socket = url;
+                this.socket.on('message', function() { that.message.apply(that, arguments);});
+                this.socket.on('close', function() { that.close.apply(that, arguments);});
+                this.socket.on('open', function() { that.open.apply(that, arguments); });
+            }
+
             this.msgId = 0;
             this.messages = {};
 
@@ -54,7 +64,7 @@ define(function(Socket) {
          * @param callback
          */
         send:  function (obj, callback) {
-            var msgId = this.msgId++;
+            var msgId = ++this.msgId;
             obj['msgId'] = msgId; // добавляем в объект отправки серверу msgId
             this.messages[msgId] = {callback:callback, time:Date.now()}; // сохраняем колбек
             this.socket.send(JSON.stringify(obj));
@@ -65,7 +75,6 @@ define(function(Socket) {
          * @param event
          */
         open: function(event){
-            var that = this;
             if (this.options.open)
                 this.options.open(event);
         },
@@ -75,7 +84,7 @@ define(function(Socket) {
          * @param event
          */
         message: function(event){
-            var data = JSON.parse(event.data);
+            var data = JSON.parse(this.options.side == 'client' ? event.data : event);
             if (this.options.message)
                 this.options.message(data);
             // если есть такой ID вызываем сохраненный колбек

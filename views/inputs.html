@@ -4,141 +4,146 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../public/class-extend.js"></script>
+    <script data-main="../public/main.js" src="../public/require.js"></script>
     <script src="./public/url.js"></script>
-    <script src="./public/common.js"></script>
     <script>
 
-        var setTimer = null;
-        var sendValues = null;
+    // глобальные методы
+    var setTimer = null;
+    var sendValues = null;
+    var showChanges = null;
 
-        $(function(){
+    // номер коннекта
+    var connId = null;
 
-            //  значения полей с сервера
-            var oldValues = {};
+    require(['socket'],
+            function( Socket ){
 
-            // запрашиваем инициализационные данные
-            socket.onopen = function(event) {
-                // отправляем сообщение что подключились
-                socket.send(JSON.stringify({action:'connect', sid: $.url('?sid'), agent:navigator.userAgent}));
-                // отправляем сообщение на инициализацию
-                socket.send(JSON.stringify({action: 'init', sid: $.url('?sid')}));
-            };
+                //  значения полей с сервера
+                var oldValues = {};
+                // таймер
+                var interval = null;
 
-            // обработчик входящих сообщений
-            socket.onmessage = function(event) {
-                var data = JSON.parse(event.data);
-                switch (data.action) {
-                    case 'init': // инициализация с сервера
-                    case 'changed': // изменения
-
-                        //  если хотя бы для одного oldValue<>newValue
-                        var changed = false;
-                        for(var i in data.values) {
-                            if (oldValues[i] != $('#'+i).val()) {
-                                changed = true;
-                            }
+                var socket = new Socket("ws://"+url('hostname')+":8081", {
+                    open: function(){
+                        socket.send({action:'connect', sid: $.url('?sid'), agent:navigator.userAgent}, function(data){
+                            connId = data.connId;
+                            $('#curr_id').html($.url('?sid'))
+                            $('#curr_conn').html(connId);
+                            socket.send({action: 'init', sid: $.url('?sid')}, showChanges);
+                        });
+                    },
+                    close:function(){
+                        if (interval)
+                            clearInterval(interval);
+                        console.log('socket closed');
+                    },
+                    message: function(data){
+                        switch (data.action) {
+                            case 'error': // ошибки
+                                console.log(data.error);
+                                break;
                         }
+                    }
+                });
 
-                        for(var i in data.values) {
-                            console.log(i+': oldValue:'+oldValues[i]+' newValue:'+$('#'+i).val()+' serverValue: '+data.values[i]);
-                            oldValues[i] = data.values[i];
-                            $('#'+i+'_old').html(data.values[i]);
-                            if (!changed || data.action=='init') {
-                                $('#'+i).val(data.values[i]);
-                            }
+                // сохранить и отобразить изменения
+                showChanges = function(data) {
+
+                    //  если хотя бы для одного oldValue<>newValue
+                    var changed = false;
+                    for(var i in data.values) {
+                        if (oldValues[i] != $('#'+i).val()) {
+                            changed = true;
                         }
+                    }
 
-                        // если изменены поля вычисляемого поля
-                        if (data.values['i1'] || data.values['i2']) {
-                            setCalcField();
+                    // сохраняем в oldValues и меняем в полях ввода если !changed
+                    for(var i in data.values) {
+                        console.log(i+': oldValue:'+oldValues[i]+' newValue:'+$('#'+i).val()+' serverValue:'+data.values[i]);
+                        oldValues[i] = data.values[i];
+                        $('#'+i+'_old').html(data.values[i]);
+                        if (!changed || data.action=='init') {
+                            $('#'+i).val(data.values[i]);
                         }
-                        break;
-                    case 'connect':
-                        $('#curr_conn').html(data.connId);
-                        break;
-                    case 'error': // ошибки
-                        console.log(data.error);
-                        break;
-                }
-            };
+                    }
 
-            // при закрытии сокета убираем пинг
-            socket.onclose = function(){
-                if (interval)
-                    clearInterval(interval);
-                console.log('socket closed');
-            };
-
-            // Отправка изменений на сервер
-            sendValues = function (){
-                var values = {};
-                var inputs = $('input.edited');
-                var changed = false;
-                for (var i= 0,len=inputs.length; i<len; i++) {
-                    var input = $(inputs[i]);
-                    var id = input.attr('id');
-                    var newValue = input.val();
-                    if (oldValues[id] != newValue) {
-                        values[input.attr('id')] = {oldValue:oldValues[id], newValue:newValue};
-                        changed = true;
+                    // если изменены поля вычисляемого поля
+                    if (data.values['i1'] || data.values['i2']) {
+                        setCalcField();
                     }
                 }
 
-                // если изменено вычисляемое поле
-                if (values['i1'] || values['i2'] || values['i1i2']) {
-                    values['i1i2'] = {oldValue:oldValues['i1i2'], newValue:$('#i1i2').val()};
-                    values['i1'] = {oldValue:oldValues['i1'], newValue:$('#i1').val()};
-                    values['i2'] = {oldValue:oldValues['i2'], newValue:$('#i2').val()};
+                // Отправка изменений на сервер
+                sendValues = function (){
+                    var values = {};
+                    var inputs = $('input.edited');
+                    var changed = false;
+
+                    // находим изменения
+                    for (var i= 0,len=inputs.length; i<len; i++) {
+                        var input = $(inputs[i]);
+                        var id = input.attr('id');
+                        var newValue = input.val();
+                        if (oldValues[id] != newValue) {
+                            values[input.attr('id')] = {oldValue:oldValues[id], newValue:newValue};
+                            changed = true;
+                        }
+                    }
+
+                    // если изменено вычисляемое поле
+                    if (values['i1'] || values['i2'] || values['i1i2']) {
+                        values['i1i2'] = {oldValue:oldValues['i1i2'], newValue:$('#i1i2').val()};
+                        values['i1'] = {oldValue:oldValues['i1'], newValue:$('#i1').val()};
+                        values['i2'] = {oldValue:oldValues['i2'], newValue:$('#i2').val()};
+                    }
+
+                    if (changed)
+                        socket.send({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()}, showChanges);
+
+                    // обнуляем значение таймера
+                    intervalValue = 0;
                 }
 
-                if (changed)
-                    socket.send(JSON.stringify({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()}));
-
-                // обнуляем значение таймера
-                intervalValue = 0;
-            }
-
-
-            // вычисляемое поле
-            function setCalcField(){
-                $('#i1i2').val($('#i1').val()+$('#i2').val());
-            }
-            $('#i1').keyup(setCalcField);
-            $('#i2').keyup(setCalcField);
-
-            // Функции таймера
-            var interval = null;
-            var intervalValue = null;
-            var intervalView = null;
-            setTimer = function(value) {
-                if (interval)
-                    clearInterval(interval);
-                if (intervalView)
-                    clearInterval(intervalView);
-
-                if (value != 0) {
-                    interval = setInterval(sendValues, value);
-                    intervalView = setInterval(viewInterval, 200);
+                // вычисляемое поле
+                function setCalcField(){
+                    $('#i1i2').val($('#i1').val()+$('#i2').val());
                 }
-                intervalValue = value;
-                $('#curr_timer').html(value);
-            };
-            function viewInterval(){
-                $('#time_left').html(intervalValue);
-                if (intervalValue==0)
-                    intervalValue = parseInt($('#curr_timer').html());
-                else
-                    intervalValue = intervalValue-200>=0?intervalValue-200:0;
+                $('#i1').keyup(setCalcField);
+                $('#i2').keyup(setCalcField);
+
+                // Функции таймера
+                var interval = null;
+                var intervalValue = null;
+                var intervalView = null;
+                setTimer = function(value) {
+                    if (interval)
+                        clearInterval(interval);
+                    if (intervalView)
+                        clearInterval(intervalView);
+                    if (value != 0) {
+                        interval = setInterval(sendValues, value);
+                        intervalView = setInterval(viewInterval, 200);
+                    }
+                    intervalValue = value;
+                    $('#curr_timer').html(value);
+                };
+                function viewInterval(){
+                    $('#time_left').html(intervalValue);
+                    if (intervalValue==0)
+                        intervalValue = parseInt($('#curr_timer').html());
+                    else
+                        intervalValue = intervalValue-200>=0?intervalValue-200:0;
+                }
+
+                // устанока таймера c интервалом 0мс(отключен) по умолчанию
+                setTimer(0);
+                $('#timer_sett').val(0);
+                $('#time_left').html(0);
             }
+    );
 
-            // устанока таймера c интервалом 1000мс по умолчанию
-            setTimer(0);
-            $('#timer_sett').val(0);
-            $('#time_left').html(0);
-
-            // текущий id сессии
-            $('#curr_id').html($.url('?sid'))
-        });
 
     </script>
 </head>
