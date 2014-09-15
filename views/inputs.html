@@ -31,24 +31,27 @@
                     case 'init': // инициализация с сервера
                     case 'changed': // изменения
 
+                        //  если хотя бы для одного oldValue<>newValue
+                        var changed = false;
+                        for(var i in data.values) {
+                            if (oldValues[i] != $('#'+i).val()) {
+                                changed = true;
+                            }
+                        }
 
                         for(var i in data.values) {
-                            var controlSett = false;
-                            if (data.action == 'init' || oldValues[i] == $('#'+i).val()){  // проверяем не изменились ли значения в контролах
-                                controlSett = true;
-                                $('#'+i).val(data.values[i]); // меняем в контролах
-                            }
+                            console.log(i+': oldValue:'+oldValues[i]+' newValue:'+$('#'+i).val()+' serverValue: '+data.values[i]);
                             oldValues[i] = data.values[i];
-
-                            // выводим в консоль изменения
-                            console.log(i+' --> '+data.values[i]+(!controlSett?' --> '+$('#'+i).val():''));
+                            $('#'+i+'_old').html(data.values[i]);
+                            if (!changed || data.action=='init') {
+                                $('#'+i).val(data.values[i]);
+                            }
                         }
 
                         // если изменены поля вычисляемого поля
                         if (data.values['i1'] || data.values['i2']) {
                             setCalcField();
                         }
-
                         break;
                     case 'connect':
                         $('#curr_conn').html(data.connId);
@@ -103,10 +106,6 @@
             $('#i1').keyup(setCalcField);
             $('#i2').keyup(setCalcField);
 
-           /* $('input').blur(function(){
-                socket.send(JSON.stringify({action:'inputs', sid: $.url('?sid'), id:$(this).attr('id'), str:$(this).val(), time:Date.now()}));
-            });*/
-
             // Функции таймера
             var interval = null;
             var intervalValue = null;
@@ -139,8 +138,6 @@
 
             // текущий id сессии
             $('#curr_id').html($.url('?sid'))
-
-
         });
 
     </script>
@@ -148,17 +145,17 @@
 <body>
 
 <h2>Редактируемые поля</h2>
-1<input id="i1" class="edited"> <br>
-2<input id="i2" class="edited"> <br>
-3<input id="i3" class="edited"> <br>
-4<input id="i4" class="edited"> <br>
-5<input id="i5" class="edited"> <br>
-6<input id="i6" class="edited"> <br>
-7<input id="i7" class="edited"> <br>
-8<input id="i8" class="edited"> <br>
-9<input id="i9" class="edited"> <br>
-10<input id="i10" class="edited"> <br>
-1+2 <input id="i1i2" class="edited"> <br>
+1<input id="i1" class="edited"> <span id="i1_old"></span> <br>
+2<input id="i2" class="edited"> <span id="i2_old"></span> <br>
+3<input id="i3" class="edited"> <span id="i3_old"></span> <br>
+4<input id="i4" class="edited"> <span id="i4_old"></span> <br>
+5<input id="i5" class="edited"> <span id="i5_old"></span> <br>
+6<input id="i6" class="edited"> <span id="i6_old"></span> <br>
+7<input id="i7" class="edited"> <span id="i7_old"></span> <br>
+8<input id="i8" class="edited"> <span id="i8_old"></span> <br>
+9<input id="i9" class="edited"> <span id="i9_old"></span> <br>
+10<input id="i10" class="edited"> <span id="i10_old"></span> <br>
+1+2 <input id="i1i2" class="edited"> <span id="i1i2_old"></span> <br>
 
 <h2>Настройки</h2>
 Таймер текущий: <span id="curr_timer"></span> <input id="timer_sett" value="1000" style="width:50px">мс <input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());"> <input type="button" value="Отправить значения" onclick="sendValues();"><br>
