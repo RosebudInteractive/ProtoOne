@@ -5,7 +5,7 @@ var app = express();
 var WebSocketServer = new require('ws');
 var Session = require('./public/session');
 var Connect = require('./public/connect');
-var Socket = require('./public/Socket');
+var Socket = require('./public/socket');
 
 // winston for logging
 var winston = require('winston');
