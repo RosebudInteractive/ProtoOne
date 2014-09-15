@@ -27,8 +27,10 @@ define(
 				this._collections.push(new MemCol("cols",this));
 				
 				//if (!parent.obj) {	// корневой объект
+				/* перенесли в прото
 				this._db = db;
 				this._db._addRoot(this);
+				*/
 
 				// запомнить родительский класс
 				/*if (flds.parentClass)
@@ -45,7 +47,7 @@ define(
 				var n = this.countParentClass();
 				var k=0;
 				for (var i=0; i<n; i++) {
-					var c = this.getParentClass(n-i);
+					var c = this.getParentClass(n-i-1);
 					for (var j=0; j<c.getCol("fields").count(); j++)
 						this._fieldsTable[c.getCol("fields").get(j).get("fname")]= { "obj": c, "idx": j, "cidx":k++ };
 				}

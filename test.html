@@ -72,9 +72,11 @@
 		
 
 		require(
-            ['memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols','memObj'],
-            function( MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
-                var db = new MDb("PROTO");
+            ['memDBController','memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols','memObj'],
+            function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
+			
+				var dbc = new MemDBController();
+                var db = dbc.newDataBase({name:"PROTO", master : "1"}); // new MDb(controller,{name:"PROTO", master : "1"});
 				//var myCol = myMemDb.newCol();
 				var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
 				var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
@@ -88,9 +90,13 @@
 				myMetaControl._bldElemTable(); // temp
 				myMetaButton._bldElemTable();
 				
-				var myRootButton = new MemObj(myMetaButton,{ "db": db },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				
-				console.log(myRootButton);
+				myRootButton.set("Caption","Cancel");
+				
+				var delta = myRootButton.getLog().genDelta();
+				
+				console.log(delta);
             }
         );
 		
