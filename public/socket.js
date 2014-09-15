@@ -23,8 +23,8 @@ define(function(Socket) {
          * @param url {string}
          * @param options {object} {}
          */
-        init: function (url) {
-            this.socket = new WebSocket(url, options);
+        init: function (url, options) {
+            this.socket = new WebSocket(url);
             this.onmessage = $.proxy(this.message, this);
             this.onclose = $.proxy(this.close, this);
             this.onopen = $.proxy(this.open, this);
