@@ -1,6 +1,0 @@
-{"level":"info","message":"{\"session\":null,\"connect\":0.24651839188300073,\"command\":\"connect\",\"params\":\"\"}","timestamp":"2014-09-08T13:11:30.414Z"}
-{"level":"info","message":"{\"session\":\"123\",\"connect\":0.6388713247142732,\"command\":\"connect\",\"params\":\"\"}","timestamp":"2014-09-08T13:11:32.381Z"}
-{"level":"info","message":"{\"session\":\"123\",\"connect\":0.15667222789488733,\"command\":\"connect\",\"params\":\"\"}","timestamp":"2014-09-08T13:11:37.877Z"}
-{"level":"info","message":"{\"session\":\"123\",\"connect\":0.6535243082325906,\"command\":\"connect\",\"params\":\"\"}","timestamp":"2014-09-08T13:11:40.992Z"}
-{"level":"info","message":"{\"session\":\"123\",\"connect\":0.6388713247142732,\"command\":\"send\",\"params\":\"123\"}","timestamp":"2014-09-08T13:12:06.719Z"}
-{"level":"info","message":"{\"session\":\"123\",\"connect\":0.15667222789488733,\"command\":\"send\",\"params\":\"456\"}","timestamp":"2014-09-08T13:12:18.745Z"}

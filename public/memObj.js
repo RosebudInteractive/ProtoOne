@@ -23,6 +23,7 @@ define(
 
 				// TODO создать коллекции 
 
+				/* перенесли в прото
 				if (!parent.obj) {	// корневой объект
 					this._db = parent.db;
 					this._db._addRoot(this);					
@@ -32,6 +33,7 @@ define(
 					this._parent = parent.obj;
 					this._col._add(this);
 				}
+				*/
 
 				
 				
@@ -48,6 +50,14 @@ define(
 				var i=this._objType._fieldsTable[field].cidx;
 				//this._objType.getCol("fields").getIdxByName(field);
 				return this._fields[i];
+			},
+			
+			set: function(field,value) {
+				var i=this._objType._fieldsTable[field].cidx;
+				var oldValue = this._fields[i];
+				this._fields[i] = value;
+				if (this.getLog().getActive()) 
+					this.getLog()._objModif({"property":field,"oldValue":oldValue,"newValue":value, "target":this});
 			}
 			
 			
