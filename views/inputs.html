@@ -34,15 +34,15 @@
                         for(var i in data.values) {
                             var controlSett = false;
                             if (data.action == 'init' || oldValues[i] == $('#'+i).val()){  // проверяем не изменились ли значения в контролах
+                                controlSett = $('#'+i).val();
                                 $('#'+i).val(data.values[i]); // меняем в контролах
-                                controlSett = true;
                             }
                             oldValues[i] = data.values[i];
 
                             if (!controlSett)
                                 console.log(i+' --> '+data.values[i]);
                             else
-                                console.log(i+' --> '+data.values[i]+' --> '+$('#'+i).val());
+                                console.log(i+' --> '+data.values[i]+' --> '+controlSett);
                         }
 
                         // если изменены поля вычисляемого поля
