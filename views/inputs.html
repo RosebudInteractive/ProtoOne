@@ -9,6 +9,7 @@
     <script>
 
         var setTimer = null;
+        var sendValues = null;
 
         $(function(){
 
@@ -68,7 +69,7 @@
             };
 
             // Отправка изменений на сервер
-            function sendValues(){
+            sendValues = function (){
                 var values = {};
                 var inputs = $('input.edited');
                 var changed = false;
@@ -117,9 +118,12 @@
                     clearInterval(interval);
                 if (intervalView)
                     clearInterval(intervalView);
-                interval = setInterval(sendValues, value);
+
+                if (value != 0) {
+                    interval = setInterval(sendValues, value);
+                    intervalView = setInterval(viewInterval, 200);
+                }
                 intervalValue = value;
-                intervalView = setInterval(viewInterval, 200);
                 $('#curr_timer').html(value);
             };
             function viewInterval(){
@@ -131,8 +135,9 @@
             }
 
             // устанока таймера c интервалом 1000мс по умолчанию
-            setTimer(1000);
-            $('#timer_sett').val(1000)
+            setTimer(0);
+            $('#timer_sett').val(0);
+            $('#time_left').html(0);
 
             // текущий id сессии
             $('#curr_id').html($.url('?sid'))
@@ -158,7 +163,7 @@
 1+2 <input id="i1i2" class="edited"> <br>
 
 <h2>Настройки</h2>
-Таймер текущий: <span id="curr_timer"></span> <input id="timer_sett" value="1000" style="width:50px">мс <input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());"><br>
+Таймер текущий: <span id="curr_timer"></span> <input id="timer_sett" value="1000" style="width:50px">мс <input type="button" value="Установить" onclick="setTimer($('#timer_sett').val());"> <input type="button" value="Отправить значения" onclick="sendValues();"><br>
 ID сессии: <span id="curr_id"></span><br>
 ID коннекта: <span id="curr_conn"></span><br>
 Таймер: <span id="time_left"></span>мс<br>
