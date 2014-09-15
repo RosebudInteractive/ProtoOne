@@ -128,8 +128,12 @@ webSocketServer.on('connection', function(ws) {
                     if (session){
                         var connects = session.getConnects();
                         for(var j in connects)
-                            connects[j].getConnection().send(JSON.stringify({error:null, action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId, msgId:data.msgId}));
+                            connects[j].getConnection().send(JSON.stringify({action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId, msgId:data.msgId}));
                     }
+                    break;
+                default:
+                    if (typeof data.action == 'function')
+                        data.action(data.params);
                     break;
             }
         },
