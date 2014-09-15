@@ -65,7 +65,8 @@ define(function(Socket) {
          */
         send:  function (obj, callback) {
             var msgId = ++this.msgId;
-            obj['msgId'] = msgId; // добавляем в объект отправки серверу msgId
+            if (!obj['msgId'])// добавляем в объект отправки серверу msgId
+                obj['msgId'] = msgId;
             this.messages[msgId] = {callback:callback, time:Date.now()}; // сохраняем колбек
             this.socket.send(JSON.stringify(obj));
         },

@@ -80,7 +80,6 @@ webSocketServer.on('connection', function(ws) {
     var socket = new Socket(ws, {
         side: 'server',
         message: function(data) {
-            console.log(data);
             switch (data.action) {
                 case 'connect':
                     // сессионный номер
@@ -98,11 +97,11 @@ webSocketServer.on('connection', function(ws) {
                     sessions[sessionID].addConnect(conn);
 
                     // отправляем клиенту номер коннекта
-                    ws.send(JSON.stringify({action:'connect', connId:connId, msgId:data.msgId}));
+                    socket.send({action:'connect', connId:connId, msgId:data.msgId});
                     console.log("новое соединение: " + sessionID);
                     break;
                 case 'init':
-                    ws.send(JSON.stringify({error:null, action:'init', values:inputValues, connId:connId, msgId:data.msgId}));
+                    socket.send({action:'init', values:inputValues, connId:connId, msgId:data.msgId});
                     break;
                 case 'changed':
                     // Если oldValue ХОТЯ БЫ
@@ -110,7 +109,7 @@ webSocketServer.on('connection', function(ws) {
                     // он не применяет это и не рассылает, а отвечает клиенту ошибкой
                     for(var i in data.values) {
                         if (data.values[i].oldValue != inputValues[i]){
-                            ws.send(JSON.stringify({error:'Ошибка в поле '+i, action:'error', msgId:data.msgId}));
+                            socket.send(JSON.stringify({error:'Ошибка в поле '+i, action:'error', msgId:data.msgId}));
                             return;
                         }
                     }
