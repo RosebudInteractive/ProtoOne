@@ -67,7 +67,7 @@ define(function(Socket) {
         open: function(event){
             var that = this;
             if (this.options.open)
-                this.options.open();
+                this.options.open(event);
         },
 
         /**
@@ -81,7 +81,7 @@ define(function(Socket) {
             // если есть такой ID вызываем сохраненный колбек
             if (data.msgId && this.messages[data.msgId]) {
                 if (this.messages[data.msgId].callback)
-                    this.messages[data.msgId].callback();
+                    this.messages[data.msgId].callback(data);
                 delete this.messages[data.msgId];
             }
         },
