@@ -74,6 +74,10 @@ function findSession(id){
     return null;
 }
 
+function loadTable(table) {
+    console.log('loadTable', table);
+}
+
 webSocketServer.on('connection', function(ws) {
     // id подключения
     var connId = Math.random();
@@ -97,11 +101,11 @@ webSocketServer.on('connection', function(ws) {
                     sessions[sessionID].addConnect(conn);
 
                     // отправляем клиенту номер коннекта
-                    socket.send({action:'connect', connId:connId, msgId:data.msgId});
+                    socket.send({connId:connId, msgId:data.msgId});
                     console.log("новое соединение: " + sessionID);
                     break;
                 case 'init':
-                    socket.send({action:'init', values:inputValues, connId:connId, msgId:data.msgId});
+                    socket.send({values:inputValues, connId:connId, msgId:data.msgId});
                     break;
                 case 'changed':
                     // Если oldValue ХОТЯ БЫ
@@ -109,7 +113,7 @@ webSocketServer.on('connection', function(ws) {
                     // он не применяет это и не рассылает, а отвечает клиенту ошибкой
                     for(var i in data.values) {
                         if (data.values[i].oldValue != inputValues[i]){
-                            socket.send(JSON.stringify({error:'Ошибка в поле '+i, action:'error', msgId:data.msgId}));
+                            socket.send({error:'Ошибка в поле '+i, action:'error', msgId:data.msgId});
                             return;
                         }
                     }
@@ -123,17 +127,18 @@ webSocketServer.on('connection', function(ws) {
                         }
                     }
 
-                    // отправляем изменения клиентам текущей сессии
+                    // отправляем изменения остальным клиентам текущей сессии
                     var session = findSession(data.sid);
                     if (session){
                         var connects = session.getConnects();
-                        for(var j in connects)
-                            connects[j].getConnection().send(JSON.stringify({action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId, msgId:data.msgId}));
+                        for(var j in connects) {
+                                connects[j].getConnection().send(JSON.stringify({action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId, msgId:data.msgId}));
+                        }
                     }
                     break;
-                default:
-                    if (typeof data.action == 'function')
-                        data.action(data.params);
+                default: // выполнение серверного метода socket.send({action: 'loadTable', 'params':['tableName']}, callback);
+                    var result = eval("("+data.action+"('"+data.params.join('\',\'')+"'))");
+                    socket.send({result:result, msgId:data.msgId});
                     break;
             }
         },

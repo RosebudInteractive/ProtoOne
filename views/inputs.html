@@ -32,6 +32,7 @@
                             $('#curr_id').html($.url('?sid'))
                             $('#curr_conn').html(connId);
                             socket.send({action: 'init', sid: $.url('?sid')}, showChanges);
+                            //socket.send({action: 'loadTable', params:['table 1'], sid: $.url('?sid')});
                         });
                     },
                     close:function(){
@@ -41,6 +42,9 @@
                     },
                     message: function(data){
                         switch (data.action) {
+                            case 'changed':
+                                showChanges(data);
+                                break;
                             case 'error': // ошибки
                                 console.log(data.error);
                                 break;
@@ -50,12 +54,13 @@
 
                 // сохранить и отобразить изменения
                 showChanges = function(data) {
-
                     //  если хотя бы для одного oldValue<>newValue
                     var changed = false;
-                    for(var i in data.values) {
-                        if (oldValues[i] != $('#'+i).val()) {
-                            changed = true;
+                    if (!$.isEmptyObject(oldValues)) {
+                        for(var i in data.values) {
+                            if (oldValues[i] != $('#'+i).val()) {
+                                changed = true;
+                            }
                         }
                     }
 
@@ -64,7 +69,7 @@
                         console.log(i+': oldValue:'+oldValues[i]+' newValue:'+$('#'+i).val()+' serverValue:'+data.values[i]);
                         oldValues[i] = data.values[i];
                         $('#'+i+'_old').html(data.values[i]);
-                        if (!changed || data.action=='init') {
+                        if (!changed) {
                             $('#'+i).val(data.values[i]);
                         }
                     }
@@ -100,7 +105,7 @@
                     }
 
                     if (changed)
-                        socket.send({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()}, showChanges);
+                        socket.send({action:'changed', sid: $.url('?sid'), values:values, time:Date.now()});
 
                     // обнуляем значение таймера
                     intervalValue = 0;
