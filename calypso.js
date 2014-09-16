@@ -51,8 +51,10 @@ var inputValues = {
     'i1i2':'12' // вычисляемое на клиенте
 };
 
-// WebSocket-сервер на порту 8081
-var webSocketServer = new WebSocketServer.Server({port: 8081});
+// id подключения
+var connId = 0;
+
+
 
 function findConnection(id){
     for(var i in sessions) {
@@ -74,9 +76,11 @@ function findSession(id){
     return null;
 }
 
-webSocketServer.on('connection', function(ws) {
+// WebSocket-сервер на порту 8081
+var wss = new WebSocketServer.Server({port: 8081});
+wss.on('connection', function(ws) {
     // id подключения
-    var connId = Math.random();
+    connId++;
     var socket = new Socket(ws, {
         side: 'server',
         message: function(data) {
@@ -134,10 +138,10 @@ webSocketServer.on('connection', function(ws) {
                     }
                     break;
 
-                default: // выполнение серверного метода socket.send({action: 'loadTable', 'params':['tableName']}, callback);
+               /* default: // выполнение серверного метода socket.send({action: 'loadTable', 'params':['tableName']}, callback);
                     var evalResult = eval("("+data.action+"('"+data.params.join('\',\'')+"'))");
                     result = {result:evalResult};
-                    break;
+                    break;*/
             }
 
             return result;
@@ -153,6 +157,12 @@ webSocketServer.on('connection', function(ws) {
             console.log("отключился клиент: " + connId);
         }
     });
+
+    // test server side
+    /*setTimeout(function(){
+        socket.send({action:'test', type:'method', value:10}, function(ddd){console.log(ddd)});
+    }, 5000);*/
+
 });
 
 // запускаем http сервер

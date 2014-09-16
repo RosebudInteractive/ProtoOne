@@ -42,7 +42,11 @@
                     message: function(data){
                         var result = {};
                         switch (data.action) {
-                            case 'changed':
+                            case 'test':
+                                result = {value:data.value*data.value};
+                                console.log(result);
+                                break;
+                           case 'changed':
                                 showChanges(data);
                                 break;
                             case 'error': // ошибки

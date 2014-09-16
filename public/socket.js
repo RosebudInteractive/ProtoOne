@@ -91,6 +91,7 @@ define(function(Socket) {
             if (this.options.message) {
                 // выполняем прикладной код
                 var result = this.options.message(data);
+
                 // если требуется возврат результата
                 if (data.type == 'method') {
                     result.msgId = data.msgId;
@@ -100,9 +101,10 @@ define(function(Socket) {
 
             // если есть такой ID вызываем сохраненный колбек
             if (data.msgId && this.messages[data.msgId]) {
-                if (this.messages[data.msgId].callback)
-                    this.messages[data.msgId].callback(data);
+                var msg = this.messages[data.msgId];
                 delete this.messages[data.msgId];
+                if (msg.callback)
+                    msg.callback(data);
             }
         },
 
