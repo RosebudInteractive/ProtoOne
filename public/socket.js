@@ -35,12 +35,12 @@ define(function(Socket) {
 
             if (this.options.side == 'client') {
                 this.socket = new WebSocket(url);
-                this.socket.onmessage = function() { that.message.apply(that, arguments); };
+                this.socket.onmessage = function() { that.receive.apply(that, arguments); };
                 this.socket.onclose = function() { that.close.apply(that, arguments); };
                 this.socket.onopen = function() { that.open.apply(that, arguments); };
             } else {
                 this.socket = url;
-                this.socket.on('message', function() { that.message.apply(that, arguments);});
+                this.socket.on('message', function() { that.receive.apply(that, arguments);});
                 this.socket.on('close', function() { that.close.apply(that, arguments);});
                 this.socket.on('open', function() { that.open.apply(that, arguments); });
             }
@@ -65,8 +65,8 @@ define(function(Socket) {
          */
         send:  function (obj, callback) {
             var msgId = ++this.msgId;
-            if (!obj['msgId'])// добавляем в объект отправки серверу msgId
-                obj['msgId'] = msgId;
+            if (!obj.msgId)// добавляем в объект отправки серверу msgId
+                obj.msgId = msgId;
             this.messages[msgId] = {callback:callback, time:Date.now()}; // сохраняем колбек
             this.socket.send(JSON.stringify(obj));
         },
@@ -84,10 +84,20 @@ define(function(Socket) {
          * Вызывается по приходу сообщений от сервера
          * @param event
          */
-        message: function(event){
+        receive: function(event){
             var data = JSON.parse(this.options.side == 'client' ? event.data : event);
-            if (this.options.message)
-                this.options.message(data);
+
+            // обработчик
+            if (this.options.message) {
+                // выполняем прикладной код
+                var result = this.options.message(data);
+                // если требуется возврат результата
+                if (data.type == 'method') {
+                    result.msgId = data.msgId;
+                    this.send(result);
+                }
+            }
+
             // если есть такой ID вызываем сохраненный колбек
             if (data.msgId && this.messages[data.msgId]) {
                 if (this.messages[data.msgId].callback)
@@ -95,6 +105,7 @@ define(function(Socket) {
                 delete this.messages[data.msgId];
             }
         },
+
 
         /**
          * Вызывается при закрытии соединения

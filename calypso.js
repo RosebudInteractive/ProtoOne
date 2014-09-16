@@ -48,7 +48,7 @@ var inputValues = {
     'i8':'8',
     'i9':'9',
     'i10':'10',
-    'i1i2':'' // вычисляемое на клиенте
+    'i1i2':'12' // вычисляемое на клиенте
 };
 
 // WebSocket-сервер на порту 8081
@@ -74,16 +74,16 @@ function findSession(id){
     return null;
 }
 
-function loadTable(table) {
-    console.log('loadTable', table);
-}
-
 webSocketServer.on('connection', function(ws) {
     // id подключения
     var connId = Math.random();
     var socket = new Socket(ws, {
         side: 'server',
         message: function(data) {
+
+            // результат обработки возвратится клиенту
+            var result = {};
+
             switch (data.action) {
                 case 'connect':
                     // сессионный номер
@@ -92,28 +92,26 @@ webSocketServer.on('connection', function(ws) {
                         console.log('не указан sid');
                         break;
                     }
-
                     // запоминаем клиента подключенного
                     var conn = new Connect(connId, ws,  {userAgent: data.agent, stateReady:1});
-                    if (!sessions[sessionID]) {
+                    if (!sessions[sessionID])
                         sessions[sessionID] = new Session(sessionID);
-                    }
                     sessions[sessionID].addConnect(conn);
-
-                    // отправляем клиенту номер коннекта
-                    socket.send({connId:connId, msgId:data.msgId});
                     console.log("новое соединение: " + sessionID);
+                    result =  {connId:connId};
                     break;
-                case 'init':
-                    socket.send({values:inputValues, connId:connId, msgId:data.msgId});
+
+                case 'init': // инициализационные данные
+                    result = {values:inputValues, connId:connId};
                     break;
+
                 case 'changed':
                     // Если oldValue ХОТЯ БЫ
                     // одного из полей не равно значениям тех полей что заполнены сервером,
                     // он не применяет это и не рассылает, а отвечает клиенту ошибкой
                     for(var i in data.values) {
                         if (data.values[i].oldValue != inputValues[i]){
-                            socket.send({error:'Ошибка в поле '+i, action:'error', msgId:data.msgId});
+                            result = {error:'Ошибка в поле '+i, action:'error'};
                             return;
                         }
                     }
@@ -127,20 +125,22 @@ webSocketServer.on('connection', function(ws) {
                         }
                     }
 
-                    // отправляем изменения остальным клиентам текущей сессии
+                    // отправляем изменения клиентам текущей сессии
                     var session = findSession(data.sid);
                     if (session){
                         var connects = session.getConnects();
-                        for(var j in connects) {
-                                connects[j].getConnection().send(JSON.stringify({action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId, msgId:data.msgId}));
-                        }
+                        for(var j in connects)
+                            connects[j].getConnection().send(JSON.stringify({action:'changed', values:values, time:Date.now(), timedelta:Date.now()-data.time, connId:connId}));
                     }
                     break;
+
                 default: // выполнение серверного метода socket.send({action: 'loadTable', 'params':['tableName']}, callback);
-                    var result = eval("("+data.action+"('"+data.params.join('\',\'')+"'))");
-                    socket.send({result:result, msgId:data.msgId});
+                    var evalResult = eval("("+data.action+"('"+data.params.join('\',\'')+"'))");
+                    result = {result:evalResult};
                     break;
             }
+
+            return result;
         },
         close: function() {
             for(var i in sessions) {
