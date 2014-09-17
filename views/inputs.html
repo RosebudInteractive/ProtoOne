@@ -39,7 +39,7 @@
                             clearInterval(interval);
                         console.log('socket closed');
                     },
-                    message: function(data){
+                    router: function(data){
                         var result = {};
                         switch (data.action) {
                             case 'test':

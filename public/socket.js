@@ -30,7 +30,7 @@ define(function(Socket) {
                 side: options.side?options.side:'client', // создаем объект для сервера или клиента
                 open: options.open?options.open:null,   // вызвать метод при открытии сокета
                 close: options.close?options.close:null,// вызвать метод при закрытии сокета
-                message: options.message?options.message:null // вызвать метод при получении сообщения от сервера
+                router: options.router?options.router:null // вызвать метод при получении сообщения от сервера
             };
 
             if (this.options.side == 'client') {
@@ -64,7 +64,7 @@ define(function(Socket) {
          * @param callback
          */
         send:  function (obj, callback) {
-            var msgId = ++this.msgId;
+            var msgId = this.options.side == 'client' ? ++this.msgId : --this.msgId;
             if (!obj.msgId)// добавляем в объект отправки серверу msgId
                 obj.msgId = msgId;
             this.messages[msgId] = {callback:callback, time:Date.now()}; // сохраняем колбек
@@ -81,16 +81,16 @@ define(function(Socket) {
         },
 
         /**
-         * Вызывается по приходу сообщений от сервера
+         * Вызывается по приходу сообщений
          * @param event
          */
         receive: function(event){
             var data = JSON.parse(this.options.side == 'client' ? event.data : event);
 
             // обработчик
-            if (this.options.message) {
-                // выполняем прикладной код
-                var result = this.options.message(data);
+            if (this.options.router) {
+                // вызов роутера
+                var result = this.options.router(data);
 
                 // если требуется возврат результата
                 if (data.type == 'method') {
