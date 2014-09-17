@@ -5,23 +5,25 @@
 
 define(
 	["./memCol", "./memObj"],
-	function(MemCollection,MemObject) {
+	function(MemCollection,MemObj) {
 		var MemDataBase = Class.extend({
 
 			// Добавить корневой объект в БД
 			_addRoot: function(obj,mode) {
 				var root = {};
 				root.obj = obj;
-				root.mode = mode; 
+				root.mode = mode;
+				root.subscribers = [];	// подписчики корневых объектов
 				this.pvt.robjs.push(root);
 			},
 		
 			init: function(controller, init){
 				var pvt = this.pvt = {};
 				pvt.name = init.name;
-				pvt.robjs = [];	// корневые объекты базы данных
+				pvt.robjs = [];				// корневые объекты базы данных
 				pvt.log = [];
 				pvt.$idCnt = 0;
+				pvt.subscribers = {}; 		// все базы-подписчики
 								
 				if ("master" in init)
 					pvt.masterDBGuid = init.master;
@@ -30,6 +32,21 @@ define(
 
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
 				pvt.controller._attachDataBase(this);				
+			},
+			
+			// Стать подписчиком базы данных
+			subscribeDB: function(subProxy) {
+				this.pvt.subscribers[subProxy.guid] = subProxy;
+				var rootDelta = {};
+				// TODO сгенерировать дельту со списком корневых объектов rootDelta и вернуть подписчику
+				return rootDelta;
+			},
+			
+			// Стать подписчиком корневого объекта
+			subscribeRoot: function(subProxy, rootGuid) {
+				var obj = {};
+				// TODO подписаться на корневой объект и вернуть его
+				return obj;
 			},
 			
 			// вернуть ссылку на контроллер базы данных
@@ -58,10 +75,10 @@ define(
 				return this.pvt.$idCnt++;
 			},
 			
-			// добавить новый объект в корень
-			newRootObj: function(obj) {
+			// добавить новый корневой объект в мастер-базу
+			newRootObj: function(objType,flds) {
 				if (this.isMaster()) {
-					
+					var obj = new MemObj( objType,{"db":this, "mode":"RW"},flds);
 					return true;
 				}
 				else	

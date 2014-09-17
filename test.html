@@ -90,7 +90,8 @@
 				myMetaControl._bldElemTable(); // temp
 				myMetaButton._bldElemTable();
 				
-				var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				
 				myRootButton.set("Caption","Cancel");
 				
