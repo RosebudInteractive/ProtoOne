@@ -28,10 +28,24 @@ app.get('/inputs', function(req, res){
     res.render('inputs.html');
 });
 
+// апдейт
+app.get("/update", function(req, res){
+    var shell = require('shelljs');
+    res.write('$ forever stop calypso.js<br>');
+    res.write(shell.exec('forever stop calypso.js').output);
+    if (exec('git commit -am "Auto-commit"').code !== 0) {
+        echo('Error: Git commit failed');
+        exit(1);
+    }
+    res.end();
+});
+
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 app.use("/docs", express.static(__dirname + '/docs'));
 app.use("/logs", express.static(__dirname + '/logs'));
+
+
 
 // сохраненные сессии
 var sessions = {};
