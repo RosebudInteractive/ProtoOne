@@ -36,6 +36,8 @@ app.get("/update", function(req, res){
     res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
     res.write('$ git pull<br>');
     res.write(shell.exec('git pull').output+'<br><br>');
+    res.write('$ jsdoc public -r -d public/docs<br>');
+    res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
     res.write('$ forever restart calypso.js<br>');
     res.write(shell.exec('forever restart calypso.js').output+'<br><br>');
     res.end();
