@@ -33,13 +33,11 @@ app.get("/update", function(req, res){
     var shell = require('shelljs');
     res.writeHead(200,{"Content-Type" : "text/html"});
     res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
-    res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br>');
-    res.write('$ forever stop calypso.js<br>');
-    res.write(shell.exec('forever stop calypso.js').output+'<br>');
+    res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
     res.write('$ git pull<br>');
-    res.write(shell.exec('git pull').output+'<br>');
-    res.write('$ forever start calypso.js<br>');
-    res.write(shell.exec('forever start calypso.js').output+'<br>');
+    res.write(shell.exec('git pull').output+'<br><br>');
+    res.write('$ forever restart calypso.js<br>');
+    res.write(shell.exec('forever restart calypso.js').output+'<br><br>');
     res.end();
 });
 
