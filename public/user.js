@@ -9,10 +9,10 @@ if (typeof define !== 'function') {
  */
 define(function(User) {
 
-    var User = Class.extend({
+    var User = Class.extend(/** @lends module:User.User.prototype */{
         /**
          * Инициализация
-         * @alias module:User
+         * @constructs
          * @param {string} name Имя пользователя
          */
         init: function(name){

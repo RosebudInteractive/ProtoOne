@@ -7,15 +7,13 @@ if (typeof define !== 'function') {
  * Модуль подключений
  * @module Connect
  */
-define(function(Connect) {
+define(function() {
 
-    var Connect = Class.extend({
-
+    var Connect = Class.extend(/** @lends module:Connect.Connect.prototype */{
 
         /**
          * Инициализация объекта
-         * @constructor
-         * @alias module:Connect
+         * @constructs
          * @param id {string} ID коннекта
          * @param ws {object} Объект подключения
          * @param params {object} Параметры подлкючения

@@ -9,13 +9,12 @@ if (typeof define !== 'function') {
  */
 define(function(Session) {
 
-   
-    var Session = Class.extend({
+
+    var Session = Class.extend(/** @lends module:Session.Session.prototype */{
 
         /**
          * Инициализация объекта
-         * @constructor
-         * @alias module:Session
+         * @constructs
          * @param id {string} ID сессии
          */
         init: function(id) {

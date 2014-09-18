@@ -7,14 +7,13 @@ if (typeof define !== 'function') {
  * Модуль Логирования
  * @module Logger
  */
-define(function(Logger) {
+define(function() {
 
-    var Logger = Class.extend({
+    var Logger = Class.extend(/** @lends module:Logger.Logger.prototype */{
 
         /**
          * Инициализация объекта
-         * @constructor
-         * @alias module:Logger
+         * @constructs
          */
         init: function() {
             this.logs = [];

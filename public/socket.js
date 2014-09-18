@@ -9,14 +9,12 @@ if (typeof define !== 'function') {
  * var socket = new Socket(url, {open: function(event){}, close:function(event){}, message: function(data){}});
  * @module Socket
  */
-define(function(Socket) {
+define(function() {
 
-    var Socket = Class.extend({
-
+    var Socket = Class.extend(/** @lends module:Socket.Socket.prototype */{
         /**
          * Инициализация объекта
-         * @constructor
-         * @alias module:Socket
+         * @constructs
          * @param url {string} url=для клиента, ws=для сервера
          * @param options {object} {}
          */
@@ -49,6 +47,7 @@ define(function(Socket) {
 
         /**
          * Проверка на поддержку WebSocket в клиенте
+         * @alias Soket:Socket.isEnabled
          * @returns {boolean}
          */
         isEnabled: function () {
