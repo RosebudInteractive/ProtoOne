@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * Модуль User
  * @module User
  */
-define(function(User) {
+define(function() {
 
     var User = Class.extend(/** @lends module:User.User.prototype */{
         /**

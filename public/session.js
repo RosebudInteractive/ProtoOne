@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * Модуль Сессий
  * @module Session
  */
-define(function(Session) {
+define(function() {
 
 
     var Session = Class.extend(/** @lends module:Session.Session.prototype */{
