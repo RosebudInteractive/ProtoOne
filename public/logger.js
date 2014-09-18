@@ -9,9 +9,6 @@ if (typeof define !== 'function') {
  */
 define(function(Logger) {
 
-    /**
-     * @class Logger
-     */
     var Logger = Class.extend({
 
         /**

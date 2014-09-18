@@ -3,16 +3,16 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 
+/**
+ * Модуль User
+ * @module User
+ */
 define(function(User) {
-    /**
-     * User class
-     * Модуль пользователей
-     * @exports User
-     */
+
     var User = Class.extend({
         /**
          * Инициализация
-         * @class User
+         * @alias module:User
          * @param {string} name Имя пользователя
          */
         init: function(name){

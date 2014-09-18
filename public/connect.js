@@ -9,9 +9,6 @@ if (typeof define !== 'function') {
  */
 define(function(Connect) {
 
-    /**
-     * @class Connect
-     */
     var Connect = Class.extend({
 
 

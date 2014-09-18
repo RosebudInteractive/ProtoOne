@@ -11,9 +11,6 @@ if (typeof define !== 'function') {
  */
 define(function(Socket) {
 
-    /**
-     * @class Socket
-     */
     var Socket = Class.extend({
 
         /**

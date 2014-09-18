@@ -9,9 +9,7 @@ if (typeof define !== 'function') {
  */
 define(function(Session) {
 
-    /**
-     * @class Session
-     */
+   
     var Session = Class.extend({
 
         /**
