@@ -16,7 +16,7 @@ define(
 				root.subscribers = [];	// подписчики корневых объектов
 				this.pvt.robjs.push(root);
 			},
-		
+
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
 			// params.local - true, тогда мастер-база локальная и masterConnect не передается
 			// params.masterGuid - гуид мастер-базы
@@ -37,6 +37,7 @@ define(
 						else {
 							pvt.masterGuid = params.masterGuid;
 							pvt.masterConnection = params.masterConnection;
+                            this.setGuid(controller.guid());
 						}
 					}
 				else
@@ -109,9 +110,20 @@ define(
 			applyDeltas:function(data) {
 				
 			},
-						
 
-		});
+            // запрос guid
+            getGuid: function() {
+                return this.guid;
+            },
+
+            // установить guid
+            setGuid: function(guid) {
+                this.guid = guid;
+            }
+
+
+
+        });
 		return MemDataBase;
 	}
 );
