@@ -76,7 +76,7 @@
             function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
 			
 				var dbc = new MemDBController();
-                var db = dbc.newDataBase({name:"PROTO", master : "1"}); // new MDb(controller,{name:"PROTO", master : "1"});
+                var db = dbc.newDataBase({name:"PROTO", kind : "master"}); // new MDb(controller,{name:"PROTO", master : "1"});
 				//var myCol = myMemDb.newCol();
 				var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
 				var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
@@ -91,7 +91,7 @@
 				myMetaButton._bldElemTable();
 				
 				//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-				db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				
 				myRootButton.set("Caption","Cancel");
 				

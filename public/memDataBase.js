@@ -17,28 +17,41 @@ define(
 				this.pvt.robjs.push(root);
 			},
 		
-			init: function(controller, init){
+			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
+			// params.local - true, тогда мастер-база локальная и masterConnect не передается
+			// params.masterGuid - гуид мастер-базы
+			// params.masterConnection - коннект к серверу с мастер-базой
+			init: function(controller, params){
 				var pvt = this.pvt = {};
-				pvt.name = init.name;
+				pvt.name = params.name;
 				pvt.robjs = [];				// корневые объекты базы данных
 				pvt.log = [];
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
 								
-				if ("master" in init)
-					pvt.masterDBGuid = init.master;
+				if (params.kind != "master") {
+						pvt.masterGuid = params.masterGuid;
+						if (params.local) {
+							// TODO найти базу по гуиду через контроллер
+						}
+						else {
+							pvt.masterGuid = params.masterGuid;
+							pvt.masterConnection = params.masterConnection;
+						}
+					}
 				else
-					pvt.masterDBGuid = undefined;				
+					pvt.masterGuid = undefined;				
 
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
 				pvt.controller._attachDataBase(this);				
 			},
 			
 			// Стать подписчиком базы данных
-			subscribeDB: function(subProxy) {
+			subscribe: function(subProxy) {
 				this.pvt.subscribers[subProxy.guid] = subProxy;
 				var rootDelta = {};
 				// TODO сгенерировать дельту со списком корневых объектов rootDelta и вернуть подписчику
+				// А вообще-то наверное не надо - пусть запрашивает их явно если нужно
 				return rootDelta;
 			},
 			
@@ -79,10 +92,10 @@ define(
 			newRootObj: function(objType,flds) {
 				if (this.isMaster()) {
 					var obj = new MemObj( objType,{"db":this, "mode":"RW"},flds);
-					return true;
+					return obj;
 				}
 				else	
-					return false;
+					return null;
 			},
 			
 			// Сгенерировать "дельты" по логу изменений
