@@ -1,3 +1,5 @@
+
+// создаем БД
 var MemDBController = require('./public/memDBController');
 var MDb = require('./public/memDataBase');
 var MemMetaObj = require('./public/memMetaObj');
@@ -22,5 +24,48 @@ myMetaButton._bldElemTable();
 
 //var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-
 myRootButton.set("Caption","Cancel");
+
+// ----------------------------------------------------------------------------------------------------------------------
+
+var http = require('http');
+var express = require('express');
+var app = express();
+var WebSocketServer = new require('ws');
+var Socket = require('./public/socket');
+
+// обработчик файлов html будет шаблонизатор ejs
+app.engine('html', require('ejs').renderFile);
+
+// обработка /test
+app.get('/test', function(req, res){
+    res.render('test.html');
+});
+
+// статические данные и модули для подгрузки на клиент
+app.use("/public", express.static(__dirname + '/public'));
+
+// WebSocket-сервер на порту 8081
+var connId = 0;
+var wss = new WebSocketServer.Server({port: 8081});
+wss.on('connection', function(ws) {
+    // id подключения
+    connId++;
+    var socket = new Socket(ws, {
+        side: 'server',
+        router: function(data) {
+            console.log('сообщение с клиента:', data);
+            var result = {};
+            switch (data.action) {
+                case 'subscribe':
+                    result = dbc.onSubscribe(ws, data.guid);
+                    break;
+            }
+            return result;
+        }
+    });
+});
+
+// запускаем http сервер
+http.createServer(app).listen(1325);
+console.log('Сервер запущен на http://127.0.0.1:1325/');

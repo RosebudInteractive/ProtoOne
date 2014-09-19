@@ -38,7 +38,8 @@ define(
 							pvt.masterGuid = params.masterGuid;
 							pvt.masterConnection = params.masterConnection;
                             this.setGuid(controller.guid());
-						}
+                            controller.subscribeTo(this, params.masterConnection, this.getGuid());
+                        }
 					}
 				else
 					pvt.masterGuid = undefined;				

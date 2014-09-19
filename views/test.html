@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../public/class-extend.js"></script>
+    <script data-main="./public/main.js" src="../public/require.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../public/url.js"></script>
+
+    <script>
+
+        var socket = null;
+
+        // когда документ загружен
+        $(function(){
+            require(
+                ['socket'],
+                function( Socket){
+                    socket = new Socket("ws://"+url('hostname')+":8081", {
+                        router: function(data){
+                            console.log('сообщение с сервера:', data);
+                            var result = {};
+                            switch (data.action) {
+                                case 'error': // ошибки
+                                    console.log(data.error);
+                                    break;
+                            }
+                            return result;
+                        }
+                    });
+                }
+            );
+        });
+
+      function createController(){
+		require(
+            ['../public/memDBController', 'memDataBase'],
+            function( MemDBController, MemDataBase){
+				var dbc = new MemDBController();
+                var db = dbc.newDataBase({name:"PROTO2", kind : "slave", masterConnection: socket});
+				console.log(dbc);
+				console.log(db);
+            }
+        );
+      }
+		
+
+    </script>
+</head>
+<body>
+
+<input type="button" value="Создать контроллер и бд" onclick="createController();">
+</body>
+</html>
