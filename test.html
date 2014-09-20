@@ -76,28 +76,47 @@
             function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
 			
 				var dbc = new MemDBController();
-                var db = dbc.newDataBase({name:"PROTO", kind : "master"}); // new MDb(controller,{name:"PROTO", master : "1"});
-				//var myCol = myMemDb.newCol();
+                var db = dbc.newDataBase({name:"Master", kind : "master"}); 
+				var dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: true, masterGuid : db.getGuid()}); 
+				
+				//var myMetaField = new MemMetaField(db);
+				//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
+								
 				var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
 				var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
 				var flds = myMetaControl.getCol("fields");
 				var cls = myMetaControl.getCol("cols");
 				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
 				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
-				
 				new MemMetaObjFields({"obj": myMetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
-				
 				myMetaControl._bldElemTable(); // temp
 				myMetaButton._bldElemTable();
+
+				// то же самое для slave				
+				var my2MetaControl = new MemMetaObj(dbsl,{"typeName": "Control", "parentClass":null});
+				var my2MetaButton = new MemMetaObj(dbsl,{"typeName": "Button", "parentClass":my2MetaControl});
+				var flds2 = my2MetaControl.getCol("fields");
+				var cls2 = my2MetaControl.getCol("cols");
+				new MemMetaObjFields({"obj": my2MetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
+				new MemMetaObjFields({"obj": my2MetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
+				new MemMetaObjFields({"obj": my2MetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
+				my2MetaControl._bldElemTable(); // temp
+				my2MetaButton._bldElemTable();
+
 				
 				//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				var lid1 = myRootButton.getLid();
 				
 				myRootButton.set("Caption","Cancel");
 				
 				var delta = myRootButton.getLog().genDelta();
 				
-				console.log(delta);
+				var obj1=dbsl.subscribeRoot(lid1);
+				
+				//dbsl.subscribe(db.getGuid());
+				
+				console.log(obj1);
             }
         );
 		

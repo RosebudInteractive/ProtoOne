@@ -33,11 +33,26 @@ define(
 				return  new MemDataBase(this,init);
 			},
 
-            subscribeTo: function(db, connect, guid) {
-                connect.send({action:'subscribe', guid:guid});
+			// подписать базу данных на ее мастер (только из инит)
+            _subscribe: function(db) {
+                db.getConnection().send({action:'subscribe', guid:db.getGuid()});
+				// TODO обработать асинхронность
             },
+			
+			
+			// подписать на рутовый элемент
+			subscribeRoot: function(db,rootLid) {
+				if (db.getMaster()) {
+					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootLid);
+					db.importRoot(newObj);
+				}
+				else {
+					db.getConnection().send({action:'subscribeRoot', guid:db.getGuid(), lid:rootLid});
+					// TODO обработать асинхронность
+				}
+			},
 
-            getDbByGiud: function(guid){
+            getDbByGuid: function(guid){
 
                 // поиск по гуиду
                 for(var i, len=this.dbCollection.length; i<len; i++)
@@ -52,7 +67,7 @@ define(
             },
 
             onSubscribe: function(connect, guid) {
-                var db = this.getDbByGiud(guid);
+                var db = this.getDbByGuid(guid);
                 if (db)
                     db.subscribe({connect:connect, guid:guid});
             }
