@@ -33,11 +33,11 @@ define(
 				return  new MemDataBase(this,init);
 			},
 
-            subscribeTo: function(db, connect, guid) {
-                connect.send({action:'subscribe', guid:guid});
+            subscribeTo: function(db, connect) {
+                connect.send({action:'subscribe', guid:db.getGuid()});
             },
 
-            getDbByGiud: function(guid){
+            getDbByGuid: function(guid){
 
                 // поиск по гуиду
                 for(var i, len=this.dbCollection.length; i<len; i++)
@@ -52,7 +52,7 @@ define(
             },
 
             onSubscribe: function(connect, guid) {
-                var db = this.getDbByGiud(guid);
+                var db = this.getDbByGuid(guid);
                 if (db)
                     db.subscribe({connect:connect, guid:guid});
             }
