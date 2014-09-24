@@ -9,8 +9,8 @@ define(
 		var MemMetaObj = MemProtoObj.extend({
 		
 			init: function(db, flds){
-			
-				this._super(null,{ "db": db }); 
+						
+				this._super(null,{ "db": db },flds); 
 				this._fields.push(flds.typeName); // TODO проверка наличия с пустой инициализацией
 				this._fields.push(flds.parentClass);
 				
@@ -25,31 +25,21 @@ define(
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
 				this._collections.push(new MemCol("fields",this));
 				this._collections.push(new MemCol("cols",this));
-				
-				//if (!parent.obj) {	// корневой объект
-				/* перенесли в прото
-				this._db = db;
-				this._db._addRoot(this);
-				*/
-
-				// запомнить родительский класс
-				/*if (flds.parentClass)
-					this._parentClass = flds.parentClass;
-				else 
-					this._parentClass = null;
-*/
-				
 			},
 			
 			// сделать таблицу элементов с учетом наследования
 			_bldElemTable: function() {
 				this._fieldsTable = {};
+				this._fieldsArr = [];
 				var n = this.countParentClass();
 				var k=0;
 				for (var i=0; i<n; i++) {
 					var c = this.getParentClass(n-i-1);
-					for (var j=0; j<c.getCol("fields").count(); j++)
-						this._fieldsTable[c.getCol("fields").get(j).get("fname")]= { "obj": c, "idx": j, "cidx":k++ };
+					for (var j=0; j<c.getCol("fields").count(); j++) {
+						var name = c.getCol("fields").get(j).get("fname");
+						this._fieldsTable[name]= { "obj": c, "idx": j, "cidx":k++ };
+						this._fieldsArr.push(name);
+					}
 				}
 			},
 			
@@ -69,7 +59,7 @@ define(
 				return this._ancestors.length;
 			},
 			
-			// получить коллекцию по имени
+			// получить коллекцию по имени ---- в МЕМОБЖ
 			getCol: function(colName) {
 				if (colName == "fields")
 					return this._collections[0]; 

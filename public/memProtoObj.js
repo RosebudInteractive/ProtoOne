@@ -14,7 +14,9 @@ define(
 				
 			// objType - ссылка на объект-тип
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
-			init: function(objType, parent){
+			init: function(objType, parent,flds){
+			
+			
 				this._objType = objType;
 				this._fields = [];				// значения полей объекта
 				this._collections = [];			// массив дочерних коллекций
@@ -22,6 +24,10 @@ define(
 				
 				if (!parent.obj) {	// корневой объект
 					this._db = parent.db;
+					if (flds && (flds.$sys) && (flds.$sys.lid))
+						this.$id = flds.$sys.lid;
+					else
+						this.$id = this.getDB().getNewLid();		// локальный идентификатор
 					this._db._addRoot(this,parent.mode);
 					this._log = new MemObjLog();	// создать лог записи изменений
 					if (parent.mode == "RW")
@@ -30,11 +36,12 @@ define(
 				else { 				// объект в коллекции (не корневой)
 					this._col = parent.obj.getCol(parent.colName);
 					this._parent = parent.obj;
+					if (flds && (flds.$sys) && (flds.$sys.lid))
+						this.$id = flds.$sys.lid;
+					else
+						this.$id = this.getDB().getNewLid();		// локальный идентификатор
 					this._col._add(this);
 				}
-
-				
-				this.$id = this.getDB().getNewLid();		// локальный идентификатор
 										
 			},
 			
@@ -44,14 +51,7 @@ define(
 			addChild: function(colName,obj) {
 				
 			},
-			
-			
-			get: function(field) {
-				//this._objType.getCol(
-				//var 
-				//this._fields[i];
-			},
-			
+						
 			getDB: function() {
 				if (!this._col) return this._db;
 				else return this._col.getDB();
@@ -62,18 +62,13 @@ define(
                 return this.$id;
             },
 			
+			getObjType: function() {
+				return this._objType;
+			},
+			
 			getLog: function() {
 				return this._log; // TODO вернуть корневой лог (ссылку на корневой объект?)
 			}
-			
-			/*getCol: function(col) {
-				if (typeof col == "number")
-					return this._collections[col]; 
-				else 
-					return this._collections[this._objType.getCol(2).getObjIdx(col)];
-			},
-			*/
-			
 
 		});
 		return MemProtoObj;
