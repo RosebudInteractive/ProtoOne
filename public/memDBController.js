@@ -17,6 +17,7 @@ define(
 				this.dbCollection = [];
 			},
 			
+			// сгенерировать guid
 			guid: function () {
 			
 				function s4() {
@@ -41,13 +42,13 @@ define(
 			
 			
 			// подписать на рутовый элемент
-			subscribeRoot: function(db,rootLid) {
-				if (db.getMaster()) {
-					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootLid);
+			subscribeRoot: function(db,rootGuid) {
+				if (db.getMaster()) { // мастер-база доступна локально
+					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootGuid);
 					db.importRoot(newObj);
 				}
-				else {
-					db.getConnection().send({action:'subscribeRoot', guid:db.getGuid(), lid:rootLid});
+				else { // мастер-база доступна удаленно
+					db.getConnection().send({action:'subscribeRoot', guid:db.getGuid(), lid:rootGuid});
 					// TODO обработать асинхронность
 				}
 			},

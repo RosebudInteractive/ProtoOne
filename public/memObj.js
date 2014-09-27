@@ -14,17 +14,20 @@ define(
 				// заполнить поля по метаинформации
 				//var fcol = this._objType.getCol("fields");
 				//this._fields[fcol.count()-1]=null;
-				for (var f in flds) {
-					var i=this._objType._fieldsTable[f].cidx;
-					if (i>=0) this._fields[i] = flds[f]; // TODO проверять типы?
+				for (var f in flds.fields) {
+					if (f.substr(0,1)!="$") { // $sys пропускаем
+						var i=this.pvt.objType.pvt.fieldsTable[f].cidx;
+						if (i>=0) this.pvt.fields[i] = flds[f]; // TODO проверять типы?
+					}
 				}
+				//this.pvt.typeGuid = this.pvt.objType.getGuid();
 				// TODO создать коллекции 
 			},
 			
 			// получить коллекцию по имени
 			getChildCol: function(colName) {
-				var i=this._objType.getCol("cols").getIdxByName(colName);
-				return this._collections[i];				
+				var i=this.pvt.objType.getCol("cols").getIdxByName(colName);
+				return this.pvt.collections[i];				
 				//return this._collections[this._objType.getCol(2).getObjIdx(col)];
 			},
 			
@@ -32,30 +35,30 @@ define(
 			// получить значение поля по имени или по названию
 			get: function(field) {
 				if (typeof field == "string") { // ищем по имени
-					var i=this._objType._fieldsTable[field].cidx;
-					return this._fields[i];
+					var i=this.pvt.objType.pvt.fieldsTable[field].cidx;
+					return this.pvt.fields[i];
 				}
 				if (typeof field == "number") { // ищем по индексу
-					return this._fields[field];
+					return this.pvt.fields[field];
 				}	
 				return undefined;				
 			},
 			
 			set: function(field,value) {
-				var i=this._objType._fieldsTable[field].cidx;
-				var oldValue = this._fields[i];
-				this._fields[i] = value;
+				var i=this.pvt.objType.pvt.fieldsTable[field].cidx;
+				var oldValue = this.pvt.fields[i];
+				this.pvt.fields[i] = value;
 				if (this.getLog().getActive()) 
 					this.getLog()._objModif({"property":field,"oldValue":oldValue,"newValue":value, "target":this});
 			},
 			
 			// вернуть количество полей объекта
 			count: function() {
-				return this._fields.length;
+				return this.pvt.fields.length;
 			},
 			
 			getFieldName: function(i) {
-				return this._objType._fieldsArr[i];
+				return this.pvt.objType.pvt.fieldsArr[i];
 			}
 			
 			

@@ -11,34 +11,35 @@ define(
 			init: function(db, flds){
 						
 				this._super(null,{ "db": db },flds); 
-				this._fields.push(flds.typeName); // TODO проверка наличия с пустой инициализацией
-				this._fields.push(flds.parentClass);
+				this.pvt.fields.push(flds.typeName); // TODO проверка наличия с пустой инициализацией
+				this.pvt.fields.push(flds.parentClass);
 				
-				this._ancestors = [];
-				this._ancestors.push(this);
+				this.pvt.ancestors = [];
+				this.pvt.ancestors.push(this);
 				var parent = flds.parentClass;
 				while (parent) {
-					this._ancestors.push(parent);
+					this.pvt.ancestors.push(parent);
 					parent = parent.getParentClass();
 				}
 				
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
-				this._collections.push(new MemCol("fields",this));
-				this._collections.push(new MemCol("cols",this));
+				this.pvt.collections.push(new MemCol("fields",this));
+				this.pvt.collections.push(new MemCol("cols",this));
 			},
 			
 			// сделать таблицу элементов с учетом наследования
 			_bldElemTable: function() {
-				this._fieldsTable = {};
-				this._fieldsArr = [];
+				var pvt = this.pvt;
+				pvt.fieldsTable = {};
+				pvt.fieldsArr = [];
 				var n = this.countParentClass();
 				var k=0;
 				for (var i=0; i<n; i++) {
 					var c = this.getParentClass(n-i-1);
 					for (var j=0; j<c.getCol("fields").count(); j++) {
 						var name = c.getCol("fields").get(j).get("fname");
-						this._fieldsTable[name]= { "obj": c, "idx": j, "cidx":k++ };
-						this._fieldsArr.push(name);
+						pvt.fieldsTable[name]= { "obj": c, "idx": j, "cidx":k++ };
+						pvt.fieldsArr.push(name);
 					}
 				}
 			},
@@ -48,23 +49,23 @@ define(
 			getParentClass: function(i) {
 				var i1 = 1;
 				if (i!==undefined) i1=i;
-				if ((this._ancestors.length-1)>=i1)
-					return this._ancestors[i1];
+				if ((this.pvt.ancestors.length-1)>=i1)
+					return this.pvt.ancestors[i1];
 				else
 					return null;
 				//return this._fields[1];
 			},
 			
 			countParentClass: function() {
-				return this._ancestors.length;
+				return this.pvt.ancestors.length;
 			},
 			
 			// получить коллекцию по имени ---- в МЕМОБЖ
 			getCol: function(colName) {
 				if (colName == "fields")
-					return this._collections[0]; 
+					return this.pvt.collections[0]; 
 				if (colName == "cols")
-					return this._collections[1];
+					return this.pvt.collections[1];
 				return null;
 			},
 			

@@ -16,7 +16,7 @@ define(
 				root.subscribers = {};	// подписчики корневого объекта
 				root.master = null;		// мастер
 				this.pvt.robjs.push(root);
-				this.pvt.rcoll[root.obj.getLid()] = root;
+				this.pvt.rcoll[obj.getGuid()] = root;
 			},
 
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
@@ -56,46 +56,66 @@ define(
 			// Стать подписчиком базы данных
 			subscribe: function(subProxy) {
 				this.pvt.subscribers[subProxy.guid] = subProxy;
-				var rootDelta = {};
-				// TODO сгенерировать дельту со списком корневых объектов rootDelta и вернуть подписчику
-				// А вообще-то наверное не надо - пусть запрашивает их явно если нужно
-				return rootDelta;
 			},
 			
-			// Стать подписчиком корневого объекта с локальным ид rootLid
-			onSubscribeRoot: function(subProxy, rootLid) {
+			// Стать подписчиком корневого объекта с гуидом rootGuid
+			onSubscribeRoot: function(subProxy, rootGuid) {
+				// TODO проверить что база подписана на базу
 				var obj = null;
-				// TODO подписаться на корневой объект и вернуть его
 				if (this.pvt.robjs.length > 0) 
-					obj = this.pvt.rcoll[rootLid].obj; // ВРЕМЕННО
+					obj = this.pvt.rcoll[rootGuid].obj; // ВРЕМЕННО
 
 				if (!obj) return null;
 				
 				// добавляем подписчика
 				var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
-				this.pvt.rcoll[rootLid].subscribers[g] = subProxy;  // TODO из списка общих подписчиков
-
+				this.pvt.rcoll[rootGuid].subscribers[g] = subProxy;  // TODO из списка общих подписчиков
 				
-				// TODO выделить в отдельную функцию генерации объекта
+				return this.serialize(obj);
+				/*
 				var newObj = {};
 				newObj.$sys = {};
-				newObj.$sys.lid = obj.getLid();
-				newObj.$sys.typeLid = obj.getObjType().getLid();
+				newObj.$sys.guid = obj.getGuid();
+				newObj.$sys.typeGuid = obj.getObjType().getGuid();
 				for (var i=0; i<obj.count(); i++) 
 					newObj[obj.getFieldName(i)] = obj.get(i);		
 				
 				return newObj;
+				*/
 			},
 			
-			subscribeRoot: function(rootLid) {
-				this.pvt.controller.subscribeRoot(this,rootLid);
+			// сериализация объекта базы
+			serialize: function(obj) {
+				if (!("getDB" in) || (obj.getDB()!=this)) return null;
+				
+				var newObj = {};
+				newObj.$sys = {};
+				newObj.$sys.guid = obj.getGuid();
+				newObj.$sys.typeGuid = obj.getObjType().getGuid();
+				// поля
+				newObj.fields = {};
+				for (var i=0; i<obj.count(); i++) 
+					newObj.fields[obj.getFieldName(i)] = obj.get(i);		
+				// коллекции
+				newObj.collections = {};
+				// TODO сделать то же с коллекциями
+					
+				return newObj;				
+				
 			},
 			
-			// создать подписанный рутовый объект
+			// подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
+			// методы вызывается у подчиненной базы.
+			subscribeRoot: function(rootGuid) {
+				this.pvt.controller.subscribeRoot(this,rootGuid);
+			},
+			
+			// создать подписанный рутовый объект (временный вариант)
 			importRoot: function(flds) {
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
-				var typeObj = this.getRoot(flds.$sys.typeLid).obj;
+				var typeObj = this.getRoot(flds.$sys.typeGuid).obj;
 				var o = new MemObj( typeObj,{"db":this, "mode":"RW"},flds);
+				return o;
 			},
 			
 			// вернуть ссылку на контроллер базы данных
@@ -113,8 +133,8 @@ define(
 			},
 			
 			// вернуть корневой объект по его Lid
-			getRoot: function(lid) {
-				return this.pvt.rcoll[lid];
+			getRoot: function(guid) {
+				return this.pvt.rcoll[guid];
 			},
 			
 			// Является ли мастер базой

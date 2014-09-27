@@ -16,32 +16,34 @@ define(
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
 			init: function(objType, parent,flds){
 			
-			
-				this._objType = objType;
-				this._fields = [];				// значения полей объекта
-				this._collections = [];			// массив дочерних коллекций
-				this._log = null; 
+				var pvt = this.pvt = {}; // приватные члены
+				 
+				pvt.objType = objType;
+				pvt.fields = [];				// значения полей объекта
+				pvt.collections = [];			// массив дочерних коллекций
+				pvt.log = null; 
 				
-				if (!parent.obj) {	// корневой объект
-					this._db = parent.db;
-					if (flds && (flds.$sys) && (flds.$sys.lid))
-						this.$id = flds.$sys.lid;
-					else
-						this.$id = this.getDB().getNewLid();		// локальный идентификатор
-					this._db._addRoot(this,parent.mode);
-					this._log = new MemObjLog();	// создать лог записи изменений
+				if (!parent.obj) 	// корневой объект
+					pvt.db = parent.db;
+				else {				// объект в коллекции (не корневой)
+					pvt.col = parent.obj.getCol(parent.colName);
+					pvt.parent = parent.obj;					
+				}
+				
+				pvt.$id = this.getDB().getNewLid();		// локальный идентификатор
+				if ((flds) && (flds.$sys) && (flds.$sys.guid))	// если гуид пришел в системных полях, то используем его
+					pvt.guid = flds.$sys.guid;
+				else 											// если нет - генерируем динамически
+					pvt.guid =  this.getDB().getController().guid();  // TODO перенести в UTILS?
+				
+				if (!parent.obj) {	// корневой объект				
+					pvt.db._addRoot(this,parent.mode);
+					pvt.log = new MemObjLog();	// создать лог записи изменений
 					if (parent.mode == "RW")
-						this._log.setActive(true); // лог активен только для корневого объекта, который создан в режиме ReadWrite
+						pvt.log.setActive(true); // лог активен только для корневого объекта, который создан в режиме ReadWrite
 				}
-				else { 				// объект в коллекции (не корневой)
-					this._col = parent.obj.getCol(parent.colName);
-					this._parent = parent.obj;
-					if (flds && (flds.$sys) && (flds.$sys.lid))
-						this.$id = flds.$sys.lid;
-					else
-						this.$id = this.getDB().getNewLid();		// локальный идентификатор
-					this._col._add(this);
-				}
+				else 
+					pvt.col._add(this);
 										
 			},
 			
@@ -53,21 +55,25 @@ define(
 			},
 						
 			getDB: function() {
-				if (!this._col) return this._db;
-				else return this._col.getDB();
+				if (!this.pvt.col) return this.pvt.db;
+				else return this.pvt.col.getDB();
 			},
 			
 			// получить локальный идентификатор объекта
             getLid: function() {
-                return this.$id;
+                return this.pvt.$id;
             },
 			
+			getGuid: function() {
+				return this.pvt.guid;
+			},
+			
 			getObjType: function() {
-				return this._objType;
+				return this.pvt.objType;
 			},
 			
 			getLog: function() {
-				return this._log; // TODO вернуть корневой лог (ссылку на корневой объект?)
+				return this.pvt.log; // TODO вернуть корневой лог (ссылку на корневой объект?)
 			}
 
 		});

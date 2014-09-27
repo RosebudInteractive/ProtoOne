@@ -93,8 +93,8 @@
 				myMetaButton._bldElemTable();
 
 				// то же самое для slave				
-				var my2MetaControl = new MemMetaObj(dbsl,{"typeName": "Control", "parentClass":null});
-				var my2MetaButton = new MemMetaObj(dbsl,{"typeName": "Button", "parentClass":my2MetaControl});
+				var my2MetaControl = new MemMetaObj(dbsl,{"typeName": "Control", "parentClass":null, $sys :{guid:myMetaControl.getGuid()}});
+				var my2MetaButton = new MemMetaObj(dbsl,{"typeName": "Button", "parentClass":my2MetaControl, $sys :{guid:myMetaButton.getGuid()}});
 				var flds2 = my2MetaControl.getCol("fields");
 				var cls2 = my2MetaControl.getCol("cols");
 				new MemMetaObjFields({"obj": my2MetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
@@ -106,13 +106,13 @@
 				
 				//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-				var lid1 = myRootButton.getLid();
+				var guid1 = myRootButton.getGuid();
 				
 				myRootButton.set("Caption","Cancel");
 				
 				var delta = myRootButton.getLog().genDelta();
 				
-				var obj1=dbsl.subscribeRoot(lid1);
+				var obj1=dbsl.subscribeRoot(guid1);
 				
 				//dbsl.subscribe(db.getGuid());
 				
