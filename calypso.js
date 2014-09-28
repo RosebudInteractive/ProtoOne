@@ -47,6 +47,7 @@ app.get("/update", function(req, res){
 app.use("/public", express.static(__dirname + '/public'));
 app.use("/docs", express.static(__dirname + '/docs'));
 app.use("/logs", express.static(__dirname + '/logs'));
+app.use("/tests", express.static(__dirname + '/tests'));
 
 
 
