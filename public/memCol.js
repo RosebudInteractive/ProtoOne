@@ -14,6 +14,7 @@ define(
 				this._name = name;
 				this._obj = obj;
 				this._db = obj.getDB();
+				obj._addCol(this);
 			},
 			
 			
@@ -23,12 +24,16 @@ define(
 				this._elems.push(obj);
 				// TODO ВРЕМЕННО
 				var cname = obj.get("cname");
-				if (cname)
+				if (cname!==undefined)
 					this._elemsByName[cname]=this._elems.length-1;
 				var fname = obj.get("fname");
-				if (fname)
+				if (fname!==undefined)
 					this._elemsByName[fname]=this._elems.length-1;				
 				// ВРЕМЕННО КОНЕЦ
+			},
+			
+			getName: function() {
+				return this._name;
 			},
 			
 			// вернуть количество элементов коллекции

@@ -4,43 +4,50 @@
 }
 
 define(
-	['./memProtoObj'],
-	function(MemProtoObj) {
+	['./memProtoObj','./memCol'],
+	function(MemProtoObj,MemCol) {
 		var MemObj = MemProtoObj.extend({
 
 			init: function(objType, parent, flds){
 				this._super(objType, parent, flds);
 				
 				// заполнить поля по метаинформации
-				//var fcol = this._objType.getCol("fields");
-				//this._fields[fcol.count()-1]=null;
 				for (var f in flds.fields) {
-					if (f.substr(0,1)!="$") { // $sys пропускаем
 						var i=this.pvt.objType.pvt.fieldsTable[f].cidx;
-						if (i>=0) this.pvt.fields[i] = flds[f]; // TODO проверять типы?
-					}
+						if (i>=0) this.pvt.fields[i] = flds.fields[f]; // TODO проверять типы?
 				}
-				//this.pvt.typeGuid = this.pvt.objType.getGuid();
-				// TODO создать коллекции 
+				// создать пустые коллекции по типу
+				var ccol = objType.getCol("cols");
+				for (var i=0; i<ccol.count(); i++) {
+					new MemCol(ccol.get(i).get("cname"),this);
+				}
+				
+				this.finit();
 			},
 			
-			// получить коллекцию по имени
-			getChildCol: function(colName) {
-				var i=this.pvt.objType.getCol("cols").getIdxByName(colName);
-				return this.pvt.collections[i];				
-				//return this._collections[this._objType.getCol(2).getObjIdx(col)];
+			// получить коллекцию по имени или по индексу
+			getCol: function(col) {
+				if (typeof col == "string") {
+					var i=this.pvt.objType.getCol("cols").getIdxByName(col);
+					return this.pvt.collections[i];
+				}
+				if (typeof col == "number") 
+					return this._super(col);
+				return null;
 			},
 			
 			
 			// получить значение поля по имени или по названию
 			get: function(field) {
 				if (typeof field == "string") { // ищем по имени
+					if (this.pvt.objType.pvt.fieldsTable[field]=== undefined)
+						return undefined;
 					var i=this.pvt.objType.pvt.fieldsTable[field].cidx;
 					return this.pvt.fields[i];
 				}
-				if (typeof field == "number") { // ищем по индексу
-					return this.pvt.fields[field];
-				}	
+				if (typeof field == "number")  // ищем по индексу
+					return this._super(field);
+					
 				return undefined;				
 			},
 			
@@ -51,14 +58,21 @@ define(
 				if (this.getLog().getActive()) 
 					this.getLog()._objModif({"property":field,"oldValue":oldValue,"newValue":value, "target":this});
 			},
-			
-			// вернуть количество полей объекта
-			count: function() {
-				return this.pvt.fields.length;
-			},
-			
+						
+			// получить имя поля по индексу
 			getFieldName: function(i) {
 				return this.pvt.objType.pvt.fieldsArr[i];
+			},
+			
+			// добавить объект obj в коллекцию colName
+			addToCol: function(colName,obj) {
+				var c = this.getCol(colName);
+				if (c) {
+					c._add(obj);
+					return true;
+				}
+				else
+					return false;
 			}
 			
 			

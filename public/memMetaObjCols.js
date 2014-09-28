@@ -9,23 +9,36 @@ define(
 		var MemMetaObjCols = MemProtoObj.extend({
 		
 			init: function(parent, flds){
-			
-				this._super(null,parent); 
-				this._fields.push(flds.cname);
-				this._fields.push(flds.ctype);
+				this._super(null,{obj : parent.obj, colName : "cols" },flds ); 			
+				//this._super(null,parent); 
+				this.pvt.fields.push(flds.fields.cname);
+				this.pvt.fields.push(flds.fields.ctype);
+				this.finit();
 				
-				this._col = parent.obj.getCol(parent.colName);
-				this._parent = parent.obj;
-				this._col._add(this);
+				/*this.pvt.col = parent.obj.getCol("cols");
+				this.pvt.parent = parent.obj;
+				this.pvt.col._add(this);*/
 				
 			},
 			
-			get: function(name) {
-				if (name=="cname") return this._fields[0];
-				// TODO другие поля тоже
-			}
+			// ПОЛЯ
 			
+			get: function(field) {
+
+				if (typeof field == "string") { // ищем по имени			
+					if (field=="cname") return this.pvt.fields[0];
+					if (field=="ctype") return this.pvt.fields[1];
+				}
+				
+				if (typeof field == "number")  // ищем по индексу
+					return this._super(field);
+			},
 			
+			// получить имя поля по индексу
+			getFieldName: function(i) {
+				if (i==0) return "cname";
+				if (i==1) return "ctype";
+			},			
 			
 
 

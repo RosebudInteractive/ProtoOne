@@ -11,20 +11,25 @@ define(
 			init: function(db, flds){
 						
 				this._super(null,{ "db": db },flds); 
-				this.pvt.fields.push(flds.typeName); // TODO проверка наличия с пустой инициализацией
-				this.pvt.fields.push(flds.parentClass);
+				this.pvt.fields.push(flds.fields.typeName); // TODO проверка наличия с пустой инициализацией
+				this.pvt.fields.push(flds.fields.parentClass);
 				
 				this.pvt.ancestors = [];
 				this.pvt.ancestors.push(this);
-				var parent = flds.parentClass;
+				var parent = flds.fields.parentClass;
 				while (parent) {
 					this.pvt.ancestors.push(parent);
 					parent = parent.getParentClass();
 				}
 				
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
-				this.pvt.collections.push(new MemCol("fields",this));
-				this.pvt.collections.push(new MemCol("cols",this));
+				new MemCol("fields",this);
+				new MemCol("cols",this);
+				
+				this.finit();
+
+				//this.pvt.collections.push(new MemCol("fields",this));
+				//this.pvt.collections.push(new MemCol("cols",this));
 			},
 			
 			// сделать таблицу элементов с учетом наследования
@@ -60,12 +65,28 @@ define(
 				return this.pvt.ancestors.length;
 			},
 			
-			// получить коллекцию по имени ---- в МЕМОБЖ
-			getCol: function(colName) {
-				if (colName == "fields")
-					return this.pvt.collections[0]; 
-				if (colName == "cols")
-					return this.pvt.collections[1];
+
+			// ПОЛЯ
+			
+			// получить имя поля по индексу
+			getFieldName: function(i) {
+				if (i==0) return "typeName";
+				if (i==1) return "parentClass";
+			},
+			
+					
+			// КОЛЛЕКЦИИ
+					
+			// получить коллекцию по имени или по индексу
+			getCol: function(col) {
+				if (typeof col == "string") {
+					if (col == "fields")
+						return this.pvt.collections[0]; 
+					if (col == "cols")
+						return this.pvt.collections[1];
+				}
+				if (typeof col == "number") 
+					return this._super(col);
 				return null;
 			},
 			

@@ -45,7 +45,7 @@ define(
 			subscribeRoot: function(db,rootGuid) {
 				if (db.getMaster()) { // мастер-база доступна локально
 					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootGuid);
-					db.importRoot(newObj);
+					db.deserialize(newObj);
 				}
 				else { // мастер-база доступна удаленно
 					db.getConnection().send({action:'subscribeRoot', guid:db.getGuid(), lid:rootGuid});

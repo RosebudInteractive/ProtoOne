@@ -82,41 +82,63 @@
 				//var myMetaField = new MemMetaField(db);
 				//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
 								
-				var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
-				var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
+				var myMetaControl = new MemMetaObj(db,{fields: {typeName: "Control", parentClass:null}});
+				var myMetaButton = new MemMetaObj(db,{fields: {"typeName": "Button", "parentClass":myMetaControl}});
+				var myMetaContainer = new MemMetaObj(db,{fields: {"typeName": "Container", "parentClass":myMetaControl}});
 				var flds = myMetaControl.getCol("fields");
 				var cls = myMetaControl.getCol("cols");
-				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
-				new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
-				new MemMetaObjFields({"obj": myMetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
+				new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname":"Id","ftype":"int"}});
+				new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname":"Name","ftype":"string"}});
+				new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname":"Caption","ftype":"string"}});
+				new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname":"containerType","ftype":"enum"}});
+				new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname":"Children","ctype":"control"}});
 				myMetaControl._bldElemTable(); // temp
 				myMetaButton._bldElemTable();
+				myMetaContainer._bldElemTable();
+				console.log("*** myMetaContainer ***");
+				myMetaContainer.consoleLog();
+				console.log("*** myMetaButton ***");
+				myMetaButton.consoleLog();
+				console.log("*** myMetaControl ***");
+				myMetaControl.consoleLog();
 
 				// то же самое для slave				
-				var my2MetaControl = new MemMetaObj(dbsl,{"typeName": "Control", "parentClass":null, $sys :{guid:myMetaControl.getGuid()}});
-				var my2MetaButton = new MemMetaObj(dbsl,{"typeName": "Button", "parentClass":my2MetaControl, $sys :{guid:myMetaButton.getGuid()}});
+				var my2MetaControl = new MemMetaObj(dbsl,{ fields: {typeName: "Control", parentClass:null }, $sys :{guid:myMetaControl.getGuid()}});
+				var my2MetaButton = new MemMetaObj(dbsl,{ fields: {typeName: "Button", parentClass:my2MetaControl }, $sys :{guid:myMetaButton.getGuid()}});
+				var my2MetaContainer = new MemMetaObj(dbsl,{ fields: {typeName:"Container",parentClass:my2MetaControl}, $sys :{guid:myMetaContainer.getGuid()}});
 				var flds2 = my2MetaControl.getCol("fields");
 				var cls2 = my2MetaControl.getCol("cols");
-				new MemMetaObjFields({"obj": my2MetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
-				new MemMetaObjFields({"obj": my2MetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
-				new MemMetaObjFields({"obj": my2MetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
+				new MemMetaObjFields({"obj": my2MetaControl}, {fields: {fname:"Id",ftype:"int"}});
+				new MemMetaObjFields({"obj": my2MetaControl}, {fields: {fname:"Name",ftype:"string"}});
+				new MemMetaObjFields({"obj": my2MetaButton}, {fields: {fname:"Caption",ftype:"string"}});
+				new MemMetaObjFields({"obj": my2MetaContainer}, {fields: {fname:"containerType",ftype:"enum"}});
+				new MemMetaObjCols({"obj": my2MetaContainer}, {fields: {cname:"Children",ctype:"control"}});
 				my2MetaControl._bldElemTable(); // temp
 				my2MetaButton._bldElemTable();
-
+				my2MetaContainer._bldElemTable();
 				
 				//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-				myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-				var guid1 = myRootButton.getGuid();
+				var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id":11,"Name":"MainContainer"}});
+				var myButton = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Name":"MyFirstButton","Caption":"OK"}});
+				//myRootCont.addToCol("Children", myButton);
 				
-				myRootButton.set("Caption","Cancel");
+				var guid1 = myRootCont.getGuid();
 				
-				var delta = myRootButton.getLog().genDelta();
+				myButton.set("Caption","Cancel");
 				
-				var obj1=dbsl.subscribeRoot(guid1);
+				var delta = myButton.getLog().genDelta();
+				
+				dbsl.subscribeRoot(guid1);
+				var objs = db.serialize(myRootCont);
+				var obj1= dbsl.getRoot(myRootCont.getGuid()).obj;
+				var objs2 = dbsl.serialize(obj1);
 				
 				//dbsl.subscribe(db.getGuid());
 				
-				console.log(obj1);
+				console.log(JSON.stringify(objs));
+				console.log(JSON.stringify(objs2));
+				
+				
             }
         );
 		

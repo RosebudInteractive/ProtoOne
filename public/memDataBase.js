@@ -84,24 +84,46 @@ define(
 				*/
 			},
 			
-			// сериализация объекта базы
+			// "сериализация" объекта базы
 			serialize: function(obj) {
-				if (!("getDB" in) || (obj.getDB()!=this)) return null;
+				// проверить, что объект принадлежит базе
+				if (!("getDB" in obj) || (obj.getDB()!=this)) return null;
 				
 				var newObj = {};
 				newObj.$sys = {};
 				newObj.$sys.guid = obj.getGuid();
 				newObj.$sys.typeGuid = obj.getObjType().getGuid();
-				// поля
+				// поля объекта TODO? можно сделать сериализацию в более "компактном" формате, то есть "массивом" и без названий полей
 				newObj.fields = {};
 				for (var i=0; i<obj.count(); i++) 
 					newObj.fields[obj.getFieldName(i)] = obj.get(i);		
 				// коллекции
 				newObj.collections = {};
-				// TODO сделать то же с коллекциями
-					
-				return newObj;				
-				
+				for (i=0; i<obj.countCol(); i++) {
+					var cc=obj.getCol(i);
+					var cc2=newObj.collections[cc.getName()] = {};
+					for (var j=0; j<cc.count(); j++) {
+						var o2=this.serialize(cc.get(j));
+						cc2[j] = o2;
+					}
+				}					
+				return newObj;	// TODO? делать stringify тут?						
+			},
+
+			// ----создать подписанный корневой объект (временный вариант)
+			// десериализация в объект
+			deserialize: function(sobj) {
+				function ideser(that,sobj,parent) {
+					var typeObj = that.getRoot(sobj.$sys.typeGuid).obj;
+					var o = new MemObj( typeObj,parent,sobj);
+					for (var cn in sobj.collections) {
+						for (var co in sobj.collections[cn]) 
+							ideser(that,sobj.collections[cn][co],{obj:o, colName:cn});
+					}	
+					return o;
+				};
+				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
+				return ideser(this,sobj,{"db":this, "mode":"RW"});
 			},
 			
 			// подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
@@ -110,13 +132,7 @@ define(
 				this.pvt.controller.subscribeRoot(this,rootGuid);
 			},
 			
-			// создать подписанный рутовый объект (временный вариант)
-			importRoot: function(flds) {
-				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
-				var typeObj = this.getRoot(flds.$sys.typeGuid).obj;
-				var o = new MemObj( typeObj,{"db":this, "mode":"RW"},flds);
-				return o;
-			},
+
 			
 			// вернуть ссылку на контроллер базы данных
 			getController: function() {

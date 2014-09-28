@@ -7,10 +7,10 @@ define(
 	['./memObjLog'],
 	function(MemObjLog) {
 		var MemProtoObj = Class.extend({
-			_objType: null,	
+			/*_objType: null,	
 			_parent: null,
 			_col: null,
-			_db: null,
+			_db: null,*/
 				
 			// objType - ссылка на объект-тип
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
@@ -23,8 +23,10 @@ define(
 				pvt.collections = [];			// массив дочерних коллекций
 				pvt.log = null; 
 				
-				if (!parent.obj) 	// корневой объект
+				if (!parent.obj) {	// корневой объект
+					pvt.col = null;
 					pvt.db = parent.db;
+				}
 				else {				// объект в коллекции (не корневой)
 					pvt.col = parent.obj.getCol(parent.colName);
 					pvt.parent = parent.obj;					
@@ -42,9 +44,14 @@ define(
 					if (parent.mode == "RW")
 						pvt.log.setActive(true); // лог активен только для корневого объекта, который создан в режиме ReadWrite
 				}
-				else 
-					pvt.col._add(this);
+				//else 
+				//	pvt.col._add(this);
 										
+			},
+			
+			finit: function() {
+				if (this.pvt.col)
+					this.pvt.col._add(this);
 			},
 			
 			// Добавляем логгер
@@ -72,9 +79,64 @@ define(
 				return this.pvt.objType;
 			},
 			
+			getParent: function() {
+				return this.pvt.parent;
+			},
+			
 			getLog: function() {
-				return this.pvt.log; // TODO вернуть корневой лог (ссылку на корневой объект?)
-			}
+				var p = this;
+				while (!p.pvt.log) p=p.getParent();
+				return p.pvt.log; // TODO вернуть корневой лог (ссылку на корневой объект?)
+			},
+			
+
+			// Поля
+			
+			// поиск по индексу
+			get: function(field) {
+				return this.pvt.fields[field];
+			},
+			
+			// вернуть количество полей объекта
+			count: function() {
+				return this.pvt.fields.length;
+			},
+			
+			
+			// Коллекции
+			
+			// добавить дочернюю коллекцию
+			_addCol: function(col) {
+				this.pvt.collections.push(col);
+			},
+			
+			// вернуть количество дочерних коллекций
+			countCol: function() {
+				return this.pvt.collections.length;
+			},
+			
+			// вернуть коллекцию по индексу
+			getCol: function(i) {
+				return this.pvt.collections[i];
+			},
+			
+			consoleLog: function(buf) {
+				if (buf === undefined) buf=""
+				else buf+="  ";
+				//console.log(buf+" [" + this.+ "]");
+				for (var i=0; i<this.count(); i++) 
+					console.log(buf+this.getFieldName(i)+" = "+this.get(i));
+
+				for (i=0; i<this.countCol(); i++) {
+					console.log(buf+this.getCol(i).getName());
+					for (var j=0; j<this.getCol(i).count(); j++) {
+					
+						this.getCol(i).get(j).consoleLog(buf);
+					}
+				}
+			},
+			
+			
 
 		});
 		return MemProtoObj;
