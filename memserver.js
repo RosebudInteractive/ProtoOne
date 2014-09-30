@@ -65,6 +65,9 @@ wss.on('connection', function(ws) {
                 case 'subscribe':
                     result = dbc.onSubscribe(ws, data.guid);
                     break;
+                case 'subscribeRoot':
+                    result = dbc.onSubscribeRoot(data.dbGuid, data.objGuid);
+                    break;
             }
             return result;
         }
