@@ -42,13 +42,13 @@ define(
 			
 			
 			// подписать на рутовый элемент
-			subscribeRoot: function(db,rootGuid) {
+			subscribeRoot: function(db,rootGuid, callback) {
 				if (db.getMaster()) { // мастер-база доступна локально
 					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootGuid);
 					db.deserialize(newObj);
 				}
 				else { // мастер-база доступна удаленно
-					db.getConnection().send({action:'subscribeRoot', dbGuid:db.getGuid(), objGuid:rootGuid});
+					db.getConnection().send({action:'subscribeRoot', dbGuid:db.getGuid(), objGuid:rootGuid},callback);
 					// TODO обработать асинхронность
 				}
 			},

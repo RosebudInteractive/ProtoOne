@@ -105,6 +105,11 @@
 				myMetaButton._bldElemTable();
 				myMetaContainer._bldElemTable();*/
 				
+				var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+				var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id":11,"Name":"MainContainer"}});
+				var myButton = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Name":"MyFirstButton","Caption":"OK"}});
+				var myButton2 = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":23,"Name":"MySecondButton","Caption":"Cancel"}});
+				
 				dbsl.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
 				
 				console.log("***");
