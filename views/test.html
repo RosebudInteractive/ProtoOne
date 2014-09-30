@@ -37,10 +37,12 @@
 		require(
             ['../public/memDBController', 'memDataBase'],
             function( MemDBController, MemDataBase){
-				var dbc = new MemDBController();
-                var db = dbc.newDataBase({name:"PROTO2", kind : "slave", masterConnection: socket});
-				console.log(dbc);
-				console.log(db);
+                socket.send({action:"getMasterGuid", type:'method'}, function(result){
+                    var dbc = new MemDBController();
+                    var dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : result.masterGuid, masterConnection: socket});
+                    console.log(dbc);
+                    console.log(dbsl);
+                });
             }
         );
       }

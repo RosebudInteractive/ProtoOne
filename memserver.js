@@ -8,28 +8,40 @@ var MemMetaObjCols = require('./public/memMetaObjCols');
 var MemObj = require('./public/memObj');
 
 var dbc = new MemDBController();
-var db = dbc.newDataBase({name:"PROTO", kind : "master"}); // new MDb(controller,{name:"PROTO", master : "1"});
-//var myCol = myMemDb.newCol();
-var myMetaControl = new MemMetaObj(db,{"typeName": "Control", "parentClass":null});
-var myMetaButton = new MemMetaObj(db,{"typeName": "Button", "parentClass":myMetaControl});
+
+console.log(dbc.guid());
+console.log(dbc.guid());
+console.log(dbc.guid());
+console.log(dbc.guid());
+
+var db = dbc.newDataBase({name:"Master", kind : "master"});
+
+
+//var myMetaField = new MemMetaField(db);
+//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
+
+var par = { obj: db.getMeta(), colName: "Children" };
+//return;
+var myMetaControl = new MemMetaObj( { db: db },{fields: {typeName: "Control", parentClass:null}});
+
+var myMetaButton = new MemMetaObj({ db: db },{fields: {typeName: "Button", parentClass:myMetaControl.getGuid()}});
+var myMetaContainer = new MemMetaObj({ db: db },{fields: {typeName: "Container", parentClass:myMetaControl.getGuid()}});
 var flds = myMetaControl.getCol("fields");
 var cls = myMetaControl.getCol("cols");
-new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Id","ftype":"int"});
-new MemMetaObjFields({"obj": myMetaControl, "colName": "fields"}, {"fname":"Name","ftype":"string"});
-
-new MemMetaObjFields({"obj": myMetaButton, "colName": "fields"}, {"fname":"Caption","ftype":"string"});
-
+new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname":"Id","ftype":"int"}});
+new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname":"Name","ftype":"string"}});
+new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname":"Caption","ftype":"string"}});
+new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname":"containerType","ftype":"enum"}});
+new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname":"Children","ctype":"control"}});
 myMetaControl._bldElemTable(); // temp
 myMetaButton._bldElemTable();
+myMetaContainer._bldElemTable();
 
-//var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-myRootButton = db.newRootObj(myMetaButton,{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
-myRootButton.set("Caption","Cancel");
+var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
+var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id":11,"Name":"MainContainer"}});
+var myButton = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Name":"MyFirstButton","Caption":"OK"}});
+var myButton2 = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":23,"Name":"MySecondButton","Caption":"Cancel"}});
 
-// myRootButton свойства Caption и Name
-// клиент должен подписаться на этот объект, он его получает и должен у себя его создать
-// сервере должен вернуть клиенту структуру объекта и на клиенте он должен его создать
-// ты можешь менять на клиенте либо на сервере и он синхронизирует отправками дельт
 
 // ----------------------------------------------------------------------------------------------------------------------
 
@@ -50,6 +62,7 @@ app.get('/test', function(req, res){
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 
+
 // WebSocket-сервер на порту 8081
 var connId = 0;
 var wss = new WebSocketServer.Server({port: 8081});
@@ -66,7 +79,10 @@ wss.on('connection', function(ws) {
                     result = dbc.onSubscribe(ws, data.guid);
                     break;
                 case 'subscribeRoot':
-                    result = dbc.onSubscribeRoot(data.dbGuid, data.objGuid);
+                    result = db.onSubscribeRoot(ws, data.objGuid);
+                    break;
+                case 'getMasterGuid':
+                    result = {masterGuid:db.getGuid()};
                     break;
             }
             return result;
