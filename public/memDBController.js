@@ -48,7 +48,7 @@ define(
 					db.deserialize(newObj);
 				}
 				else { // мастер-база доступна удаленно
-					db.getConnection().send({action:'subscribeRoot', guid:db.getGuid(), lid:rootGuid});
+					db.getConnection().send({action:'subscribeRoot', dbGuid:db.getGuid(), objGuid:rootGuid});
 					// TODO обработать асинхронность
 				}
 			},

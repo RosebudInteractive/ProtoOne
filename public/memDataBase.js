@@ -4,8 +4,14 @@
 }
 
 define(
-	["./memCol", "./memObj"],
-	function(MemCollection,MemObj) {
+	["./memCol", "./memObj", "./memMetaRoot", "./memMetaObj", "./memMetaObjFields", "./memMetaObjCols"],
+	function(MemCollection,MemObj,MemMetaRoot,MemMetaObj,MemMetaObjFields,MemMetaObjCols) {
+	
+		var metaObjFieldsGuid =  "0fa90328-4e86-eba7-b12b-4fff3a057533";
+		var metaObjColsGuid =  "99628583-1667-3341-78e0-fb2af29dbe8";
+		var metaRootGuid =  "fc13e2b8-3600-b537-f9e5-654b7418c156";
+		var metaObjGuid =  "4dcd61c3-3594-7456-fd86-5a3527c5cdcc";
+	
 		var MemDataBase = Class.extend({
 
 			// Добавить корневой объект в БД
@@ -18,6 +24,11 @@ define(
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
 			},
+			
+			// зарегистрировать объект в списке по гуидам
+			_addObj: function(obj) {
+				this.pvt.objs[obj.getGuid()] = obj;
+			},
 
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
 			// params.local - true, тогда мастер-база локальная и masterConnect не передается
@@ -28,11 +39,15 @@ define(
 				pvt.name = params.name;
 				pvt.robjs = [];				// корневые объекты базы данных
 				pvt.rcoll = {};
+				pvt.objs = {};				// все объекты по гуидам
 				pvt.log = [];
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
                 pvt.guid = controller.guid();
-							
+				
+				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
+				pvt.controller._attachDataBase(this);
+				
 				if (params.kind != "master") {
 						pvt.masterGuid = params.masterGuid;
 						if (params.local) {
@@ -46,11 +61,11 @@ define(
                             controller._subscribe(this);
                         }
 					}
-				else
-					pvt.masterGuid = undefined;				
-
-				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
-				pvt.controller._attachDataBase(this);				
+				else { // master base
+					pvt.masterGuid = undefined;
+					// Создать объект с коллекцией метаинфо
+					pvt.meta = new MemMetaRoot( { db: this },{});	
+				}		
 			},
 			
 			// Стать подписчиком базы данных
@@ -92,7 +107,11 @@ define(
 				var newObj = {};
 				newObj.$sys = {};
 				newObj.$sys.guid = obj.getGuid();
-				newObj.$sys.typeGuid = obj.getObjType().getGuid();
+				/*if (obj.getObjType()) // obj
+					newObj.$sys.typeGuid = obj.getObjType().getGuid();
+				else // meta obj
+					newObj.$sys.typeGuid = "12345";*/
+				newObj.$sys.typeGuid = obj.getTypeGuid();
 				// поля объекта TODO? можно сделать сериализацию в более "компактном" формате, то есть "массивом" и без названий полей
 				newObj.fields = {};
 				for (var i=0; i<obj.count(); i++) 
@@ -114,8 +133,27 @@ define(
 			// десериализация в объект
 			deserialize: function(sobj) {
 				function ideser(that,sobj,parent) {
-					var typeObj = that.getRoot(sobj.$sys.typeGuid).obj;
-					var o = new MemObj( typeObj,parent,sobj);
+					
+					switch (sobj.$sys.typeGuid) {
+						case metaObjFieldsGuid:
+							var o = new MemMetaObjFields(parent,sobj);
+							break;
+						case metaObjColsGuid:
+							o = new MemMetaObjCols(parent,sobj);
+							break;
+						case metaRootGuid:
+							//o = that.getObj(metaRootGuid);
+							that.pvt.meta = new MemMetaRoot(parent,sobj);
+							o = that.pvt.meta;
+							break;
+						case metaObjGuid:
+							o = new MemMetaObj(parent,sobj);
+							break;
+						default:
+							var typeObj = that.getRoot(sobj.$sys.typeGuid).obj;
+							o = new MemObj( typeObj,parent,sobj);
+							break;						
+					}
 					for (var cn in sobj.collections) {
 						for (var co in sobj.collections[cn]) 
 							ideser(that,sobj.collections[cn][co],{obj:o, colName:cn});
@@ -166,12 +204,22 @@ define(
 				return this.pvt.masterDB;
 			},
 			
+			// вернуть корневой объект метаинфо
+			getMeta: function() {
+				return this.pvt.meta;
+			},
+			
             /**
              * Получить следующий local id
              * @returns {number}
              */
 			getNewLid: function() {  // TODO сделать DataBaseController и перенести туда?
 				return this.pvt.$idCnt++;
+			},
+			
+			// полуить объект по его гуиду
+			getObj: function(guid) {
+				return this.pvt.objs[guid];
 			},
 			
 			// добавить новый корневой объект в мастер-базу

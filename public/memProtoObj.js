@@ -7,10 +7,6 @@ define(
 	['./memObjLog'],
 	function(MemObjLog) {
 		var MemProtoObj = Class.extend({
-			/*_objType: null,	
-			_parent: null,
-			_col: null,
-			_db: null,*/
 				
 			// objType - ссылка на объект-тип
 			// parent - ссылка на объект и имя коллекции либо db, null для корневых  (obj и colname)
@@ -22,10 +18,12 @@ define(
 				pvt.fields = [];				// значения полей объекта
 				pvt.collections = [];			// массив дочерних коллекций
 				pvt.log = null; 
+				pvt.state = 0;
 				
 				if (!parent.obj) {	// корневой объект
 					pvt.col = null;
 					pvt.db = parent.db;
+					pvt.parent = null;
 				}
 				else {				// объект в коллекции (не корневой)
 					pvt.col = parent.obj.getCol(parent.colName);
@@ -40,18 +38,22 @@ define(
 				
 				if (!parent.obj) {	// корневой объект				
 					pvt.db._addRoot(this,parent.mode);
-					pvt.log = new MemObjLog();	// создать лог записи изменений
+					pvt.log = new MemObjLog(this);	// создать лог записи изменений
 					if (parent.mode == "RW")
 						pvt.log.setActive(true); // лог активен только для корневого объекта, который создан в режиме ReadWrite
 				}
 				//else 
 				//	pvt.col._add(this);
+				this.getDB()._addObj(this);
 										
 			},
 			
+			// завершение инициализации (вызывается из наследников)
 			finit: function() {
 				if (this.pvt.col)
 					this.pvt.col._add(this);
+				this.pvt.state = 1;
+				
 			},
 			
 			// Добавляем логгер
@@ -77,6 +79,10 @@ define(
 			
 			getObjType: function() {
 				return this.pvt.objType;
+			},
+			
+			getTypeGuid: function() {
+				return (this.pvt.objType == null) ? this.pvt.typeGuid : this.pvt.objType.getGuid();
 			},
 			
 			getParent: function() {

@@ -9,16 +9,13 @@ define(
 		var MemMetaObjCols = MemProtoObj.extend({
 		
 			init: function(parent, flds){
-				this._super(null,{obj : parent.obj, colName : "cols" },flds ); 			
-				//this._super(null,parent); 
+				//flds.$sys = { guid: "99628583-1667-3341-78e0-fb2af29dbe8" };
+
+				this._super(null,{obj : parent.obj, colName : "cols" },flds );
+				this.pvt.typeGuid = "99628583-1667-3341-78e0-fb2af29dbe8";				
 				this.pvt.fields.push(flds.fields.cname);
 				this.pvt.fields.push(flds.fields.ctype);
-				this.finit();
-				
-				/*this.pvt.col = parent.obj.getCol("cols");
-				this.pvt.parent = parent.obj;
-				this.pvt.col._add(this);*/
-				
+				this.finit();				
 			},
 			
 			// ПОЛЯ

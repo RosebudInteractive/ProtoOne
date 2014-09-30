@@ -8,18 +8,25 @@ define(
 	function(MemProtoObj,MemCol) {
 		var MemMetaObj = MemProtoObj.extend({
 		
-			init: function(db, flds){
-						
-				this._super(null,{ "db": db },flds); 
+			init: function(parent, flds){
+							
+				//flds.$sys = { guid: "4dcd61c3-3594-7456-fd86-5a3527c5cdcc" };
+				var db = (parent.db) ? parent.db: parent.obj.getDB();
+				//if (db.getMeta())
+				this._super(null,{ obj: db.getMeta(), colName: "MetaObjects" },flds); 
+				this.pvt.typeGuid = "4dcd61c3-3594-7456-fd86-5a3527c5cdcc";
+				//else 
+				//	this._super(null,{ db: db },flds); // Корневой метаобъект в БД - является корнем всех остальных метаобъектов
 				this.pvt.fields.push(flds.fields.typeName); // TODO проверка наличия с пустой инициализацией
 				this.pvt.fields.push(flds.fields.parentClass);
 				
 				this.pvt.ancestors = [];
 				this.pvt.ancestors.push(this);
-				var parent = flds.fields.parentClass;
-				while (parent) {
-					this.pvt.ancestors.push(parent);
-					parent = parent.getParentClass();
+				var par = this.getDB().getObj(flds.fields.parentClass);
+				while (par) {
+					this.pvt.ancestors.push(par);
+					par = (par.get("parentClass")==undefined) ? null : this.getDB().getObj(par.get("parentClass"));
+					//par = par.getParent(); //par.getParentClass();
 				}
 				
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
@@ -27,9 +34,8 @@ define(
 				new MemCol("cols",this);
 				
 				this.finit();
-
-				//this.pvt.collections.push(new MemCol("fields",this));
-				//this.pvt.collections.push(new MemCol("cols",this));
+				
+				this._bldElemTable();
 			},
 			
 			// сделать таблицу элементов с учетом наследования
@@ -67,6 +73,20 @@ define(
 			
 
 			// ПОЛЯ
+			
+			// получить значение поля по имени или по названию
+			get: function(field) {
+				if (typeof field == "string") { // ищем по имени
+					if (field=="typeName")
+						return this.pvt.fields[0];
+					if (field=="parentClass")
+						return this.pvt.fields[1];
+				}
+				if (typeof field == "number")  // ищем по индексу
+					return this._super(field);
+					
+				return undefined;				
+			},
 			
 			// получить имя поля по индексу
 			getFieldName: function(i) {

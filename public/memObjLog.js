@@ -8,25 +8,27 @@ define(
 	function(MemObj) {
 		var MemObjLog = Class.extend({
 
-			init: function(){
-				this._log = [];
-				this._active = false;
+			init: function(obj){
+				this.pvt = {};
+				this.pvt.obj = obj;
+				this.pvt.log = [];
+				this.pvt.active = false;
 				
 			},
 			
 			truncate: function() {
-				this._log = [];
+				this.pvt.log = [];
 			},
 			
 			setActive: function(active) {
 				if (active)
-					this._active = true;
+					this.pvt.active = true;
 				else 
-					this._active = false;
+					this.pvt.active = false;
 			},
 			
 			getActive: function() {
-				return this._active;
+				return this.pvt.active;
 			},
 			
 			
@@ -35,27 +37,29 @@ define(
 				var delta = {};
 				var deltaIdx = {};
 				delta.items = [];
-				var log = this._log;
+				var log = this.pvt.log;
 				for (var i=0; i<log.length; i++) {
 					var c = log[i];
-					var s = c.obj.getLid();
+					var s = c.obj.getGuid();
                     if (!(s in deltaIdx)) {
 						var curd = {};
-						curd.Lid = c.obj.getLid(); // вообще нужен гуид
+						curd.guid = c.obj.getGuid();
 						deltaIdx[s] = delta.items.length;
                         delta.items.push(curd); 
+						curd.fields = {};
 						// TODO добавить элемент для идентификации
 					}
                     else
                         curd = delta.items[deltaIdx[s]];
-					
+								
 					switch(c.type) {
 						// изменение поля (свойства)
 						case "mp":
 							for (var fld in c.flds) {
-								curd[fld] = {};
+								/*curd[fld] = {};
 								curd[fld].old = c.flds[fld].old;
-								curd[fld].new = c.flds[fld].new;
+								curd[fld].new = c.flds[fld].new;*/
+								curd.fields[fld] = c.flds[fld].new;
 							}
 							break;
 					}
@@ -64,7 +68,17 @@ define(
 			},
 			
 			// применить "дельту" изменений к объекту
-			applyDelta: function() {
+			applyDelta: function(delta) {
+				for (var i=0; i<delta.items.length; i++) {
+					var c = delta.items[i];
+					var o = this.pvt.obj.getDB().getObj(c.guid);
+					if (o) 
+						for (var cf in c.fields) {
+							// TODO проверить наличие полей с таким именем в метаинфо
+							// и понять как поступать с логом (отключать?)
+							o.set(cf,c.fields[cf]);
+						}
+				}
 				
 			},
 			
@@ -75,7 +89,7 @@ define(
 			// objModif.oldValue
 			// objModif.newValue
 			_objModif: function(modifData) {
-                if (this._active) {
+                if (this.pvt.active) {
                     //var fldMeta = modifData.target.fields[modifData.property];
                     var changes = {};
                     changes.flds = {};
@@ -106,7 +120,7 @@ define(
                     //}
                     changes.type = "mp";
                     changes.obj = modifData.target;
-                    this._log.push(changes); // записываем изменение в лог
+                    this.pvt.log.push(changes); // записываем изменение в лог
                 }				
 			},
 			
