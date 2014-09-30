@@ -60,7 +60,7 @@ define(
 							pvt.masterConnection = params.masterConnection;
                             controller._subscribe(this);
                         }
-						controller.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
+						this.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
 					}
 				else { // master base
 					pvt.masterGuid = undefined;

@@ -35,7 +35,7 @@ define(
 				
 				this.finit();
 				
-				this._bldElemTable();
+				//this._bldElemTable();
 			},
 			
 			// сделать таблицу элементов с учетом наследования

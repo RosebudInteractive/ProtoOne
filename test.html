@@ -83,7 +83,7 @@
 				console.log(dbc.guid());
 				
                 var db = dbc.newDataBase({name:"Master", kind : "master"}); 
-				var dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: true, masterGuid : db.getGuid()}); 
+
 				
 				//var myMetaField = new MemMetaField(db);
 				//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
@@ -101,16 +101,17 @@
 				new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname":"Caption","ftype":"string"}});
 				new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname":"containerType","ftype":"enum"}});
 				new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname":"Children","ctype":"control"}});
-				/*myMetaControl._bldElemTable(); // temp
+				myMetaControl._bldElemTable(); // temp
 				myMetaButton._bldElemTable();
-				myMetaContainer._bldElemTable();*/
+				myMetaContainer._bldElemTable();
 				
 				var myRootButton = new MemObj(myMetaButton,{ "db": db, "mode":"RW" },{"Id":22,"Name":"MyFirstButton","Caption":"OK"});
 				var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id":11,"Name":"MainContainer"}});
 				var myButton = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Name":"MyFirstButton","Caption":"OK"}});
 				var myButton2 = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":23,"Name":"MySecondButton","Caption":"Cancel"}});
-				
-				dbsl.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
+
+				var dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: true, masterGuid : db.getGuid()}); 				
+				//dbsl.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
 				
 				console.log("***");
 				
