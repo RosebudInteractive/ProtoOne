@@ -81,8 +81,8 @@ wss.on('connection', function(ws) {
                 case 'subscribeRoot':
                     result = db.onSubscribeRoot(ws, data.objGuid);
                     break;
-                case 'getMasterGuid':
-                    result = {masterGuid:db.getGuid()};
+                case 'getGuids':
+                    result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};
                     break;
             }
             return result;
