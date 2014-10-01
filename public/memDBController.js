@@ -48,7 +48,10 @@ define(
 					db.deserialize(newObj);
 				}
 				else { // мастер-база доступна удаленно
-					db.getConnection().send({action:'subscribeRoot', type:'method', dbGuid:db.getGuid(), objGuid:rootGuid},callback);
+					callback2 = function(newObj) {
+						db.deserialize(newObj);
+					}
+					db.getConnection().send({action:'subscribeRoot', type:'method', dbGuid:db.getGuid(), objGuid:rootGuid},callback2);
 					// TODO обработать асинхронность
 				}
 			},
