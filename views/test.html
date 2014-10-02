@@ -56,6 +56,7 @@
 
       function subscribeRoot() {
           // подписываемся на корневой объект контейнера
+		  dbsl._buildMetaTables();
           dbsl.subscribeRoot(guids.myRootContGuid, function(result){
               console.log(result);
           });

@@ -29,6 +29,15 @@ define(
 			_addObj: function(obj) {
 				this.pvt.objs[obj.getGuid()] = obj;
 			},
+			
+			_buildMetaTables: function() {
+				var metacol = this.getMeta().getCol("MetaObjects");
+				for (var i=0; i<metacol.count(); i++) {
+					var o = metacol.get(i);
+					if (o.pvt.fieldsTable == undefined)
+						o._bldElemTable();					
+				}
+			},
 
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
 			// params.local - true, тогда мастер-база локальная и masterConnect не передается
@@ -154,7 +163,7 @@ define(
 							o = new MemMetaObj(parent,sobj);
 							break;
 						default:
-							var typeObj = that.getObj(sobj.$sys.typeGuid).obj;
+							var typeObj = that.getObj(sobj.$sys.typeGuid); //.obj;
 							o = new MemObj( typeObj,parent,sobj);
 							break;						
 					}
