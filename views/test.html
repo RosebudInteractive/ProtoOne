@@ -19,7 +19,10 @@
                 function( Socket){
                     socket = new Socket("ws://"+url('hostname')+":8081", {
                         open: function(){ // при открытии соединения
-                            createController();
+                            // отправляем сообщение что подключились
+                            socket.send({action:'connect', type:'method', sid: $.url('?sid'), agent:navigator.userAgent}, function(){
+                                createController();
+                            });
                         },
                         close: function(){ // при закрытии соединения
 

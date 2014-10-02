@@ -50,6 +50,8 @@ var express = require('express');
 var app = express();
 var WebSocketServer = new require('ws');
 var Socket = require('./public/socket');
+var Session = require('./public/session');
+var Connect = require('./public/connect');
 
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
@@ -62,6 +64,28 @@ app.get('/test', function(req, res){
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 
+// сохраненные сессии
+var sessions = {};
+
+function findConnection(id){
+    for(var i in sessions) {
+        var connects = sessions[i].getConnects();
+        for(var j in connects) {
+            if (id == connects[j].getId())
+                return connects[j];
+        }
+    }
+    return null;
+}
+
+function findSession(id){
+    for(var i in sessions) {
+        if (sessions[i].getId() == id) {
+            return sessions[i];
+        }
+    }
+    return null;
+}
 
 // WebSocket-сервер на порту 8081
 var connId = 0;
@@ -71,18 +95,39 @@ wss.on('connection', function(ws) {
     connId++;
     var socket = new Socket(ws, {
         side: 'server',
-        close: function(){ // при закрытии соединения
-
+        close: function() { // при закрытии коннекта
+            var connect = findConnection(connId);
+            //console.log('close', connect);
+            if (connect)
+                connect.closeConnect();
+            console.log("отключился клиент: " + connId);
         },
         router: function(data) {
             console.log('сообщение с клиента:', data);
             var result = {};
             switch (data.action) {
+                case 'connect':
+                    // сессионный номер
+                    var sessionID = data.sid;
+                    if (!sessionID) {
+                        console.log('не указан sid');
+                        break;
+                    }
+                    // запоминаем клиента подключенного
+                    var conn = new Connect(connId, ws,  {userAgent: data.agent, stateReady:1});
+                    if (!sessions[sessionID])
+                        sessions[sessionID] = new Session(sessionID);
+                    sessions[sessionID].addConnect(conn);
+                    console.log("новое соединение: " + sessionID);
+                    result =  {connId:connId};
+                    break;
                 case 'subscribe':
                     result = {data:dbc.onSubscribe(ws, data.guid)};
                     break;
                 case 'subscribeRoot':
-                    result = {data:db.onSubscribeRoot(ws, data.objGuid)};
+                    if (!db.isSubscribed(data.dbGuid)) // если клиентская база еще не подписчик
+                        db.onSubscribe(ws);
+                    result = {data:db.onSubscribeRoot(data.dbGuid, data.objGuid)};
                     break;
                 case 'getGuids':
                     result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};

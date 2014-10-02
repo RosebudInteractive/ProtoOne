@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * Модуль подключений
  * @module Connect
  */
-define(function() {
+define(['./event'], function(event) {
 
     var Connect = Class.extend(/** @lends module:Connect.Connect.prototype */{
 
@@ -19,6 +19,7 @@ define(function() {
          * @param params {object} Параметры подлкючения
          */
         init: function (id, ws, params) {
+            this.event = new event(this);
             this.id = id;
             this.ws = ws;
             this.params = {
@@ -90,6 +91,18 @@ define(function() {
         setStateReady: function (stateReady) {
             this.params.stateReady = stateReady;
             return this.params.stateReady;
+        },
+
+        /**
+         * Закрыть соединение
+         */
+        closeConnect: function() {
+            // создаем событие закрытия коннекта
+            this.event.fire({
+                type: 'socket.close',
+                target: this,
+                connId: this.id
+            });
         }
     });
 

@@ -7,8 +7,9 @@ if (typeof define !== 'function') {
  * Модуль Сессий
  * @module Session
  */
-define(function() {
-
+define(
+    ['./event'],
+    function(event) {
 
     var Session = Class.extend(/** @lends module:Session.Session.prototype */{
 
@@ -18,6 +19,7 @@ define(function() {
          * @param id {string} ID сессии
          */
         init: function(id) {
+            this.event = new event(this);
             this.id = id;
             this.connects = [];
         },
@@ -36,6 +38,16 @@ define(function() {
          * @returns {object}
          */
         addConnect: function(conn) {
+
+            var that = this;
+            // обработка события закрытия коннекта
+            conn.event.on({
+                type: 'socket.close',
+                subscriber: this,
+                callback: function(args){
+                    that.removeConn(args.connId);
+                }
+            });
             this.connects.push(conn);
             return true;
         },
@@ -54,6 +66,7 @@ define(function() {
          * @returns {boolean}
          */
         removeConn: function (id) {
+            
             for (var i = 0, len = this.connects.length; i < len; i++) {
                 if (this.connects[i].getId() == id) {
                     this.connects.splice(i, 1);

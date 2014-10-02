@@ -112,7 +112,7 @@ define(
 				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
 				var subProxy = this.pvt.subscribers[dbGuid];
 				if (subProxy) {
-					this.pvt.rcoll[rootGuid].subscribers[g] = subProxy;  // TODO из списка общих подписчиков
+					this.pvt.rcoll[rootGuid].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
 					return this.serialize(obj);
 					}
 				else 

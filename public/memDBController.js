@@ -73,7 +73,7 @@ define(
             onSubscribe: function(connect, guid) {
                 var db = this.getDbByGuid(guid);
                 if (db)
-                    db.subscribe({connect:connect, guid:guid});
+                    db.onSubscribe({connect:connect, guid:guid});
             }
 
         });
