@@ -49,7 +49,7 @@ define(
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(newObj) {
-						db.deserialize(newObj);
+						db.deserialize(newObj.data);
 					}
 					db.getConnection().send({action:'subscribeRoot', type:'method', dbGuid:db.getGuid(), objGuid:rootGuid},callback2);
 					// TODO обработать асинхронность

@@ -37,25 +37,28 @@
         });
 
 
-      var myButton=null, dbc=null, dbsl=null;
+      var myButton=null, dbc=null, dbsl=null, guids=null;
       function createController(done){
 		require(
             ['../public/memDBController', 'memDataBase'],
             function( MemDBController, MemDataBase){
                 socket.send({action:"getGuids", type:'method'}, function(result){
+                    guids = result;
                     // создаем  контроллер и бд
                     dbc = new MemDBController();
-                    dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : result.masterGuid, masterConnection: socket});
+                    dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : guids.masterGuid, masterConnection: socket});
                     console.log('контроллер:', dbc);
                     console.log('база данных:', dbsl);
-
-                    // подписываемся на корневой объект контейнера
-                    dbsl.subscribeRoot(result.myRootContGuid, function(result){
-                        console.log(result);
-                    });
                 });
             }
         );
+      }
+
+      function subscribeRoot() {
+          // подписываемся на корневой объект контейнера
+          dbsl.subscribeRoot(guids.myRootContGuid, function(result){
+              console.log(result);
+          });
       }
 
       function changeCaption(val) {
@@ -68,6 +71,7 @@
 </head>
 <body>
 <h2>Управление</h2>
+<input type="button" value="Подписаться на корневой объект" onclick="subscribeRoot();"><br><br>
 <input type="text" value="" id="myButtonInput"> <input type="button" value="Поменять Caption для myButton" onclick="changeCaption($('#myButtonInput').val());">
 
 

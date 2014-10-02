@@ -76,10 +76,10 @@ wss.on('connection', function(ws) {
             var result = {};
             switch (data.action) {
                 case 'subscribe':
-                    result = dbc.onSubscribe(ws, data.guid);
+                    result = {data:dbc.onSubscribe(ws, data.guid)};
                     break;
                 case 'subscribeRoot':
-                    result = db.onSubscribeRoot(ws, data.objGuid);
+                    result = {data:db.onSubscribeRoot(ws, data.objGuid)};
                     break;
                 case 'getGuids':
                     result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};
