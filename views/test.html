@@ -18,8 +18,11 @@
                 ['socket'],
                 function( Socket){
                     socket = new Socket("ws://"+url('hostname')+":8081", {
-                        open: function(){
+                        open: function(){ // при открытии соединения
                             createController();
+                        },
+                        close: function(){ // при закрытии соединения
+
                         },
                         router: function(data){
                             console.log('сообщение с сервера:', data);

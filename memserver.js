@@ -71,6 +71,9 @@ wss.on('connection', function(ws) {
     connId++;
     var socket = new Socket(ws, {
         side: 'server',
+        close: function(){ // при закрытии соединения
+
+        },
         router: function(data) {
             console.log('сообщение с клиента:', data);
             var result = {};
