@@ -87,6 +87,11 @@ define(
 				this.pvt.subscribers[g] = subProxy;
 			},
 			
+			isSubscribed: function(dbGuid) {
+				var s= this.pvt.subscribers[dbGuid];
+				return (s) ? s : null;
+			},
+			
 			onUnsubscribe: function(guid) {
 				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
 				delete this.pvt.subscribers[guid]; // убрать из общего списка подписчиков
