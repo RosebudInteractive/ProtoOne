@@ -41,10 +41,10 @@ define(
             },
 			
 			
-			// подписать на рутовый элемент
+			// подписать базу db на рутовый элемент с гуидом rootGuid
 			subscribeRoot: function(db,rootGuid, callback) {
 				if (db.getMaster()) { // мастер-база доступна локально
-					var newObj = db.getMaster().onSubscribeRoot({dataBase:db},rootGuid);
+					var newObj = db.getMaster().onSubscribeRoot(db.getGuid(),rootGuid);
 					db.deserialize(newObj);
 				}
 				else { // мастер-база доступна удаленно

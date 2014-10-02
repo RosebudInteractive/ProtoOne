@@ -82,12 +82,20 @@ define(
 			},
 			
 			// Стать подписчиком базы данных
-			subscribe: function(subProxy) {
-				this.pvt.subscribers[subProxy.guid] = subProxy;
+			onSubscribe: function(subProxy) {
+				var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
+				this.pvt.subscribers[g] = subProxy;
+			},
+			
+			onUnsubscribe: function(guid) {
+				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
+				delete this.pvt.subscribers[guid]; // убрать из общего списка подписчиков
+				// TODO удалить из остальных мест
+				
 			},
 			
 			// Стать подписчиком корневого объекта с гуидом rootGuid
-			onSubscribeRoot: function(subProxy, rootGuid) {
+			onSubscribeRoot: function(dbGuid, rootGuid) {
 				// TODO проверить что база подписана на базу
 				var obj = null;
 				if (this.pvt.robjs.length > 0) 
@@ -96,20 +104,14 @@ define(
 				if (!obj) return null;
 				
 				// добавляем подписчика
-				var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
-				this.pvt.rcoll[rootGuid].subscribers[g] = subProxy;  // TODO из списка общих подписчиков
-				
-				return this.serialize(obj);
-				/*
-				var newObj = {};
-				newObj.$sys = {};
-				newObj.$sys.guid = obj.getGuid();
-				newObj.$sys.typeGuid = obj.getObjType().getGuid();
-				for (var i=0; i<obj.count(); i++) 
-					newObj[obj.getFieldName(i)] = obj.get(i);		
-				
-				return newObj;
-				*/
+				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
+				var subProxy = this.pvt.subscribers[dbGuid];
+				if (subProxy) {
+					this.pvt.rcoll[rootGuid].subscribers[g] = subProxy;  // TODO из списка общих подписчиков
+					return this.serialize(obj);
+					}
+				else 
+					return null;
 			},
 			
 			// "сериализация" объекта базы
