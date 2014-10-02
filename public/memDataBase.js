@@ -61,6 +61,7 @@ define(
                             controller._subscribe(this);
                         }
 						this.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156", function(result){
+							
                             console.log('callback result:', result);
                         });
 					}
@@ -153,7 +154,7 @@ define(
 							o = new MemMetaObj(parent,sobj);
 							break;
 						default:
-							var typeObj = that.getRoot(sobj.$sys.typeGuid).obj;
+							var typeObj = that.getObj(sobj.$sys.typeGuid).obj;
 							o = new MemObj( typeObj,parent,sobj);
 							break;						
 					}
