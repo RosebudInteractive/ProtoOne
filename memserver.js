@@ -84,6 +84,9 @@ wss.on('connection', function(ws) {
                 case 'getGuids':
                     result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};
                     break;
+                case 'changeObj':
+                    myRootCont.getLog().applyDelta(data.delta);
+                    break;
             }
             return result;
         }

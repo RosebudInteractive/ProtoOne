@@ -67,7 +67,10 @@
           myRootCont = dbsl.getObj(guids.myRootContGuid);
           myButton.set('Caption', val);
           var delta = myRootCont.getLog().genDelta();
-          console.log(delta);
+          console.log('delta:', delta);
+
+          // отправляем дельту на сервер
+          socket.send({action:"changeObj", delta:delta});
       }
 		
 
