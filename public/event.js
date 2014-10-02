@@ -43,7 +43,6 @@ define (
                         //handler.id = calypso1.database.getNewLid();
                         this._eventHandlers[eventName].push(handler);
                     }
-                    console.log(this._eventHandlers);
                 }
             },
 
@@ -94,7 +93,6 @@ define (
              * @private
              */
             _fire: function(eventArgs) {
-                console.log('fire', this._eventHandlers);
                 if (eventArgs.type in this._eventHandlers) {
                     var handlers = this._eventHandlers[eventArgs.type];
                     for (var i=0, len=handlers.length; i < len; i++){

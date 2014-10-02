@@ -22,6 +22,7 @@ define(['./event'], function(event) {
             this.event = new event(this);
             this.id = id;
             this.ws = ws;
+            this.session = null;
             this.params = {
                 connectTime: params.connectTime || Date.now(),
                 userAgent: params.userAgent || '',
@@ -103,6 +104,14 @@ define(['./event'], function(event) {
                 target: this,
                 connId: this.id
             });
+        },
+
+        setSession: function(session) {
+            this.session = session;
+        },
+
+        getSession: function() {
+            return this.session;
         }
     });
 

@@ -40,6 +40,7 @@ define(
         addConnect: function(conn) {
 
             var that = this;
+
             // обработка события закрытия коннекта
             conn.event.on({
                 type: 'socket.close',
@@ -48,6 +49,10 @@ define(
                     that.removeConn(args.connId);
                 }
             });
+
+            // добавим ссылку на сессию
+            conn.setSession(this);
+
             this.connects.push(conn);
             return true;
         },
@@ -66,7 +71,7 @@ define(
          * @returns {boolean}
          */
         removeConn: function (id) {
-            
+
             for (var i = 0, len = this.connects.length; i < len; i++) {
                 if (this.connects[i].getId() == id) {
                     this.connects.splice(i, 1);

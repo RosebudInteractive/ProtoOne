@@ -97,7 +97,6 @@ wss.on('connection', function(ws) {
         side: 'server',
         close: function() { // при закрытии коннекта
             var connect = findConnection(connId);
-            //console.log('close', connect);
             if (connect)
                 connect.closeConnect();
             console.log("отключился клиент: " + connId);
