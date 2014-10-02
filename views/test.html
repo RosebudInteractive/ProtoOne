@@ -37,7 +37,7 @@
         });
 
 
-      var myButton=null, dbc=null, dbsl=null, guids=null;
+      var myButton=null, myRootCont=null, dbc=null, dbsl=null, guids=null;
       function createController(done){
 		require(
             ['../public/memDBController', 'memDataBase'],
@@ -63,8 +63,11 @@
       }
 
       function changeCaption(val) {
+          myButton = dbsl.getObj(guids.myButtonGuid);
+          myRootCont = dbsl.getObj(guids.myRootContGuid);
           myButton.set('Caption', val);
           var delta = myRootCont.getLog().genDelta();
+          console.log(delta);
       }
 		
 
