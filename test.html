@@ -76,17 +76,7 @@
             function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
 			
 				var dbc = new MemDBController();
-				
-				console.log(dbc.guid());
-				console.log(dbc.guid());
-				console.log(dbc.guid());
-				console.log(dbc.guid());
-				
                 var db = dbc.newDataBase({name:"Master", kind : "master"}); 
-
-				
-				//var myMetaField = new MemMetaField(db);
-				//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
 				
 				var par = { obj: db.getMeta(), colName: "Children" };
 				//return;				
@@ -110,7 +100,7 @@
 				var myButton = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Name":"MyFirstButton","Caption":"OK"}});
 				var myButton2 = new MemObj(myMetaButton,{ obj: myRootCont, colName: "Children"},{fields: {"Id":23,"Name":"MySecondButton","Caption":"Cancel"}});
 
-				var dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: true, masterGuid : db.getGuid()}); 				
+				var dbsl = dbc.newDataBase({name:"Slave", proxyMaster : dbc.getProxy(db.getGuid())}); 				
 				//dbsl.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");
 				
 				console.log("***");

@@ -40,7 +40,9 @@ define(
 			},
 
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
-			// params.local - true, тогда мастер-база локальная и masterConnect не передается
+			// params.proxyMaster 
+			
+			// params.local - true, тогда мастер-база локальная и masterConnect не передается -- НЕТ - это должно быть в КОНТРОЛЛЕРЕ
 			// params.masterGuid - гуид мастер-базы
 			// params.masterConnection - коннект к серверу с мастер-базой
 			init: function(controller, params){
@@ -55,9 +57,15 @@ define(
                 pvt.guid = controller.guid();
 				
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
-				pvt.controller._attachDataBase(this);
+				pvt.controller._attachLocalDataBase(this);
 				
 				if (params.kind != "master") {
+					pvt.proxyMaster = params.proxyMaster;
+					controller._subscribe(this);
+					controller.subscribeRoot(this,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(result){		
+                            console.log('callback result:', result);
+                     });
+				/*
 						pvt.masterGuid = params.masterGuid;
 						if (params.local) {
 							// TODO найти базу по гуиду через контроллер
@@ -69,22 +77,26 @@ define(
 							pvt.masterConnection = params.masterConnection;
                             controller._subscribe(this);
                         }
-						this.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156", function(result){
-							
-                            console.log('callback result:', result);
-                        });
+
+						*/
 					}
 				else { // master base
-					pvt.masterGuid = undefined;
+					//pvt.masterGuid = undefined;
 					// Создать объект с коллекцией метаинфо
 					pvt.meta = new MemMetaRoot( { db: this },{});	
 				}		
 			},
+
+			// подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
+			// метод вызывается у подчиненной (slave) базы.
+			subscribeRoot: function(rootGuid,callback) {
+				this.pvt.controller.subscribeRoot(this,rootGuid,callback);
+			},
 			
 			// Стать подписчиком базы данных
-			onSubscribe: function(subProxy) {
-				var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
-				this.pvt.subscribers[g] = subProxy;
+			onSubscribe: function(proxy) {
+				//var g = (proxy.db) ? proxy.dataBase.getGuid() : proxy.guid;
+				this.pvt.subscribers[proxy.guid] = proxy;
 			},
 			
 			isSubscribed: function(dbGuid) {
@@ -183,23 +195,15 @@ define(
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
 				return ideser(this,sobj,{"db":this, "mode":"RW"});
 			},
-			
-			// подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
-			// метод вызывается у подчиненной базы.
-			subscribeRoot: function(rootGuid,callback) {
-				this.pvt.controller.subscribeRoot(this,rootGuid,callback);
-			},
-			
-
-			
+						
 			// вернуть ссылку на контроллер базы данных
 			getController: function() {
 				return this.pvt.controller;
 			},
 			
-			getConnection: function() {
+			/*getConnection: function() {
 				return this.pvt.masterConnection;
-			},
+			},*/
 			
 			// Вернуть название БД
 			getName: function() {
@@ -213,15 +217,15 @@ define(
 			
 			// Является ли мастер базой
 			isMaster: function() {
-				if (this.pvt.masterDBGuid == undefined)
+				if (this.pvt.proxyMaster == undefined)
 					return true;
 				else
 					return false;
 			},
 			
 			// вернуть мастер-базу если локальна
-			getMaster: function() {
-				return this.pvt.masterDB;
+			getProxyMaster: function() {
+				return this.pvt.proxyMaster;
 			},
 			
 			// вернуть корневой объект метаинфо

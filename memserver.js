@@ -9,16 +9,7 @@ var MemObj = require('./public/memObj');
 
 var dbc = new MemDBController();
 
-console.log(dbc.guid());
-console.log(dbc.guid());
-console.log(dbc.guid());
-console.log(dbc.guid());
-
 var db = dbc.newDataBase({name:"Master", kind : "master"});
-
-
-//var myMetaField = new MemMetaField(db);
-//var myMetaXObj = new MemMetaXObj(db); // должен создаваться автоматом при инициализации базы
 
 var par = { obj: db.getMeta(), colName: "Children" };
 //return;
@@ -121,7 +112,7 @@ wss.on('connection', function(ws) {
                     result =  {connId:connId};
                     break;
                 case 'subscribe':
-                    result = {data:dbc.onSubscribe(ws, data.guid)};
+                    result = {data:dbc.onSubscribe({ connect:ws, guid:data.guid})};
                     break;
                 case 'subscribeRoot':
                     if (!db.isSubscribed(data.dbGuid)) // если клиентская база еще не подписчик
