@@ -52,7 +52,8 @@
                     guids = result;
                     // создаем  контроллер и бд
                     dbc = new MemDBController();
-                    dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : guids.masterGuid, masterConnection: socket});
+                    //dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : guids.masterGuid, masterConnection: socket});
+					dbsl = dbc.newDataBase({name:"Slave", proxyMaster : { connect: socket, guid: guids.masterGuid}}); 	
                     console.log('контроллер:', dbc);
                     console.log('база данных:', dbsl);
                 });

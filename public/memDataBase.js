@@ -57,11 +57,13 @@ define(
                 pvt.guid = controller.guid();
 				
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
-				pvt.controller._attachLocalDataBase(this);
+				pvt.controller.createLocalProxy(this);
 				
 				if (params.kind != "master") {
-					pvt.proxyMaster = params.proxyMaster;
-					controller._subscribe(this);
+					//controller.addProxy(params.proxyMaster);
+					//pvt.proxyMaster = params.proxyMaster;
+					controller._subscribe(this,params.proxyMaster);
+					pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
 					controller.subscribeRoot(this,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(result){		
                             console.log('callback result:', result);
                      });

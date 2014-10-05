@@ -8,30 +8,31 @@ define(
 	function(MemDataBase) {
 		var MemDBController = Class.extend({
 
-			_attachLocalDataBase: function(db) {
+			createLocalProxy: function(db) {
 				var dbInfo = {};
 				dbInfo.db = db;
 				dbInfo.kind = "local";
 				dbInfo.guid = db.getGuid();
 				this.pvt.dbCollection[db.getGuid()] = dbInfo;
+				return dbInfo;
 			},
 
-			_attachRemoteDataBase: function(proxy) {
+			findOrCreateProxy: function(proxy) {
+				var p=this.getProxy(proxy.guid);
+				if (p)  return p;
+				
 				var dbInfo = {};
 				dbInfo.db = null;
 				dbInfo.kind = "remote";
 				dbInfo.guid = proxy.guid;
 				dbInfo.connect = proxy.connect;
 				this.pvt.dbCollection[proxy.guid] = dbInfo;
+				return dbInfo;
 			},			
 	
 			init: function(){
 				this.pvt = {};
 				this.pvt.dbCollection = {};
-			},
-			
-			addRemote: function(proxy) {
-				this._attachRemoteDataBase(proxy);
 			},
 			
 			// сгенерировать guid
@@ -52,23 +53,26 @@ define(
 			},
 
 			// подписать базу данных на ее мастер (только из инит)
-            _subscribe: function(db) {
-				var p=db.getProxyMaster();
+            _subscribe: function(db,proxyMaster) {
+				var p=this.findOrCreateProxy(proxyMaster);
 				if (p.kind == "remote")
-					db.getConnection().send({action:'subscribe', guid:db.getGuid()});
+					p.connect.send({action:'subscribe', slaveGuid:db.getGuid(), masterGuid: p.guid});
+					//db.getConnection().send({action:'subscribe', guid:db.getGuid()});
 				else {
 					this.onSubscribe(this.getProxy(db.getGuid()),p.db.getGuid());
 				}				
 				// TODO обработать асинхронность
             },
 			
-			// подписать  базу данных с гуидом guid, относящуюся к данному контроллеру
-			// db - база данных, которую подписываем
+			// подписать proxy на базу данных с гуидом dbGuid, относящуюся к данному контроллеру
 			// proxy - прокси базы, которая подписывается
-            onSubscribe: function(proxy,dbGuid) {
-				db=this.getDbByGuid(dbGuid);
-				db.onSubscribe(proxy);
-                /*var db = this.getDbByGuid(proxy.guid);
+			// masterGuid - база данных, на которую подписываем
+            onSubscribe: function(proxy,masterGuid) {
+				var p=this.findOrCreateProxy(proxy);
+				
+				db=this.getDB(masterGuid);
+				db.onSubscribe(p);
+                /*var db = this.getDB(proxy.guid);
                 if (db)
                     db.getProxyMaster().db.onSubscribe(proxy);*/
             },
@@ -76,7 +80,7 @@ define(
 			// подписать базу db на рутовый элемент с гуидом rootGuid
 			subscribeRoot: function(db,rootGuid, callback) {
 				var p = db.getProxyMaster();
-				if (p.kind = "local") { // мастер-база доступна локально
+				if (p.kind == "local") { // мастер-база доступна локально
 					var newObj = p.db.onSubscribeRoot(db.getGuid(),rootGuid);
 					db.deserialize(newObj);
 				}
@@ -84,12 +88,12 @@ define(
 					callback2 = function(newObj) {
 						db.deserialize(newObj.data);
 					}
-					p.connect.send({action:'subscribeRoot', type:'method', dbGuid:db.getGuid(), objGuid:rootGuid},callback2);
+					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);
 					// TODO обработать асинхронность
 				}
 			},
-
-
+			
+			//onSubscribeRoot: function(proxy,dbGuid
 			
 			// отписать либо все базы данного коннекта либо БД с гуидом guid
 			onUnsubscribe: function(connect, dbGuid) {
@@ -101,7 +105,7 @@ define(
 				}
 			},
 			
-            getDbByGuid: function(guid){
+            getDB: function(guid){
 
                 // поиск по гуиду
 				var dbInfo = this.pvt.dbCollection[guid];

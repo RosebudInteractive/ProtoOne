@@ -112,12 +112,13 @@ wss.on('connection', function(ws) {
                     result =  {connId:connId};
                     break;
                 case 'subscribe':
-                    result = {data:dbc.onSubscribe({ connect:ws, guid:data.guid})};
+                    result = {data:dbc.onSubscribe({ connect:ws, guid:data.slaveGuid}, data.masterGuid )};
                     break;
                 case 'subscribeRoot':
-                    if (!db.isSubscribed(data.dbGuid)) // если клиентская база еще не подписчик
-                        db.onSubscribe(ws);
-                    result = {data:db.onSubscribeRoot(data.dbGuid, data.objGuid)};
+					var masterdb=dbc.getDB(data.masterGuid);
+                    if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
+                        dbc.onSubscribe({ connect:ws, guid:data.slaveGuid}, data.masterGuid );
+                    result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
                     break;
                 case 'getGuids':
                     result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};
