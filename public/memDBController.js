@@ -131,6 +131,16 @@ define(
 				return this.pvt.dbCollection[dbGuid];
 			},
 
+            /**
+             * Отключение коннекта
+             * @param connectId
+             */
+            onDisconnect: function(connectId) {
+                for(var i in this.pvt.dbCollection) {
+                    this.pvt.dbCollection[i].unSubscribe(connectId);
+                }
+            }
+
 
 
         });

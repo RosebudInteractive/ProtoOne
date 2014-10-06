@@ -17,10 +17,12 @@ define(
          * Инициализация объекта
          * @constructs
          * @param id {string} ID сессии
+         * @param data {object} данные сессии
          */
-        init: function(id) {
+        init: function(id, data) {
             this.event = new event(this);
             this.id = id;
+            this.data = data;
             this.connects = [];
         },
 
@@ -47,6 +49,7 @@ define(
                 subscriber: this,
                 callback: function(args){
                     that.removeConn(args.connId);
+
                 }
             });
 
@@ -93,6 +96,14 @@ define(
                 break;
             }
             return null;
+        },
+
+        setData: function(data){
+            this.data = data;
+        },
+
+        getData: function(){
+            return this.data;
         }
     });
 

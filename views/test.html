@@ -11,6 +11,7 @@
     <script>
 
         var socket = null;
+        var sid = $.url('?sid');
 
         // когда документ загружен
         $(function(){
@@ -20,7 +21,7 @@
                     socket = new Socket("ws://"+url('hostname')+":8081", {
                         open: function(){ // при открытии соединения
                             // отправляем сообщение что подключились
-                            socket.send({action:'connect', type:'method', sid: $.url('?sid'), agent:navigator.userAgent}, function(){
+                            socket.send({action:'connect', type:'method', sid: sid, agent:navigator.userAgent}, function(){
                                 createController();
                             });
                         },

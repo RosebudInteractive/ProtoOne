@@ -273,6 +273,10 @@ define(
             // получить guid
             getGuid: function() {
                 return this.pvt.guid;
+            },
+
+            unSubscribe: function(connectId) {
+
             }
 
         });

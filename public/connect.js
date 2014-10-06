@@ -98,6 +98,7 @@ define(['./event'], function(event) {
          * Закрыть соединение
          */
         closeConnect: function() {
+            this.params.stateReady = 0; // closed
             // создаем событие закрытия коннекта
             this.event.fire({
                 type: 'socket.close',
