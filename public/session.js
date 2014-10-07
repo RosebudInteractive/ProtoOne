@@ -56,7 +56,7 @@ define(
             // добавим ссылку на сессию
             conn.setSession(this);
 
-            this.connects.push(conn);
+            this.connects[conn.getId()] = conn;
             return true;
         },
 
@@ -74,14 +74,8 @@ define(
          * @returns {boolean}
          */
         removeConn: function (id) {
-
-            for (var i = 0, len = this.connects.length; i < len; i++) {
-                if (this.connects[i].getId() == id) {
-                    this.connects.splice(i, 1);
-                    return true;
-                }
-            }
-            return false;
+            if (this.connects[id])
+                delete this.connects[id];
         },
 
         /**
@@ -90,11 +84,8 @@ define(
          * @returns {object|null}
          */
         findConnect: function (id) {
-            for (var i in this.connects) {
-                if (this.connects[i].getId() == id)
-                    return this.connects[i];
-                break;
-            }
+            if (this.connects[id])
+                return this.connects[id];
             return null;
         },
 

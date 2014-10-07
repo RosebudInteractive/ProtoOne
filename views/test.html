@@ -3,6 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        html, body, table,tr, td {padding:0;margin: 0;}
+        #container {padding:10px;}
+        #result {border:1px solid #999; width: 100%; overflow: auto;height:100%;}
+        #console-block {height: 70px;position:absolute;}
+        #console {padding: 0;margin: 0;}
+    </style>
+
     <script src="../public/class-extend.js"></script>
     <script data-main="./public/main.js" src="../public/require.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -80,17 +88,59 @@
           // отправляем дельту на сервер
           socket.send({action:"changeObj", delta:delta});
       }
+
+    /**
+     * Получить  получить на клиент от сервера структуру - все сессии с номерами и когда созданы,
+     * все коннекты этих сессий - с номерами и когда созданы - и чтобы эту инфо можно было вывести
+     * в мемо поле по кнопке (трассировка)
+     */
+      function getSessions() {
+          socket.send({action:"getSessions", type:'method'}, function(result){
+                console.log(result);
+               $('#result').append('<p>' + JSON.stringify(result.sessions) + ' </p>');
+          });
+      }
+
+        $(function(){
+
+            function fixHeight() {
+                $('#result').height($(window).height()-90);
+                $('#console').width('100%');
+            };
+            fixHeight();
+            $(window).resize(fixHeight)
+
+            // click enter
+            $("#console").keyup(function(event){
+                if(event.keyCode == 13){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    runCommand($('#console').val());
+                    // $('#console').val('');
+                }
+            });
+        });
 		
 
     </script>
 </head>
 <body>
-<h2>Управление</h2>
 <input type="button" value="Подписаться на корневой объект" onclick="subscribeRoot();"><br><br>
+<input type="button" value="Трассировка" onclick="getSessions();"><br><br>
 <input type="text" value="" id="myButtonInput"> <input type="button" value="Поменять Caption для myButton" onclick="changeCaption($('#myButtonInput').val());">
 
+<div id="container">
+    <div id="result"></div>
+    <div id="console-block"><table width="100%">
+        <tr>
+            <td width="100%"><textarea name="console" id="console" style="width: 100%;" rows="3"></textarea></td>
+            <td width="120"><input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/><br>
+                <input type="button" onclick="$('#console').val('');" value="Очистить"/>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
 
-<h2>Кнопки</h2>
-myButton: <input type="button" value="" id="myButton">
 </body>
 </html>

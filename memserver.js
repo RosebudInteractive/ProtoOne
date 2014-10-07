@@ -63,21 +63,22 @@ var SessionController = require('./public/sessionController.js');
 var sessionController = new SessionController();
 
 // WebSocket-сервер на порту 8081
-var connectId = 0;
+var _connectId = 0;
 var wss = new WebSocketServer.Server({port: 8081});
 wss.on('connection', function(ws) {
     // id подключения
-    connectId++;
-    var socket = new Socket(ws, {
+    _connectId++;
+    new Socket(ws, {
         side: 'server',
-        close: function() { // при закрытии коннекта
+        connectId: _connectId,
+        close: function(event, connectId) { // при закрытии коннекта
             var connect = sessionController.getConnect(connectId);
             if (connect)
                 connect.closeConnect();
             console.log("отключился клиент: " + connectId);
         },
-        router: function(data) {
-            console.log('сообщение с клиента:', data);
+        router: function(data, connectId) {
+            console.log('сообщение с клиента '+connectId+':', data);
             var result = {};
             switch (data.action) {
                 case 'connect':
@@ -144,6 +145,20 @@ wss.on('connection', function(ws) {
                     var sessionData = sessionController.getConnect(connectId).getSession().getData();
                     var myRootCont = sessionData.myRootCont;
                     myRootCont.getLog().applyDelta(data.delta);
+                    break;
+
+                case 'getSessions':
+                    var sessions = sessionController.getSessions();
+                    result = {sessions:[]};
+                    for(var i in sessions) {
+                        var session = {id:i, date:sessions[i].date, connects:[]};
+                        var connects = sessions[i].item.getConnects();
+                        for(var j in connects) {
+                            var connect = {id:j, date:sessionController.getConnectDate(j)};
+                            session.connects.push(connect);
+                        }
+                        result.sessions.push(session);
+                    }
                     break;
             }
             return result;

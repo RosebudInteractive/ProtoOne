@@ -25,7 +25,8 @@ define(function() {
                 side: options.side?options.side:'client', // создаем объект для сервера или клиента
                 open: options.open?options.open:null,   // вызвать метод при открытии сокета
                 close: options.close?options.close:null,// вызвать метод при закрытии сокета
-                router: options.router?options.router:null // вызвать метод при получении сообщения от сервера
+                router: options.router?options.router:null, // вызвать метод при получении сообщения от сервера
+                connectId: options.connectId?options.connectId:null
             };
 
             if (this.options.side == 'client') {
@@ -73,7 +74,7 @@ define(function() {
          */
         open: function(event){
             if (this.options.open)
-                this.options.open(event);
+                this.options.open(event, this.options.connectId);
         },
 
         /**
@@ -86,7 +87,7 @@ define(function() {
             // обработчик
             if (this.options.router) {
                 // вызов роутера
-                var result = this.options.router(data);
+                var result = this.options.router(data, this.options.connectId);
 
                 // если требуется возврат результата
                 if (data.type == 'method') {
@@ -111,7 +112,7 @@ define(function() {
          */
         close: function(event){
             if (this.options.close)
-                this.options.close(event);
+                this.options.close(event, this.options.connectId);
         }
     });
 
