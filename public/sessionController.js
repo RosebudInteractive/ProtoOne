@@ -11,17 +11,25 @@ define(
                 this.session = {};
                 this.connects = {};
             },
-            addSession: function(id, session){
-                this.session[id] = session;
+            addSession: function(session){
+                this.session[session.getId()] = session;
             },
-            addConnect: function(id, connect){
-                this.connects[id] = connect;
+            addConnect: function(connect){
+                this.connects[connect.getId()] = connect;
             },
             getSession: function(id){
                 return this.session[id];
             },
             getConnect: function(id){
                 return this.connects[id];
+            },
+            removeSession: function(id){
+                if (this.session[id])
+                delete this.session[id];
+            },
+            removeConnect: function(id){
+                if (this.connects[id])
+                    delete this.connects[id];
             }
         });
         return SessionController;

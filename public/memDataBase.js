@@ -275,8 +275,12 @@ define(
                 return this.pvt.guid;
             },
 
+            /**
+             * Отписаться от коннекта
+             * @param connectId
+             */
             unSubscribe: function(connectId) {
-
+                console.log('MemDataBase.unSubscribe', connectId);
             }
 
         });

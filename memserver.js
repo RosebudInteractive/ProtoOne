@@ -96,14 +96,17 @@ wss.on('connection', function(ws) {
                         session = new Session(sessionID, createControllerAndDb());
                         sessionController.addSession(session);
                     }
-                    connect.setSession(session);
+                    session.addConnect(connect);
+
+                    console.log(sessionController);
 
                     // обработка события закрытия коннекта
-                    conn.event.on({
+                    connect.event.on({
                         type: 'socket.close',
                         subscriber: this,
                         callback: function(args){
                             session.getData().dbc.onDisconnect(args.connId);
+                            sessionController.removeConnect(args.connId);
                         }
                     });
 
