@@ -77,7 +77,7 @@ wss.on('connection', function(ws) {
                 connect.closeConnect();
             console.log("отключился клиент: " + connectId);
         },
-        router: function(data, connectId) {
+        router: function(data, connectId, socket) {
             console.log('сообщение с клиента '+connectId+':', data);
             var result = {};
             switch (data.action) {
@@ -90,7 +90,7 @@ wss.on('connection', function(ws) {
                     }
 
                     // запоминаем клиента подключенного
-                    var connect = new Connect(connectId, ws,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
+                    var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
                     sessionController.addConnect(connect);
                     var session = sessionController.getSession(sessionID);
                     if (!session) {
@@ -119,7 +119,7 @@ wss.on('connection', function(ws) {
                     var session = connect.getSession();
                     var dbc = session.getData().dbc;
 
-                    result = {data:dbc.onSubscribe({connect:connectId, guid:data.slaveGuid}, data.masterGuid)};
+                    result = {data:dbc.onSubscribe({connect:connect, guid:data.slaveGuid}, data.masterGuid)};
                     break;
 
                 case 'subscribeRoot':
@@ -145,6 +145,11 @@ wss.on('connection', function(ws) {
                     var sessionData = sessionController.getConnect(connectId).getSession().getData();
                     var myRootCont = sessionData.myRootCont;
                     myRootCont.getLog().applyDelta(data.delta);
+                    break;
+
+                case 'sendDelta':
+                    var dbc = sessionController.getConnect(connectId).getSession().getData().dbc;
+                    dbc.applyDelta(data.masterGuid, data.guidDb, data.guidRoot, data.delta);
                     break;
 
                 case 'getSessions':

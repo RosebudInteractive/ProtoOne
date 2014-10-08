@@ -41,6 +41,10 @@ define(['./event'], function(event) {
             return this.ws;
         },
 
+        send: function(data){
+            return this.ws.send(data);
+        },
+
         /**
          * Получить параметры подключения
          * @returns {object}

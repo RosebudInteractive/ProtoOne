@@ -142,7 +142,7 @@ define(
                 }
             },
 
-            applyDelta: function(guidDb, guidRootObj, delta) {
+            applyDelta: function(guidDb, sendGuidDb, guidRootObj, delta) {
                 // находим рутовый объект к которому должна быть применена дельта
                 var db  = this.getDB(guidDb);
                 var root = db.getRoot(guidRootObj);
@@ -159,16 +159,18 @@ define(
                 // должен непосредственно вызвать тот же метод controller.applyDelta. При этом
                 // необходимо сперва сделать все отсылки удаленным подписчикам, а затем уже
                 // обработать локальных.
+                console.log('root.subscribers', root.subscribers);
                 for(var guid in root.subscribers) {
                     var subscriber = root.subscribers[guid];
+                    console.log('subscriber', subscriber);
                     // удаленные
-                    if (subscriber.kind == 'remote' && root.getGuid() != guid)
-                        subscriber.connect.send({action:"changeObj", delta:delta});
+                    if (subscriber.kind == 'remote' && sendGuidDb != guid)
+                        subscriber.connect.send({action:"sendDelta", delta:delta, guidDb:subscriber.guid, guidRoot:guid});
                 }
                 for(var guid in root.subscribers) {
                     var subscriber = root.subscribers[guid];
                     // локальные
-                    if (subscriber.kind == 'local' && root.getGuid() != guid)
+                    if (subscriber.kind == 'local' && sendGuidDb != guid)
                         subscriber.db.getObj(guid).getLog().applyDelta(delta);
                 }
             }

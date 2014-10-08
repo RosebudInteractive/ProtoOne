@@ -86,7 +86,8 @@
           console.log('delta:', delta);
 
           // отправляем дельту на сервер
-          socket.send({action:"changeObj", delta:delta});
+          //socket.send({action:"changeObj", delta:delta});
+          socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
       }
 
     /**

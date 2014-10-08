@@ -87,7 +87,7 @@ define(function() {
             // обработчик
             if (this.options.router) {
                 // вызов роутера
-                var result = this.options.router(data, this.options.connectId);
+                var result = this.options.router(data, this.options.connectId, this);
 
                 // если требуется возврат результата
                 if (data.type == 'method') {
