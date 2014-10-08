@@ -140,10 +140,38 @@ define(
                     if (this.pvt.dbCollection[i].db)
                         this.pvt.dbCollection[i].db.unSubscribe(connectId);
                 }
+            },
+
+            applyDelta: function(guidDb, guidRootObj, delta) {
+                // находим рутовый объект к которому должна быть применена дельта
+                var db  = this.getDB(guidDb);
+                var root = db.getRoot(guidRootObj);
+
+                // вызывает у лога этого объекта applyDelta(delta)
+                root.obj.getLog().applyDelta(delta);
+
+                // пробегает по подписчикам этого корневого объекта и рассылает
+                // им всем ту же самую дельту. При этом необходимо, чтобы из
+                // подписчиков был исключен тот, кто эту дельту послал.
+                // Самый важный момент - подписчики могут быть локальными или
+                // удаленными.  про это знает контроллер, который в случае удаленного
+                // подписчика должен послать сообщение подписчику, а в случае локального
+                // должен непосредственно вызвать тот же метод controller.applyDelta. При этом
+                // необходимо сперва сделать все отсылки удаленным подписчикам, а затем уже
+                // обработать локальных.
+                for(var guid in root.subscribers) {
+                    var subscriber = root.subscribers[guid];
+                    // удаленные
+                    if (subscriber.kind == 'remote' && root.getGuid() != guid)
+                        subscriber.connect.send({action:"changeObj", delta:delta});
+                }
+                for(var guid in root.subscribers) {
+                    var subscriber = root.subscribers[guid];
+                    // локальные
+                    if (subscriber.kind == 'local' && root.getGuid() != guid)
+                        subscriber.db.getObj(guid).getLog().applyDelta(delta);
+                }
             }
-
-
-
         });
 		return MemDBController;
 	}

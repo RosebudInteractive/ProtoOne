@@ -160,7 +160,7 @@ define(
 						cc2[j] = o2;
 					}
 				}					
-				return newObj;	// TODO? делать stringify тут?						
+				return newObj;	// TODO? делать stringify тут?
 			},
 
 			// ----создать подписанный корневой объект (временный вариант)
