@@ -7,10 +7,14 @@ var MemMetaObjFields = require('./public/memMetaObjFields');
 var MemMetaObjCols = require('./public/memMetaObjCols');
 var MemObj = require('./public/memObj');
 
-function createControllerAndDb() {
+function createController(){
     var dbc = new MemDBController();
+    return dbc;
+}
 
-    var db = dbc.newDataBase({name: "Master", kind: "master"});
+function createDb(dbc, options){
+
+    var db = dbc.newDataBase(options);
 
     var par = { obj: db.getMeta(), colName: "Children" };
 //return;
@@ -94,7 +98,8 @@ wss.on('connection', function(ws) {
                     sessionController.addConnect(connect);
                     var session = sessionController.getSession(sessionID);
                     if (!session) {
-                        session = new Session(sessionID, createControllerAndDb());
+                        var dbc = createController();
+                        session = new Session(sessionID, createDb(dbc, {name: "Master", kind: "master"}));
                         sessionController.addSession(session);
                     }
                     session.addConnect(connect);
@@ -165,6 +170,21 @@ wss.on('connection', function(ws) {
                         result.sessions.push(session);
                     }
                     break;
+
+                case 'changeCaption':
+                    var sessionData = sessionController.getConnect(connectId).getSession().getData();
+                    var dbc = sessionData.dbc;
+                    var db = sessionData.db;
+                    var myButton = sessionData.myButton;
+                    var myRootCont = sessionData.myRootCont;
+
+                    myButton.set('Caption', data.caption);
+                    var delta = myRootCont.getLog().genDelta();
+                    console.log('delta:', delta);
+
+                    dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);
+                    break;
+
             }
             return result;
         }

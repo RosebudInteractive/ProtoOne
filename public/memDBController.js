@@ -171,7 +171,7 @@ define(
                     var subscriber = root.subscribers[guid];
                     // локальные
                     if (subscriber.kind == 'local' && sendGuidDb != guid)
-                        subscriber.db.getObj(guid).getLog().applyDelta(delta);
+                        subscriber.db.getObj(guidRootObj).getLog().applyDelta(delta);
                 }
             }
         });

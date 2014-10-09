@@ -20,6 +20,7 @@
 
         var socket = null;
         var sid = $.url('?sid');
+        var myButton=null, myRootCont=null, dbc=null, dbsl=null, dbs2=null, guids=null;
 
         // когда документ загружен
         $(function(){
@@ -43,6 +44,9 @@
                                 case 'error': // ошибки
                                     console.log(data.error);
                                     break;
+                                case 'sendDelta':
+                                    dbc.applyDelta(dbsl.getGuid(), data.guidDb, guids.myRootContGuid, data.delta);
+                                    break;
                             }
                             return result;
                         }
@@ -52,7 +56,7 @@
         });
 
 
-      var myButton=null, myRootCont=null, dbc=null, dbsl=null, guids=null;
+
       function createController(done){
 		require(
             ['../public/memDBController', 'memDataBase'],
@@ -61,13 +65,26 @@
                     guids = result;
                     // создаем  контроллер и бд
                     dbc = new MemDBController();
-                    //dbsl = dbc.newDataBase({name:"Slave", kind : "slave", local: false, masterGuid : guids.masterGuid, masterConnection: socket});
-					dbsl = dbc.newDataBase({name:"Slave", proxyMaster : { connect: socket, guid: guids.masterGuid}}); 	
+					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}});
                     console.log('контроллер:', dbc);
-                    console.log('база данных:', dbsl);
+                    console.log('база данных B:', dbsl);
+
                 });
             }
         );
+      }
+
+      function createDataBase() {
+          dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
+          dbs2._buildMetaTables();
+          dbs2.subscribeRoot(guids.myRootContGuid, function(result){
+              console.log(result);
+          });
+          console.log('база данных C:', dbs2);
+      }
+
+      function changeCaptionMaster() {
+          socket.send({action:"changeCaption", caption:'13313123'});
       }
 
       function subscribeRoot() {
@@ -88,6 +105,9 @@
           // отправляем дельту на сервер
           //socket.send({action:"changeObj", delta:delta});
           socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
+
+          // отправляем подписчикам своим
+          dbc.applyDelta(dbsl.getGuid(), dbsl.getGuid(), guids.myRootContGuid, delta);
       }
 
     /**
@@ -109,7 +129,7 @@
                 $('#console').width('100%');
             };
             fixHeight();
-            $(window).resize(fixHeight)
+            $(window).resize(fixHeight);
 
             // click enter
             $("#console").keyup(function(event){
@@ -127,6 +147,9 @@
 </head>
 <body>
 <input type="button" value="Подписаться на корневой объект" onclick="subscribeRoot();"><br><br>
+<input type="button" value="Создать базу C и подписаться на базу B" onclick="createDataBase();"><br><br>
+<input type="button" value="Изменить Caption в мастер базе А" onclick="changeCaptionMaster();"><br><br>
+
 <input type="button" value="Трассировка" onclick="getSessions();"><br><br>
 <input type="text" value="" id="myButtonInput"> <input type="button" value="Поменять Caption для myButton" onclick="changeCaption($('#myButtonInput').val());">
 
