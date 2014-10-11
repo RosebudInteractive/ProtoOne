@@ -105,10 +105,13 @@
           });
       }
 
-      function changeCaption(val) {
+      function changeFields(fields) {
           myButton = dbsl.getObj(guids.myButtonGuid);
           myRootCont = dbsl.getObj(guids.myRootContGuid);
-          myButton.set('Caption', val);
+
+          for(var name in fields)
+            if (fields[name] && fields[name]!='')
+                myButton.set(name, fields[name]);
           //var delta = myRootCont.getLog().genDelta();
           //console.log('delta:', delta);
 		  
@@ -175,7 +178,10 @@
 <body>
 
 <input type="button" value="Трассировка" onclick="getSessions();">
-<input type="text" value="" id="myButtonInput"> <input type="button" value="Поменять Caption для myButton" onclick="changeCaption($('#myButtonInput').val());">
+Caption:<input type="text" value="" id="myButtonCaption">
+Top:<input type="text" value="" id="myButtonTop">
+Left:<input type="text" value="" id="myButtonLeft">
+<input type="button" value="Поменять" onclick="changeFields({Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});">
 <input type="button" value="renderAll" onclick="renderAll();">
 
 <div id="container">
