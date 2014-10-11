@@ -6,7 +6,8 @@
     <style>
         html, body, table,tr, td {padding:0;margin: 0;}
         #container {padding:10px;}
-        #result {border:1px solid #999; width: 100%; overflow: auto;height:100%;}
+        #result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;}
+        #result input {position: absolute;top:0;left:0;}
         #console-block {height: 70px;position:absolute;}
         #console {padding: 0;margin: 0;}
     </style>
@@ -69,7 +70,6 @@
 					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
                     console.log('контроллер:', dbc);
                     console.log('база данных B:', dbsl);
-
                 });
             }
         );
@@ -80,6 +80,7 @@
           //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
               console.log(result);
+              createButton(dbsl, guids.myButtonGuid);
           });
           console.log('база данных C:', dbs2);
       }
@@ -106,6 +107,8 @@
 		  
 		  dbc.genDeltas(dbsl.getGuid());
 
+          renderAll();
+
           // отправляем дельту на сервер
           //socket.send({action:"changeObj", delta:delta});
           //socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
@@ -113,6 +116,8 @@
           // отправляем подписчикам своим
           //dbc.applyDelta(dbsl.getGuid(), dbsl.getGuid(), guids.myRootContGuid, delta);
       }
+
+
 
     /**
      * Получить  получить на клиент от сервера структуру - все сессии с номерами и когда созданы,
@@ -126,48 +131,48 @@
           });
       }
 
-        $(function(){
 
+        var buttons = [];
+        function createButton(db, guid) {
+            require(
+                    ['../public/button'],
+                    function( Button ){
+                        socket.send({action:"getGuids", type:'method'}, function(result){
+                            // создаем кнопку
+                            var button = new Button(db, guid, {parent:'#result'});
+                            button.render();
+                            buttons.push(button);
+                        });
+                    }
+            );
+        }
+
+        function renderAll() {
+          for(var i=0; i<buttons.length; i++) {
+              buttons[i].render();
+          }
+        }
+
+        $(function(){
             function fixHeight() {
                 $('#result').height($(window).height()-90);
                 $('#console').width('100%');
             };
             fixHeight();
             $(window).resize(fixHeight);
-
-            // click enter
-            $("#console").keyup(function(event){
-                if(event.keyCode == 13){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    runCommand($('#console').val());
-                    // $('#console').val('');
-                }
-            });
         });
 		
 
     </script>
 </head>
 <body>
-<input type="button" value="Подписаться на корневой объект" onclick="subscribeRoot();"><br><br>
-<input type="button" value="Создать базу C и подписаться на базу B" onclick="createDataBase();"><br><br>
-<input type="button" value="Изменить Caption в мастер базе А" onclick="changeCaptionMaster();"><br><br>
 
-<input type="button" value="Трассировка" onclick="getSessions();"><br><br>
+<input type="button" value="Трассировка" onclick="getSessions();">
 <input type="text" value="" id="myButtonInput"> <input type="button" value="Поменять Caption для myButton" onclick="changeCaption($('#myButtonInput').val());">
+<input type="button" value="renderAll" onclick="renderAll();">
 
 <div id="container">
     <div id="result"></div>
-    <div id="console-block"><table width="100%">
-        <tr>
-            <td width="100%"><textarea name="console" id="console" style="width: 100%;" rows="3"></textarea></td>
-            <td width="120"><input type="button" onclick="runCommand($('#console').val());$('#console').val('');" value="Выполнить"/><br>
-                <input type="button" onclick="$('#console').val('');" value="Очистить"/>
-            </td>
-        </tr>
-    </table>
-    </div>
 </div>
 
 </body>

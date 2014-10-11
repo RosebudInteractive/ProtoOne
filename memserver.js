@@ -27,16 +27,18 @@ function createDb(dbc, options){
     new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname": "Id", "ftype": "int"}});
     new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname": "Name", "ftype": "string"}});
     new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Caption", "ftype": "string"}});
+    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Left", "ftype": "integer"}});
+    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Top", "ftype": "integer"}});
     new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname": "containerType", "ftype": "enum"}});
     new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname": "Children", "ctype": "control"}});
     myMetaControl._bldElemTable(); // temp
     myMetaButton._bldElemTable();
     myMetaContainer._bldElemTable();
 
-    var myRootButton = new MemObj(myMetaButton, { "db": db, "mode": "RW" }, {"Id": 22, "Name": "MyFirstButton", "Caption": "OK"});
+    var myRootButton = new MemObj(myMetaButton, { "db": db, "mode": "RW" }, {"Id": 22, "Name": "MyFirstButton", "Caption": "OK", "Left":"30", "Top":"50"});
     var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id": 11, "Name": "MainContainer"}});
-    var myButton = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton", "Caption": "OK"}});
-    var myButton2 = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 23, "Name": "MySecondButton", "Caption": "Cancel"}});
+    var myButton = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
+    var myButton2 = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 23, "Name": "MySecondButton", "Caption": "Cancel", "Left":30, "Top":"70"}});
     return {dbc:dbc, db: db, myRootCont:myRootCont, myButton:myButton};
 }
 
