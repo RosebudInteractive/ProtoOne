@@ -179,7 +179,7 @@ define(
 					if (srcDbGuid != db.getGuid()) {
 						// послать в мастер
 						var proxy = db.getProxyMaster();
-						if (proxy != undefined) {
+						if (proxy != undefined && proxy.guid != srcDbGuid) {
 							if (proxy.kind == "local") {
 								//TODO
 								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta.content);
