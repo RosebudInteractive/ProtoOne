@@ -66,6 +66,13 @@
                     guids = result;
                     // создаем  контроллер и бд
                     dbc = new MemDBController();
+                    dbc.event.on({
+                        type: 'applyDeltas',
+                        subscriber: this,
+                        callback: function(args){
+                            renderAll();
+                        }
+                    });
 					var cb = subscribeRoot;
 					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
                     console.log('контроллер:', dbc);

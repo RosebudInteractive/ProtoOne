@@ -4,8 +4,8 @@
 }
 
 define(
-	['./memDataBase'],
-	function(MemDataBase) {
+	['./memDataBase', './event'],
+	function(MemDataBase, event) {
 		var MemDBController = Class.extend({
 
 			createLocalProxy: function(db) {
@@ -33,6 +33,7 @@ define(
 			init: function(){
 				this.pvt = {};
 				this.pvt.dbCollection = {};
+                this.event = new event();
 			},
 			
 			// сгенерировать guid
@@ -158,7 +159,11 @@ define(
 				deltas.push(delta);
 			
 				this.propagateDeltas(dbGuid,srcDbGuid,deltas);
-				
+
+                this.event.fire({
+                    type: 'applyDeltas',
+                    target: this
+                });
             },
 			
 			// сгенерить и разослать дельты
