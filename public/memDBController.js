@@ -48,18 +48,19 @@ define(
 			
 			
 			// создать новую базу данных в данном контроллере
-			newDataBase: function(init) {
-				return  new MemDataBase(this,init);
+			newDataBase: function(init,cb) {
+				return  new MemDataBase(this,init,cb);
 			},
 
 			// подписать базу данных на ее мастер (только из инит)
-            _subscribe: function(db,proxyMaster) {
+            _subscribe: function(db,proxyMaster,cb) {
 				var p=this.findOrCreateProxy(proxyMaster);
 				if (p.kind == "remote")
-					p.connect.send({action:'subscribe', slaveGuid:db.getGuid(), masterGuid: p.guid});
+					p.connect.send({action:'subscribe', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid},cb);
 					//db.getConnection().send({action:'subscribe', guid:db.getGuid()});
 				else {
 					this.onSubscribe(this.getProxy(db.getGuid()),p.db.getGuid());
+					if (cb !== undefined && (typeof cb == "function")) cb();
 				}				
 				// TODO обработать асинхронность
             },
@@ -78,15 +79,17 @@ define(
             },
 			
 			// подписать базу db на рутовый элемент с гуидом rootGuid
-			subscribeRoot: function(db,rootGuid, callback) {
+			subscribeRoot: function(db,rootGuid, cb) {
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
 					var newObj = p.db.onSubscribeRoot(db.getGuid(),rootGuid);
 					db.deserialize(newObj);
+					if (cb !== undefined && (typeof cb == "function")) cb();
 				}
 				else { // мастер-база доступна удаленно
-					callback2 = function(newObj) {
-						db.deserialize(newObj.data);
+					callback2 = function(obj) {
+						db.deserialize(obj.data);
+						if (cb !== undefined && (typeof cb == "function")) cb();
 					}
 					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);
 					// TODO обработать асинхронность
@@ -142,38 +145,71 @@ define(
                 }
             },
 
-            applyDelta: function(guidDb, sendGuidDb, guidRootObj, delta) {
+			// пока только 1 дельта!!!!
+            applyDeltas: function(dbGuid, srcDbGuid, delta) {
                 // находим рутовый объект к которому должна быть применена дельта
-                var db  = this.getDB(guidDb);
-                var root = db.getRoot(guidRootObj);
-
+                var db  = this.getDB(dbGuid);
+                var root = db.getRoot(delta.rootGuid);
+				
                 // вызывает у лога этого объекта applyDelta(delta)
-                root.obj.getLog().applyDelta(delta);
+                root.obj.getLog().applyDelta(delta.content);
 
-                // пробегает по подписчикам этого корневого объекта и рассылает
-                // им всем ту же самую дельту. При этом необходимо, чтобы из
-                // подписчиков был исключен тот, кто эту дельту послал.
-                // Самый важный момент - подписчики могут быть локальными или
-                // удаленными.  про это знает контроллер, который в случае удаленного
-                // подписчика должен послать сообщение подписчику, а в случае локального
-                // должен непосредственно вызвать тот же метод controller.applyDelta. При этом
-                // необходимо сперва сделать все отсылки удаленным подписчикам, а затем уже
-                // обработать локальных.
-                console.log('root.subscribers', root.subscribers);
-                for(var guid in root.subscribers) {
-                    var subscriber = root.subscribers[guid];
-                    console.log('subscriber', subscriber);
-                    // удаленные
-                    if (subscriber.kind == 'remote' && sendGuidDb != guid)
-                        subscriber.connect.send({action:"sendDelta", delta:delta, guidDb:subscriber.guid, guidRoot:guid});
-                }
-                for(var guid in root.subscribers) {
-                    var subscriber = root.subscribers[guid];
-                    // локальные
-                    if (subscriber.kind == 'local' && sendGuidDb != guid)
-                        subscriber.db.getObj(guidRootObj).getLog().applyDelta(delta);
-                }
-            }
+				var deltas = [];
+				deltas.push(delta);
+			
+				this.propagateDeltas(dbGuid,srcDbGuid,deltas);
+				
+            },
+			
+			// сгенерить и разослать дельты
+			genDeltas: function(dbGuid) {
+				var db  = this.getDB(dbGuid);
+				var deltas = db.genDeltas();
+				this.propagateDeltas(dbGuid,null,deltas);
+			},
+			
+			// послать подписчикам и мастеру дельты которые либо сгенерированы локально либо пришли снизу либо сверху
+			propagateDeltas: function(dbGuid, srcDbGuid, deltas) {
+				//var db = this.getDB(dbGuid);
+				//var deltas = db.genDeltas();
+				var db  = this.getDB(dbGuid);
+				for (var i=0; i<deltas.length; i++) {
+								
+					var delta = deltas[i];
+					if (srcDbGuid != db.getGuid()) {
+						// послать в мастер
+						var proxy = db.getProxyMaster();
+						if (proxy != undefined) {
+							if (proxy.kind == "local") {
+								//TODO
+								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta.content);
+								}
+							else
+								proxy.connect.send({action:"sendDelta", delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()});
+						}
+					}
+										
+					var root = db.getRoot(delta.rootGuid);
+					
+					for(var guid in root.subscribers) {
+						var subscriber = root.subscribers[guid];
+						console.log('subscriber', subscriber);
+						// удаленные
+						if (subscriber.kind == 'remote' && srcDbGuid != guid)
+							subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});
+					}
+					for(var guid in root.subscribers) {
+						var subscriber = root.subscribers[guid];
+						// локальные
+						if (subscriber.kind == 'local' && srcDbGuid != guid)
+							subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta.content);
+					}
+					
+					
+				}
+			}
+			
+			
         });
 		return MemDBController;
 	}

@@ -31,13 +31,17 @@ define(
 				return this.pvt.active;
 			},
 			
-			
+			getObj: function() {
+				return this.pvt.obj;
+			},
+						
 			// сгенерировать "дельту" изменений по логу объекта
 			genDelta: function() {
 				var delta = {};
 				var deltaIdx = {};
 				delta.items = [];
 				var log = this.pvt.log;
+				if (log.length == 0) return null;
 				for (var i=0; i<log.length; i++) {
 					var c = log[i];
 					var s = c.obj.getGuid();
@@ -64,38 +68,49 @@ define(
 							break;
 					}
 				}
+				delta.rootGuid = this.getObj().getRoot().getGuid();
+				this.truncate();
 				return delta;
 			},
 			
 			// применить "дельту" изменений к объекту
 			applyDelta: function(delta) {
+				this.setActive(false);
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
 					var o = this.pvt.obj.getDB().getObj(c.guid);
 					if (o) 
 						for (var cf in c.fields) {
 							// TODO проверить наличие полей с таким именем в метаинфо
-							// и понять как поступать с логом (отключать?)
 							o.set(cf,c.fields[cf]);
 						}
 				}
+				this.setActive(true);
 				
 			},
 			
+
+			add: function(item) {
+				if (this.getActive()) {
+					item.idx = this.getObj().getDB().getNewCounter();
+					this.pvt.log.push(item);				// добавить в лог корневого объекта
+				}
+			}
 			
-			// логировать изменение свойств объекта
-			// objModif.target
-			// objModif.property
-			// objModif.oldValue
-			// objModif.newValue
-			_objModif: function(modifData) {
+			/*
+			_objModif: function(field, logItem) {
                 if (this.pvt.active) {
                     //var fldMeta = modifData.target.fields[modifData.property];
                     var changes = {};
                     changes.flds = {};
-                    changes.flds[modifData.property] = {};
+                    changes.flds[field] = {};
+                    changes.flds[field].old = modifData.oldValue;
+                    changes.flds[field].new = modifData.newValue;
+                    changes.type = "mp";
+                    changes.obj = modifData.target;
+                    this.pvt.log.push(changes); // записываем изменение в лог
                     //switch (fldMeta.type.toUpperCase()) {
-                        /*case LogicalType.Enum:
+                        case LogicalType.Enum:
                             if (!(modifData.oldValue === undefined))
                                 changes.flds[modifData.property].old = fldMeta.values[modifData.oldValue];
                             if (!(modifData.newValue === undefined))
@@ -112,17 +127,11 @@ define(
                                 changes.flds[modifData.property].old = modifData.oldValue ? "True" : "False";
                             if (!(modifData.newValue === undefined))
                                 changes.flds[modifData.property].new = modifData.newValue ? "True" : "False";
-                            break;*/
+                            break;
                         //default:
-                            changes.flds[modifData.property].old = modifData.oldValue;
-                            changes.flds[modifData.property].new = modifData.newValue;
-                         //   break;
-                    //}
-                    changes.type = "mp";
-                    changes.obj = modifData.target;
-                    this.pvt.log.push(changes); // записываем изменение в лог
-                }				
-			},
+
+                }		
+			},*/
 			
 			
 			

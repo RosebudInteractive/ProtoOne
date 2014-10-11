@@ -45,7 +45,7 @@
                                     console.log(data.error);
                                     break;
                                 case 'sendDelta':
-                                    dbc.applyDelta(dbsl.getGuid(), data.guidDb, guids.myRootContGuid, data.delta);
+                                    dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                                     break;
                             }
                             return result;
@@ -65,7 +65,8 @@
                     guids = result;
                     // создаем  контроллер и бд
                     dbc = new MemDBController();
-					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}});
+					var cb = subscribeRoot;
+					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
                     console.log('контроллер:', dbc);
                     console.log('база данных B:', dbsl);
 
@@ -76,7 +77,7 @@
 
       function createDataBase() {
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
-          dbs2._buildMetaTables();
+          //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
               console.log(result);
           });
@@ -89,9 +90,10 @@
 
       function subscribeRoot() {
           // подписываемся на корневой объект контейнера
-		  dbsl._buildMetaTables();
+		  //dbsl._buildMetaTables();
           dbsl.subscribeRoot(guids.myRootContGuid, function(result){
               console.log(result);
+			  createDataBase();
           });
       }
 
@@ -99,15 +101,17 @@
           myButton = dbsl.getObj(guids.myButtonGuid);
           myRootCont = dbsl.getObj(guids.myRootContGuid);
           myButton.set('Caption', val);
-          var delta = myRootCont.getLog().genDelta();
-          console.log('delta:', delta);
+          //var delta = myRootCont.getLog().genDelta();
+          //console.log('delta:', delta);
+		  
+		  dbc.genDeltas(dbsl.getGuid());
 
           // отправляем дельту на сервер
           //socket.send({action:"changeObj", delta:delta});
-          socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
+          //socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
 
           // отправляем подписчикам своим
-          dbc.applyDelta(dbsl.getGuid(), dbsl.getGuid(), guids.myRootContGuid, delta);
+          //dbc.applyDelta(dbsl.getGuid(), dbsl.getGuid(), guids.myRootContGuid, delta);
       }
 
     /**

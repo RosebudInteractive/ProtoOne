@@ -154,7 +154,7 @@ wss.on('connection', function(ws) {
 
                 case 'sendDelta':
                     var dbc = sessionController.getConnect(connectId).getSession().getData().dbc;
-                    dbc.applyDelta(data.masterGuid, data.guidDb, data.guidRoot, data.delta);
+                    dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                     break;
 
                 case 'getSessions':

@@ -89,6 +89,13 @@ define(
 				return this.pvt.parent;
 			},
 			
+			// вернуть корневой элемент объекта
+			getRoot: function() {
+				var r = this;
+				while (r.getParent()!=null) r = r.getParent();
+				return r;
+			},
+			
 			getLog: function() {
 				var p = this;
 				while (!p.pvt.log) p=p.getParent();

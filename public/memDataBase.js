@@ -30,6 +30,12 @@ define(
 				this.pvt.objs[obj.getGuid()] = obj;
 			},
 			
+			_addLogItem: function(item) {
+				this.pvt.logIdx.push(item);
+			},
+			
+			
+			
 			_buildMetaTables: function() {
 				var metacol = this.getMeta().getCol("MetaObjects");
 				for (var i=0; i<metacol.count(); i++) {
@@ -41,52 +47,41 @@ define(
 
 			// params.kind - "master" - значит мастер-база, другое значение - подчиненная база
 			// params.proxyMaster 
-			
-			// params.local - true, тогда мастер-база локальная и masterConnect не передается -- НЕТ - это должно быть в КОНТРОЛЛЕРЕ
-			// params.masterGuid - гуид мастер-базы
-			// params.masterConnection - коннект к серверу с мастер-базой
-			init: function(controller, params){
+
+			init: function(controller, params, cb){
 				var pvt = this.pvt = {};
 				pvt.name = params.name;
 				pvt.robjs = [];				// корневые объекты базы данных
 				pvt.rcoll = {};
 				pvt.objs = {};				// все объекты по гуидам
-				pvt.log = [];
+				pvt.logIdx = [];			// упорядоченный индекс логов
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
                 pvt.guid = controller.guid();
+				pvt.counter = 0;
+
 				
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
 				pvt.controller.createLocalProxy(this);
 				
 				if (params.kind != "master") {
-					//controller.addProxy(params.proxyMaster);
-					//pvt.proxyMaster = params.proxyMaster;
-					controller._subscribe(this,params.proxyMaster);
-					pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
-					controller.subscribeRoot(this,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(result){		
-                            console.log('callback result:', result);
-                     });
-				/*
-						pvt.masterGuid = params.masterGuid;
-						if (params.local) {
-							// TODO найти базу по гуиду через контроллер
-							pvt.masterGuid = params.masterGuid;
-							pvt.masterDB = controller.getDbByGuid(params.masterGuid);
-						}
-						else {
-							pvt.masterGuid = params.masterGuid;
-							pvt.masterConnection = params.masterConnection;
-                            controller._subscribe(this);
-                        }
+					var db=this;
+					controller._subscribe(this,params.proxyMaster, function() {
+						pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
+						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){		
+								db._buildMetaTables();
+								//console.log('callback result:', result);
+								if (cb !== undefined && (typeof cb == "function")) cb();
+							});
+						});
 
-						*/
 					}
 				else { // master base
-					//pvt.masterGuid = undefined;
 					// Создать объект с коллекцией метаинфо
-					pvt.meta = new MemMetaRoot( { db: this },{});	
+					pvt.meta = new MemMetaRoot( { db: this },{});
+					if (cb !== undefined && (typeof cb == "function")) cb(this);
 				}		
+				
 			},
 
 			// подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
@@ -212,9 +207,16 @@ define(
 				return this.pvt.name;
 			},
 			
-			// вернуть корневой объект по его Lid
-			getRoot: function(guid) {
-				return this.pvt.rcoll[guid];
+			countRoot: function() {
+				return this.pvt.robjs.length;
+			},
+			
+			// вернуть корневой объект по его Guid или по порядковому номеру
+			getRoot: function(id) {
+				if (typeof id == "number")
+					return this.pvt.robjs[id];
+				else
+					return this.pvt.rcoll[id];
 			},
 			
 			// Является ли мастер базой
@@ -243,6 +245,11 @@ define(
 				return this.pvt.$idCnt++;
 			},
 			
+			// вернуть счетчик изменения для БД (в логе)
+			getNewCounter: function() {
+				return this.pvt.counter++;
+			},
+			
 			// полуить объект по его гуиду
 			getObj: function(guid) {
 				return this.pvt.objs[guid];
@@ -262,7 +269,15 @@ define(
 			// (для сервера нужно будет передавать ИД подписчика)
 			// возможно, надо сделать отдельный служебный класс для этого функционала
 			genDeltas: function() {
+				var allDeltas = [];
+				for (var i=0; i<this.countRoot(); i++) {
+					var d=this.getRoot(i).obj.getLog().genDelta();
+					if (d!=null)
+						allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d });
+				}
 				
+				return allDeltas;
+
 			},
 			
 			// применить дельты к БД для синхронизации

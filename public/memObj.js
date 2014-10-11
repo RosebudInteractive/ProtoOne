@@ -55,8 +55,12 @@ define(
 				var i=this.pvt.objType.pvt.fieldsTable[field].cidx;
 				var oldValue = this.pvt.fields[i];
 				this.pvt.fields[i] = value;
-				if (this.getLog().getActive()) 
-					this.getLog()._objModif({"property":field,"oldValue":oldValue,"newValue":value, "target":this});
+				if (this.getLog().getActive()) {
+					var o = { "flds": {}, "obj":this, "type":"mp"};
+					o.flds[field] = {"old":oldValue,"new":value};
+					this.getLog().add(o);
+				}
+					//this.getLog()._objModif(field, {"oldValue":oldValue,"newValue":value, "target":this});
 			},
 						
 			// получить имя поля по индексу
@@ -68,7 +72,7 @@ define(
 			addToCol: function(colName,obj) {
 				var c = this.getCol(colName);
 				if (c) {
-					c._add(obj);
+					c.add(obj);
 					return true;
 				}
 				else
