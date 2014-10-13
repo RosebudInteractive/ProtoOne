@@ -10,6 +10,35 @@
         #result input {position: absolute;top:0;left:0;}
         #console-block {height: 70px;position:absolute;}
         #console {padding: 0;margin: 0;}
+
+        .divTable
+        {
+            display:  table;
+            width:auto;
+            background-color:#eee;
+            border:1px solid  #666666;
+            border-spacing:0px;/*cellspacing:poor IE support for  this*/
+            /* border-collapse:separate;*/
+        }
+
+        .divRow
+        {
+            display:table-row;
+            width:auto;
+            clear:both;
+        }
+
+        .divCell
+        {
+            float:left;/*fix for  buggy browsers*/
+            display:table-column;
+            width:200px;
+            background-color:#ccc;
+            border-right:1px solid  #666666;
+            border-bottom:1px solid  #666666;
+            border-collapse: collapse;
+            padding:10px;
+        }
     </style>
 
     <script src="../public/class-extend.js"></script>
@@ -119,6 +148,10 @@
 
           renderAll();
 
+          if (fields['VerCells']!='' && fields['HorCells']!='') {
+              renderGrid(fields['HorCells'], fields['VerCells']);
+          }
+
           // отправляем дельту на сервер
           //socket.send({action:"changeObj", delta:delta});
           //socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
@@ -163,6 +196,26 @@
           }
         }
 
+        function renderGrid(x, y) {
+            var table = $('#grid');
+            if (table.length == 0) {
+                table = $('<div class="divTable" id="grid"></div>');
+                $('#result').append(table);
+            } else {
+                table.empty();
+            }
+            
+            for(var i=0; i < y; i++) {
+                var row  = $('<div class="divRow"></div>');
+                for(var j=0; j < x; j++) {
+                    var cell = $('<div class="divCell"></div>');
+                    row.append(cell);
+                }
+                table.append(row);
+            }
+
+        }
+
         $(function(){
             function fixHeight() {
                 $('#result').height($(window).height()-90);
@@ -181,8 +234,10 @@
 Caption:<input type="text" value="" id="myButtonCaption">
 Top:<input type="text" value="" id="myButtonTop">
 Left:<input type="text" value="" id="myButtonLeft">
-<input type="button" value="Поменять" onclick="changeFields({Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});">
-<input type="button" value="renderAll" onclick="renderAll();">
+HorCells:<input type="text" value="" id="HorCells">
+VerCells:<input type="text" value="" id="VerCells">
+<input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});">
+<input type="button" value="renderAll" onclick="renderAll();"><br>
 
 <div id="container">
     <div id="result"></div>

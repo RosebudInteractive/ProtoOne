@@ -29,6 +29,8 @@ function createDb(dbc, options){
     new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Caption", "ftype": "string"}});
     new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Left", "ftype": "integer"}});
     new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Top", "ftype": "integer"}});
+    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "HorCells", "ftype": "integer"}});
+    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "VerCells", "ftype": "integer"}});
     new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname": "containerType", "ftype": "enum"}});
     new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname": "Children", "ctype": "control"}});
     myMetaControl._bldElemTable(); // temp
