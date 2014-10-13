@@ -115,7 +115,6 @@
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
               console.log(result);
               createButton(dbsl, guids.myButtonGuid);
-              renderAll();
           });
           console.log('база данных C:', dbs2);
       }
@@ -181,6 +180,7 @@
                             // создаем кнопку
                             var button = new Button(db, guid, {parent:'#result'});
                             buttons.push(button);
+                            renderAll();
                         });
                     }
             );
