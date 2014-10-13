@@ -4,9 +4,9 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['jquery'],
-    function($) {
-        var Button = Class.extend({
+    ['jquery', '../AControl'],
+    function($, AControl) {
+        var Button = AControl.extend({
 
             /**
              * Инициализация объекта

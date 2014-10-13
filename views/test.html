@@ -174,7 +174,7 @@
         var buttons = [];
         function createButton(db, guid) {
             require(
-                    ['../public/button'],
+                    ['../public/ProtoControls/button'],
                     function( Button ){
                         socket.send({action:"getGuids", type:'method'}, function(result){
                             // создаем кнопку

@@ -11,7 +11,7 @@ define(
 		var AControl = Class.extend({
 				
 			init: function(){										
-			},
+			}
 						
 
 		});

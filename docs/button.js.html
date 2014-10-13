@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>JSDoc: Source: ProtoControls/button.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,30 +17,66 @@
 
 <div id="main">
 
-    <h1 class="page-title">Index</h1>
+    <h1 class="page-title">Source: ProtoControls/button.js</h1>
 
     
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+    var Class = require('class.extend');
+}
 
+define(
+    ['jquery', '../AControl'],
+    function($, AControl) {
+        var Button = AControl.extend({
 
-    <h3> </h3>
+            /**
+             * Инициализация объекта
+             * @param db ссылка на БД
+             * @param guid гуид объекта
+             * @param options {parent:parentId}
+             */
+            init: function(db, guid, options) {
+                this.guid = guid;
+                this.db = db;
+                this.options = options;
+            },
 
+            getObj: function() {
+                return this.db.getObj(this.guid);
+            },
 
+            /**
+             * Рендер кнопки
+             */
+            render: function() {
+                var obj = this.getObj();
+                var item = null;
+                if (obj) {
+                    var top = obj.get('Top')+'px';
+                    var left = obj.get('Left')+'px';
+                    var caption = obj.get('Caption');
+                    item = $('#'+this.guid);
+                    if (item.length == 0) {
+                        item = $('&lt;input type="button" />').attr('id', this.guid);
+                        $(this.options.parent).append(item);
+                    }
+                    item.css({top:top, left:left}).val(caption);
+                }
+                return item;
+            }
 
-
-
-
-
-
-
-    
-
-
-
-
-
+        });
+        return Button;
+    }
+);</code></pre>
+        </article>
+    </section>
 
 
 
