@@ -142,7 +142,7 @@ define(
             onDisconnect: function(connectId) {
                 for(var i in this.pvt.dbCollection) {
                     if (this.pvt.dbCollection[i].db)
-                        this.pvt.dbCollection[i].db.unSubscribe(connectId);
+                        this.pvt.dbCollection[i].db.onUnsubscribe(connectId);
                 }
             },
 

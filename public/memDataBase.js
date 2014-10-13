@@ -101,9 +101,21 @@ define(
 				return (s) ? s : null;
 			},
 			
-			onUnsubscribe: function(guid) {
+			onUnsubscribe: function(connectId) {
 				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
-				delete this.pvt.subscribers[guid]; // убрать из общего списка подписчиков
+				for (var g in this.pvt.subscribers) {
+					var p = this.pvt.subscribers[g];
+					if (p.connect.getId() == connectId)
+						delete this.pvt.subscribers[g]; // убрать из общего списка подписчиков
+				}
+				for (g in this.pvt.rcoll) {
+					var p=this.pvt.rcoll[g];
+					for (var g2 in p.subscribers) {
+						if (p.subscribers[g2].connect.getId() == connectId) 
+							delete p.subscribers[g2];
+						
+					}
+				}
 				// TODO удалить из остальных мест
 				
 			},
@@ -290,13 +302,7 @@ define(
                 return this.pvt.guid;
             },
 
-            /**
-             * Отписаться от коннекта
-             * @param connectId
-             */
-            unSubscribe: function(connectId) {
-                console.log('MemDataBase.unSubscribe', connectId);
-            }
+
 
         });
 		return MemDataBase;
