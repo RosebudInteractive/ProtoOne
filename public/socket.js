@@ -56,6 +56,14 @@ define(function() {
         },
 
         /**
+         * Проверка на подключенность
+         * @returns {boolean}
+         */
+        isConnected: function() {
+            return (this.socket.readyState == 1);
+        },
+
+        /**
          * Отправка сообщений серверу с уникальным msgId
          * @param obj
          * @param callback
@@ -65,7 +73,8 @@ define(function() {
             if (!obj.msgId)// добавляем в объект отправки серверу msgId
                 obj.msgId = msgId;
             this.messages[msgId] = {callback:callback, time:Date.now()}; // сохраняем колбек
-            this.socket.send(JSON.stringify(obj));
+            if (this.isConnected())
+                this.socket.send(JSON.stringify(obj));
         },
 
         /**
