@@ -15,15 +15,30 @@ define(function() {
          * @constructs
          * @param {string} name Имя пользователя
          */
-        init: function(name){
+        init: function(name) {
             this.name = name;
+            this._logged = false;
         },
         /**
          * Получить имя пользователя
          * @returns {string}
          */
-        getName: function(){
+        getName: function() {
             return this.name;
+        },
+
+        login: function(name, pass) {
+            if (name == 'user' && pass == '123') {
+                this._logged = true;
+            }
+            return false;
+        },
+
+        /**
+         * Залогинен ли пользователь
+         */
+        isLogged: function() {
+            return this._logged;
         }
     });
     return User;

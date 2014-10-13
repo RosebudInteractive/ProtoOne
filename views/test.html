@@ -37,6 +37,10 @@
             border-collapse: collapse;
             padding:10px;
         }
+
+        #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
+        #header {padding:10px;}
+        #loginError {color: #ff0000;}
     </style>
 
     <script src="../public/class-extend.js"></script>
@@ -59,6 +63,14 @@
                         open: function(){ // при открытии соединения
                             // отправляем сообщение что подключились
                             socket.send({action:'connect', type:'method', sid: sid, agent:navigator.userAgent}, function(){
+                                // проверяем залогинненость
+                                socket.send({action:'isLogged', type:'method', sid: sid}, function(result){
+                                    if (result.user) {
+                                        $('#login').hide(); $('#logout').show();
+                                    } else {
+                                        $('#logout').hide(); $('#login').show();
+                                    }
+                                });
                                 createController();
                             });
                         },
@@ -216,13 +228,60 @@
 
         }
 
+        /**
+         * Логин
+         * @param name
+         * @param pass
+         */
+        function login(name, pass){
+            // логинимся
+            socket.send({action:'login', type:'method', name:name, pass:pass, sid: sid}, function(result){
+                if (result.user) {
+                    $('#login').hide(); $('#logout').show();
+                    $('#loginForm').hide();
+                    $('#loginError').hide();
+
+                } else {
+                    $('#logout').hide(); $('#login').show();
+                    $('#loginError').html('Неправильный логин или пароль').show();
+                }
+            });
+        }
+
+        /**
+         * Выход
+         */
+        function logout(){
+            socket.send({action:'logout', type:'method', sid: sid}, function(result){
+                $('#logout').hide(); $('#login').show();
+            });
+            return false;
+        }
+
         $(function(){
+
+            // высота окошка результатов
             function fixHeight() {
-                $('#result').height($(window).height()-90);
+                $('#result').height($(window).height()-120);
                 $('#console').width('100%');
             };
             fixHeight();
             $(window).resize(fixHeight);
+
+            // форма логина
+            $('#login').click(function(e){
+                e.stopPropagation();
+                if ($('#loginForm').is(':visible')) {
+                    $('#loginForm').hide();
+                } else {
+                    var offset = $(this).offset();
+                    offset.top += 20;
+                    $('#loginForm').show().offset(offset);
+                }
+                return false;
+            });
+            $(window).click(function(){$('#loginForm').hide();});
+            $('#loginForm').click(function(e){e.stopPropagation();});
         });
 		
 
@@ -230,17 +289,31 @@
 </head>
 <body>
 
-<input type="button" value="Трассировка" onclick="getSessions();">
-Caption:<input type="text" value="" id="myButtonCaption">
-Top:<input type="text" value="" id="myButtonTop">
-Left:<input type="text" value="" id="myButtonLeft">
-HorCells:<input type="text" value="" id="HorCells">
-VerCells:<input type="text" value="" id="VerCells">
-<input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});">
-<input type="button" value="renderAll" onclick="renderAll();"><br>
+<div id="header">
+    <a href="#" id="login" style="display: none;">Войти</a>
+    <a href="#" id="logout" style="display: none;" onclick="return logout();">Выйти</a>
+</div>
 
-<div id="container">
-    <div id="result"></div>
+<div id="interface">
+    Caption:<input type="text" value="" id="myButtonCaption">
+    Top:<input type="text" value="" id="myButtonTop">
+    Left:<input type="text" value="" id="myButtonLeft">
+    HorCells:<input type="text" value="" id="HorCells">
+    VerCells:<input type="text" value="" id="VerCells">
+    <input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});"><br>
+    <input type="button" value="Трассировка" onclick="getSessions();">
+    <input type="button" value="renderAll" onclick="renderAll();">
+
+    <div id="container">
+        <div id="result"></div>
+    </div>
+</div>
+
+<div id="loginForm" style="display: none;">
+    <div id="loginError"></div>
+    Имя:<input type="text" id="loginName"><br>
+    Пароль:<input type="password" id="loginPass"><br>
+    <input type="button" value="Войти" onclick="login($('#loginName').val(), $('#loginPass').val())">
 </div>
 
 </body>

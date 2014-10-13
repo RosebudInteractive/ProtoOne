@@ -189,6 +189,33 @@ wss.on('connection', function(ws) {
                     dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);
                     break;
 
+                case 'isLogged':
+                    var session = sessionController.getConnect(connectId).getSession();
+                    var sessionData = session.getData();
+                    if (sessionData.user)
+                        result = {user:sessionData.user};
+                    break;
+
+                case 'login':
+                    var session = sessionController.getConnect(connectId).getSession();
+                    var sessionData = session.getData();
+                    if (data.name == 'user' && data.pass == '123') {
+                        var user = {user:data.name};
+                        sessionData.user = user;
+                        session.setData(sessionData);
+                        result = {user:user};
+                    }
+                    break;
+
+                case 'logout':
+                    var session = sessionController.getConnect(connectId).getSession();
+                    var sessionData = session.getData();
+                    if (sessionData.user) {
+                        delete sessionData.user;
+                        session.setData(sessionData);
+                    }
+                    break;
+
             }
             return result;
         }
