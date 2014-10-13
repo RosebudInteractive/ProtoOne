@@ -15,7 +15,6 @@
         {
             display:  table;
             width:auto;
-            background-color:#eee;
             border:1px solid  #666666;
             border-spacing:0px;/*cellspacing:poor IE support for  this*/
             /* border-collapse:separate;*/
@@ -148,9 +147,7 @@
 
           renderAll();
 
-          if (fields['VerCells']!='' && fields['HorCells']!='') {
-              renderGrid(fields['HorCells'], fields['VerCells']);
-          }
+
 
           // отправляем дельту на сервер
           //socket.send({action:"changeObj", delta:delta});
@@ -193,6 +190,10 @@
         function renderAll() {
           for(var i=0; i<buttons.length; i++) {
               buttons[i].render();
+              var obj = buttons[i].getObj();
+              if (obj.get('VerCells') && obj.get('HorCells')) {
+                  renderGrid(obj.get('HorCells'),obj.get('VerCells'));
+              }
           }
         }
 
@@ -204,7 +205,7 @@
             } else {
                 table.empty();
             }
-            
+
             for(var i=0; i < y; i++) {
                 var row  = $('<div class="divRow"></div>');
                 for(var j=0; j < x; j++) {

@@ -20,11 +20,15 @@ define(
                 this.options = options;
             },
 
+            getObj: function() {
+                return this.db.getObj(this.guid);
+            },
+
             /**
              * Рендер кнопки
              */
             render: function() {
-                var obj = this.db.getObj(this.guid);
+                var obj = this.getObj();
                 var item = null;
                 if (obj) {
                     var top = obj.get('Top')+'px';
