@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['jquery', '../AControl'],
+    ['jquery', '../aControl'],
     function($, AControl) {
         var Button = AControl.extend({
 
