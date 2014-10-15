@@ -33,7 +33,7 @@ define(
                 }
 
                 // добавляем коннект в общий список и в сессию
-                var connect = new Connect(socket.getConnectId(), socket,  {sessionID:sessionID, userAgent:data.client.agent, stateReady:1});
+                var connect = new Connect(socket.getConnectId(), socket,  {sessionID:sessionId, userAgent:data.client.agent, stateReady:1});
                 this.addConnect(connect);
                 session.addConnect(connect);
 
@@ -48,7 +48,13 @@ define(
                     }
                 });
 
-                return {sessionId: sessionId, user: {user: session.user.getName(), loginTime: session.user.getLoginTime()}};
+                // Если возвращен user, то это означает, что сессия авторизована и соответствует пользователю с логином user.user
+                var result = {sessionId: sessionId};
+                var user = session.getUser();
+                if (user.isAuthenticated())
+                    result.user = {user: user.getName(), loginTime: user.getLoginTime()};
+
+                return result;
             },
 
             /**
@@ -57,8 +63,7 @@ define(
              * @private
              */
             _newSession: function(data) {
-                var userId = ++this.userId;
-                var user = new User('noname'+userId);
+                var user = this._newUser();
                 var sessionId = ++this.sessionId;
                 data.user = user;
                 var session = new Session(sessionId, data);
@@ -66,6 +71,16 @@ define(
                 this.addUser(user);
                 user.addSession(session);
                 return sessionId;
+            },
+
+            /**
+             * Создать noname-пользователя
+             * @private
+             */
+            _newUser: function() {
+                var userId = ++this.userId;
+                var user = new User('noname'+userId);
+                return user;
             },
 
             /**
@@ -79,14 +94,14 @@ define(
              * @returns {user: string, loginTime: dateTime}
              */
             authenticate: function(connectId, sessionId, user, pass) {
-                if (user == 'user' && pass == '123') {
+                if (user.substr(0, 4) == 'user' && pass == '123') {
                     var userObj = this.getUser(user);
                     var session = this.getSession(sessionId);
                     if (userObj) {
-                        this.removeUser(session.user.getName());
+                        this.removeUser(session.getUser().getName());
                     } else {
-                        userObj = new User(user);
-                        this.addUser(userObj);
+                        userObj = session.getUser();
+                        userObj.setName(user);
                     }
                     userObj.addSession(session);
                     userObj.setAuthenticated(true);
@@ -106,12 +121,14 @@ define(
                 var session = this.getSession(sessionId);
 
                 // удаляем у именованного
-                session.user.removeSession(sessionId);
+                session.getUser().removeSession(sessionId);
 
                 // создаем noname
-                var userId = ++this.userId;
-                var user = new User('noname'+userId);
+                var user = this._newUser();
+
+                // сессию привязываем к юзеру
                 user.addSession(session);
+                session.setUser(user);
             },
 
             /**

@@ -18,7 +18,7 @@ define(function() {
         init: function(name) {
             this.name = name;
             this.loginTime = false;
-            this.isAuthenticated = false;
+            this._isAuthenticated = false;
             this.sessions = {};
         },
 
@@ -52,6 +52,14 @@ define(function() {
         },
 
         /**
+         * Изменить имя пользователя
+         * @param name {string}
+         */
+        setName: function(name) {
+            this.name = name;
+        },
+
+        /**
          * Получить имя пользователя
          * @returns {string}
          */
@@ -81,14 +89,14 @@ define(function() {
          * @param val {boolean}
          */
         setAuthenticated: function(val) {
-            this.isAuthenticated = val;
+            this._isAuthenticated = val;
         },
 
         /**
          * Залогинен ли пользователь
          */
         isAuthenticated: function() {
-            return this.isAuthenticated;
+            return this._isAuthenticated;
         }
     });
     return User;

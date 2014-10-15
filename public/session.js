@@ -125,6 +125,10 @@ define(
             return this.data.user;
         },
 
+        setUser: function(user) {
+            this.data.user = user;
+        },
+
         /**
          * вернуть таймстамп создания
          * @returns {timestamp}

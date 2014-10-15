@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * ClientConnection
  * @module ClientConnection
  */
-define(function() {
+define(['socket'], function(Socket) {
 
     var ClientConnection = Class.extend(/** @lends module:ClientConnection.ClientConnection.prototype */{
         /**
@@ -15,7 +15,9 @@ define(function() {
          * @constructs
          */
         init: function() {
-
+            this.socket = null;
+            this.sessionId = null;
+            this.connected = false;
         },
 
         /**
@@ -24,32 +26,64 @@ define(function() {
          * @param url
          * @param sessionId
          */
-        connect: function(url, sessionId) {
-
+        connect: function(url, sessionId, callback) {
+            var that = this;
+            this.sessionId = sessionId;
+            that.socket = new Socket(url, {
+                open: function(){ // при открытии соединения
+                    that.connected = true;
+                    // отправляем сообщение что подключились
+                    that.socket.send({action:'connect', type:'method', sid: sessionId, agent:navigator.userAgent}, callback);
+                },
+                close: function(){
+                    that.connected = false;
+                },
+                router: function(data){
+                    console.log('сообщение с сервера:', data);
+                    var result = {};
+                    switch (data.action) {
+                        case 'error': // ошибки
+                            console.log(data.error);
+                            break;
+                        case 'sendDelta':
+                            dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
+                            break;
+                    }
+                    return result;
+                }
+            });
         },
 
-        authenticate: function(user, pass) {
-
+        authenticate: function(user, pass, callback) {
+            if (!this.connected)
+                return false;
+            this.socket.send({action:'authenticate', type:'method', name:user, pass:pass, sid: this.sessionId}, callback);
         },
 
-        deauthenticate: function() {
-
+        deauthenticate: function(callback) {
+            this.socket.send({action:'deauthenticate', type:'method', sid: this.sessionId}, callback);
         },
 
-        disconnect: function() {
-
+        disconnect: function(callback) {
+            this.socket.send({action:'disconnect', type:'method', sid: this.sessionId}, callback);
         },
 
-        getUser: function() {
-
+        getUser: function(callback) {
+            this.socket.send({action:'getUser', type:'method', sid: this.sessionId}, function(result){
+                callback(result.item);
+            });
         },
 
-        getSession: function() {
-
+        getSession: function(callback) {
+            this.socket.send({action:'getSession', type:'method', sid: this.sessionId}, function(result){
+                callback(result.item);
+            });
         },
 
-        getConnect: function() {
-
+        getConnect: function(callback) {
+            this.socket.send({action:'getConnect', type:'method', sid: this.sessionId}, function(result){
+                callback(result.item);
+            });
         }
     });
 

@@ -50,51 +50,30 @@
 
     <script>
 
-        var socket = null;
-        var sid = $.url('?sid');
+        var clientConnection = null, socket = null;
+        var sessionId = $.url('#sid');
         var myButton=null, myRootCont=null, dbc=null, dbsl=null, dbs2=null, guids=null;
 
         // когда документ загружен
         $(function(){
             require(
-                ['socket'],
-                function( Socket){
-                    socket = new Socket("ws://"+url('hostname')+":8081", {
-                        open: function(){ // при открытии соединения
-                            // отправляем сообщение что подключились
-                            socket.send({action:'connect', type:'method', sid: sid, agent:navigator.userAgent}, function(){
-                                // проверяем залогинненость
-                                socket.send({action:'isLogged', type:'method', sid: sid}, function(result){
-                                    if (result.user) {
-                                        $('#login').hide(); $('#logout').show();
-                                    } else {
-                                        $('#logout').hide(); $('#login').show();
-                                    }
-                                });
-                                createController();
-                            });
-                        },
-                        close: function(){ // при закрытии соединения
-
-                        },
-                        router: function(data){
-                            console.log('сообщение с сервера:', data);
-                            var result = {};
-                            switch (data.action) {
-                                case 'error': // ошибки
-                                    console.log(data.error);
-                                    break;
-                                case 'sendDelta':
-                                    dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
-                                    break;
-                            }
-                            return result;
+                ['clientConnection'],
+                function(ClientConnection){
+                    clientConnection = new ClientConnection();
+                    clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
+                        if (result.user) {
+                            $('#login').hide(); $('#logout').show();
+                        } else {
+                            $('#logout').hide(); $('#login').show();
                         }
+                        socket = clientConnection.socket;
+                        sessionId = result.sessionId;
+                        document.location.hash = '#sid='+sessionId;
+                        createController();
                     });
                 }
             );
         });
-
 
 
       function createController(done){
@@ -125,7 +104,6 @@
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
           //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
-              console.log(result);
               createButton(dbsl, guids.myButtonGuid);
           });
           console.log('база данных C:', dbs2);
@@ -139,7 +117,6 @@
           // подписываемся на корневой объект контейнера
 		  //dbsl._buildMetaTables();
           dbsl.subscribeRoot(guids.myRootContGuid, function(result){
-              console.log(result);
 			  createDataBase();
           });
       }
@@ -151,21 +128,9 @@
           for(var name in fields)
             if (fields[name] && fields[name]!='')
                 myButton.set(name, fields[name]);
-          //var delta = myRootCont.getLog().genDelta();
-          //console.log('delta:', delta);
-		  
+
 		  dbc.genDeltas(dbsl.getGuid());
-
           renderAll();
-
-
-
-          // отправляем дельту на сервер
-          //socket.send({action:"changeObj", delta:delta});
-          //socket.send({action:'sendDelta', delta:delta, guidDb:dbsl.getGuid(), masterGuid:guids.masterGuid, guidRoot:myRootCont.getGuid()});
-
-          // отправляем подписчикам своим
-          //dbc.applyDelta(dbsl.getGuid(), dbsl.getGuid(), guids.myRootContGuid, delta);
       }
 
 
@@ -234,8 +199,7 @@
          * @param pass
          */
         function login(name, pass){
-            // логинимся
-            socket.send({action:'login', type:'method', name:name, pass:pass, sid: sid}, function(result){
+            clientConnection.authenticate(name, pass, function(result){
                 if (result.user) {
                     $('#login').hide(); $('#logout').show();
                     $('#loginForm').hide();
@@ -252,8 +216,8 @@
          * Выход
          */
         function logout(){
-            socket.send({action:'logout', type:'method', sid: sid}, function(result){
-                $('#logout').hide(); $('#login').show();
+            clientConnection.deauthenticate(function(){
+                $('#login').show(); $('#logout').hide();
             });
             return false;
         }

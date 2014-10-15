@@ -95,7 +95,7 @@ wss.on('connection', function(ws) {
 
                     // подключаемся к серверу с клиента
                     var dbc = createController();
-                    userSessionMgr.connect(socket, {session:createDb(dbc, {name: "Master", kind: "master"}), client:data}, sessionID);
+                    result =  userSessionMgr.connect(socket, {session:createDb(dbc, {name: "Master", kind: "master"}), client:data}, sessionID);
 
                     // запоминаем клиента подключенного ( перенесено а userSessionMgr)
                    /* var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
@@ -117,9 +117,31 @@ wss.on('connection', function(ws) {
                             userSessionMgr.removeConnect(args.connId);
                         }
                     });*/
-
-                    result =  {connectId:connectId};
                     break;
+
+                case 'authenticate':
+                    var session = userSessionMgr.getConnect(connectId).getSession();
+                    var sessionData = session.getData();
+                    result = {user:userSessionMgr.authenticate(connectId, session.getId(), data.name, data.pass)};
+                    break;
+
+                case 'deauthenticate':
+                    var session = userSessionMgr.getConnect(connectId).getSession();
+                    userSessionMgr.deauthenticate(session.getId());
+                    break;
+
+                case 'getUser':
+                    result = {item:userSessionMgr.getUser()};
+                    break;
+
+                case 'getSession':
+                    result = {item:userSessionMgr.getSession()};
+                    break;
+
+                case 'getConnect':
+                    result = {item:userSessionMgr.getConnect()};
+                    break;
+
 
                 case 'subscribe':
                     var connect = userSessionMgr.getConnect(connectId);
@@ -187,32 +209,6 @@ wss.on('connection', function(ws) {
                     dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);
                     break;
 
-                case 'isLogged':
-                    var session = userSessionMgr.getConnect(connectId).getSession();
-                    var sessionData = session.getData();
-                    if (sessionData.user)
-                        result = {user:sessionData.user};
-                    break;
-
-                case 'login':
-                    var session = userSessionMgr.getConnect(connectId).getSession();
-                    var sessionData = session.getData();
-                    if (data.name == 'user' && data.pass == '123') {
-                        var user = {user:data.name};
-                        sessionData.user = user;
-                        session.setData(sessionData);
-                        result = {user:user};
-                    }
-                    break;
-
-                case 'logout':
-                    var session = userSessionMgr.getConnect(connectId).getSession();
-                    var sessionData = session.getData();
-                    if (sessionData.user) {
-                        delete sessionData.user;
-                        session.setData(sessionData);
-                    }
-                    break;
 
             }
             return result;
