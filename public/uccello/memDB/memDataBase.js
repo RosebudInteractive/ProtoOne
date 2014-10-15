@@ -189,7 +189,7 @@ define(
 			
             /**
              * "сериализация" объекта базы
-             * @param obj
+             * @param {object} obj
              * @returns {*}
              */
 			serialize: function(obj) {
@@ -224,7 +224,7 @@ define(
             /**
              * ----создать подписанный корневой объект (временный вариант)
              * десериализация в объект
-             * @param sobj
+             * @param {object} sobj
              * @returns {*}
              */
 			deserialize: function(sobj) {
@@ -290,7 +290,7 @@ define(
 			
             /**
              * вернуть корневой объект по его Guid или по порядковому номеру
-             * @param id
+             * @param {number} id
              * @returns {*}
              */
 			getRoot: function(id) {
@@ -345,7 +345,7 @@ define(
 			
             /**
              * полуить объект по его гуиду
-             * @param guid
+             * @param {string} guid
              * @returns {*}
              */
 			getObj: function(guid) {
@@ -354,8 +354,8 @@ define(
 			
             /**
              * добавить новый корневой объект в мастер-базу
-             * @param objType
-             * @param flds
+             * @param {object} objType
+             * @param {object} flds
              * @returns {*}
              */
 			newRootObj: function(objType,flds) {
