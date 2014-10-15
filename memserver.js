@@ -1,11 +1,11 @@
 
 // создаем БД
-var MemDBController = require('./public/memDBController');
-var MDb = require('./public/memDataBase');
-var MemMetaObj = require('./public/memMetaObj');
-var MemMetaObjFields = require('./public/memMetaObjFields');
-var MemMetaObjCols = require('./public/memMetaObjCols');
-var MemObj = require('./public/memObj');
+var MemDBController = require('./public/uccello/memDB/memDBController');
+var MDb = require('./public/uccello/memDB/memDataBase');
+var MemMetaObj = require('./public/uccello/memDB/memMetaObj');
+var MemMetaObjFields = require('./public/uccello/memDB/memMetaObjFields');
+var MemMetaObjCols = require('./public/uccello/memDB/memMetaObjCols');
+var MemObj = require('./public/uccello/memDB/memObj');
 
 function createController(){
     var dbc = new MemDBController();
@@ -50,9 +50,9 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var WebSocketServer = new require('ws');
-var Socket = require('./public/socket');
-var Session = require('./public/session');
-var Connect = require('./public/connect');
+var Socket = require('./public/uccello/connection/socket');
+var Session = require('./public/uccello/connection/session');
+var Connect = require('./public/uccello/connection/connect');
 
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
@@ -67,7 +67,7 @@ app.use("/public", express.static(__dirname + '/public'));
 
 
 // хранилище коннектов и сессий
-var UserSessionMgr = require('./public/userSessionMgr.js');
+var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
 var userSessionMgr = new UserSessionMgr();
 
 // WebSocket-сервер на порту 8081

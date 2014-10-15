@@ -3,8 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="../public/class-extend.js"></script>
-    <script data-main="../public/main.js" src="../public/require.js"></script>
+    <script src="../public/uccello/uses/class-extend.js"></script>
+    <script data-main="../public/main.js" src="../public/uccello/uses/require.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <script>
@@ -79,7 +79,7 @@
         }
 		
 		require(
-            ['memDataBase', 'jquery'],
+            ['../public/uccello/memDB/memDataBase', 'jquery'],
             function( MDb, $ ){
                 var myMemDb = new MDb("PROTO");
 				var myCol = myMemDb.newCol();

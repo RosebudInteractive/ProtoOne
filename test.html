@@ -3,8 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="./public/class-extend.js"></script>
-    <script data-main="./public/main.js" src="./public/require.js"></script>
+    <script src="public/uccello/uses/class-extend.js"></script>
+    <script data-main="./public/main.js" src="public/uccello/uses/require.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <script>
@@ -72,7 +72,7 @@
 		
 
 		require(
-            ['memDBController','memDataBase','memMetaObj','memMetaObjFields','memMetaObjCols','memObj'],
+            ['public/uccello/memDB/memDBController','public/uccello/memDB/memDataBase','public/uccello/memDB/memMetaObj','public/uccello/memDB/memMetaObjFields','public/uccello/memDB/memMetaObjCols','public/uccello/memDB/memObj'],
             function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
 			
 				var dbc = new MemDBController();

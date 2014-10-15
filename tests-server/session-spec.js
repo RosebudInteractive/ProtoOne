@@ -1,5 +1,5 @@
-var Session = require('../public/session');
-var Connect = require('../public/connect');
+var Session = require('../public/uccello/connection/session');
+var Connect = require('../public/uccello/connection/connect');
 
 var connect = new Connect(1, {}, {});
 describe('Unit Connect', function() {

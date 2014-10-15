@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./session', './connect', './user'],
+    ['./session', '../connection/connect', '../../user'],
     function(Session, Connect, User) {
         var UserSessionMgr = Class.extend({
 
@@ -137,9 +137,12 @@ define(
              */
             disconnect: function(sessionId) {
                 var session = this.getSession(sessionId);
-                var connects = session.getConnects();
-                for(var i in connects)
-                    session.removeConnect(connects[i].getId());
+                var user = session.getUser();
+                var sessions = user.getSessions();
+                for(var i in sessions) {
+                    this.removeSession(sessions[i].getId());
+                    user.removeSession(sessions[i].getId())
+                }
             },
 
 

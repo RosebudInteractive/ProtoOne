@@ -43,10 +43,10 @@
         #loginError {color: #ff0000;}
     </style>
 
-    <script src="../public/class-extend.js"></script>
-    <script data-main="./public/main.js" src="../public/require.js"></script>
+    <script src="../public/uccello/uses/class-extend.js"></script>
+    <script data-main="../public/uccello/uses/main.js" src="../public/uccello/uses/require.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="../public/url.js"></script>
+    <script src="../public/uccello/uses/url.js"></script>
 
     <script>
 
@@ -57,7 +57,7 @@
         // когда документ загружен
         $(function(){
             require(
-                ['clientConnection'],
+                ['../public/uccello/connection/clientConnection'],
                 function(ClientConnection){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
@@ -78,7 +78,7 @@
 
       function createController(done){
 		require(
-            ['../public/memDBController', 'memDataBase'],
+            ['../public/uccello/memDB/memDBController', '../public/uccello/memDB/memDataBase'],
             function( MemDBController, MemDataBase){
                 socket.send({action:"getGuids", type:'method'}, function(result){
                     guids = result;

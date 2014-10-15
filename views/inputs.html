@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="../public/class-extend.js"></script>
-    <script data-main="../public/main.js" src="../public/require.js"></script>
+    <script src="../public/uccello/uses/class-extend.js"></script>
+    <script data-main="../public/main.js" src="../public/uccello/uses/require.js"></script>
     <script src="./public/url.js"></script>
     <script>
 
@@ -17,7 +17,7 @@
     // номер коннекта
     var connId = null;
 
-    require(['socket'],
+    require(['../public/uccello/connection/socket'],
             function( Socket ){
 
                 //  значения полей с сервера

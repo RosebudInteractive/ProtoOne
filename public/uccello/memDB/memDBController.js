@@ -4,7 +4,7 @@
 }
 
 define(
-	['./memDataBase', './event'],
+	['./memDataBase', './../system/event'],
 	function(MemDataBase, event) {
 		var MemDBController = Class.extend({
 

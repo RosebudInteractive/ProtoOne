@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['jquery', '../aControl'],
+    ['jquery', '../uccello/baseControls/aControl'],
     function($, AControl) {
         var Button = AControl.extend({
 

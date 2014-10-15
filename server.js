@@ -9,7 +9,7 @@ var module1 = new Module1();
 var User = require('./public/user');
 var Admin = require('./public/admin');
 
-var Db = require('./public/memDataBase');
+var Db = require('./public/uccello/memDB/memDataBase');
 
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);

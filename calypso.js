@@ -3,9 +3,9 @@ var express = require('express');
 //var session = require('cookie-session');
 var app = express();
 var WebSocketServer = new require('ws');
-var Session = require('./public/session');
-var Connect = require('./public/connect');
-var Socket = require('./public/socket');
+var Session = require('./public/uccello/connection/session');
+var Connect = require('./public/uccello/connection/connect');
+var Socket = require('./public/uccello/connection/socket');
 
 // winston for logging
 var winston = require('winston');

@@ -1,4 +1,4 @@
-define(['../../public/connect', '../../public/session'], function(Connect, Session) {
+define(['../../public/uccello/connection/connect', '../../public/uccello/connection/session'], function(Connect, Session) {
 
     var connect = new Connect(1, {}, {});
     describe('Unit Connect', function() {
