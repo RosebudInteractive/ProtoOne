@@ -57,7 +57,7 @@
         // когда документ загружен
         $(function(){
             require(
-                ['public/uccello/connection/clientConnection'],
+                ['uccello/connection/clientConnection'],
                 function(ClientConnection){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
