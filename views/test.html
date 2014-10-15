@@ -50,12 +50,17 @@
 
     <script>
 
+        requirejs.config({
+            baseUrl: 'public',
+            nodeRequire: require
+        });
+
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
         var myButton=null, myRootCont=null, dbc=null, dbsl=null, dbs2=null, guids=null;
 
         // когда документ загружен
-        $(function(){
+        $(document).ready( function() {
             require(
                 ['../public/uccello/connection/clientConnection'],
                 function(ClientConnection){
