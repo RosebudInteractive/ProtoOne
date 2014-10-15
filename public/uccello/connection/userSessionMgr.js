@@ -91,7 +91,7 @@ define(
              * @param sessionId
              * @param user
              * @param pass
-             * @returns {user: string, loginTime: dateTime}
+             * @returns {object}
              */
             authenticate: function(connectId, sessionId, user, pass) {
                 if (user.substr(0, 4) == 'user' && pass == '123') {
