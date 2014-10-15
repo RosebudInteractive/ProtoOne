@@ -117,6 +117,10 @@ define(['./event'], function(event) {
 
         getSession: function() {
             return this.session;
+        },
+
+        isConnected: function() {
+            return this.params.stateReady == 1;
         }
     });
 

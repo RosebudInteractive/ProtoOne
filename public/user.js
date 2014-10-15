@@ -17,8 +17,40 @@ define(function() {
          */
         init: function(name) {
             this.name = name;
-            this._logged = false;
+            this.loginTime = false;
+            this.isAuthenticated = false;
+            this.sessions = {};
         },
+
+        /**
+         * Добавить сессию пользователя
+         * @param session
+         */
+        addSession: function(session){
+            this.sessions[session.getId()] = {item:session, date:new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')};
+        },
+
+        getSession: function(id){
+            return this.sessions[id] ? this.sessions[id].item : null;
+        },
+
+        getSessions: function(){
+            return this.sessions;
+        },
+
+        countSession: function(){
+            return Object.keys(this.sessions).length;
+        },
+
+        /**
+         * Удалить сессию по ID
+         * @param id
+         */
+        removeSession: function(id){
+            if (this.sessions[id])
+                delete this.sessions[id];
+        },
+
         /**
          * Получить имя пользователя
          * @returns {string}
@@ -27,18 +59,36 @@ define(function() {
             return this.name;
         },
 
-        login: function(name, pass) {
-            if (name == 'user' && pass == '123') {
-                this._logged = true;
-            }
-            return false;
+        /**
+         * Установить таймстамп логина
+         * @returns {number}
+         */
+        setLoginTime: function(loginTime) {
+            this.loginTime = loginTime;
+        },
+
+        /**
+         * Получить таймстамп логина
+         * @returns {number}
+         */
+        getLoginTime: function() {
+            return this.loginTime;
+        },
+
+
+        /**
+         * Залогинен
+         * @param val {boolean}
+         */
+        setAuthenticated: function(val) {
+            this.isAuthenticated = val;
         },
 
         /**
          * Залогинен ли пользователь
          */
-        isLogged: function() {
-            return this._logged;
+        isAuthenticated: function() {
+            return this.isAuthenticated;
         }
     });
     return User;

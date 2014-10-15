@@ -67,8 +67,8 @@ app.use("/public", express.static(__dirname + '/public'));
 
 
 // хранилище коннектов и сессий
-var SessionController = require('./public/sessionController.js');
-var sessionController = new SessionController();
+var UserSessionMgr = require('./public/userSessionMgr.js');
+var userSessionMgr = new UserSessionMgr();
 
 // WebSocket-сервер на порту 8081
 var _connectId = 0;
@@ -80,7 +80,7 @@ wss.on('connection', function(ws) {
         side: 'server',
         connectId: _connectId,
         close: function(event, connectId) { // при закрытии коннекта
-            var connect = sessionController.getConnect(connectId);
+            var connect = userSessionMgr.getConnect(connectId);
             if (connect)
                 connect.closeConnect();
             console.log("отключился клиент: " + connectId);
@@ -92,23 +92,21 @@ wss.on('connection', function(ws) {
                 case 'connect':
                     // сессионный номер
                     var sessionID = data.sid;
-                    if (!sessionID) {
-                        console.log('не указан sid');
-                        break;
-                    }
 
-                    // запоминаем клиента подключенного
-                    var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
-                    sessionController.addConnect(connect);
-                    var session = sessionController.getSession(sessionID);
+                    // подключаемся к серверу с клиента
+                    var dbc = createController();
+                    userSessionMgr.connect(socket, {session:createDb(dbc, {name: "Master", kind: "master"}), client:data}, sessionID);
+
+                    // запоминаем клиента подключенного ( перенесено а userSessionMgr)
+                   /* var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
+                    userSessionMgr.addConnect(connect);
+                    var session = userSessionMgr.getSession(sessionID);
                     if (!session) {
                         var dbc = createController();
                         session = new Session(sessionID, createDb(dbc, {name: "Master", kind: "master"}));
-                        sessionController.addSession(session);
+                        userSessionMgr.addSession(session);
                     }
                     session.addConnect(connect);
-
-                    console.log(sessionController);
 
                     // обработка события закрытия коннекта
                     connect.event.on({
@@ -116,15 +114,15 @@ wss.on('connection', function(ws) {
                         subscriber: this,
                         callback: function(args){
                             session.getData().dbc.onDisconnect(args.connId);
-                            sessionController.removeConnect(args.connId);
+                            userSessionMgr.removeConnect(args.connId);
                         }
-                    });
+                    });*/
 
                     result =  {connectId:connectId};
                     break;
 
                 case 'subscribe':
-                    var connect = sessionController.getConnect(connectId);
+                    var connect = userSessionMgr.getConnect(connectId);
                     var session = connect.getSession();
                     var dbc = session.getData().dbc;
 
@@ -132,7 +130,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'subscribeRoot':
-                    var connect = sessionController.getConnect(connectId);
+                    var connect = userSessionMgr.getConnect(connectId);
                     var session = connect.getSession();
                     var dbc = session.getData().dbc;
 
@@ -143,7 +141,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'getGuids':
-                    var sessionData = sessionController.getConnect(connectId).getSession().getData();
+                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
                     var db = sessionData.db;
                     var myRootCont = sessionData.myRootCont;
                     var myButton = sessionData.myButton;
@@ -151,24 +149,24 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'changeObj':
-                    var sessionData = sessionController.getConnect(connectId).getSession().getData();
+                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
                     var myRootCont = sessionData.myRootCont;
                     myRootCont.getLog().applyDelta(data.delta);
                     break;
 
                 case 'sendDelta':
-                    var dbc = sessionController.getConnect(connectId).getSession().getData().dbc;
+                    var dbc = userSessionMgr.getConnect(connectId).getSession().getData().dbc;
                     dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                     break;
 
                 case 'getSessions':
-                    var sessions = sessionController.getSessions();
+                    var sessions = userSessionMgr.getSessions();
                     result = {sessions:[]};
                     for(var i in sessions) {
                         var session = {id:i, date:sessions[i].date, connects:[]};
                         var connects = sessions[i].item.getConnects();
                         for(var j in connects) {
-                            var connect = {id:j, date:sessionController.getConnectDate(j)};
+                            var connect = {id:j, date:userSessionMgr.getConnectDate(j)};
                             session.connects.push(connect);
                         }
                         result.sessions.push(session);
@@ -176,7 +174,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'changeCaption':
-                    var sessionData = sessionController.getConnect(connectId).getSession().getData();
+                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
                     var dbc = sessionData.dbc;
                     var db = sessionData.db;
                     var myButton = sessionData.myButton;
@@ -190,14 +188,14 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'isLogged':
-                    var session = sessionController.getConnect(connectId).getSession();
+                    var session = userSessionMgr.getConnect(connectId).getSession();
                     var sessionData = session.getData();
                     if (sessionData.user)
                         result = {user:sessionData.user};
                     break;
 
                 case 'login':
-                    var session = sessionController.getConnect(connectId).getSession();
+                    var session = userSessionMgr.getConnect(connectId).getSession();
                     var sessionData = session.getData();
                     if (data.name == 'user' && data.pass == '123') {
                         var user = {user:data.name};
@@ -208,7 +206,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'logout':
-                    var session = sessionController.getConnect(connectId).getSession();
+                    var session = userSessionMgr.getConnect(connectId).getSession();
                     var sessionData = session.getData();
                     if (sessionData.user) {
                         delete sessionData.user;

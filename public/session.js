@@ -24,6 +24,8 @@ define(
             this.id = id;
             this.data = data;
             this.connects = [];
+            this.creationTime = Date.now();
+            this.lastOpTime = Date.now();
         },
 
         /**
@@ -40,6 +42,8 @@ define(
          * @returns {object}
          */
         addConnect: function(conn) {
+
+            this.lastOpTime = Date.now();
 
             var that = this;
 
@@ -69,13 +73,33 @@ define(
         },
 
         /**
+         * получить коннект с идентификатором id
+         * @param id {number}
+         * @returns {object}
+         */
+        getConnect: function(id) {
+            if (this.connects[id])
+                return this.connects[id];
+            return null;
+        },
+
+        /**
          * Удалить коннект по ID
-         * @param id {string} ID удаляемого коннекта
+         * @param id {number} ID удаляемого коннекта
          * @returns {boolean}
          */
         removeConn: function (id) {
+            this.lastOpTime = Date.now();
             if (this.connects[id])
                 delete this.connects[id];
+        },
+
+        /**
+         * Количество коннектов
+         * @returns {number}
+         */
+        countConnect: function () {
+            return Object.keys(this.connects).length
         },
 
         /**
@@ -93,8 +117,28 @@ define(
             this.data = data;
         },
 
-        getData: function(){
+        getData: function() {
             return this.data;
+        },
+
+        getUser: function() {
+            return this.data.user;
+        },
+
+        /**
+         * вернуть таймстамп создания
+         * @returns {timestamp}
+         */
+        getCreationTime: function() {
+            return this.creationTime;
+        },
+
+        /**
+         * вернуть таймстамп последней операции в текущей сессии
+         * @returns {timestamp}
+         */
+        getLastOpTime: function() {
+            return this.lastOpTime;
         }
     });
 

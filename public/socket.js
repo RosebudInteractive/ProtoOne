@@ -122,6 +122,14 @@ define(function() {
         close: function(event){
             if (this.options.close)
                 this.options.close(event, this.options.connectId);
+        },
+
+        /**
+         * Получить номер коннекта
+         * @returns {*}
+         */
+        getConnectId: function() {
+            return this.options.connectId;
         }
     });
 
