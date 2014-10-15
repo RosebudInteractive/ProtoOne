@@ -62,6 +62,23 @@ app.get('/test', function(req, res){
     res.render('test.html');
 });
 
+
+// апдейт
+app.get("/update", function(req, res){
+    var shell = require('shelljs');
+    res.writeHead(200,{"Content-Type" : "text/html"});
+    res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
+    res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
+    res.write('$ git pull<br>');
+    res.write(shell.exec('git pull').output+'<br><br>');
+    res.write('$ jsdoc public -r -d public/docs<br>');
+    res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
+    res.write('$ forever restart calypso.js<br>');
+    res.write(shell.exec('forever restart calypso.js').output+'<br><br>');
+    res.end();
+});
+
+
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 
