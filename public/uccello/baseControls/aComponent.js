@@ -4,13 +4,14 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../memDB/memMetaObj', '../memDB/memMetaObjFields'],
-    function(MemMetaObj, MemMetaObjFields) {
+    ['../memDB/memMetaObj', '../memDB/memMetaObjFields','../memDB/memMetaObjCols'],
+    function(MemMetaObj, MemMetaObjFields, MemMetaObjCols) {
         var AComponent = Class.extend({
 		
 			className: "AComponent",
 			classGuid: "5b8c93e7-350d-de2a-e2b4-1025a03b17db",
 			metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ], // TODO? гуиды для полей?
+			metaCols: [],
 	
             init: function(db){
 				this._buildMetaInfo(db);
@@ -31,7 +32,8 @@ define(
                     var c =  new MemMetaObj({db: db}, {fields: {typeName: this.className, parentClass: pobj},$sys: {guid: this.classGuid}});
                     for (var i=0; i<this.metaFields.length; i++)
                         new MemMetaObjFields({"obj": c}, {fields: this.metaFields[i]});
-						
+                    for (i=0; i<this.metaCols.length; i++)
+                        new MemMetaObjCols({"obj": c}, {fields: this.metaCols[i]});						
 					db._buildMetaTables();
                 }
             }
