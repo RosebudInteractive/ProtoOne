@@ -14,6 +14,11 @@ define(
              * @param guid гуид объекта
              * @param options {parent:parentId}
              */
+
+			className: "Button";
+			classGuid: 
+			 
+			 
             init: function(db, guid, options) {
                 this.guid = guid;
                 this.db = db;

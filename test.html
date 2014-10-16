@@ -72,14 +72,18 @@
 		
 
 		require(
-            ['public/uccello/memDB/memDBController','public/uccello/memDB/memDataBase','public/uccello/memDB/memMetaObj','public/uccello/memDB/memMetaObjFields','public/uccello/memDB/memMetaObjCols','public/uccello/memDB/memObj'],
-            function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj){
+            ['public/uccello/memDB/memDBController','public/uccello/memDB/memDataBase','public/uccello/memDB/memMetaObj','public/uccello/memDB/memMetaObjFields','public/uccello/memDB/memMetaObjCols','public/uccello/memDB/memObj',
+			'public/uccello/baseControls/AComponent','public/uccello/baseControls/AControl','public/ProtoControls/button'],
+            function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj, AComponent,AControl,Button){
 			
 				var dbc = new MemDBController();
                 var db = dbc.newDataBase({name:"Master", kind : "master"}); 
 				
 				var par = { obj: db.getMeta(), colName: "Children" };
 				//return;				
+				
+				AComponent.buildMetaInfo(db);
+				
 				var myMetaControl = new MemMetaObj( { db: db },{fields: {typeName: "Control", parentClass:null}});
 				
 				var myMetaButton = new MemMetaObj({ db: db },{fields: {typeName: "Button", parentClass:myMetaControl.getGuid()}});

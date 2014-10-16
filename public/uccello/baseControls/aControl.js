@@ -9,6 +9,9 @@ define(
 	['uccello/baseControls/aComponent'],
 	function(AComponent) {
 		var AControl = AComponent.extend({
+		
+			className: "AControl";
+			classGuid: 			
 				
 			init: function(){										
 			}
