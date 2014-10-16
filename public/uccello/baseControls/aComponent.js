@@ -20,7 +20,7 @@ define(
         }, {
 
             metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ],
-            
+
             /**
              * Cоздает метаинформацию своего класса в базе данных db
              * @static
