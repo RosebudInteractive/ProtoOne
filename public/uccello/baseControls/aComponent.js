@@ -31,6 +31,8 @@ define(
                     var c =  new MemMetaObj({db: db}, {fields: {typeName: this.className, parentClass: pobj},$sys: {guid: this.classGuid}});
                     for (var i=0; i<this.metaFields.length; i++)
                         new MemMetaObjFields({"obj": c}, {fields: this.metaFields[i]});
+						
+					db._buildMetaTables();
                 }
             }
 			
