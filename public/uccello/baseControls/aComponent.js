@@ -23,12 +23,12 @@ define(
              */
             _buildMetaInfo: function(db){
                 if (!db.getObj(this.classGuid)) {
-					var obj = Object.getPrototypeOf(this), pobj=null;
+					var obj = Object.getPrototypeOf(this), gobj="";
 					if (obj.className != "AComponent")
-						pobj = db.getObj(Object.getPrototypeOf(obj).classGuid);
+						gobj = db.getObj(Object.getPrototypeOf(obj).classGuid).getGuid();
 					//var obj2 = Object.getPrototypeOf(obj);
 					// TODO parentClass передавать гуидом либо именем.
-                    var c =  new MemMetaObj({db: db}, {fields: {typeName: this.className, parentClass: pobj},$sys: {guid: this.classGuid}});
+                    var c =  new MemMetaObj({db: db}, {fields: {typeName: this.className, parentClass: gobj},$sys: {guid: this.classGuid}});
                     for (var i=0; i<this.metaFields.length; i++)
                         new MemMetaObjFields({"obj": c}, {fields: this.metaFields[i]});
                     for (i=0; i<this.metaCols.length; i++)

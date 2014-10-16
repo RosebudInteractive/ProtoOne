@@ -9,7 +9,7 @@ define(
         var Container = AControl.extend({
 
             className: "Container",
-            classGuid: "c576cb6e-cdbc-50f4-91d1-4dc3b48b0b61",
+            classGuid: "1d95ab61-df00-aec8-eff5-0f90187891cf",
             metaCols: [ {"cname": "Children", "ctype": "control"} ],
 
             init: function(db) {

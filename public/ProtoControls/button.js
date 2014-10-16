@@ -16,7 +16,7 @@ define(
              */
 
 			className: "Button",
-			classGuid: "c576cb6e-cdbc-50f4-91d1-4dc3b48b0b60",
+			classGuid: "af419748-7b25-1633-b0a9-d539cada8e0d",
             metaFields: [ {fname:"Caption",ftype:"string"} ],
 			 
 			 
