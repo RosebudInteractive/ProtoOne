@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./session', '../connection/connect', 'user'],
+    ['../connection/session', '../connection/connect', '../connection/user'],
     function(Session, Connect, User) {
         var UserSessionMgr = Class.extend({
 
