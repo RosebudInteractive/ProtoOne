@@ -12,17 +12,16 @@ define(
 			classGuid: "5b8c93e7-350d-de2a-e2b4-1025a03b17db",
 			metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ], // TODO? гуиды для полей?
 			metaCols: [],
-	
+
             init: function(db){
 				this._buildMetaInfo(db);
             },
-			
+
             /**
              * Cоздает метаинформацию своего класса в базе данных db
-             * @static
              * @param db
              */
-            _buildMetaInfo: function(db){ 
+            _buildMetaInfo: function(db){
                 if (!db.getObj(this.classGuid)) {
 					var obj = Object.getPrototypeOf(this), pobj=null;
 					if (obj.className != "AComponent")
@@ -33,7 +32,7 @@ define(
                     for (var i=0; i<this.metaFields.length; i++)
                         new MemMetaObjFields({"obj": c}, {fields: this.metaFields[i]});
                     for (i=0; i<this.metaCols.length; i++)
-                        new MemMetaObjCols({"obj": c}, {fields: this.metaCols[i]});						
+                        new MemMetaObjCols({"obj": c}, {fields: this.metaCols[i]});
 					db._buildMetaTables();
                 }
             }

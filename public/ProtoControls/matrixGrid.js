@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['jquery', '../uccello/baseControls/aControl'],
-    function($, AControl) {
+    ['../uccello/baseControls/aControl'],
+    function(AControl) {
         var MatrixGrid = AControl.extend({
 
             /**

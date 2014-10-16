@@ -2,10 +2,13 @@
 // создаем БД
 var MemDBController = require('./public/uccello/memDB/memDBController');
 var MDb = require('./public/uccello/memDB/memDataBase');
-var MemMetaObj = require('./public/uccello/memDB/memMetaObj');
-var MemMetaObjFields = require('./public/uccello/memDB/memMetaObjFields');
-var MemMetaObjCols = require('./public/uccello/memDB/memMetaObjCols');
 var MemObj = require('./public/uccello/memDB/memObj');
+
+var AComponent = require('./public/uccello/baseControls/aComponent');
+var AControl = require('./public/uccello/baseControls/aControl');
+var AContainer = require('./public/protoControls/container');
+var AButton = require('./public/protoControls/button');
+var AMatrixGrid = require('./public/protoControls/matrixGrid');
 
 function createController(){
     var dbc = new MemDBController();
@@ -14,9 +17,7 @@ function createController(){
 
 function createDb(dbc, options){
 
-    var db = dbc.newDataBase(options);
-
-    var par = { obj: db.getMeta(), colName: "Children" };
+   /* var par = { obj: db.getMeta(), colName: "Children" };
 //return;
     var myMetaControl = new MemMetaObj({ db: db }, {fields: {typeName: "Control", parentClass: null}});
 
@@ -35,12 +36,19 @@ function createDb(dbc, options){
     new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname": "Children", "ctype": "control"}});
     myMetaControl._bldElemTable(); // temp
     myMetaButton._bldElemTable();
-    myMetaContainer._bldElemTable();
+    myMetaContainer._bldElemTable();*/
 
-    var myRootButton = new MemObj(myMetaButton, { "db": db, "mode": "RW" }, {"Id": 22, "Name": "MyFirstButton", "Caption": "OK", "Left":"30", "Top":"50"});
-    var myRootCont = db.newRootObj(myMetaContainer, {fields: {"Id": 11, "Name": "MainContainer"}});
-    var myButton = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
-    var myButton2 = new MemObj(myMetaButton, { obj: myRootCont, colName: "Children"}, {fields: {"Id": 23, "Name": "MySecondButton", "Caption": "Cancel", "Left":30, "Top":"70"}});
+    var db = dbc.newDataBase(options);
+
+    var component = new AComponent(db);
+    var control = new AControl(db);
+    var matrixGrid = new AMatrixGrid(db);
+    var rootCont = new AContainer(db);
+    var button = new AButton(db);
+
+    var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
+    var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
+
     return {dbc:dbc, db: db, myRootCont:myRootCont, myButton:myButton};
 }
 

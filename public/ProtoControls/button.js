@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['jquery', '../uccello/baseControls/aControl'],
-    function($, AControl) {
+    ['../uccello/baseControls/aControl'],
+    function(AControl) {
         var Button = AControl.extend({
 
             /**
@@ -16,14 +16,20 @@ define(
              */
 
 			className: "Button",
-			classGuid: "",
+			classGuid: "c576cb6e-cdbc-50f4-91d1-4dc3b48b0b60",
+            metaFields: [ {fname:"Caption",ftype:"string"} ],
 			 
 			 
             init: function(db, guid, options) {
+                this._super(db);
+
                 this.guid = guid;
                 this.db = db;
                 this.options = options;
-                this.meta = this.buildMetaInfo(db, "Button");
+            },
+
+            getGuid: function(){
+                return this.guid;
             },
 
             getObj: function() {
