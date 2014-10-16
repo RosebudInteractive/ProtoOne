@@ -6,7 +6,7 @@ if (typeof define !== 'function') {
 define(
     ['jquery', '../uccello/baseControls/aControl'],
     function($, AControl) {
-        var Button = AControl.extend({
+        var MatrixGrid = AControl.extend({
 
             /**
              * Инициализация объекта
@@ -18,7 +18,6 @@ define(
                 this.guid = guid;
                 this.db = db;
                 this.options = options;
-                this.meta = this.buildMetaInfo(db, "Button");
             },
 
             getObj: function() {
@@ -26,26 +25,13 @@ define(
             },
 
             /**
-             * Рендер кнопки
+             * Рендер
              */
             render: function() {
-                var obj = this.getObj();
-                var item = null;
-                if (obj) {
-                    var top = obj.get('Top')+'px';
-                    var left = obj.get('Left')+'px';
-                    var caption = obj.get('Caption');
-                    item = $('#'+this.guid);
-                    if (item.length == 0) {
-                        item = $('<input type="button" />').attr('id', this.guid);
-                        $(this.options.parent).append(item);
-                    }
-                    item.css({top:top, left:left}).val(caption);
-                }
-                return item;
+
             }
 
         });
-        return Button;
+        return MatrixGrid;
     }
 );

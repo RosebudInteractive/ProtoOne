@@ -6,9 +6,9 @@
 
 
 define(
-	[],
-	function() {
-		var AControl = Class.extend({
+	['uccello/baseControls/aComponent'],
+	function(AComponent) {
+		var AControl = AComponent.extend({
 				
 			init: function(){										
 			}

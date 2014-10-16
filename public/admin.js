@@ -3,7 +3,7 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 
-define(['./user'], function(User) {
+define(['./uccello/connection/user'], function(User) {
     var Admin = User.extend({
         init: function(name){
             this._super(name);

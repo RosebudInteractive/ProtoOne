@@ -6,7 +6,7 @@ var WebSocketServer = new require('ws');
 var Module1 = require('./public/module1');
 var module1 = new Module1();
 
-var User = require('./public/user');
+var User = require('./public/uccello/connection/user');
 var Admin = require('./public/admin');
 
 var Db = require('./public/uccello/memDB/memDataBase');
