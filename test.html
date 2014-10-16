@@ -77,12 +77,17 @@
             function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj, AComponent,AControl,Button){
 			
 				var dbc = new MemDBController();
+				console.log(dbc.guid());
+				console.log(dbc.guid());
+				console.log(dbc.guid());
                 var db = dbc.newDataBase({name:"Master", kind : "master"}); 
 				
 				var par = { obj: db.getMeta(), colName: "Children" };
 				//return;				
 				
-				AComponent.buildMetaInfo(db);
+				var ac = new AComponent(db);
+				var ac2 = new AControl(db);
+				//AComponent.buildMetaInfo(db);
 				
 				var myMetaControl = new MemMetaObj( { db: db },{fields: {typeName: "Control", parentClass:null}});
 				

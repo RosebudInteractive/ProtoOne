@@ -11,9 +11,10 @@ define(
 		var AControl = AComponent.extend({
 		
 			className: "AControl",
-			classGuid: "",
+			classGuid: "c576cb6e-cdbc-50f4-91d1-4dc3b48b0b59",
 				
-			init: function(){										
+			init: function(db){
+				this._super(db);
 			}
 						
 
