@@ -4,7 +4,7 @@
 }
 
 define(
-	['./memProtoObj','./memCol'],
+	['../memDB/memProtoObj','../memDB/memCol'],
 	function(MemProtoObj,MemCol) {
 		var MemObj = MemProtoObj.extend({
 
