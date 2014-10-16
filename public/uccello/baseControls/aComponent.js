@@ -8,10 +8,10 @@ define(
     function(MemMetaObj, MemMetaObjFields) {
         var AComponent = Class.extend({
 		
-			className: "AComponent";
-			classGuid: 
+			className: "AComponent",
+			classGuid: "",
 		
-			metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ];
+			metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ],
 
             init: function(){
 				

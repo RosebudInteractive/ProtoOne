@@ -15,8 +15,8 @@ define(
              * @param options {parent:parentId}
              */
 
-			className: "Button";
-			classGuid: 
+			className: "Button",
+			classGuid: "",
 			 
 			 
             init: function(db, guid, options) {

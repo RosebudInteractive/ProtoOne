@@ -10,8 +10,8 @@ define(
 	function(AComponent) {
 		var AControl = AComponent.extend({
 		
-			className: "AControl";
-			classGuid: 			
+			className: "AControl",
+			classGuid: "",
 				
 			init: function(){										
 			}
