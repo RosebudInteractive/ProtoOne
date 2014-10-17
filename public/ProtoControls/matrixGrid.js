@@ -20,6 +20,8 @@ define(
              * @param options {parent:parentId}
              */
             init: function(db, guid, options) {
+                this._super(db);
+
                 this.guid = guid;
                 this.db = db;
                 this.options = options;

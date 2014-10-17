@@ -13,6 +13,7 @@
 
         .divTable
         {
+            position: absolute;
             display:  table;
             width:auto;
             border:1px solid  #666666;
@@ -128,11 +129,17 @@
 
       function changeFields(fields) {
           myButton = dbsl.getObj(guids.myButtonGuid);
+          myMatrixGrid = dbsl.getObj(guids.myMatrixGridGuid);
           myRootCont = dbsl.getObj(guids.myRootContGuid);
 
           for(var name in fields)
-            if (fields[name] && fields[name]!='')
-                myButton.set(name, fields[name]);
+            if (fields[name] && fields[name]!='') {
+               if (name=='HorCells' || name=='VerCells')
+                   myMatrixGrid.set(name, fields[name]);
+               else
+                   myButton.set(name, fields[name]);
+            }
+
 
 		  dbc.genDeltas(dbsl.getGuid());
           renderAll();
@@ -162,6 +169,7 @@
                             var button = new Button(db, guidButton, {parent:'#result'});
                             var matrix = new MatrixGrid(db, guidMatrixGrid, {parent:'#result'});
                             buttons.push(button);
+                            buttons.push(matrix);
                             renderAll();
                         });
                     }
