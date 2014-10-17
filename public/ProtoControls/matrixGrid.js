@@ -39,7 +39,7 @@ define(
                 if (obj) {
                     var table = $('#' + this.guid);
                     if (table.length == 0) {
-                        table = $('<div class="divTable" id="grid"></div>');
+                        table = $('<div class="divTable" id="'+this.guid+'"></div>');
                         $(this.options.parent).append(table);
                     } else {
                         table.empty();
