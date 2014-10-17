@@ -109,7 +109,7 @@
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
           //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
-              createButton(dbsl, guids.myButtonGuid);
+              createButtons(dbsl, guids.myButtonGuid, guids.myMatrixGridGuid);
           });
           console.log('база данных C:', dbs2);
       }
@@ -154,13 +154,13 @@
 
 
         var buttons = [];
-        function createButton(db, guid) {
+        function createButtons(db, guidButton, guidMatrixGrid) {
             require(
-                    ['../public/ProtoControls/button'],
-                    function( Button ){
+                    ['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid'],
+                    function( Button, MatrixGrid ){
                         socket.send({action:"getGuids", type:'method'}, function(result){
-                            // создаем кнопку
-                            var button = new Button(db, guid, {parent:'#result'});
+                            var button = new Button(db, guidButton, {parent:'#result'});
+                            var matrix = new MatrixGrid(db, guidMatrixGrid, {parent:'#result'});
                             buttons.push(button);
                             renderAll();
                         });
@@ -171,32 +171,9 @@
         function renderAll() {
           for(var i=0; i<buttons.length; i++) {
               buttons[i].render();
-              var obj = buttons[i].getObj();
-              if (obj.get('VerCells') && obj.get('HorCells')) {
-                  renderGrid(obj.get('HorCells'),obj.get('VerCells'));
-              }
           }
         }
 
-        function renderGrid(x, y) {
-            var table = $('#grid');
-            if (table.length == 0) {
-                table = $('<div class="divTable" id="grid"></div>');
-                $('#result').append(table);
-            } else {
-                table.empty();
-            }
-
-            for(var i=0; i < y; i++) {
-                var row  = $('<div class="divRow"></div>');
-                for(var j=0; j < x; j++) {
-                    var cell = $('<div class="divCell"></div>');
-                    row.append(cell);
-                }
-                table.append(row);
-            }
-
-        }
 
         /**
          * Логин

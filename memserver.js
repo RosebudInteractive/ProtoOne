@@ -1,9 +1,6 @@
-
-// создаем БД
 var MemDBController = require('./public/uccello/memDB/memDBController');
 var MDb = require('./public/uccello/memDB/memDataBase');
 var MemObj = require('./public/uccello/memDB/memObj');
-
 var AComponent = require('./public/uccello/baseControls/aComponent');
 var AControl = require('./public/uccello/baseControls/aControl');
 var AContainer = require('./public/protoControls/container');
@@ -16,40 +13,19 @@ function createController(){
 }
 
 function createDb(dbc, options){
-
-   /* var par = { obj: db.getMeta(), colName: "Children" };
-//return;
-    var myMetaControl = new MemMetaObj({ db: db }, {fields: {typeName: "Control", parentClass: null}});
-
-    var myMetaButton = new MemMetaObj({ db: db }, {fields: {typeName: "Button", parentClass: myMetaControl.getGuid()}});
-    var myMetaContainer = new MemMetaObj({ db: db }, {fields: {typeName: "Container", parentClass: myMetaControl.getGuid()}});
-    var flds = myMetaControl.getCol("fields");
-    var cls = myMetaControl.getCol("cols");
-    new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname": "Id", "ftype": "int"}});
-    new MemMetaObjFields({"obj": myMetaControl}, {fields: {"fname": "Name", "ftype": "string"}});
-    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Caption", "ftype": "string"}});
-    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Left", "ftype": "integer"}});
-    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "Top", "ftype": "integer"}});
-    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "HorCells", "ftype": "integer"}});
-    new MemMetaObjFields({"obj": myMetaButton}, {fields: {"fname": "VerCells", "ftype": "integer"}});
-    new MemMetaObjFields({"obj": myMetaContainer}, {fields: {"fname": "containerType", "ftype": "enum"}});
-    new MemMetaObjCols({"obj": myMetaContainer}, {fields: {"cname": "Children", "ctype": "control"}});
-    myMetaControl._bldElemTable(); // temp
-    myMetaButton._bldElemTable();
-    myMetaContainer._bldElemTable();*/
-
     var db = dbc.newDataBase(options);
 
     var component = new AComponent(db);
     var control = new AControl(db);
-    var matrixGrid = new AMatrixGrid(db);
     var rootCont = new AContainer(db);
     var button = new AButton(db);
+    var matrixGrid = new AMatrixGrid(db);
 
     var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
     var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
+    var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:33, HorCells:3, VerCells:4, Name:"Grid", "Left":"50", "Top":"60"}});
 
-    return {dbc:dbc, db: db, myRootCont:myRootCont, myButton:myButton};
+    return {dbc:dbc, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid};
 }
 
 // ----------------------------------------------------------------------------------------------------------------------
@@ -192,7 +168,8 @@ wss.on('connection', function(ws) {
                     var db = sessionData.db;
                     var myRootCont = sessionData.myRootCont;
                     var myButton = sessionData.myButton;
-                    result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid()};
+                    var myMatrixGrid = sessionData.myMatrixGrid;
+                    result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid(), myMatrixGridGuid:myMatrixGrid.getGuid()};
                     break;
 
                 case 'changeObj':

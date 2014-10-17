@@ -73,8 +73,8 @@
 
 		require(
             ['uccello/memDB/memDBController','uccello/memDB/memDataBase','uccello/memDB/memMetaObj','uccello/memDB/memMetaObjFields','uccello/memDB/memMetaObjCols','uccello/memDB/memObj',
-			'uccello/baseControls/aComponent','uccello/baseControls/aControl','ProtoControls/button','ProtoControls/container'],
-            function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj, AComponent,AControl,AButton,AContainer){
+			'uccello/baseControls/aComponent','uccello/baseControls/aControl','ProtoControls/button','ProtoControls/container','ProtoControls/matrixGrid'],
+            function( MemDBController,MDb,MemMetaObj,MemMetaObjFields,MemMetaObjCols,MemObj, AComponent,AControl,AButton,AContainer,AMatrixGrid){
 			
 				var dbc = new MemDBController();
 				console.log(dbc.guid());
@@ -89,6 +89,7 @@
 				var ac2 = new AControl(db);
 				var container = new AContainer(db);
 				var button = new AButton(db);
+				var matrixGrid = new AMatrixGrid(db);
 				//AComponent.buildMetaInfo(db);
 				
 				/*var myMetaControl = new MemMetaObj( { db: db },{fields: {typeName: "Control", parentClass:null}});
@@ -110,6 +111,7 @@
 				var myRootCont = db.newRootObj(db.getObj(container.classGuid), {fields: {"Id":11,"Name":"MainContainer"}});
 				var myButton = new MemObj(db.getObj(button.classGuid),{ obj: myRootCont, colName: "Children"},{fields: {"Id":22,"Caption":"OK"}});
 				var myButton2 = new MemObj(db.getObj(button.classGuid),{ obj: myRootCont, colName: "Children"},{fields: {"Id":23,"Caption":"Cancel"}});
+				var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid),{ obj: myRootCont, colName: "Children"},{fields: {"Id":24,"HorCells":"3", VerCells:"4"}});
 
 				var dbsl = dbc.newDataBase({name:"Slave", proxyMaster : dbc.getProxy(db.getGuid())}); 				
 				//dbsl.subscribeRoot("fc13e2b8-3600-b537-f9e5-654b7418c156");

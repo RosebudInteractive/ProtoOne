@@ -8,18 +8,16 @@ define(
     function(AControl) {
         var Button = AControl.extend({
 
+			className: "Button",
+			classGuid: "af419748-7b25-1633-b0a9-d539cada8e0d",
+            metaFields: [ {fname:"Caption",ftype:"string"} ],
+
             /**
              * Инициализация объекта
              * @param db ссылка на БД
              * @param guid гуид объекта
              * @param options {parent:parentId}
              */
-
-			className: "Button",
-			classGuid: "af419748-7b25-1633-b0a9-d539cada8e0d",
-            metaFields: [ {fname:"Caption",ftype:"string"} ],
-			 
-			 
             init: function(db, guid, options) {
                 this._super(db);
 
