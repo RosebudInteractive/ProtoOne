@@ -14,15 +14,14 @@ define(
 
             /**
              * Инициализация объекта
-             * @param db ссылка на БД
+             * @param cm ссылка на контрол менеджер
              * @param guid гуид объекта
              * @param options {parent:parentId}
              */
-            init: function(db, guid, options) {
-                this._super(db);
+            init: function(cm, guid, options) {
+                this._super(cm, guid);
 
                 this.guid = guid;
-                this.db = db;
                 this.options = options;
             },
 

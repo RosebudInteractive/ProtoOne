@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../connection/session', '../connection/connect', '../connection/user'],
-    function(Session, Connect, User) {
+    ['../connection/session', '../connection/connect', '../connection/user','./../system/event'],
+    function(Session, Connect, User,Event) {
         var UserSessionMgr = Class.extend({
 
             init: function(){
@@ -14,6 +14,8 @@ define(
                 this.users = {};
                 this.sessionId = 0;
                 this.userId = 0;
+				
+				this.event = new Event();
             },
 
             /**
@@ -28,7 +30,7 @@ define(
 
                 // если не указан номер сессии или не найдена создаем новую
                 if (!session) {
-                    sessionId = this._newSession(data.session);
+                    sessionId = this._newSession();
                     session = this.getSession(sessionId);
                 }
 
@@ -62,11 +64,11 @@ define(
              * @returns {number}
              * @private
              */
-            _newSession: function(data) {
+            _newSession: function() {
                 var user = this._newUser();
                 var sessionId = ++this.sessionId;
-                data.user = user;
-                var session = new Session(sessionId, data);
+                //data.user = user;
+                var session = new Session(sessionId, user);
                 this.addSession(session);
                 this.addUser(user);
                 user.addSession(session);
@@ -80,6 +82,14 @@ define(
             _newUser: function() {
                 var userId = ++this.userId;
                 var user = new User('noname'+userId);
+				
+				// генерируем событие на создание нового пользователя, чтобы привязать к нему контекст
+				this.event.fire({
+                   type: 'newUser',
+                   target: user,
+				   blalba: 1
+                });
+				
                 return user;
             },
 

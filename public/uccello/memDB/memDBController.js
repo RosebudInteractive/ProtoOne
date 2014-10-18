@@ -5,7 +5,7 @@
 
 define(
 	['./memDataBase', './../system/event'],
-	function(MemDataBase, event) {
+	function(MemDataBase, Event) {
 		var MemDBController = Class.extend({
 
 			createLocalProxy: function(db) {
@@ -33,7 +33,7 @@ define(
 			init: function(){
 				this.pvt = {};
 				this.pvt.dbCollection = {};
-                this.event = new event();
+                this.event = new Event();
 			},
 			
 			// сгенерировать guid
@@ -78,18 +78,24 @@ define(
                 if (db)
                     db.getProxyMaster().db.onSubscribe(proxy);*/
             },
-			
-			// подписать базу db на рутовый элемент с гуидом rootGuid
-			subscribeRoot: function(db,rootGuid, cb) {
+
+            /**
+             * подписать базу db на рутовый элемент с гуидом rootGuid
+			 * @param {MemDataBase} db - база данных
+             * @param rootGuid
+             * @param cb - вызывается после того, как подписка произошла и данные сериализовались в базе
+			 * @param cb2 - вызывается по ходу создания объектов
+             */
+			subscribeRoot: function(db,rootGuid, cb, cb2) {
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
 					var newObj = p.db.onSubscribeRoot(db.getGuid(),rootGuid);
-					db.deserialize(newObj);
+					db.deserialize(newObj,{db:db, mode:"RW"},cb2);
 					if (cb !== undefined && (typeof cb == "function")) cb();
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
-						db.deserialize(obj.data);
+						db.deserialize(obj.data,{db:db, mode:"RW"});
 						if (cb !== undefined && (typeof cb == "function")) cb();
 					}
 					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);

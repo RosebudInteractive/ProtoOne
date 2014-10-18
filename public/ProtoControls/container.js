@@ -12,8 +12,8 @@ define(
             classGuid: "1d95ab61-df00-aec8-eff5-0f90187891cf",
             metaCols: [ {"cname": "Children", "ctype": "control"} ],
 
-            init: function(db) {
-                this._super(db);
+            init: function(cm, guid) {
+                this._super(cm, guid);
             },
 
             render: function() {

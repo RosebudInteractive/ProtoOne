@@ -13,8 +13,23 @@ define(
 			metaFields: [ {fname:"Id",ftype:"int"}, {fname:"Name",ftype:"string"} ], // TODO? гуиды для полей?
 			metaCols: [],
 
-            init: function(db){
-				this._buildMetaInfo(db);
+            /**
+             * @constructs
+             * @param {ControlMgr} cm - менеджер контролов, к которому привязан данный контрол
+			 * @param memObj
+             */
+            init: function(cm, objGuid){
+				this.pvt = {};
+				this.pvt.controlMgr = cm;
+				this._buildMetaInfo(cm.getDB());
+				if (objGuid!==undefined) {
+					this.pvt.obj = cm.getDB().getObj(objGuid);
+					cm.add(this);
+					}
+				else {
+					// TODO создать пустой объект
+				}
+				
             },
 
             /**
@@ -35,7 +50,15 @@ define(
                         new MemMetaObjCols({"obj": c}, {fields: this.metaCols[i]});
 					db._buildMetaTables();
                 }
-            }
+            },
+
+            /**
+             * Возвращает локальный идентификатор
+             */			
+			getLid: function() {
+				return this.pvt.obj.getLid();
+				
+			}
 			
         });
         return AComponent;

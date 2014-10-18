@@ -2,31 +2,18 @@ var MemDBController = require('./public/uccello/memDB/memDBController');
 var MDb = require('./public/uccello/memDB/memDataBase');
 var MemObj = require('./public/uccello/memDB/memObj');
 var AComponent = require('./public/uccello/baseControls/aComponent');
+var ControlMgr = require('./public/uccello/baseControls/controlMgr');
 var AControl = require('./public/uccello/baseControls/aControl');
 var AContainer = require('./public/protoControls/container');
 var AButton = require('./public/protoControls/button');
 var AMatrixGrid = require('./public/protoControls/matrixGrid');
 
+/*
 function createController(){
     var dbc = new MemDBController();
     return dbc;
-}
+}*/
 
-function createDb(dbc, options){
-    var db = dbc.newDataBase(options);
-
-    var component = new AComponent(db);
-    var control = new AControl(db);
-    var rootCont = new AContainer(db);
-    var button = new AButton(db);
-    var matrixGrid = new AMatrixGrid(db);
-
-    var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
-    var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
-    var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:33, HorCells:3, VerCells:4, Name:"Grid", "Left":"50", "Top":"60"}});
-
-    return {dbc:dbc, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid};
-}
 
 // ----------------------------------------------------------------------------------------------------------------------
 
@@ -71,6 +58,38 @@ app.use("/public", express.static(__dirname + '/public'));
 var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
 var userSessionMgr = new UserSessionMgr();
 
+function createDb(dbc, options){
+    var db = dbc.newDataBase(options);
+	var cm = new ControlMgr(db);
+
+    var component = new AComponent(cm);
+    var control = new AControl(cm);
+    var rootCont = new AContainer(cm);
+    var button = new AButton(cm);
+    var matrixGrid = new AMatrixGrid(cm);
+
+    var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
+    var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
+    var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:33, HorCells:3, VerCells:4, Name:"Grid", "Left":"50", "Top":"60"}});
+
+    return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid};
+}
+// вызывается по событию при создании нового пользователя
+function createUserContext(args) {
+	var userData = args.target.getData();
+	userData.controller = new MemDBController();
+	var r = createDb(userData.controller,{name: "Master", kind: "master"});
+	userData.db = r.db;
+	userData.cm = r.cm;	
+	userData.myRootCont = r.myRootCont;
+};
+
+ userSessionMgr.event.on({
+	type: 'newUser',
+	subscriber: this,
+	callback: createUserContext
+});
+
 // WebSocket-сервер на порту 8081
 var _connectId = 0;
 var wss = new WebSocketServer.Server({port: 8081});
@@ -95,8 +114,8 @@ wss.on('connection', function(ws) {
                     var sessionID = data.sid;
 
                     // подключаемся к серверу с клиента
-                    var dbc = createController();
-                    result =  userSessionMgr.connect(socket, {session:createDb(dbc, {name: "Master", kind: "master"}), client:data}, sessionID);
+                    //var dbc = createController();
+                    result =  userSessionMgr.connect(socket, {/*session:createDb(dbc, {name: "Master", kind: "master"}),*/ client:data}, sessionID);
 
                     // запоминаем клиента подключенного ( перенесено а userSessionMgr)
                    /* var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
@@ -122,7 +141,7 @@ wss.on('connection', function(ws) {
 
                 case 'authenticate':
                     var session = userSessionMgr.getConnect(connectId).getSession();
-                    var sessionData = session.getData();
+                    //var sessionData = session.getData();
                     result = {user:userSessionMgr.authenticate(connectId, session.getId(), data.name, data.pass)};
                     break;
 
@@ -146,16 +165,16 @@ wss.on('connection', function(ws) {
 
                 case 'subscribe':
                     var connect = userSessionMgr.getConnect(connectId);
-                    var session = connect.getSession();
-                    var dbc = session.getData().dbc;
+                    var u = connect.getSession().getUser();
+                    var dbc = u.getData().controller;
 
                     result = {data:dbc.onSubscribe({connect:connect, guid:data.slaveGuid}, data.masterGuid)};
                     break;
 
                 case 'subscribeRoot':
                     var connect = userSessionMgr.getConnect(connectId);
-                    var session = connect.getSession();
-                    var dbc = session.getData().dbc;
+                    var u = connect.getSession().getUser();
+                    var dbc = u.getData().controller;
 
 					var masterdb=dbc.getDB(data.masterGuid);
                     if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
@@ -164,22 +183,22 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'getGuids':
-                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
-                    var db = sessionData.db;
-                    var myRootCont = sessionData.myRootCont;
-                    var myButton = sessionData.myButton;
-                    var myMatrixGrid = sessionData.myMatrixGrid;
-                    result = {masterGuid:db.getGuid(), myRootContGuid:myRootCont.getGuid(), myButtonGuid:myButton.getGuid(), myMatrixGridGuid:myMatrixGrid.getGuid()};
+                    var userData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
+                    var db = userData.db;
+                    //var myRootCont = userData.myRootCont;
+                    //var myButton = userData.myButton;
+                    //var myMatrixGrid = userData.myMatrixGrid;
+                    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid() /*, myButtonGuid:myButton.getGuid(), myMatrixGridGuid:myMatrixGrid.getGuid()*/};
                     break;
 
                 case 'changeObj':
-                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
-                    var myRootCont = sessionData.myRootCont;
-                    myRootCont.getLog().applyDelta(data.delta);
+                    /*var userData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
+                    var myRootCont = userData.myRootCont;
+                    myRootCont.getLog().applyDelta(data.delta);*/
                     break;
 
                 case 'sendDelta':
-                    var dbc = userSessionMgr.getConnect(connectId).getSession().getData().dbc;
+                    var dbc = userSessionMgr.getConnect(connectId).getSession().getUser().getData().controller;
                     dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                     break;
 
@@ -198,7 +217,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'changeCaption':
-                    var sessionData = userSessionMgr.getConnect(connectId).getSession().getData();
+                    /*var sessionData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
                     var dbc = sessionData.dbc;
                     var db = sessionData.db;
                     var myButton = sessionData.myButton;
@@ -208,7 +227,7 @@ wss.on('connection', function(ws) {
                     var delta = myRootCont.getLog().genDelta();
                     console.log('delta:', delta);
 
-                    dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);
+                    dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);*/
                     break;
 
 

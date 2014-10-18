@@ -16,6 +16,8 @@ define(function() {
          * @param {string} name Имя пользователя
          */
         init: function(name) {
+			this.pvt = {};
+			this.pvt.data = {};
             this.name = name;
             this.loginTime = false;
             this._isAuthenticated = false;
@@ -41,6 +43,10 @@ define(function() {
         countSession: function(){
             return Object.keys(this.sessions).length;
         },
+		
+		getData: function() {
+			return this.pvt.data;
+		},
 
         /**
          * Удалить сессию по ID

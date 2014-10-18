@@ -17,12 +17,12 @@ define(
          * Инициализация объекта
          * @constructs
          * @param id {string} ID сессии
-         * @param data {object} данные сессии
+         * @param user {object} пользователь сессии
          */
-        init: function(id, data) {
+        init: function(id, user) {
             this.event = new event(this);
             this.id = id;
-            this.data = data;
+            this.user = user;
             this.connects = [];
             this.creationTime = Date.now();
             this.lastOpTime = Date.now();
@@ -113,6 +113,7 @@ define(
             return null;
         },
 
+		// TODO УБРАТЬ ИЛИ ПЕРЕДЕЛАТЬ?
         setData: function(data){
             this.data = data;
         },
@@ -122,11 +123,11 @@ define(
         },
 
         getUser: function() {
-            return this.data.user;
+            return this.user;
         },
 
         setUser: function(user) {
-            this.data.user = user;
+            this.user = user;
         },
 
         /**

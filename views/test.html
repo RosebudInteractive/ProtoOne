@@ -55,15 +55,20 @@
             baseUrl: 'public',
             nodeRequire: require
         });
+		
 
+		
+		
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
         var myButton=null, myRootCont=null, dbc=null, dbsl=null, dbs2=null, guids=null;
+		
+		var myApp = {};
 
         // когда документ загружен
         $(document).ready( function() {
             require(
-                ['../public/uccello/connection/clientConnection'],
+                ['./uccello/connection/clientConnection'],
                 function(ClientConnection){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
@@ -83,13 +88,17 @@
 
 
       function createController(done){
-		require(
-            ['../public/uccello/memDB/memDBController', '../public/uccello/memDB/memDataBase'],
-            function( MemDBController, MemDataBase){
+	  
+				var MemDBController = require('./uccello/memDB/memDBController');
+				var MemDataBase = require('./uccello/memDB/memDataBase');
+				var ControlMgr = require('./uccello/memDB/controlMgr');
+	  
+	  
                 socket.send({action:"getGuids", type:'method'}, function(result){
                     guids = result;
-                    // создаем  контроллер и бд
+                    // создаем  контроллер и бд					
                     dbc = new MemDBController();
+					myApp.controller = dbc;
                     dbc.event.on({
                         type: 'applyDeltas',
                         subscriber: this,
@@ -97,34 +106,56 @@
                             renderAll();
                         }
                     });
+					
 					var cb = subscribeRoot;
 					dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
+					myApp.controlMgr = new ControlMgr(dbsl);
                     console.log('контроллер:', dbc);
                     console.log('база данных B:', dbsl);
                 });
-            }
-        );
       }
 
       function createDataBase() {
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
           //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
-              createButtons(dbsl, guids.myButtonGuid, guids.myMatrixGridGuid);
-          });
+				renderControls();
+              //createButtons(dbsl, guids.myButtonGuid, guids.myMatrixGridGuid);
+          },createComponent);
           console.log('база данных C:', dbs2);
       }
+	  
+	  function renderControls() {
+	  }
 
       function changeCaptionMaster() {
           socket.send({action:"changeCaption", caption:'13313123'});
       }
 
+	  // obj.parentGuid
+	  // obj.
+
+	  var typeGuids = {};
+	  
+	  require(['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid','../public/ProtoControls/container'],
+            function( Button, MatrixGrid,Container ){
+			  typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
+			  typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
+			  typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
+	  });
+	  
+	  function createComponent(obj) {
+			var g = obj.getTypeGuid();
+			new typeGuids[g](myApp.controlMgr,obj.getGuid(),{parent:'#result'});
+
+	  }
+	  
       function subscribeRoot() {
           // подписываемся на корневой объект контейнера
 		  //dbsl._buildMetaTables();
           dbsl.subscribeRoot(guids.myRootContGuid, function(result){
 			  createDataBase();
-          });
+          }, createComponent);
       }
 
       function changeFields(fields) {
@@ -161,7 +192,7 @@
 
 
         var buttons = [];
-        function createButtons(db, guidButton, guidMatrixGrid) {
+        /*function createButtons(db, guidButton, guidMatrixGrid) {
             require(
                     ['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid'],
                     function( Button, MatrixGrid ){
@@ -174,7 +205,7 @@
                         });
                     }
             );
-        }
+        }*/
 
         function renderAll() {
           for(var i=0; i<buttons.length; i++) {

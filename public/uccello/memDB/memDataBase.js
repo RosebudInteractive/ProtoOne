@@ -114,10 +114,11 @@ define(
              * подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid
              * метод вызывается у подчиненной (slave) базы.
              * @param rootGuid
-             * @param callback
+             * @param callback - вызывается после того, как подписка произошла и данные сериализовались в базе
+			 * @param callback2 - вызывается по ходу создания объектов
              */
-			subscribeRoot: function(rootGuid,callback) {
-				this.pvt.controller.subscribeRoot(this,rootGuid,callback);
+			subscribeRoot: function(rootGuid,callback,callback2) {
+				this.pvt.controller.subscribeRoot(this,rootGuid,callback,callback2);
 			},
 			
             /**
@@ -224,10 +225,12 @@ define(
             /**
              * ----создать подписанный корневой объект (временный вариант)
              * десериализация в объект
-             * @param {object} sobj
+             * @param {object} sobj - объект который нужно десериализовать
+			 * @param {object} parent - родительский "объект" - либо parent.db для корневых либо parent.obj, parent.colName
+			 * @callback cb - вызов функции, которая выполняет доп.действия после создания объекта
              * @returns {*}
              */
-			deserialize: function(sobj) {
+			deserialize: function(sobj,parent,cb) {
 				function ideser(that,sobj,parent) {
 					
 					switch (sobj.$sys.typeGuid) {
@@ -248,6 +251,7 @@ define(
 						default:
 							var typeObj = that.getObj(sobj.$sys.typeGuid); //.obj;
 							o = new MemObj( typeObj,parent,sobj);
+							if (cb!==undefined) cb(o);
 							break;						
 					}
 					for (var cn in sobj.collections) {
@@ -257,7 +261,7 @@ define(
 					return o;
 				};
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
-				return ideser(this,sobj,{"db":this, "mode":"RW"});
+				return ideser(this,sobj,parent);
 			},
 						
             /**
