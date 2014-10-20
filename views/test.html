@@ -136,8 +136,8 @@
 	  }
 	  
 	  function renderControls() {
-			for (var f in myApp.controlMgr.pvt.components) 
-				myApp.controlMgr.pvt.components[f].render();
+			for (var f in myApp.controlMgr.pvt.compByGuid)
+				myApp.controlMgr.pvt.compByGuid[f].render();
 	  }
 
 	  /*
