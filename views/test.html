@@ -21,6 +21,10 @@
             /* border-collapse:separate;*/
         }
 
+
+        .divRow .divCell:last-child {border-right:0;}
+        .divTable:last-child .divRow:last-child .divCell {border-bottom:0;}
+
         .divRow
         {
             display:table-row;
@@ -30,14 +34,15 @@
 
         .divCell
         {
-            float:left;/*fix for  buggy browsers*/
-            display:table-column;
-            width:200px;
+            display:table-cell;
+            width:100px;
             border-right:1px solid  #666666;
             border-bottom:1px solid  #666666;
             border-collapse: collapse;
             padding:10px;
         }
+
+        .divCell textarea {min-width:50px;min-height: 20px;}
 
         #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
         #header {padding:10px;}
@@ -48,6 +53,7 @@
     <script src="/public/uccello/uses/require.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/public/uccello/uses/url.js"></script>
+    <script src="/public/libs/jeditable/jquery.jeditable.mini.js"></script>
 
     <script>
 
@@ -136,8 +142,19 @@
 	  }
 	  
 	  function renderControls() {
-			for (var f in myApp.controlMgr.pvt.compByGuid)
+			for (var f in myApp.controlMgr._getCompGuidList())
 				myApp.controlMgr.pvt.compByGuid[f].render();
+
+          // редактирование ячеек грида
+          $(".divCell").editable(function(value, settings) {
+              return(value);
+          }, {
+              type    : 'textarea',
+              submit  : 'OK',
+              placeholder: '',
+              width      : '100px',
+              height     : '20px',
+          });
 	  }
 
 	  /*
@@ -150,7 +167,7 @@
 
       function changeFields(fields) {
 		  var myButton, myMatrixGrid, myRootCont;
-		  var gl = myApp.controller._getCompGuidList();
+		  var gl = myApp.controlMgr._getCompGuidList();
 		  for (var f in gl) {
 			if (gl[f].getClassName() == "MatrixGrid") myMatrixGrid=gl[f];
 			if (gl[f].getClassName() == "Button") myButton=gl[f];
@@ -160,9 +177,9 @@
           for(var name in fields)
             if (fields[name] && fields[name]!='') {
                if (name=='HorCells' || name=='VerCells')
-                   myMatrixGrid.set(name, fields[name]);
+                   myMatrixGrid.pvt.obj.set(name, fields[name]);
                else
-                   myButton.set(name, fields[name]);
+                   myButton.pvt.obj.set(name, fields[name]);
             }
 
 		  dbc.genDeltas(dbsl.getGuid());
