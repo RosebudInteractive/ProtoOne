@@ -78,7 +78,24 @@ define(
 			
 			getControlMgr: function() {	
 				return this.pvt.controlMgr;
+			},
+			
+			// метаинформация (properties)
+			
+			countProps: function() {
+				return this.metaFields.length;
+			},
+			
+			getPropName: function(i) {
+			if (i>=0 && i<this.metaFields.length)
+				return this.metaFields[i].fname;
+			},
+			
+			getPropType: function(i) {
+			if (i>=0 && i<this.metaFields.length)
+				return this.metaFields[i].ftype;
 			}
+
 			
         });
         return AComponent;
