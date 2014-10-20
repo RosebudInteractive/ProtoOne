@@ -50,21 +50,25 @@ define(
 						curd.guid = c.obj.getGuid();
 						deltaIdx[s] = delta.items.length;
                         delta.items.push(curd); 
-						curd.fields = {};
 						// TODO добавить элемент для идентификации
 					}
-                    else
+                    else 
                         curd = delta.items[deltaIdx[s]];
 								
 					switch(c.type) {
 						// изменение поля (свойства)
 						case "mp":
+							if (!("fields" in curd)) curd.fields = {};
 							for (var fld in c.flds) {
 								/*curd[fld] = {};
 								curd[fld].old = c.flds[fld].old;
 								curd[fld].new = c.flds[fld].new;*/
 								curd.fields[fld] = c.flds[fld].new;
 							}
+							break;
+						// добавление объекта в иерархию
+						case "add":
+							curd.add = c.obj;		
 							break;
 					}
 				}
@@ -79,11 +83,17 @@ define(
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
 					var o = this.pvt.obj.getDB().getObj(c.guid);
-					if (o) 
+					if (o) {
+						if ("add" in c) 
+							o.getLog().deserialize(c.add);
+						
+						
 						for (var cf in c.fields) {
 							// TODO проверить наличие полей с таким именем в метаинфо
 							o.set(cf,c.fields[cf]);
 						}
+						
+					}
 				}
 				this.setActive(true);
 				

@@ -56,8 +56,8 @@ define(
 				var oldValue = this.pvt.fields[i];
 				this.pvt.fields[i] = value;
 				if (this.getLog().getActive()) {
-					var o = { "flds": {}, "obj":this, "type":"mp"};
-					o.flds[field] = {"old":oldValue,"new":value};
+					var o = { flds: {}, obj:this, type:"mp"};
+					o.flds[field] = {old:oldValue,new:value};
 					this.getLog().add(o);
 				}
 					//this.getLog()._objModif(field, {"oldValue":oldValue,"newValue":value, "target":this});
@@ -72,7 +72,12 @@ define(
 			addToCol: function(colName,obj) {
 				var c = this.getCol(colName);
 				if (c) {
-					c.add(obj);
+					c._add(obj);
+					if (this.getLog().getActive()) { // TODO перенести в _add для надежности
+						var newObj=this.getDB().serialize(obj);
+						var o = { adObj: newObj, obj:obj, colName: colName, type:"add"};
+						this.getLog().add(o);
+					}
 					return true;
 				}
 				else

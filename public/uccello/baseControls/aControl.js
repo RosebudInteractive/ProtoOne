@@ -14,8 +14,8 @@ define(
 			classGuid: "c576cb6e-cdbc-50f4-91d1-4dc3b48b0b59",
             metaFields: [ {fname:"Top",ftype:"int"}, {fname:"Left",ftype:"int"} ],
 				
-			init: function(cm,objGuid){
-				this._super(cm,objGuid);
+			init: function(cm,params){
+				this._super(cm,params);
 			}
 
 

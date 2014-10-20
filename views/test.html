@@ -138,7 +138,7 @@
 
 	  function createComponent(obj) {
 			var g = obj.getTypeGuid();
-			new typeGuids[g](myApp.controlMgr,obj.getGuid(),{parent:'#result'});
+			new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() },{parent:'#result'});
 	  }
 	  
 	  function renderControls() {
@@ -156,15 +156,21 @@
               height     : '20px',
           });
 	  }
+	  
+	  function addButton() {
+		var myRootCont;
+		var gl = myApp.controlMgr._getCompGuidList();
+		for (var f in gl) 
+			if (gl[f].getClassName() == "Container") { myRootCont=gl[f]; break; }
+		
+		var d={fields: {"Id": 99, "Name": "MysecButton2", "Caption": "OK111", "Left":"300", "Top":"150"}}
+		var newb = new typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"](myApp.controlMgr, {obj: myRootCont.getObj(), colName: "Children", ini:d },{parent:'#result'});
+		//myRootCont.addToCol("Children", newb);
+		renderControls();
+		
+	  }
 
-	  /*
-	  require(['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid','../public/ProtoControls/container'],
-            function( Button, MatrixGrid,Container ){
-			  typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
-			  typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
-			  typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
-	  });*/
-
+	
       function changeFields(fields) {
 		  var myButton, myMatrixGrid, myRootCont;
 		  var gl = myApp.controlMgr._getCompGuidList();
@@ -294,6 +300,7 @@
     <input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});"><br>
     <input type="button" value="Трассировка" onclick="getSessions();">
     <input type="button" value="renderControls" onclick="renderControls();">
+	<input type="button" value="add button" onclick="addButton();">
 
     <div id="container">
         <div id="result"></div>

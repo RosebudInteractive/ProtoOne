@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../memDB/memMetaObj', '../memDB/memMetaObjFields','../memDB/memMetaObjCols'],
-    function(MemMetaObj, MemMetaObjFields, MemMetaObjCols) {
+    ['../memDB/memMetaObj', '../memDB/memObj', '../memDB/memMetaObjFields','../memDB/memMetaObjCols'],
+    function(MemMetaObj, MemObj, MemMetaObjFields, MemMetaObjCols) {
         var AComponent = Class.extend({
 		
 			className: "AComponent",
@@ -16,19 +16,25 @@ define(
             /**
              * @constructs
              * @param {ControlMgr} cm - менеджер контролов, к которому привязан данный контрол
-			 * @param memObj
+			 * @param params
              */
-            init: function(cm, objGuid){
+            init: function(cm, params){
 				this.pvt = {};
 				this.pvt.controlMgr = cm;
 				this._buildMetaInfo(cm.getDB());
-				if (objGuid!==undefined) {
-					this.pvt.obj = cm.getDB().getObj(objGuid);
-					cm.add(this);
+				if (params.objGuid!==undefined) {
+					this.pvt.obj = cm.getDB().getObj(params.objGuid);
+					//cm.add(this);
 					}
 				else {
-					// TODO создать пустой объект
+					//  создать пустой объект
+					if (!("colName" in params)) 
+						var col = "Children";
+					else col = params.colName;
+					this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{ obj: params.obj, "colName": col}, params.ini);
+					
 				}
+				cm.add(this);
 				
             },
 

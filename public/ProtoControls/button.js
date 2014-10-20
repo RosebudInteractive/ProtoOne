@@ -18,10 +18,9 @@ define(
              * @param guid гуид объекта
              * @param options {parent:parentId}
              */
-            init: function(cm, guid, options) {
-                this._super(cm, guid);
+            init: function(cm, params, options) {
+                this._super(cm, params);
 
-                //this.guid = guid;
                 this.options = options;
             },
 
