@@ -117,26 +117,6 @@ wss.on('connection', function(ws) {
                     //var dbc = createController();
                     result =  userSessionMgr.connect(socket, {/*session:createDb(dbc, {name: "Master", kind: "master"}),*/ client:data}, sessionID);
 
-                    // запоминаем клиента подключенного ( перенесено а userSessionMgr)
-                   /* var connect = new Connect(connectId, socket,  {sessionID:sessionID, userAgent:data.agent, stateReady:1});
-                    userSessionMgr.addConnect(connect);
-                    var session = userSessionMgr.getSession(sessionID);
-                    if (!session) {
-                        var dbc = createController();
-                        session = new Session(sessionID, createDb(dbc, {name: "Master", kind: "master"}));
-                        userSessionMgr.addSession(session);
-                    }
-                    session.addConnect(connect);
-
-                    // обработка события закрытия коннекта
-                    connect.event.on({
-                        type: 'socket.close',
-                        subscriber: this,
-                        callback: function(args){
-                            session.getData().dbc.onDisconnect(args.connId);
-                            userSessionMgr.removeConnect(args.connId);
-                        }
-                    });*/
                     break;
 
                 case 'authenticate':

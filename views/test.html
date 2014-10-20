@@ -61,15 +61,18 @@
 		
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
-        var myButton=null, myRootCont=null, dbc=null, dbsl=null, dbs2=null, guids=null;
+        var dbc=null, dbsl=null, dbs2=null, guids=null;
 		
 		var myApp = {};
+		var MemDBController=null, MemDataBase=null, ControlMgr=null;
+		var typeGuids = {};
 
         // когда документ загружен
         $(document).ready( function() {
             require(
-                ['./uccello/connection/clientConnection'],
-                function(ClientConnection){
+                ['./uccello/connection/clientConnection' ,'./uccello/memDB/memDBController','./uccello/memDB/memDataBase','./uccello/baseControls/controlMgr','./ProtoControls/button', './ProtoControls/matrixGrid',
+				'./ProtoControls/container'],
+                function(ClientConnection,m1,m2,m3,b,g,c){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
                         if (result.user) {
@@ -80,6 +83,12 @@
                         socket = clientConnection.socket;
                         sessionId = result.sessionId;
                         document.location.hash = '#sid='+sessionId;
+						MemDBController = m1;
+						MemDataBase = m2;
+						ControlMgr = m3;
+						typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = b;
+						typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = g;
+						typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = c;
                         createController();
                     });
                 }
@@ -87,12 +96,12 @@
         });
 
 
+		
       function createController(done){
 	  
-				var MemDBController = require('./uccello/memDB/memDBController');
-				var MemDataBase = require('./uccello/memDB/memDataBase');
-				var ControlMgr = require('./uccello/memDB/controlMgr');
-	  
+				//var MemDBController = require('./uccello/memDB/memDBController');
+				//var MemDataBase = require('./uccello/memDB/memDataBase');
+				//var ControlMgr = require('./uccello/memDB/controlMgr');
 	  
                 socket.send({action:"getGuids", type:'method'}, function(result){
                     guids = result;
@@ -103,7 +112,7 @@
                         type: 'applyDeltas',
                         subscriber: this,
                         callback: function(args){
-                            renderAll();
+                            renderControls();
                         }
                     });
 					
@@ -114,8 +123,18 @@
                     console.log('база данных B:', dbsl);
                 });
       }
-
-      function createDataBase() {
+	  
+	  
+      function subscribeRoot() {
+          // подписываемся на корневой объект контейнера
+		  //dbsl._buildMetaTables();
+          dbsl.subscribeRoot(guids.myRootContGuid, function(result){
+			  //createDataBase2();
+			  renderControls();
+          }, createComponent);
+      }
+	  
+      function createDataBase2() {
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
           //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
@@ -124,8 +143,16 @@
           },createComponent);
           console.log('база данных C:', dbs2);
       }
+
+	  function createComponent(obj) {
+			var g = obj.getTypeGuid();
+			new typeGuids[g](myApp.controlMgr,obj.getGuid(),{parent:'#result'});
+
+	  }
 	  
 	  function renderControls() {
+			for (var f in myApp.controlMgr.pvt.components) 
+				myApp.controlMgr.pvt.components[f].render();
 	  }
 
       function changeCaptionMaster() {
@@ -135,33 +162,31 @@
 	  // obj.parentGuid
 	  // obj.
 
-	  var typeGuids = {};
 	  
+	  /*
 	  require(['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid','../public/ProtoControls/container'],
             function( Button, MatrixGrid,Container ){
 			  typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
 			  typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
 			  typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
-	  });
+	  });*/
 	  
-	  function createComponent(obj) {
-			var g = obj.getTypeGuid();
-			new typeGuids[g](myApp.controlMgr,obj.getGuid(),{parent:'#result'});
 
-	  }
 	  
-      function subscribeRoot() {
-          // подписываемся на корневой объект контейнера
-		  //dbsl._buildMetaTables();
-          dbsl.subscribeRoot(guids.myRootContGuid, function(result){
-			  createDataBase();
-          }, createComponent);
-      }
+
 
       function changeFields(fields) {
-          myButton = dbsl.getObj(guids.myButtonGuid);
-          myMatrixGrid = dbsl.getObj(guids.myMatrixGridGuid);
-          myRootCont = dbsl.getObj(guids.myRootContGuid);
+          //myButton = dbsl.getObj(guids.myButtonGuid);
+          //myMatrixGrid = dbsl.getObj(guids.myMatrixGridGuid);
+          //myRootCont = dbsl.getObj(guids.myRootContGuid);
+		  var myButton, myMatrixGrid, myRootCont;
+		  var gl = myApp.controller._getCompGuidList();
+		  for (var f in gl) {
+			if (gl[f].getClassName() == "MatrixGrid") myMatrixGrid=gl[f];
+			if (gl[f].getClassName() == "Button") myButton=gl[f];
+			if (gl[f].getClassName() == "Container") myRootCont=gl[f];		
+		  };
+		  
 
           for(var name in fields)
             if (fields[name] && fields[name]!='') {
@@ -173,7 +198,7 @@
 
 
 		  dbc.genDeltas(dbsl.getGuid());
-          renderAll();
+          renderControls();
       }
 
 
@@ -191,7 +216,7 @@
       }
 
 
-        var buttons = [];
+        //var buttons = [];
         /*function createButtons(db, guidButton, guidMatrixGrid) {
             require(
                     ['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid'],
@@ -205,13 +230,12 @@
                         });
                     }
             );
-        }*/
-
+        }
         function renderAll() {
           for(var i=0; i<buttons.length; i++) {
               buttons[i].render();
           }
-        }
+        }*/
 
 
         /**
@@ -289,7 +313,7 @@
     VerCells:<input type="text" value="" id="VerCells">
     <input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});"><br>
     <input type="button" value="Трассировка" onclick="getSessions();">
-    <input type="button" value="renderAll" onclick="renderAll();">
+    <input type="button" value="renderControls" onclick="renderControls();">
 
     <div id="container">
         <div id="result"></div>

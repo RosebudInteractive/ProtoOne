@@ -22,13 +22,14 @@ define(
             init: function(cm, guid, options) {
                 this._super(cm,guid);
 
-                this.guid = guid;
+                //this.guid = guid;
                 this.options = options;
             },
 
+			/*  перенесли в aComponent
             getObj: function() {
                 return this.db.getObj(this.guid);
-            },
+            },*/
 
             /**
              * Рендер
@@ -36,9 +37,9 @@ define(
             render: function() {
                 var obj = this.getObj();
                 if (obj) {
-                    var table = $('#' + this.guid);
+                    var table = $('#' + this.getGuid());
                     if (table.length == 0) {
-                        table = $('<div class="divTable" id="'+this.guid+'"></div>');
+                        table = $('<div class="divTable" id="'+this.getGuid()+'"></div>');
                         $(this.options.parent).append(table);
                     } else {
                         table.empty();

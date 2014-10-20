@@ -45,7 +45,8 @@ define(
                     type: 'socket.close',
                     subscriber: this,
                     callback: function(args){
-                        session.getData().dbc.onDisconnect(args.connId);
+						//TODO это должно быть ВНЕ userSessionMgr
+                        session.getUser().getData().controller.onDisconnect(args.connId);
                         that.removeConnect(args.connId);
                     }
                 });

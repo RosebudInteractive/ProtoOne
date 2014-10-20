@@ -21,17 +21,19 @@ define(
             init: function(cm, guid, options) {
                 this._super(cm, guid);
 
-                this.guid = guid;
+                //this.guid = guid;
                 this.options = options;
             },
 
-            getGuid: function(){
+            
+			/* перенесли в aComponent
+			getGuid: function(){
                 return this.guid;
             },
 
             getObj: function() {
-                return this.db.getObj(this.guid);
-            },
+                return this.getControlMgr().getDB().getObj(this.guid);
+            },*/
 
             /**
              * Рендер кнопки
@@ -43,9 +45,9 @@ define(
                     var top = obj.get('Top')+'px';
                     var left = obj.get('Left')+'px';
                     var caption = obj.get('Caption');
-                    item = $('#'+this.guid);
+                    item = $('#'+this.getGuid());
                     if (item.length == 0) {
-                        item = $('<input type="button" />').attr('id', this.guid);
+                        item = $('<input type="button" />').attr('id', this.getGuid());
                         $(this.options.parent).append(item);
                     }
                     item.css({top:top, left:left}).val(caption);

@@ -14,7 +14,8 @@ define(
              */
 			init: function(db){	
 				this.pvt = {};
-				this.pvt.components = {};
+				this.pvt.compByLid = {};
+				this.pvt.compByGuid = {};
 				this.pvt.db = db;	
 			},
 
@@ -23,7 +24,13 @@ define(
              * @param {AComponent} component - добавляемый компонент
              */			
 			add: function(component) {
-				this.pvt.components[component.getLid()] = component;
+				this.pvt.compByLid[component.getLid()] = component;
+				this.pvt.compByGuid[component.getGuid()] = component;
+			},
+			
+			// временно
+			_getCompGuidList: function() {
+				return this.pvt.compByGuid;
 			},
 			
             /**

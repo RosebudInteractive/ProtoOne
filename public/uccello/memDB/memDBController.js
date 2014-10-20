@@ -4,7 +4,7 @@
 }
 
 define(
-	['./memDataBase', './../system/event'],
+	['./memDataBase', '../system/event'],
 	function(MemDataBase, Event) {
 		var MemDBController = Class.extend({
 
@@ -95,7 +95,7 @@ define(
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
-						db.deserialize(obj.data,{db:db, mode:"RW"});
+						db.deserialize(obj.data,{db:db, mode:"RW"},cb2);
 						if (cb !== undefined && (typeof cb == "function")) cb();
 					}
 					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);

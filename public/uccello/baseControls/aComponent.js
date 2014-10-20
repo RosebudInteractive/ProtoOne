@@ -58,6 +58,26 @@ define(
 			getLid: function() {
 				return this.pvt.obj.getLid();
 				
+			},
+			
+			getGuid: function() {
+				return this.pvt.obj.getGuid();
+			},
+			
+			getClassGuid: function() {
+				return this.classGuid;
+			},
+			
+			getClassName: function() {
+				return this.className;
+			},			
+					
+			getObj: function() {
+				return this.pvt.obj;
+			},
+			
+			getControlMgr: function() {	
+				return this.pvt.controlMgr;
 			}
 			
         });
