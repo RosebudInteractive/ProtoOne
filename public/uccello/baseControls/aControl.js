@@ -6,7 +6,7 @@
 
 
 define(
-	['../baseControls/aComponent'],
+	['./aComponent'],
 	function(AComponent) {
 		var AControl = AComponent.extend({
 		

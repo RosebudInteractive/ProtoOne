@@ -1,6 +1,8 @@
+// Модули MEM
 var MemDBController = require('./public/uccello/memDB/memDBController');
-var MDb = require('./public/uccello/memDB/memDataBase');
 var MemObj = require('./public/uccello/memDB/memObj');
+
+// Модули компонентов
 var AComponent = require('./public/uccello/baseControls/aComponent');
 var ControlMgr = require('./public/uccello/baseControls/controlMgr');
 var AControl = require('./public/uccello/baseControls/aControl');
@@ -8,22 +10,17 @@ var AContainer = require('./public/protoControls/container');
 var AButton = require('./public/protoControls/button');
 var AMatrixGrid = require('./public/protoControls/matrixGrid');
 
-/*
-function createController(){
-    var dbc = new MemDBController();
-    return dbc;
-}*/
+// Коммуникационные модули
+var Socket = require('./public/uccello/connection/socket');
+var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
 
-
-// ----------------------------------------------------------------------------------------------------------------------
-
+// Модули nodejs
 var http = require('http');
 var express = require('express');
 var app = express();
 var WebSocketServer = new require('ws');
-var Socket = require('./public/uccello/connection/socket');
-var Session = require('./public/uccello/connection/session');
-var Connect = require('./public/uccello/connection/connect');
+
+// ----------------------------------------------------------------------------------------------------------------------
 
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
@@ -32,7 +29,6 @@ app.engine('html', require('ejs').renderFile);
 app.get('/test', function(req, res){
     res.render('test.html');
 });
-
 
 // апдейт
 app.get("/update", function(req, res){
@@ -49,15 +45,18 @@ app.get("/update", function(req, res){
     res.end();
 });
 
-
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 
-
 // хранилище коннектов и сессий
-var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
 var userSessionMgr = new UserSessionMgr();
 
+/**
+ * Создать базу данных
+ * @param dbc
+ * @param options
+ * @returns {object}
+ */
 function createDb(dbc, options){
     var db = dbc.newDataBase(options);
 	var cm = new ControlMgr(db);
@@ -74,6 +73,7 @@ function createDb(dbc, options){
 
     return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid};
 }
+
 // вызывается по событию при создании нового пользователя
 function createUserContext(args) {
 	var userData = args.target.getData();
@@ -83,8 +83,7 @@ function createUserContext(args) {
 	userData.cm = r.cm;	
 	userData.myRootCont = r.myRootCont;
 };
-
- userSessionMgr.event.on({
+userSessionMgr.event.on({
 	type: 'newUser',
 	subscriber: this,
 	callback: createUserContext
@@ -114,14 +113,22 @@ wss.on('connection', function(ws) {
                     var sessionID = data.sid;
 
                     // подключаемся к серверу с клиента
-                    //var dbc = createController();
-                    result =  userSessionMgr.connect(socket, {/*session:createDb(dbc, {name: "Master", kind: "master"}),*/ client:data}, sessionID);
+                    result =  userSessionMgr.connect(socket, {client:data}, sessionID);
 
+                    // обработка события закрытия коннекта
+                    var connect = userSessionMgr.getConnect(connectId);
+                    connect.event.on({
+                        type: 'socket.close',
+                        subscriber: this,
+                        callback: function(args){
+                            connect.getSession().getUser().getData().controller.onDisconnect(args.connId);
+                            userSessionMgr.removeConnect(args.connId);
+                        }
+                    });
                     break;
 
                 case 'authenticate':
                     var session = userSessionMgr.getConnect(connectId).getSession();
-                    //var sessionData = session.getData();
                     result = {user:userSessionMgr.authenticate(connectId, session.getId(), data.name, data.pass)};
                     break;
 
@@ -142,7 +149,6 @@ wss.on('connection', function(ws) {
                     result = {item:userSessionMgr.getConnect()};
                     break;
 
-
                 case 'subscribe':
                     var connect = userSessionMgr.getConnect(connectId);
                     var u = connect.getSession().getUser();
@@ -156,7 +162,7 @@ wss.on('connection', function(ws) {
                     var u = connect.getSession().getUser();
                     var dbc = u.getData().controller;
 
-					var masterdb=dbc.getDB(data.masterGuid);
+					var masterdb = dbc.getDB(data.masterGuid);
                     if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
                         dbc.onSubscribe({connect:connectId, guid:data.slaveGuid}, data.masterGuid );
                     result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
@@ -165,16 +171,7 @@ wss.on('connection', function(ws) {
                 case 'getGuids':
                     var userData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
                     var db = userData.db;
-                    //var myRootCont = userData.myRootCont;
-                    //var myButton = userData.myButton;
-                    //var myMatrixGrid = userData.myMatrixGrid;
-                    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid() /*, myButtonGuid:myButton.getGuid(), myMatrixGridGuid:myMatrixGrid.getGuid()*/};
-                    break;
-
-                case 'changeObj':
-                    /*var userData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
-                    var myRootCont = userData.myRootCont;
-                    myRootCont.getLog().applyDelta(data.delta);*/
+                    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
                     break;
 
                 case 'sendDelta':
@@ -195,22 +192,6 @@ wss.on('connection', function(ws) {
                         result.sessions.push(session);
                     }
                     break;
-
-                case 'changeCaption':
-                    /*var sessionData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
-                    var dbc = sessionData.dbc;
-                    var db = sessionData.db;
-                    var myButton = sessionData.myButton;
-                    var myRootCont = sessionData.myRootCont;
-
-                    myButton.set('Caption', data.caption);
-                    var delta = myRootCont.getLog().genDelta();
-                    console.log('delta:', delta);
-
-                    dbc.applyDelta(db.getGuid(), db.getGuid(), myRootCont.getGuid(), delta);*/
-                    break;
-
-
             }
             return result;
         }

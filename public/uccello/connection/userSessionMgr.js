@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../connection/session', '../connection/connect', '../connection/user','./../system/event'],
+    ['./session', './connect', './user', '../system/event'],
     function(Session, Connect, User,Event) {
         var UserSessionMgr = Class.extend({
 
@@ -21,7 +21,7 @@ define(
             /**
              * Подключаемся к серверу с клиента
              * @param {object} socket
-             * @param {object} data Данные в формате {session:{...}, client:{...}}
+             * @param {object} data Данные в формате {client:{...}}
              * @param {number=} sessionId
              */
             connect: function(socket, data, sessionId) {
@@ -38,18 +38,6 @@ define(
                 var connect = new Connect(socket.getConnectId(), socket,  {sessionID:sessionId, userAgent:data.client.agent, stateReady:1});
                 this.addConnect(connect);
                 session.addConnect(connect);
-
-                // обработка события закрытия коннекта
-                var that = this;
-                connect.event.on({
-                    type: 'socket.close',
-                    subscriber: this,
-                    callback: function(args){
-						//TODO это должно быть ВНЕ userSessionMgr
-                        session.getUser().getData().controller.onDisconnect(args.connId);
-                        that.removeConnect(args.connId);
-                    }
-                });
 
                 // Если возвращен user, то это означает, что сессия авторизована и соответствует пользователю с логином user.user
                 var result = {sessionId: sessionId};

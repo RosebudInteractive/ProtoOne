@@ -55,10 +55,7 @@
             baseUrl: 'public',
             nodeRequire: require
         });
-		
 
-		
-		
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
         var dbc=null, dbsl=null, dbs2=null, guids=null;
@@ -95,14 +92,7 @@
             );
         });
 
-
-		
       function createController(done){
-	  
-				//var MemDBController = require('./uccello/memDB/memDBController');
-				//var MemDataBase = require('./uccello/memDB/memDataBase');
-				//var ControlMgr = require('./uccello/memDB/controlMgr');
-	  
                 socket.send({action:"getGuids", type:'method'}, function(result){
                     guids = result;
                     // создаем  контроллер и бд					
@@ -127,27 +117,22 @@
 	  
       function subscribeRoot() {
           // подписываемся на корневой объект контейнера
-		  //dbsl._buildMetaTables();
           dbsl.subscribeRoot(guids.myRootContGuid, function(result){
-			  //createDataBase2();
 			  renderControls();
           }, createComponent);
       }
 	  
       function createDataBase2() {
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
-          //dbs2._buildMetaTables();
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
 				renderControls();
-              //createButtons(dbsl, guids.myButtonGuid, guids.myMatrixGridGuid);
-          },createComponent);
+          }, createComponent);
           console.log('база данных C:', dbs2);
       }
 
 	  function createComponent(obj) {
 			var g = obj.getTypeGuid();
 			new typeGuids[g](myApp.controlMgr,obj.getGuid(),{parent:'#result'});
-
 	  }
 	  
 	  function renderControls() {
@@ -155,14 +140,6 @@
 				myApp.controlMgr.pvt.components[f].render();
 	  }
 
-      function changeCaptionMaster() {
-          socket.send({action:"changeCaption", caption:'13313123'});
-      }
-
-	  // obj.parentGuid
-	  // obj.
-
-	  
 	  /*
 	  require(['../public/ProtoControls/button', '../public/ProtoControls/matrixGrid','../public/ProtoControls/container'],
             function( Button, MatrixGrid,Container ){
@@ -170,15 +147,8 @@
 			  typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
 			  typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
 	  });*/
-	  
-
-	  
-
 
       function changeFields(fields) {
-          //myButton = dbsl.getObj(guids.myButtonGuid);
-          //myMatrixGrid = dbsl.getObj(guids.myMatrixGridGuid);
-          //myRootCont = dbsl.getObj(guids.myRootContGuid);
 		  var myButton, myMatrixGrid, myRootCont;
 		  var gl = myApp.controller._getCompGuidList();
 		  for (var f in gl) {
@@ -186,7 +156,6 @@
 			if (gl[f].getClassName() == "Button") myButton=gl[f];
 			if (gl[f].getClassName() == "Container") myRootCont=gl[f];		
 		  };
-		  
 
           for(var name in fields)
             if (fields[name] && fields[name]!='') {
@@ -196,12 +165,9 @@
                    myButton.set(name, fields[name]);
             }
 
-
 		  dbc.genDeltas(dbsl.getGuid());
           renderControls();
       }
-
-
 
     /**
      * Получить  получить на клиент от сервера структуру - все сессии с номерами и когда созданы,
@@ -292,9 +258,6 @@
             $(window).click(function(){$('#loginForm').hide();});
             $('#loginForm').click(function(e){e.stopPropagation();});
         });
-
-
-
 
     </script>
 </head>

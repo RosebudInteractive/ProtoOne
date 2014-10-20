@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * Модуль подключений
  * @module Connect
  */
-define(['./../system/event'], function(event) {
+define(['../system/event'], function(event) {
 
     var Connect = Class.extend(/** @lends module:Connect.Connect.prototype */{
 

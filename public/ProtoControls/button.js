@@ -25,16 +25,6 @@ define(
                 this.options = options;
             },
 
-            
-			/* перенесли в aComponent
-			getGuid: function(){
-                return this.guid;
-            },
-
-            getObj: function() {
-                return this.getControlMgr().getDB().getObj(this.guid);
-            },*/
-
             /**
              * Рендер кнопки
              */
@@ -54,7 +44,6 @@ define(
                 }
                 return item;
             }
-
         });
         return Button;
     }

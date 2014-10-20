@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * ClientConnection
  * @module ClientConnection
  */
-define(['uccello/connection/socket'], function(Socket) {
+define(['./socket'], function(Socket) {
 
     var ClientConnection = Class.extend(/** @lends module:ClientConnection.ClientConnection.prototype */{
         /**
