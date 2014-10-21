@@ -22,6 +22,7 @@ define(
 				this.pvt = {};
 				this.pvt.controlMgr = cm;
 				this._buildMetaInfo(cm.getDB());
+				if (params==undefined) return; // в этом режиме только создаем метаинфо
 				if (params.objGuid!==undefined) {
 					this.pvt.obj = cm.getDB().getObj(params.objGuid);
 					//cm.add(this);

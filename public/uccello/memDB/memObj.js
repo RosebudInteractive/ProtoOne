@@ -69,6 +69,7 @@ define(
 			},
 			
 			// добавить объект obj в коллекцию colName
+			/*
 			addToCol: function(colName,obj) {
 				var c = this.getCol(colName);
 				if (c) {
@@ -82,7 +83,7 @@ define(
 				}
 				else
 					return false;
-			}
+			}*/
 			
 			
 

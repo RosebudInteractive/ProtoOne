@@ -68,7 +68,7 @@ define(
 							break;
 						// добавление объекта в иерархию
 						case "add":
-							curd.add = c.obj;		
+							curd.add = c.adObj;		
 							break;
 					}
 				}

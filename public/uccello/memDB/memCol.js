@@ -30,6 +30,11 @@ define(
 				if (fname!==undefined)
 					this._elemsByName[fname]=this._elems.length-1;				
 				// ВРЕМЕННО КОНЕЦ
+				if (this._obj.getLog().getActive()) { 
+						var newObj=this._obj.getDB().serialize(obj);
+						var o = { adObj: newObj, obj:obj, colName: this._name, type:"add"};
+						this._obj.getLog().add(o);
+					}
 			},
 			
 			getName: function() {

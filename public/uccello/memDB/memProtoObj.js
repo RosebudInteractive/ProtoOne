@@ -39,7 +39,7 @@ define(
 				if (!parent.obj) {	// корневой объект				
 					pvt.db._addRoot(this,parent.mode);
 					pvt.log = new MemObjLog(this);	// создать лог записи изменений
-					if (parent.mode == "RW")
+					if ((parent.mode == "RW") && (!parent.nolog))
 						pvt.log.setActive(true); // лог активен только для корневого объекта, который создан в режиме ReadWrite
 				}
 				//else 

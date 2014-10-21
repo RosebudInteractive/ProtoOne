@@ -165,6 +165,8 @@
 		
 		var d={fields: {"Id": 99, "Name": "MysecButton2", "Caption": "OK111", "Left":"300", "Top":"150"}}
 		var newb = new typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"](myApp.controlMgr, {obj: myRootCont.getObj(), colName: "Children", ini:d },{parent:'#result'});
+		var db = newb.getObj().getDB();
+		myApp.controller.genDeltas(db.getGuid());
 		//myRootCont.addToCol("Children", newb);
 		renderControls();
 		
@@ -188,7 +190,7 @@
                    myButton.pvt.obj.set(name, fields[name]);
             }
 
-		  dbc.genDeltas(dbsl.getGuid());
+		  myApp.controller.genDeltas(dbsl.getGuid());
           renderControls();
       }
 

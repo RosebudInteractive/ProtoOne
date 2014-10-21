@@ -250,6 +250,7 @@ define(
 							break;
 						default:
 							var typeObj = that.getObj(sobj.$sys.typeGuid); //.obj;
+							if ("db" in parent) parent.nolog=true;
 							o = new MemObj( typeObj,parent,sobj);
 							if (cb!==undefined) cb(o);
 							break;						
@@ -261,7 +262,11 @@ define(
 					return o;
 				};
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
-				return ideser(this,sobj,parent);
+				if ("obj" in parent) parent.obj.getLog().setActive(false); // отключить лог на время десериализации
+				var res = ideser(this,sobj,parent);
+				//if ("obj" in parent) 
+				res.getLog().setActive(true);
+				return res; 
 			},
 						
             /**
