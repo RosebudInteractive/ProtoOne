@@ -5,9 +5,13 @@
     <title></title>
     <style>
         html, body, table,tr, td {padding:0;margin: 0;}
+        p {padding:0;margin: 4px 0;}
         #container {padding:10px;}
-        #result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;}
+        #container > div {float:left;}
+        #result {position: relative;border:1px solid #999; width: 70%; overflow: auto;height:100%;box-sizing: border-box;}
         #result input {position: absolute;top:0;left:0;}
+        #editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
+        #editor .controls {clear:both;}
         #console-block {height: 70px;position:absolute;}
         #console {padding: 0;margin: 0;}
 
@@ -35,7 +39,7 @@
         .divCell
         {
             display:table-cell;
-            width:100px;
+            width:60px;
             border-right:1px solid  #666666;
             border-bottom:1px solid  #666666;
             border-collapse: collapse;
@@ -64,7 +68,7 @@
 
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
-        var dbc=null, dbsl=null, dbs2=null, guids=null;
+        var dbc=null, dbsl=null, dbs2=null, guids=null, propEditor = null;
 		
 		var myApp = {};
 		var MemDBController=null, MemDataBase=null, ControlMgr=null;
@@ -74,8 +78,8 @@
         $(document).ready( function() {
             require(
                 ['./uccello/connection/clientConnection' ,'./uccello/memDB/memDBController','./uccello/memDB/memDataBase','./uccello/baseControls/controlMgr','./ProtoControls/button', './ProtoControls/matrixGrid',
-				'./ProtoControls/container'],
-                function(ClientConnection,m1,m2,m3,b,g,c){
+				'./ProtoControls/container', 'propEditor'],
+                function(ClientConnection,m1,m2,m3,b,g,c,pe){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
                         if (result.user) {
@@ -89,6 +93,7 @@
 						MemDBController = m1;
 						MemDataBase = m2;
 						ControlMgr = m3;
+                        PropEditor = pe;
 						typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = b;
 						typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = g;
 						typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = c;
@@ -117,8 +122,18 @@
 					myApp.controlMgr = new ControlMgr(dbsl);
                     console.log('контроллер:', dbc);
                     console.log('база данных B:', dbsl);
+
+                    // редактор свойств
+                    propEditor = new PropEditor(myApp.controlMgr, {parent:'#editor', change:function(){
+                            myApp.controller.genDeltas(dbsl.getGuid());
+                            renderControls(false);
+                        }
+                    });
+
                 });
       }
+
+
 	  
 	  
       function subscribeRoot() {
@@ -141,7 +156,7 @@
 			new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() },{parent:'#result'});
 	  }
 	  
-	  function renderControls() {
+	  function renderControls(renderEditor) {
 			for (var f in myApp.controlMgr._getCompGuidList())
 				myApp.controlMgr.pvt.compByGuid[f].render();
 
@@ -153,8 +168,12 @@
               submit  : 'OK',
               placeholder: '',
               width      : '100px',
-              height     : '20px',
+              height     : '20px'
           });
+
+          // Редактор свойств
+          if (renderEditor !== false)
+            propEditor.render();
 	  }
 	  
 	  function addButton() {
@@ -262,7 +281,9 @@
 
             // высота окошка результатов
             function fixHeight() {
-                $('#result').height($(window).height()-120);
+                var h = $(window).height();
+                $('#result').height(h-80);
+                $('#editor').height(h-100);
                 $('#console').width('100%');
             };
             fixHeight();
@@ -282,6 +303,8 @@
             });
             $(window).click(function(){$('#loginForm').hide();});
             $('#loginForm').click(function(e){e.stopPropagation();});
+
+
         });
 
     </script>
@@ -294,18 +317,22 @@
 </div>
 
 <div id="interface">
-    Caption:<input type="text" value="" id="myButtonCaption">
+    <!--Caption:<input type="text" value="" id="myButtonCaption">
     Top:<input type="text" value="" id="myButtonTop">
     Left:<input type="text" value="" id="myButtonLeft">
     HorCells:<input type="text" value="" id="HorCells">
     VerCells:<input type="text" value="" id="VerCells">
-    <input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});"><br>
-    <input type="button" value="Трассировка" onclick="getSessions();">
+    <input type="button" value="Поменять" onclick="changeFields({VerCells:$('#VerCells').val(), HorCells:$('#HorCells').val(), Caption:$('#myButtonCaption').val(), Top:$('#myButtonTop').val(), Left:$('#myButtonLeft').val()});"><br>-->
+    &nbsp; &nbsp; <input type="button" value="Трассировка" onclick="getSessions();">
     <input type="button" value="renderControls" onclick="renderControls();">
 	<input type="button" value="add button" onclick="addButton();">
 
     <div id="container">
         <div id="result"></div>
+        <div id="editor">
+            <p><b>Редактор свойств</b></p>
+
+        </div>
     </div>
 </div>
 

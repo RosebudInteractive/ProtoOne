@@ -20,7 +20,7 @@ define(
 			},
 
             /**
-			 * Добавить компонент comoponent в список менеджера контролов
+			 * Добавить компонент component в список менеджера контролов
              * @param {AComponent} component - добавляемый компонент
              */			
 			add: function(component) {
