@@ -8,14 +8,62 @@ define(
     function(Session, Connect, User,Event) {
         var UserSessionMgr = Class.extend({
 
-            init: function(){
+            init: function(router){
                 this.sessions = {};
                 this.connects = {};
                 this.users = {};
                 this.sessionId = 0;
                 this.userId = 0;
-				
 				this.event = new Event();
+
+                // функции роутера
+                var that = this;
+                router.add('connect', function(){ return that.routerConnect.apply(that, arguments); });
+                router.add('authenticate', function(){ return that.routerAuthenticate.apply(that, arguments); });
+                router.add('deauthenticate', function(){ return that.routerDeauthenticate.apply(that, arguments); });
+            },
+
+            /**
+             * Подключение с клиента
+             * @param data
+             * @returns {object}
+             */
+            routerConnect: function(data) {
+                // подключаемся к серверу с клиента
+                var result =  this.connect(data.socket, {client:data}, data.sid);
+
+                // обработка события закрытия коннекта
+                var connect = this.getConnect(data.connectId);
+                connect.event.on({
+                    type: 'socket.close',
+                    subscriber: this,
+                    callback: function(args){
+                        connect.getSession().getUser().getData().controller.onDisconnect(args.connId);
+                        this.removeConnect(args.connId);
+                    }
+                });
+                return result;
+            },
+
+            /**
+             * Авторизация
+             * @param data
+             * @returns {object}
+             */
+            routerAuthenticate: function(data) {
+                var session = this.getConnect(data.connectId).getSession();
+                var result = {user:this.authenticate(data.connectId, session.getId(), data.name, data.pass)};
+                return result;
+            },
+
+            /**
+             * Деавторизация
+             * @param data
+             * @returns {object}
+             */
+            routerDeauthenticate: function(data) {
+                var session = this.getConnect(data.connectId).getSession();
+                return this.deauthenticate(session.getId());
             },
 
             /**

@@ -12,6 +12,7 @@ var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
 
 // Коммуникационные модули
 var Socket = require('./public/uccello/connection/socket');
+var Router = require('./public/uccello/connection/router');
 var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
 
 // Модули nodejs
@@ -49,7 +50,30 @@ app.get("/update", function(req, res){
 app.use("/public", express.static(__dirname + '/public'));
 
 // хранилище коннектов и сессий
-var userSessionMgr = new UserSessionMgr();
+var router = new Router();
+var userSessionMgr = new UserSessionMgr(router);
+
+// прикладные методы
+router.add('getGuids', function(data) {
+    var userData = userSessionMgr.getConnect(data.connectId).getSession().getUser().getData();
+    var db = userData.db;
+    return {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
+});
+router.add('getSessions', function(data) {
+    var sessions = userSessionMgr.getSessions();
+    result = {sessions:[]};
+    for(var i in sessions) {
+        var session = {id:i, date:sessions[i].date, connects:[]};
+        var connects = sessions[i].item.getConnects();
+        for(var j in connects) {
+            var connect = {id:j, date:userSessionMgr.getConnectDate(j)};
+            session.connects.push(connect);
+        }
+        result.sessions.push(session);
+    }
+    return result;
+});
+
 
 /**
  * Создать базу данных
@@ -89,6 +113,7 @@ userSessionMgr.event.on({
 	callback: createUserContext
 });
 
+
 // WebSocket-сервер на порту 8081
 var _connectId = 0;
 var wss = new WebSocketServer.Server({port: 8081});
@@ -106,48 +131,17 @@ wss.on('connection', function(ws) {
         },
         router: function(data, connectId, socket) {
             console.log('сообщение с клиента '+connectId+':', data);
+
+            // обработик методов connect authenticate deauthenticate getGuids getSessions
+            if (data.action=='connect' || data.action=='authenticate' || data.action=='deauthenticate' || data.action=='getGuids' || data.action=='getSessions') {
+                data.connectId = connectId;
+                data.socket = socket;
+                var result = router.exec(data);
+                return result? result: {};
+            }
+
             var result = {};
             switch (data.action) {
-                case 'connect':
-                    // сессионный номер
-                    var sessionID = data.sid;
-
-                    // подключаемся к серверу с клиента
-                    result =  userSessionMgr.connect(socket, {client:data}, sessionID);
-
-                    // обработка события закрытия коннекта
-                    var connect = userSessionMgr.getConnect(connectId);
-                    connect.event.on({
-                        type: 'socket.close',
-                        subscriber: this,
-                        callback: function(args){
-                            connect.getSession().getUser().getData().controller.onDisconnect(args.connId);
-                            userSessionMgr.removeConnect(args.connId);
-                        }
-                    });
-                    break;
-
-                case 'authenticate':
-                    var session = userSessionMgr.getConnect(connectId).getSession();
-                    result = {user:userSessionMgr.authenticate(connectId, session.getId(), data.name, data.pass)};
-                    break;
-
-                case 'deauthenticate':
-                    var session = userSessionMgr.getConnect(connectId).getSession();
-                    userSessionMgr.deauthenticate(session.getId());
-                    break;
-
-                case 'getUser':
-                    result = {item:userSessionMgr.getUser()};
-                    break;
-
-                case 'getSession':
-                    result = {item:userSessionMgr.getSession()};
-                    break;
-
-                case 'getConnect':
-                    result = {item:userSessionMgr.getConnect()};
-                    break;
 
                 case 'subscribe':
                     var connect = userSessionMgr.getConnect(connectId);
@@ -168,30 +162,12 @@ wss.on('connection', function(ws) {
                     result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
                     break;
 
-                case 'getGuids':
-                    var userData = userSessionMgr.getConnect(connectId).getSession().getUser().getData();
-                    var db = userData.db;
-                    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
-                    break;
-
                 case 'sendDelta':
                     var dbc = userSessionMgr.getConnect(connectId).getSession().getUser().getData().controller;
                     dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                     break;
 
-                case 'getSessions':
-                    var sessions = userSessionMgr.getSessions();
-                    result = {sessions:[]};
-                    for(var i in sessions) {
-                        var session = {id:i, date:sessions[i].date, connects:[]};
-                        var connects = sessions[i].item.getConnects();
-                        for(var j in connects) {
-                            var connect = {id:j, date:userSessionMgr.getConnectDate(j)};
-                            session.connects.push(connect);
-                        }
-                        result.sessions.push(session);
-                    }
-                    break;
+
             }
             return result;
         }
