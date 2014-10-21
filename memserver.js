@@ -6,9 +6,9 @@ var MemObj = require('./public/uccello/memDB/memObj');
 var AComponent = require('./public/uccello/baseControls/aComponent');
 var ControlMgr = require('./public/uccello/baseControls/controlMgr');
 var AControl = require('./public/uccello/baseControls/aControl');
-var AContainer = require('./public/protoControls/container');
-var AButton = require('./public/protoControls/button');
-var AMatrixGrid = require('./public/protoControls/matrixGrid');
+var AContainer = require('./public/ProtoControls/container');
+var AButton = require('./public/ProtoControls/button');
+var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
 
 // Коммуникационные модули
 var Socket = require('./public/uccello/connection/socket');
