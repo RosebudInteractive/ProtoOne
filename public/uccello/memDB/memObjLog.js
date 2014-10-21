@@ -68,7 +68,14 @@ define(
 							break;
 						// добавление объекта в иерархию
 						case "add":
-							curd.add = c.adObj;		
+							curd.add = c.adObj;
+							var par = c.obj.getParent();
+							if (par) {
+								curd.parentGuid = par.getGuid();
+								curd.parentColName = c.obj.getColName();
+							}
+							else
+								curd.parentGuid = "";
 							break;
 					}
 				}
@@ -82,21 +89,20 @@ define(
 				this.setActive(false);
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
-					var o = this.pvt.obj.getDB().getObj(c.guid);
-					if (o) {
-						if ("add" in c) 
-							o.getLog().deserialize(c.add);
-						
-						
+					if ("add" in c) {
+						var o = this.getObj().getDB().getObj(c.parentGuid);
+						o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }); //TODO добавить коллбэк для контролов
+					}
+					o2 = this.getObj().getDB().getObj(c.guid);
+					if (o2) {
 						for (var cf in c.fields) {
 							// TODO проверить наличие полей с таким именем в метаинфо
-							o.set(cf,c.fields[cf]);
+							o2.set(cf,c.fields[cf]);
 						}
 						
 					}
 				}
-				this.setActive(true);
-				
+				this.setActive(true);				
 			},
 			
 

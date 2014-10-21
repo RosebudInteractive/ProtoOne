@@ -27,7 +27,8 @@ define(
 				}
 				else {				// объект в коллекции (не корневой)
 					pvt.col = parent.obj.getCol(parent.colName);
-					pvt.parent = parent.obj;					
+					pvt.parent = parent.obj;	
+					pvt.colName = parent.colName;
 				}
 				
 				pvt.$id = this.getDB().getNewLid();		// локальный идентификатор
@@ -148,6 +149,10 @@ define(
 					}
 				}
 			},
+			
+			getColName: function() {
+				return this.pvt.colName;
+			}
 			
 			
 
