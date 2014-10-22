@@ -53,7 +53,7 @@ define(
                 for (var f in gl) {
                     var name = gl[f].getClassName();
                     var id = gl[f].getGuid();
-                    var option = $('<option/>').val(id).html(name);
+                    var option = $('<option/>').val(id).html(gl[f].getObj().get('Name'));
                     controls.append(option);
                 }
                 return editor;
@@ -78,7 +78,7 @@ define(
                 var countProps = comp.countProps();
                 for(var i=0; i<countProps; i++) {
                     var propName = comp.getPropName(i);
-                    var p = $('<p><span class="name"></span>: <span class="value"><input></span></p>');
+                    var p = $('<p><span class="name"></span> <span class="value"><input></span></p>');
                     p.find('.name').html(propName);
                     p.find('.value input').val(obj.get(propName)).attr('name', propName);
                     props.append(p);
