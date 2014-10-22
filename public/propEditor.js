@@ -73,7 +73,7 @@ define(
                 }
                 change.show();
 
-                var comp = this.cm.pvt.compByGuid[guid];
+                var comp = this.cm.getByGuid(guid);
                 var obj = this.cm.getDB().getObj(guid);
                 var countProps = comp.countProps();
                 for(var i=0; i<countProps; i++) {
