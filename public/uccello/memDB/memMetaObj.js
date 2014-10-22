@@ -49,7 +49,8 @@ define(
 					var c = this.getParentClass(n-i-1);
 					for (var j=0; j<c.getCol("fields").count(); j++) {
 						var name = c.getCol("fields").get(j).get("fname");
-						pvt.fieldsTable[name]= { "obj": c, "idx": j, "cidx":k++ };
+						var typ = c.getCol("fields").get(j).get("ftype");
+						pvt.fieldsTable[name]= { "obj": c, "idx": j, "cidx":k++, "ftype": typ };
 						pvt.fieldsArr.push(name);
 					}
 				}

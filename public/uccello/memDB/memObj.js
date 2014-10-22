@@ -68,6 +68,14 @@ define(
 				return this.pvt.objType.pvt.fieldsArr[i];
 			},
 			
+			getFieldType: function(i) {
+				return this.pvt.objType.pvt.fieldsTable[this.pvt.objType.pvt.fieldsArr[i]].ftype;
+			},
+			
+			countFields: function() {
+				return this.pvt.objType.pvt.fieldsArr.length;
+			}
+			
 			// добавить объект obj в коллекцию colName
 			/*
 			addToCol: function(colName,obj) {

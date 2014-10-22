@@ -38,7 +38,14 @@ define(
              */					
 			getDB: function() {
 				return this.pvt.db;
-			}					
+			},
+
+            /**
+			 * Вернуть компонент по его гуид
+             */	
+			getByGuid: function(guid) {
+				return this.pvt.compByGuid[guid];
+			},
 
 		});
 		return ControlMgr;

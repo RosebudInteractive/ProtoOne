@@ -90,17 +90,17 @@ define(
 			// метаинформация (properties)
 			
 			countProps: function() {
-				return this.metaFields.length;
+				return this.pvt.obj.countFields();
 			},
 			
 			getPropName: function(i) {
-			if (i>=0 && i<this.metaFields.length)
-				return this.metaFields[i].fname;
+			if (i>=0 && i<this.pvt.obj.countFields())
+				return this.pvt.obj.getFieldName(i);
 			},
 			
 			getPropType: function(i) {
-			if (i>=0 && i<this.metaFields.length)
-				return this.metaFields[i].ftype;
+			if (i>=0 && i<this.pvt.obj.countFields())
+				return this.pvt.obj.getFieldType(i);
 			}
 
 			
