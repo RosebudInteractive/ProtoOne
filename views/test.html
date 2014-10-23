@@ -8,7 +8,7 @@
         p {padding:0;margin: 4px 0;}
         #container {padding:10px;}
         #container > div {float:left;}
-        #result {position: relative;border:1px solid #999; width: 70%; overflow: auto;height:100%;box-sizing: border-box;}
+        #result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
         #result input {position: absolute;top:0;left:0;}
         #editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
         #editor .controls {clear:both;}
@@ -160,8 +160,23 @@
 	  }
 	  
 	  function renderControls(renderEditor) {
-			for (var f in myApp.controlMgr._getCompGuidList())
-				myApp.controlMgr.pvt.compByGuid[f].render();
+			for (var guid in myApp.controlMgr._getCompGuidList()) {
+                var comp = myApp.controlMgr.getByGuid(guid);
+                var className = comp.getClassName();
+
+                // метод обработки изменений
+                if (!propEditor && comp.getClassName() == 'PropEditor') {
+                    propEditor = comp;
+                    propEditor.options.change = function(){
+                        myApp.controller.genDeltas(dbsl.getGuid());
+                        renderControls(false);
+                    };
+                }
+
+                if (comp.getClassName() != 'PropEditor' || (comp.getClassName() == 'PropEditor' && renderEditor !== false))
+                    comp.render();
+            }
+
 
           // редактирование ячеек грида
           $(".divCell").editable(function(value, settings) {
@@ -284,9 +299,9 @@
 
     <div id="container">
         <div id="result"></div>
-        <div id="editor">
+       <!-- <div id="editor">
             <p><b>Редактор свойств</b></p>
-        </div>
+        </div>-->
     </div>
 </div>
 

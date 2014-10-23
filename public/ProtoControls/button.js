@@ -28,16 +28,12 @@ define(
              * Рендер кнопки
              */
             render: function() {
-                var item = null;
-                var top = this.top()+'px';
-                var left = this.left()+'px';
-                var caption = this.caption();
-                item = $('#'+this.getGuid());
+                var item = $('#'+this.getGuid());
                 if (item.length == 0) {
                     item = $('<input type="button" />').attr('id', this.getGuid());
                     $(this.options.parent).append(item);
                 }
-                item.css({top:top, left:left}).val(caption);
+                item.css({top:this.top()+'px', left:this.left()+'px'}).val(this.caption());
                 return item;
             },
 
