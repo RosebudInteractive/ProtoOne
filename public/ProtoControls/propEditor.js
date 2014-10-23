@@ -77,6 +77,7 @@ define(
              * @param guid
              */
             changeControl: function(guid) {
+                this.control(guid);
                 var editor = $('#'+this.options.id);
                 var props = editor.find('.props');
                 var change = editor.find('.change');
