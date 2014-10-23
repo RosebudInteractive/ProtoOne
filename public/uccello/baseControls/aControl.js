@@ -16,7 +16,15 @@ define(
 				
 			init: function(cm,params){
 				this._super(cm,params);
-			}
+			},
+
+            top: function(value) {
+                return this._genericSetter("Top", value);
+            },
+
+            left: function(value) {
+                return this._genericSetter("Left", value);
+            }
 
 
 		});

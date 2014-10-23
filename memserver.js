@@ -9,6 +9,7 @@ var AControl = require('./public/uccello/baseControls/aControl');
 var AContainer = require('./public/ProtoControls/container');
 var AButton = require('./public/ProtoControls/button');
 var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
+var PropEditor = require('./public/ProtoControls/propEditor');
 
 // Коммуникационные модули
 var Socket = require('./public/uccello/connection/socket');
@@ -115,12 +116,14 @@ function createDb(dbc, options){
     var rootCont = new AContainer(cm);
     var button = new AButton(cm);
     var matrixGrid = new AMatrixGrid(cm);
+    var propEditor = new PropEditor(cm);
 
     var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
     var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
     var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:33, HorCells:3, VerCells:4, Name:"Grid", "Left":"50", "Top":"60"}});
+    var myPropEditor = new MemObj(db.getObj(propEditor.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:44,  Name:"PropEditor", "Left":"400", "Top":"10"}});
 
-    return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid};
+    return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid, myPropEditor:myPropEditor};
 }
 
 // вызывается по событию при создании нового пользователя

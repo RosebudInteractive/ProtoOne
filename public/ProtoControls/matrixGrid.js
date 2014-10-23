@@ -29,29 +29,24 @@ define(
              * Рендер
              */
             render: function() {
-                var obj = this.getObj();
-                if (obj) {
-                    var table = $('#' + this.getGuid());
-                    if (table.length == 0) {
-                        table = $('<div class="divTable" id="'+this.getGuid()+'"></div>');
-                        $(this.options.parent).append(table);
-                    } else {
-                        table.empty();
-                    }
-                    var x = obj.get('HorCells');
-                    var y = obj.get('VerCells');
-                    var top = obj.get('Top')+'px';
-                    var left = obj.get('Left')+'px';
-                    for (var i = 0; i < y; i++) {
-                        var row = $('<div class="divRow"></div>');
-                        for (var j = 0; j < x; j++) {
-                            var cell = $('<div class="divCell"></div>');
-                            row.append(cell);
-                        }
-                        table.append(row);
-                    }
-                    table.css({top:top, left:left});
+                var table = $('#' + this.getGuid());
+                if (table.length == 0) {
+                    table = $('<div class="divTable" id="'+this.getGuid()+'"></div>');
+                    $(this.options.parent).append(table);
+                } else {
+                    table.empty();
                 }
+                var x = this.horCells();
+                var y = this.verCells();
+                for (var i = 0; i < y; i++) {
+                    var row = $('<div class="divRow"></div>');
+                    for (var j = 0; j < x; j++) {
+                        var cell = $('<div class="divCell"></div>');
+                        row.append(cell);
+                    }
+                    table.append(row);
+                }
+                table.css({top:this.top()+'px', left:this.left()+'px'});
             },
 
             horCells: function(value) {

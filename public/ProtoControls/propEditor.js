@@ -10,7 +10,7 @@ define(
 
             className: "PropEditor",
             classGuid: "a0e02c45-1600-6258-b17a-30a56301d7f1",
-            metaFields: [],
+            metaFields: [{fname:"Control",ftype:"string"}],
 
             /**
              * Инициализация объекта
@@ -19,9 +19,11 @@ define(
              * @param options
              */
             init: function(cm, params, options) {
-               // this._super(cm, params);
+                this._super(cm, params);
                 this.cm = cm;
                 this.options = options;
+                if (!this.options)
+                    this.options = {};
                 if (!this.options.id)
                     this.options.id = 'propEditor';
                 this.control = null; // гуид текущего контрола
@@ -65,6 +67,9 @@ define(
                     var option = $('<option/>').val(id).html(gl[f].getObj().get('Name'));
                     controls.append(option);
                 }
+
+                editor.css({top:this.top()+'px', left:this.left()+'px'});
+
                 return editor;
             },
 
@@ -91,7 +96,7 @@ define(
                     var propName = comp.getPropName(i);
                     var p = $('<p><span class="name"></span> <span class="value"><input></span></p>');
                     p.find('.name').html(propName);
-                    p.find('.value input').val(comp._genericSetter(propName)).attr('name', propName);
+                    p.find('.value input').val(comp[propName.charAt(0).toLowerCase() + propName.slice(1)]()).attr('name', propName);
                     props.append(p);
                 }
             },
@@ -110,10 +115,14 @@ define(
                 for(var i=0; i<inputs.length; i++) {
                     var propName = $(inputs[i]).attr('name');
                     var value = $(inputs[i]).val();
-                    comp._genericSetter(propName, value);
+                    comp[propName.charAt(0).toLowerCase() + propName.slice(1)](propName, value);
                 }
                 if (this.options.change)
                     this.options.change();
+            },
+
+            control: function(value) {
+                return this._genericSetter("Control", value);
             }
 
         });
