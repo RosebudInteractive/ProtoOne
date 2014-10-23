@@ -14,7 +14,6 @@ var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
 var Socket = require('./public/uccello/connection/socket');
 var Router = require('./public/uccello/connection/router');
 var UserSessionMgr = require('./public/uccello/connection/userSessionMgr');
-var Mysql = require('./db/mysql');
 
 // Модули nodejs
 var http = require('http');
@@ -80,7 +79,9 @@ router.add('getSessions', function(data) {
 
 
 // база данных
-/*var mysql = new Mysql();
+/*
+var Mysql = require('./db/mysql');
+var mysql = new Mysql();
 var mysqlConnection = mysql.connect({
     host:     'localhost',
     user:     'root',
