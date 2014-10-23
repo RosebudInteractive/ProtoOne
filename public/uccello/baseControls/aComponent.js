@@ -101,8 +101,28 @@ define(
 			getPropType: function(i) {
 			if (i>=0 && i<this.pvt.obj.countFields())
 				return this.pvt.obj.getFieldType(i);
-			}
+			},
+			
+			// Setter and getters
 
+            /**
+             * сеттер-геттер свойств по умолчанию (дженерик) - используется если нет дополнительной логики в свойствах
+             */
+			
+			_genericSetter: function(fldName,fldVal) {
+				if (fldVal!==undefined) 
+					this.pvt.obj.set(fldName,fldVal);
+
+				return this.pvt.obj.get(fldName);					
+			},			
+			
+			id: function(value) {
+				return this._genericSetter("Id",value);
+			},
+
+			name: function(value) {
+				return this._genericSetter("Name",value);
+			},
 			
         });
         return AComponent;
