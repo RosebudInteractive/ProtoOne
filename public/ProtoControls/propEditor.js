@@ -44,7 +44,7 @@ define(
                     });
                     props = $('<div class="props" />');
                     change = $('<input class="change" type="button" value="Изменить" style="display: none;" />');
-                    change.click(function() { that.changeProps.apply(that, arguments); });
+                    change.click(function() { that.saveProps.apply(that, arguments); });
                     editor.append(controls);
                     editor.append(props);
                     editor.append(change);
@@ -102,18 +102,16 @@ define(
             /**
              * Сохранить свойства
              */
-            changeProps: function() {
+            saveProps: function() {
                 var editor = $('#'+this.options.id);
-                var controls = editor.find('.controls');
                 var props = editor.find('.props');
-                var guid = controls.val();
                 var inputs = props.find('input');
-                var comp = this.cm.getByGuid(guid);
+                var comp = this.cm.getByGuid(editor.find('.controls').val());
 
                 for(var i=0; i<inputs.length; i++) {
                     var propName = $(inputs[i]).attr('name');
                     var value = $(inputs[i]).val();
-                    comp[propName.charAt(0).toLowerCase() + propName.slice(1)](propName, value);
+                    comp[propName.charAt(0).toLowerCase() + propName.slice(1)](value);
                 }
                 if (this.options.change)
                     this.options.change();

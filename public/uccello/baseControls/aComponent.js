@@ -123,7 +123,7 @@ define(
 			name: function(value) {
 				return this._genericSetter("Name",value);
 			}
-			
+
         });
         return AComponent;
     }
