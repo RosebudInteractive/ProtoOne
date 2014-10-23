@@ -45,7 +45,7 @@ define(
              */	
 			getByGuid: function(guid) {
 				return this.pvt.compByGuid[guid];
-			},
+			}
 
 		});
 		return ControlMgr;

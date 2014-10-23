@@ -79,7 +79,7 @@
         $(document).ready( function() {
             require(
                 ['./uccello/connection/clientConnection' ,'./uccello/memDB/memDBController','./uccello/memDB/memDataBase','./uccello/baseControls/controlMgr','./ProtoControls/button', './ProtoControls/matrixGrid',
-				'./ProtoControls/container', 'propEditor'],
+				'./ProtoControls/container', './ProtoControls/propEditor'],
                 function(ClientConnection,m1,m2,m3,b,g,c,pe){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
@@ -125,7 +125,7 @@
                 console.log('база данных B:', dbsl);
 
                 // редактор свойств
-                propEditor = new PropEditor(myApp.controlMgr, {parent:'#editor', change:function(){
+                propEditor = new PropEditor(myApp.controlMgr, {}, {parent:'#editor', change:function(){
                         myApp.controller.genDeltas(dbsl.getGuid());
                         renderControls(false);
                     }
@@ -207,6 +207,11 @@
          * @param pass
          */
         function login(name, pass){
+          /*  socket.send({action:"mysqlLogin", type:'method', name:name, pass:pass}, function(result){
+                console.log(result);
+            });
+            return;*/
+
             clientConnection.authenticate(name, pass, function(result){
                 if (result.user) {
                     $('#login').hide(); $('#logout').show();

@@ -42,7 +42,13 @@ define(
                     item.css({top:top, left:left}).val(caption);
                 }
                 return item;
+            },
+
+            caption: function(value) {
+                return this._genericSetter("Caption", value);
             }
+
+
         });
         return Button;
     }

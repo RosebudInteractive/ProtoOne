@@ -25,11 +25,6 @@ define(
                 this.options = options;
             },
 
-			/*  перенесли в aComponent
-            getObj: function() {
-                return this.db.getObj(this.guid);
-            },*/
-
             /**
              * Рендер
              */
@@ -57,6 +52,14 @@ define(
                     }
                     table.css({top:top, left:left});
                 }
+            },
+
+            horCells: function(value) {
+                return this._genericSetter("HorCells", value);
+            },
+
+            verCells: function(value) {
+                return this._genericSetter("VerCells", value);
             }
 
         });

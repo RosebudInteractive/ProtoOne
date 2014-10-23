@@ -13,7 +13,8 @@ var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
 // Коммуникационные модули
 var Socket = require('./public/uccello/connection/socket');
 var Router = require('./public/uccello/connection/router');
-var UserSessionMgr = require('./public/uccello/connection/userSessionMgr.js');
+var UserSessionMgr = require('./public/uccello/connection/userSessionMgr');
+var Mysql = require('./db/mysql');
 
 // Модули nodejs
 var http = require('http');
@@ -52,7 +53,6 @@ app.use("/public", express.static(__dirname + '/public'));
 
 // ----------------------------------------------------------------------------------------------------------------------
 
-
 // хранилище коннектов и сессий
 var router = new Router();
 var userSessionMgr = new UserSessionMgr(router);
@@ -77,6 +77,26 @@ router.add('getSessions', function(data) {
     }
     return result;
 });
+
+
+// база данных
+/*var mysql = new Mysql();
+var mysqlConnection = mysql.connect({
+    host:     'localhost',
+    user:     'root',
+    password: '111111',
+    database: 'mobimed_test'
+});
+router.add('mysqlLogin',
+    function(data) {
+        mysqlConnection.queryRow(
+            'SELECT user_id, email FROM user WHERE username=? AND password=MD5(?)', [data.name, data.pass],
+            function(err, row) {
+                if (err) throw (err);
+                console.log(row);
+            }
+        );
+});*/
 
 
 /**
@@ -136,8 +156,8 @@ wss.on('connection', function(ws) {
         router: function(data, connectId, socket) {
             console.log('сообщение с клиента '+connectId+':', data);
 
-            // обработик методов connect authenticate deauthenticate getGuids getSessions
-            if (data.action=='connect' || data.action=='authenticate' || data.action=='deauthenticate' || data.action=='getGuids' || data.action=='getSessions') {
+            // обработчик
+            if (data.action!='subscribe' && data.action!='subscribeRoot' && data.action!='sendDelta') {
                 data.connectId = connectId;
                 data.socket = socket;
                 var result = router.exec(data);

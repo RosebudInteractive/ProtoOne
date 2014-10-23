@@ -4,22 +4,27 @@ if (typeof define !== 'function') {
 }
 
 define(
-    [],
-    function() {
-        var PropEditor = Class.extend({
+    ['../uccello/baseControls/aControl'],
+    function(AControl) {
+        var PropEditor = AControl.extend({
 
             className: "PropEditor",
+            classGuid: "a0e02c45-1600-6258-b17a-30a56301d7f1",
+            metaFields: [],
 
             /**
              * Инициализация объекта
              * @param cm ссылка на контрол менеджер
+             * @param params
              * @param options
              */
-            init: function(cm, options) {
+            init: function(cm, params, options) {
+               // this._super(cm, params);
                 this.cm = cm;
                 this.options = options;
                 if (!this.options.id)
                     this.options.id = 'propEditor';
+                this.control = null; // гуид текущего контрола
             },
 
             /**
@@ -31,7 +36,11 @@ define(
                 if (editor.length == 0) {
                     editor = $('<div/>').attr('id', this.options.id);
                     controls = $('<select class="controls"/>');
-                    controls.change(function() { that.changeControl.apply(that, arguments); });
+                    controls.change(function() {
+                        var editor = $('#'+that.options.id);
+                        var controls = editor.find('.controls');
+                        that.changeControl.apply(that, [controls.val()]);
+                    });
                     props = $('<div class="props" />');
                     change = $('<input class="change" type="button" value="Изменить" style="display: none;" />');
                     change.click(function() { that.changeProps.apply(that, arguments); });
@@ -59,12 +68,15 @@ define(
                 return editor;
             },
 
-            changeControl: function() {
+            /**
+             * Изменение текущего контрола
+             * @param guid
+             */
+            changeControl: function(guid) {
+                this.control = guid;
                 var editor = $('#'+this.options.id);
-                var controls = editor.find('.controls');
                 var props = editor.find('.props');
                 var change = editor.find('.change');
-                var guid = controls.val();
                 props.empty();
 
                 if (guid=='') {
@@ -74,29 +86,31 @@ define(
                 change.show();
 
                 var comp = this.cm.getByGuid(guid);
-                var obj = this.cm.getDB().getObj(guid);
                 var countProps = comp.countProps();
                 for(var i=0; i<countProps; i++) {
                     var propName = comp.getPropName(i);
                     var p = $('<p><span class="name"></span> <span class="value"><input></span></p>');
                     p.find('.name').html(propName);
-                    p.find('.value input').val(obj.get(propName)).attr('name', propName);
+                    p.find('.value input').val(comp._genericSetter(propName)).attr('name', propName);
                     props.append(p);
                 }
             },
 
+            /**
+             * Сохранить свойства
+             */
             changeProps: function() {
                 var editor = $('#'+this.options.id);
                 var controls = editor.find('.controls');
                 var props = editor.find('.props');
                 var guid = controls.val();
-                var obj = this.cm.getDB().getObj(guid);
                 var inputs = props.find('input');
+                var comp = this.cm.getByGuid(guid);
 
                 for(var i=0; i<inputs.length; i++) {
                     var propName = $(inputs[i]).attr('name');
                     var value = $(inputs[i]).val();
-                    obj.set(propName, value);
+                    comp._genericSetter(propName, value);
                 }
                 if (this.options.change)
                     this.options.change();
