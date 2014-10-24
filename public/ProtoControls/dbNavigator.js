@@ -26,8 +26,6 @@ define(
                     this.options = {};
                 if (!this.options.id)
                     this.options.id = 'DBNavigator';
-
-                //this._activeDb = this.cm.getDB().getController().getDB(this.dataBase());
                 this._activeDb = this.cm.getDB();
             },
 
@@ -51,6 +49,12 @@ define(
                     if (editor.length == 0) {
                         editor = $(this._templates['navigator']).attr('id', this.options.id);
                         $(this.options.parent).append(editor);
+                        // перейти к паренту
+                        editor.find('.dragRight').click(function(){that.toParent();});
+                        // перейти к чайлду
+                        editor.find('.dragLeft').click(function(){that.toChild();});
+                        // перейти к чайлду
+                        editor.find('.refresh').click(function(){that.render();});
                     }
                     editor.css({top:this.top()+'px', left:this.left()+'px'});
 
@@ -62,15 +66,17 @@ define(
                     centerTop.empty();
                     centerBottom.empty();
                     right.empty();
+                    this._activeRoot = null;
+                    this._activeCol = null;
+                    this._activeObj = null;
 
                     // отображаем слева рут элементы
                     if (this._activeDb) {
                         for(var i=0, len=this._activeDb.countRoot(); i<len; i++) {
                             var root = this._activeDb.getRoot(i);
                             var name = root.obj.get('Name');
-                            if (!name) {
+                            if (!name)
                                 name = root.obj.getGuid();
-                            }
 
                             var leftTpl = $(this._templates['left']);
                             var link =  leftTpl.find('a')
@@ -88,13 +94,64 @@ define(
                     }
 
 
-                    // перейти к паренту
-                    editor.find('.dragRight').click(function(){that.toParent();});
-                    // перейти к чайлду
-                    editor.find('.dragLeft').click(function(){that.toChild();});
-                    // перейти к чайлду
-                    editor.find('.refresh').click(function(){that.render();});
                 }
+            },
+
+            toParent: function() {
+                if (!this._activeCol) return;
+                var that = this;
+                var editor = $('#'+this.options.id);
+                var left = editor.find('.left');
+                var centerTop = editor.find('.centerTop');
+                var centerBottom = editor.find('.centerBottom');
+                var right = editor.find('.right');
+                var name = centerTop.find('a.active').html();
+                left.empty();
+                centerTop.empty();
+                centerBottom.empty();
+                right.empty();
+                var leftTpl = $(this._templates['left']);
+                var link =  leftTpl.find('a')
+                    .data('obj', this._activeCol)
+                    .html(name)
+                    .click(function(){
+                        var a = $(this);
+                        left.find('a').removeClass('active');
+                        a.addClass('active');
+                        that.selectItem(a.data('obj'));
+                        return false;
+                    });
+                left.append(leftTpl);
+                link.click();
+            },
+
+            toChild: function() {
+                if (!this._activeRoot || !this._activeRoot.getParent()) return;
+                var that = this;
+                var editor = $('#'+this.options.id);
+                var left = editor.find('.left');
+                var centerTop = editor.find('.centerTop');
+                var centerBottom = editor.find('.centerBottom');
+                var right = editor.find('.right');
+                var parent = this._activeRoot.getParent();
+                var name = parent.get('Name')?parent.get('Name'):parent.getGuid();
+                left.empty();
+                centerTop.empty();
+                centerBottom.empty();
+                right.empty();
+                var leftTpl = $(this._templates['left']);
+                var link =  leftTpl.find('a')
+                    .data('obj', parent)
+                    .html(name)
+                    .click(function(){
+                        var a = $(this);
+                        left.find('a').removeClass('active');
+                        a.addClass('active');
+                        that.selectItem(a.data('obj'));
+                        return false;
+                    });
+                left.append(leftTpl);
+                link.click();
             },
 
             selectItem: function(obj){
@@ -112,9 +169,12 @@ define(
                 centerTop.empty();
                 centerBottom.empty();
                 right.empty();
+                if (obj.countCol)
                 for(var i=0, len=obj.countCol(); i<len; i++) {
                     var col = obj.getCol(i);
                     var name = col.getName();
+                    if (!name)
+                        name = col.getGuid();
                     var centerTpl = $(this._templates['centerTop']);
                     var link =  centerTpl.find('a')
                         .data('obj', col)
@@ -145,6 +205,8 @@ define(
                 for(var i=0, len=obj.count(); i<len; i++) {
                     var col = obj.get(i);
                     var name = col.get('Name');
+                    if (!name)
+                        name = col.getGuid();
                     var centerTpl = $(this._templates['centerTop']);
                     var link =  centerTpl.find('a')
                         .data('obj', col)
