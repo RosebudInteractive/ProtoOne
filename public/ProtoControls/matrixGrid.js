@@ -31,7 +31,7 @@ define(
             render: function() {
                 var table = $('#' + this.getGuid());
                 if (table.length == 0) {
-                    table = $('<div class="divTable" id="'+this.getGuid()+'"></div>');
+                    table = $('<div class="divTable control" id="'+this.getGuid()+'"></div>');
                     $(this.options.parent).append(table);
                 } else {
                     table.empty();

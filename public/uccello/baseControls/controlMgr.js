@@ -10,7 +10,7 @@ define(
 
             /**
              * @constructs
-             * @param {MemDataBase} db - база, в которой хранится метаинформация компонентов
+             * @param db {MemDataBase} - база, в которой хранится метаинформация компонентов
              */
 			init: function(db){	
 				this.pvt = {};
@@ -21,7 +21,7 @@ define(
 
             /**
 			 * Добавить компонент component в список менеджера контролов
-             * @param {AComponent} component - добавляемый компонент
+             * @param component {AComponent} - добавляемый компонент
              */			
 			add: function(component) {
 				this.pvt.compByLid[component.getLid()] = component;

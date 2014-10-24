@@ -35,7 +35,7 @@ define(
                 var editor = $('#'+this.options.id), props, controls, change;
                 var that = this;
                 if (editor.length == 0) {
-                    editor = $('<div/>').attr('id', this.options.id);
+                    editor = $('<div  class="control" />').attr('id', this.options.id);
                     controls = $('<select class="controls"/>');
                     controls.change(function() {
                         var editor = $('#'+that.options.id);
