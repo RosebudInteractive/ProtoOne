@@ -56,6 +56,10 @@ define(
 			
 			getDB: function() {
 				return this._db;
+			},
+			
+			getParent: function() {
+				return this._obj;
 			}
 			
 
