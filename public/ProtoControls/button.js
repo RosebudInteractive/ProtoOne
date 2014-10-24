@@ -30,7 +30,7 @@ define(
             render: function() {
                 var item = $('#'+this.getGuid());
                 if (item.length == 0) {
-                    item = $('<input type="button" />').attr('id', this.getGuid());
+                    item = $('<input type="button" class="control" />').attr('id', this.getGuid());
                     $(this.options.parent).append(item);
                 }
                 item.css({top:this.top()+'px', left:this.left()+'px'}).val(this.caption());

@@ -4,21 +4,34 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-        html, body, table,tr, td {padding:0;margin: 0;}
+        html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-serif;}
         p {padding:0;margin: 4px 0;}
         #container {padding:10px;}
         #container > div {float:left;}
         #result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
-        #result input {position: absolute;top:0;left:0;}
         #editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
         #editor .controls {clear:both;}
-
         #console-block {height: 70px;position:absolute;}
         #console {padding: 0;margin: 0;}
-
         #propEditor {position: absolute; padding:10px; border: 1px solid #aaa;background-color: #fff;}
         #propEditor input {position: relative;}
         #propEditor .props .name {width:100px;display: inline-block;}
+        .control {position: absolute;top:0;left:0;}
+        .navigator {position: absolute; background-color: #fff;font-size: 12px;}
+        .navigator .left {width:240px;overflow: auto;}
+        .navigator a {text-decoration: none; color:#000000;}
+        .navigator a:hover {text-decoration: none;}
+        .navigator a.active {background-color: #333;color:#fff;}
+        .navigator .centerTop {width:240px;overflow: auto;height: 60px;}
+        .navigator .centerBottom {width:240px;overflow: auto;}
+        .navigator .right {width:260px;overflow: auto;}
+        .navigator td {border:1px solid #999;padding:5px;}
+        .navigator input.value {width:100px;}
+        .navigator input.save {}
+        .navigator .right span {display: inline-block;}
+        .navigator .right span.name {width:70px;}
+        .navigator .right span.type {width:40px;}
+        .navigator .right input {display: inline-block;}
 
         .divTable
         {
@@ -60,7 +73,7 @@
 
     <script src="/public/uccello/uses/class-extend.js"></script>
     <script src="/public/uccello/uses/require.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
     <script src="/public/uccello/uses/url.js"></script>
     <script src="/public/libs/jeditable/jquery.jeditable.mini.js"></script>
 
@@ -68,7 +81,11 @@
 
         requirejs.config({
             baseUrl: 'public',
-            nodeRequire: require
+            nodeRequire: require,
+            paths: {
+                text       : '/public/uccello/uses/text',
+                underscore : '/public/uccello/uses/underscore'
+            }
         });
 
         var clientConnection = null, socket = null;
@@ -83,8 +100,8 @@
         $(document).ready( function() {
             require(
                 ['./uccello/connection/clientConnection' ,'./uccello/memDB/memDBController','./uccello/memDB/memDataBase','./uccello/baseControls/controlMgr','./ProtoControls/button', './ProtoControls/matrixGrid',
-				'./ProtoControls/container', './ProtoControls/propEditor'],
-                function(ClientConnection,m1,m2,m3,b,g,c,pe){
+				'./ProtoControls/container', './ProtoControls/propEditor', './ProtoControls/dbNavigator'],
+                function(ClientConnection,m1,m2,m3,b,g,c,pe,dn){
                     clientConnection = new ClientConnection();
                     clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
                         if (result.user) {
@@ -98,11 +115,11 @@
 						MemDBController = m1;
 						MemDataBase = m2;
 						ControlMgr = m3;
-                        PropEditor = pe;
 						typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = b;
 						typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = g;
 						typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = c;
 						typeGuids["a0e02c45-1600-6258-b17a-30a56301d7f1"] = pe;
+						typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = dn;
                         createController();
                     });
                 }

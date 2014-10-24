@@ -15,7 +15,7 @@ define(
 
             /**
              * @constructs
-             * @param {ControlMgr} cm - менеджер контролов, к которому привязан данный контрол
+             * @param cm {ControlMgr} - менеджер контролов, к которому привязан данный контрол
 			 * @param params
              */
             init: function(cm, params){

@@ -1,0 +1,31 @@
+<!-- template: navigator -->
+<div class="navigator control">
+    <table cellspacing="0" cellpadding="0" width="100%">
+        <tr valign="top">
+            <td><u>список объектов</u><div class="left"></div></td>
+            <td>
+                <table>
+                    <tr valign="top"><td><u>коллекции объекта</u><div class="centerTop"></div></td></tr>
+                    <tr valign="top"><td><u>субэлементы коллекции объекта</u><div class="centerBottom"></div></td></tr>
+                    <tr valign="top">
+                    <td>
+                        <input type="button" class="dragRight" value="сдвинуть влево">
+                        <input type="button" class="dragLeft" value="сдвинуть вправо">
+                        <input type="button" class="refresh" value="обновить">
+                    </td>
+                    </tr>
+                </table>
+            </td>
+            <td><u>список полей текущего выделенного объекта</u><div class="right"></div></td>
+        </tr>
+    </table>
+</div>
+
+<!-- template: left -->
+<p><a href="#"></a></p>
+
+<!-- template: centerTop -->
+<p><a href="#"></a></p>
+
+<!-- template: right -->
+<p><span class="name"></span> <span class="type"></span> <input class="value" /> <input class="save" type="button" value="*"></p>
