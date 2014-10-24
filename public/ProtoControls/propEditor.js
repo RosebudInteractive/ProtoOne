@@ -52,6 +52,7 @@ define(
                     editor.append(props);
                     editor.append(change);
                     $(this.options.parent).append(editor);
+                    editor.css({top:this.top()+'px', left:this.left()+'px'});
                 } else {
                     controls = editor.find('.controls');
                     controls.empty();
@@ -59,9 +60,9 @@ define(
                     props.empty();
                     change = editor.find('.change');
                     change.hide();
+                    if (this.getObj().isFldModified('Top') || this.getObj().isFldModified('Left'))
+                        editor.css({top:this.top()+'px', left:this.left()+'px'});
                 }
-
-
 
                 controls.append('<option value=""></option>');
                 var gl = this.cm._getCompGuidList();
@@ -71,8 +72,6 @@ define(
                     var option = $('<option/>').val(id).html(gl[f].getObj().get('Name'));
                     controls.append(option);
                 }
-
-                editor.css({top:this.top()+'px', left:this.left()+'px'});
 
                 // отобразить текущий контрол
                 if (this.control()) {
