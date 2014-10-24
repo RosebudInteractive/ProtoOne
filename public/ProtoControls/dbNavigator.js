@@ -67,11 +67,15 @@ define(
                     if (this._activeDb) {
                         for(var i=0, len=this._activeDb.countRoot(); i<len; i++) {
                             var root = this._activeDb.getRoot(i);
-                            var guid = root.obj.getGuid();
+                            var name = root.obj.get('Name');
+                            if (!name) {
+                                name = root.obj.getGuid();
+                            }
+
                             var leftTpl = $(this._templates['left']);
                             var link =  leftTpl.find('a')
                                 .data('obj', root.obj)
-                                .html(guid)
+                                .html(name)
                                 .click(function(){
                                     var a = $(this);
                                     left.find('a').removeClass('active');
@@ -140,7 +144,7 @@ define(
                 right.empty();
                 for(var i=0, len=obj.count(); i<len; i++) {
                     var col = obj.get(i);
-                    var name = col.getGuid();
+                    var name = col.get('Name');
                     var centerTpl = $(this._templates['centerTop']);
                     var link =  centerTpl.find('a')
                         .data('obj', col)
