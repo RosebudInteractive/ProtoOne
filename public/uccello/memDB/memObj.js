@@ -61,7 +61,7 @@ define(
 					this.getLog().add(o);
 				}
 				
-				if (!this.isModified(field)) { // запоминаем измененные свойства
+				if (!this.isFldModified(field)) { // запоминаем измененные свойства
 					this.pvt.fldLog[field] = oldValue;
 				}
 			},

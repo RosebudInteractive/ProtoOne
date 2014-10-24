@@ -40,7 +40,10 @@ define(
                     controls.change(function() {
                         var editor = $('#'+that.options.id);
                         var controls = editor.find('.controls');
-                        that.changeControl.apply(that, [controls.val()]);
+                        that.control(controls.val());
+                        if (that.options.change)
+                            that.options.change();
+                        //that.changeControl.apply(that, [controls.val()]);
                     });
                     props = $('<div class="props" />');
                     change = $('<input class="change" type="button" value="Изменить" style="display: none;" />');
@@ -58,6 +61,8 @@ define(
                     change.hide();
                 }
 
+
+
                 controls.append('<option value=""></option>');
                 var gl = this.cm._getCompGuidList();
                 for (var f in gl) {
@@ -69,6 +74,12 @@ define(
 
                 editor.css({top:this.top()+'px', left:this.left()+'px'});
 
+                // отобразить текущий контрол
+                if (this.control()) {
+                    controls.val(this.control());
+                    this.changeControl(this.control());
+                }
+
                 return editor;
             },
 
@@ -77,7 +88,7 @@ define(
              * @param guid
              */
             changeControl: function(guid) {
-                this.control(guid);
+
                 var editor = $('#'+this.options.id);
                 var props = editor.find('.props');
                 var change = editor.find('.change');
