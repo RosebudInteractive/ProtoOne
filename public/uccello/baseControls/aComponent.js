@@ -22,6 +22,7 @@ define(
 				this.pvt = {};
 				this.pvt.controlMgr = cm;
 				this._buildMetaInfo(cm.getDB());
+
 				if (params==undefined) return; // в этом режиме только создаем метаинфо
 				if (params.objGuid!==undefined) {
 					this.pvt.obj = cm.getDB().getObj(params.objGuid);
@@ -102,8 +103,8 @@ define(
 			if (i>=0 && i<this.pvt.obj.countFields())
 				return this.pvt.obj.getFieldType(i);
 			},
+
 			
-			// Setter and getters
 
             /**
              * сеттер-геттер свойств по умолчанию (дженерик) - используется если нет дополнительной логики в свойствах

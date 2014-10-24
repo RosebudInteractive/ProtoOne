@@ -19,6 +19,7 @@ define(
 				pvt.collections = [];			// массив дочерних коллекций
 				pvt.log = null; 
 				pvt.state = 0;
+				pvt.fldLog = {};
 				
 				if (!parent.obj) {	// корневой объект
 					pvt.col = null;
@@ -152,7 +153,27 @@ define(
 			
 			getColName: function() {
 				return this.pvt.colName;
-			}
+			},
+			
+						
+			isFldModified: function(fldName) {
+				if (fldName in this.pvt.fldLog) 
+					return true;
+				else
+					return false;
+					
+			},
+			
+			getOldFldVal: function(fldName) {
+				if (fldName in this.pvt.fldLog) 
+					return this.pvt.fldLog[fldName];
+				else
+					return undefined;
+			},
+			
+			resetModifFldLog: function() {
+				this.pvt.fldLog = {};
+			},
 			
 			
 

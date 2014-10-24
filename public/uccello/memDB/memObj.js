@@ -60,7 +60,10 @@ define(
 					o.flds[field] = {old:oldValue,new:value};
 					this.getLog().add(o);
 				}
-					//this.getLog()._objModif(field, {"oldValue":oldValue,"newValue":value, "target":this});
+				
+				if (!this.isModified(field)) { // запоминаем измененные свойства
+					this.pvt.fldLog[field] = oldValue;
+				}
 			},
 						
 			// получить имя поля по индексу

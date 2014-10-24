@@ -45,6 +45,14 @@ define(
              */	
 			getByGuid: function(guid) {
 				return this.pvt.compByGuid[guid];
+			},
+			
+			render: function() {
+				for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
+					this.pvt.compByGuid[g].render();
+					
+				for (var g in this.pvt.compByGuid)
+					this.pvt.compByGuid[g].getObj().resetModifFldLog();
 			}
 
 		});
