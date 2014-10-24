@@ -87,18 +87,25 @@ define(
 			 * @param cb2 - вызывается по ходу создания объектов
              */
 			subscribeRoot: function(db,rootGuid, cb, cb2) {
+
+				
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
 					var newObj = p.db.onSubscribeRoot(db.getGuid(),rootGuid);
 					db.deserialize(newObj,{db:db, mode:"RW"},cb2);
+					if (cb2!==undefined)  // запомнить коллбэк
+						db._cbSetNewObject(rootGuid,cb2);
 					if (cb !== undefined && (typeof cb == "function")) cb();
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
 						db.deserialize(obj.data,{db:db, mode:"RW"},cb2);
+						if (cb2!==undefined)  // запомнить коллбэк
+							db._cbSetNewObject(rootGuid,cb2);
 						if (cb !== undefined && (typeof cb == "function")) cb();
 					}
 					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);
+
 					// TODO обработать асинхронность
 				}
 			},

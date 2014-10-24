@@ -30,6 +30,7 @@ define(
 				root.mode = mode;
 				root.subscribers = {};	// подписчики корневого объекта
 				root.master = null;		// мастер
+				root.callbackNewObject = undefined;
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
 			},
@@ -64,6 +65,14 @@ define(
 					if (o.pvt.fieldsTable == undefined)
 						o._bldElemTable();					
 				}
+			},
+			
+			_cbSetNewObject: function(rootGuid,callback) {
+				this.getRoot(rootGuid).callbackNewObject = callback;
+			},
+			
+			_cbGetNewObject: function(rootGuid) {
+				return this.getRoot(rootGuid).callbackNewObject;
 			},
 
             /**

@@ -90,8 +90,10 @@ define(
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
 					if ("add" in c) {
-						var o = this.getObj().getDB().getObj(c.parentGuid);
-						o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }); //TODO добавить коллбэк для контролов
+						var db = this.getObj().getDB();
+						var o = db.getObj(c.parentGuid);
+						var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
+						o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
 					}
 					o2 = this.getObj().getDB().getObj(c.guid);
 					if (o2) {
