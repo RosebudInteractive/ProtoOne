@@ -8,13 +8,14 @@ define(
     function(Session, Connect, User,Event) {
         var UserSessionMgr = Class.extend({
 
-            init: function(router){
+            init: function(router, options){
                 this.sessions = {};
                 this.connects = {};
                 this.users = {};
                 this.sessionId = 0;
                 this.userId = 0;
 				this.event = new Event();
+                this.options = options;
 
                 // функции роутера
                 var that = this;
@@ -28,7 +29,7 @@ define(
              * @param data
              * @returns {object}
              */
-            routerConnect: function(data) {
+            routerConnect: function(data, done) {
                 // подключаемся к серверу с клиента
                 var result =  this.connect(data.socket, {client:data}, data.sid);
 
@@ -42,7 +43,7 @@ define(
                         this.removeConnect(args.connId);
                     }
                 });
-                return result;
+                done(result);
             },
 
             /**
@@ -50,10 +51,9 @@ define(
              * @param data
              * @returns {object}
              */
-            routerAuthenticate: function(data) {
+            routerAuthenticate: function(data, done) {
                 var session = this.getConnect(data.connectId).getSession();
-                var result = {user:this.authenticate(data.connectId, session.getId(), data.name, data.pass)};
-                return result;
+                this.authenticate(data.connectId, session.getId(), data.name, data.pass, done);
             },
 
             /**
@@ -61,9 +61,9 @@ define(
              * @param data
              * @returns {object}
              */
-            routerDeauthenticate: function(data) {
+            routerDeauthenticate: function(data, done) {
                 var session = this.getConnect(data.connectId).getSession();
-                return this.deauthenticate(session.getId());
+                this.deauthenticate(session.getId(), done);
             },
 
             /**
@@ -138,24 +138,26 @@ define(
              * @param sessionId
              * @param user
              * @param pass
-             * @returns {object}
              */
-            authenticate: function(connectId, sessionId, user, pass) {
-                if (user.substr(0, 4) == 'user' && pass == '123') {
-                    var userObj = this.getUser(user);
-                    var session = this.getSession(sessionId);
-                    if (userObj) {
-                        this.removeUser(session.getUser().getName());
-                    } else {
-                        userObj = session.getUser();
-                        userObj.setName(user);
+            authenticate: function(connectId, sessionId, user, pass, done) {
+                var that = this;
+                this.options.authenticate(user, pass, function(err, result){
+                    if (result) {
+                        var userObj = that.getUser(user);
+                        var session = that.getSession(sessionId);
+                        if (userObj) {
+                            that.removeUser(session.getUser().getName());
+                        } else {
+                            userObj = session.getUser();
+                            userObj.setName(user);
+                        }
+                        userObj.addSession(session);
+                        userObj.setAuthenticated(true);
+                        userObj.setLoginTime(Date.now());
+                        done({user:{user: userObj.getName(), loginTime: userObj.getLoginTime()}});
                     }
-                    userObj.addSession(session);
-                    userObj.setAuthenticated(true);
-                    userObj.setLoginTime(Date.now());
-                    return {user: userObj.getName(), loginTime: userObj.getLoginTime()};
-                }
-                return null;
+                    done({user:null});
+                });
             },
 
             /**
@@ -164,7 +166,7 @@ define(
              * TODO - в будущем нужно оповещать все коннекты о деаутентификации
              * @param sessionId
              */
-            deauthenticate: function(sessionId) {
+            deauthenticate: function(sessionId, done) {
                 var session = this.getSession(sessionId);
 
                 // удаляем у именованного
@@ -176,6 +178,7 @@ define(
                 // сессию привязываем к юзеру
                 user.addSession(session);
                 session.setUser(user);
+                done();
             },
 
             /**

@@ -92,17 +92,17 @@ define(function() {
          */
         receive: function(event){
             var data = JSON.parse(this.options.side == 'client' ? event.data : event);
-
+            var that = this;
             // обработчик
             if (this.options.router) {
                 // вызов роутера
-                var result = this.options.router(data, this.options.connectId, this);
-
-                // если требуется возврат результата
-                if (data.type == 'method') {
-                    result.msgId = data.msgId;
-                    this.send(result);
-                }
+                this.options.router(data, this.options.connectId, this, function(result){
+                    // если требуется возврат результата
+                    if (data.type == 'method') {
+                        result.msgId = data.msgId;
+                        that.send(result);
+                    }
+                });
             }
 
             // если есть такой ID вызываем сохраненный колбек

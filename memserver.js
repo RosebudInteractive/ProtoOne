@@ -53,18 +53,52 @@ app.get("/update", function(req, res){
 app.use("/public", express.static(__dirname + '/public'));
 
 // ----------------------------------------------------------------------------------------------------------------------
+// база данных
+/*
+var Mysql = require('./db/mysql');
+var mysql = new Mysql();
+var mysqlConnection = mysql.connect({
+    host:     'localhost',
+    user:     'root',
+    password: '111111',
+    database: 'mobimed_test'
+});
+function mysqlAuthenticate(user, pass, done) {
+    mysqlConnection.queryRow(
+        'SELECT user_id, email FROM user WHERE username=? AND password=MD5(?)', [user, pass],
+        function(err, row) {
+            done(err, row);
+        }
+    );
+}
+*/
+
+/**
+ * Функция заглушка для аутентификации
+ * @param user
+ * @param pass
+ * @param done
+ */
+function fakeAuthenticate(user, pass, done) {
+    var err = null, row = null;
+    if (user=='user' && pass=='123')
+        row = {user_id:1, email:'user@user.com'};
+    done(err, row);
+}
 
 // хранилище коннектов и сессий
 var router = new Router();
-var userSessionMgr = new UserSessionMgr(router);
+var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
 
 // прикладные методы
-router.add('getGuids', function(data) {
+router.add('getGuids', function(data, done) {
     var userData = userSessionMgr.getConnect(data.connectId).getSession().getUser().getData();
     var db = userData.db;
-    return {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
+    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
+    done(result);
+    return result;
 });
-router.add('getSessions', function(data) {
+router.add('getSessions', function(data, done) {
     var sessions = userSessionMgr.getSessions();
     result = {sessions:[]};
     for(var i in sessions) {
@@ -76,30 +110,11 @@ router.add('getSessions', function(data) {
         }
         result.sessions.push(session);
     }
+    done(result);
     return result;
 });
 
 
-// база данных
-/*
-var Mysql = require('./db/mysql');
-var mysql = new Mysql();
-var mysqlConnection = mysql.connect({
-    host:     'localhost',
-    user:     'root',
-    password: '111111',
-    database: 'mobimed_test'
-});
-router.add('mysqlLogin',
-    function(data) {
-        mysqlConnection.queryRow(
-            'SELECT user_id, email FROM user WHERE username=? AND password=MD5(?)', [data.name, data.pass],
-            function(err, row) {
-                if (err) throw (err);
-                console.log(row);
-            }
-        );
-});*/
 
 
 /**
@@ -160,15 +175,15 @@ wss.on('connection', function(ws) {
                 connect.closeConnect();
             console.log("отключился клиент: " + connectId);
         },
-        router: function(data, connectId, socket) {
+        router: function(data, connectId, socket, done) {
             console.log('сообщение с клиента '+connectId+':', data);
 
             // обработчик
             if (data.action!='subscribe' && data.action!='subscribeRoot' && data.action!='sendDelta') {
                 data.connectId = connectId;
                 data.socket = socket;
-                var result = router.exec(data);
-                return result? result: {};
+                router.exec(data, done);
+                return;
             }
 
             var result = {};
@@ -200,6 +215,7 @@ wss.on('connection', function(ws) {
 
 
             }
+            done(result);
             return result;
         }
     });

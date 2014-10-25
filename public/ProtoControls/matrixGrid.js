@@ -29,24 +29,33 @@ define(
              * Рендер
              */
             render: function() {
-                var table = $('#' + this.getGuid());
-                if (table.length == 0) {
-                    table = $('<div class="divTable control" id="'+this.getGuid()+'"></div>');
-                    $(this.options.parent).append(table);
+                var that = this;
+                // обработка шаблонов
+                if (!this._templates) {
+                    require(['/public/uccello/uses/template.js', 'text!./templates/matrixGrid.html'], function(template, tpl){
+                        that._templates = template.parseTemplate(tpl);
+                        that.render();
+                    });
                 } else {
-                    table.empty();
-                }
-                var x = this.horCells();
-                var y = this.verCells();
-                for (var i = 0; i < y; i++) {
-                    var row = $('<div class="divRow"></div>');
-                    for (var j = 0; j < x; j++) {
-                        var cell = $('<div class="divCell"></div>');
-                        row.append(cell);
+                    var table = $('#' + this.getGuid());
+                    if (table.length == 0) {
+                        table = $(this._templates['matrixGrid']).attr('id', this.getGuid());
+                        $(this.options.parent).append(table);
+                    } else {
+                        table.empty();
                     }
-                    table.append(row);
+                    var x = this.horCells();
+                    var y = this.verCells();
+                    for (var i = 0; i < y; i++) {
+                        var row = $(this._templates['row']);
+                        for (var j = 0; j < x; j++) {
+                            var cell = $(this._templates['cell']);
+                            row.append(cell);
+                        }
+                        table.append(row);
+                    }
+                    table.css({top: this.top() + 'px', left: this.left() + 'px'});
                 }
-                table.css({top:this.top()+'px', left:this.left()+'px'});
             },
 
             horCells: function(value) {

@@ -41,9 +41,9 @@ define(['../system/event'], function(event) {
          * Выполнить обработчик
          * @param action
          */
-        exec: function(data) {
+        exec: function(data, done) {
             if (this._actions[data.action])
-                return this._actions[data.action](data);
+                return this._actions[data.action](data, done);
             return null;
         }
 

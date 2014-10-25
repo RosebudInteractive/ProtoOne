@@ -92,8 +92,6 @@ define(
                             left.append(leftTpl);
                         }
                     }
-
-
                 }
             },
 

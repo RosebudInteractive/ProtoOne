@@ -187,9 +187,7 @@
 	  }
 	  
 	  function renderControls(renderEditor) {
-
           myApp.controlMgr.render();
-
           // редактирование ячеек грида
           $(".divCell").editable(function(value, settings) {
               return(value);
@@ -214,7 +212,6 @@
 		myApp.controller.genDeltas(db.getGuid());
 		//myRootCont.addToCol("Children", newb);
 		renderControls();
-		
 	  }
 
     /**
@@ -235,11 +232,6 @@
          * @param pass
          */
         function login(name, pass){
-          /*  socket.send({action:"mysqlLogin", type:'method', name:name, pass:pass}, function(result){
-                console.log(result);
-            });
-            return;*/
-
             clientConnection.authenticate(name, pass, function(result){
                 if (result.user) {
                     $('#login').hide(); $('#logout').show();

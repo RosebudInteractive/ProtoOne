@@ -28,13 +28,21 @@ define(
              * Рендер кнопки
              */
             render: function() {
-                var item = $('#'+this.getGuid());
-                if (item.length == 0) {
-                    item = $('<input type="button" class="control" />').attr('id', this.getGuid());
-                    $(this.options.parent).append(item);
+                var that = this;
+                // обработка шаблонов
+                if (!this._templates) {
+                    require(['/public/uccello/uses/template.js', 'text!./templates/button.html'], function(template, tpl){
+                        that._templates = template.parseTemplate(tpl);
+                        that.render();
+                    });
+                } else {
+                    var item = $('#' + this.getGuid());
+                    if (item.length == 0) {
+                        item = $(this._templates['button']).attr('id', this.getGuid());
+                        $(this.options.parent).append(item);
+                    }
+                    item.css({top: this.top() + 'px', left: this.left() + 'px'}).val(this.caption());
                 }
-                item.css({top:this.top()+'px', left:this.left()+'px'}).val(this.caption());
-                return item;
             },
 
             caption: function(value) {
