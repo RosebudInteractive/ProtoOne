@@ -178,7 +178,7 @@ define(
                 // сессию привязываем к юзеру
                 user.addSession(session);
                 session.setUser(user);
-                done();
+                done({});
             },
 
             /**

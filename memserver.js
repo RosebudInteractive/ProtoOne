@@ -16,6 +16,7 @@ var DBNavigator = require('./public/ProtoControls/dbNavigator');
 var Socket = require('./public/uccello/connection/socket');
 var Router = require('./public/uccello/connection/router');
 var UserSessionMgr = require('./public/uccello/connection/userSessionMgr');
+var Logger = require('./public/uccello/system/logger');
 
 // Модули nodejs
 var http = require('http');
@@ -88,6 +89,7 @@ function fakeAuthenticate(user, pass, done) {
 
 // хранилище коннектов и сессий
 var router = new Router();
+var logger = new Logger();
 var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
 
 // прикладные методы
@@ -177,6 +179,9 @@ wss.on('connection', function(ws) {
         },
         router: function(data, connectId, socket, done) {
             console.log('сообщение с клиента '+connectId+':', data);
+
+            // логирование входящих запросов
+            logger.addLog(data);
 
             // обработчик
             if (data.action!='subscribe' && data.action!='subscribeRoot' && data.action!='sendDelta') {

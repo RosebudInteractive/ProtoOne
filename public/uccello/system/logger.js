@@ -15,8 +15,20 @@ define(function() {
          * Инициализация объекта
          * @constructs
          */
-        init: function() {
+        init: function(options) {
             this.logs = [];
+
+            if (!options) options = {};
+            this.options = {};
+            this.options.autoWrite = options.autoWrite || false;
+            this.options.file = options.file || 'logs/log.xml';
+
+            if (this.options.autoWrite) {
+                var that = this;
+                setInterval(function(){
+                    that.saveLog();
+                }, 10*3600*1000);
+            }
         },
 
         /**
@@ -24,8 +36,10 @@ define(function() {
          * @param log {object}
          */
         addLog: function(log) {
-            log.timestamp = Date.now();
-            this.logs.push(log);
+            if (log) {
+                log.timestamp = Date.now();
+                this.logs.push(log);
+            }
         },
 
         /**
@@ -39,15 +53,16 @@ define(function() {
 
         /**
          * Сохранить лог в файл
-         * @param file
          */
-        saveLog: function(file, done) {
+        saveLog: function() {
             var fs = require('fs');
             var js2xmlparser = require("js2xmlparser");
             var log = js2xmlparser("log", {row:this.logs});
-            fs.writeFile(file, log, function (err) {
-                if (err) throw 'ошибка записи файла: ' + err;
-                done('Файл лога записан: ' + file);
+            var that = this;
+            fs.appendFile(this.options.file, log, function (err) {
+                console.log('err', err);
+                if (err) throw err;
+                that.logs = [];
             });
         }
 

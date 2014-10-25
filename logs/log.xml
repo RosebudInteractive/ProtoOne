@@ -1,31 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <log>
-	<row>
-		<session>123</session>
-		<connect>0.7694202393759042</connect>
-		<command>connect</command>
-		<params></params>
-		<timestamp>1410169400853</timestamp>
-	</row>
-	<row>
-		<session>123</session>
-		<connect>0.6159750663209707</connect>
-		<command>connect</command>
-		<params></params>
-		<timestamp>1410169401475</timestamp>
-	</row>
-	<row>
-		<session>123</session>
-		<connect>0.7694202393759042</connect>
-		<command>send</command>
-		<params>123</params>
-		<timestamp>1410169407645</timestamp>
-	</row>
-	<row>
-		<session>123</session>
-		<connect>0.6159750663209707</connect>
-		<command>send</command>
-		<params>456</params>
-		<timestamp>1410169414956</timestamp>
-	</row>
+</log><?xml version="1.0" encoding="UTF-8"?>
+<log>
+</log><?xml version="1.0" encoding="UTF-8"?>
+<log>
+</log><?xml version="1.0" encoding="UTF-8"?>
+<log>
 </log>
