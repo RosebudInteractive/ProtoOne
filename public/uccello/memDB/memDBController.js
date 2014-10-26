@@ -100,6 +100,7 @@ define(
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
 						db.deserialize(obj.data,{db:db, mode:"RW"},cb2);
+						console.log(JSON.stringify(obj.data));
 						if (cb2!==undefined)  // запомнить коллбэк
 							db._cbSetNewObject(rootGuid,cb2);
 						if (cb !== undefined && (typeof cb == "function")) cb();

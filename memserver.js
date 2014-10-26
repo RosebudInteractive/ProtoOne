@@ -137,13 +137,19 @@ function createDb(dbc, options){
     var propEditor = new PropEditor(cm);
     var dbNavigator = new DBNavigator(cm);
 
-    var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
+	var hehe = {"$sys":{"guid":"ac949125-ce74-3fad-5b4a-b943e3ee67c6","typeGuid":"1d95ab61-df00-aec8-eff5-0f90187891cf"},"fields":{"Id":11,"Name":"MainContainer"},"collections":{"Children":{"0":{"$sys":{"guid":"65704a87-4310-30ef-7b31-b8fe8bffa211","typeGuid":"af419748-7b25-1633-b0a9-d539cada8e0d"},"fields":{"Id":22,"Name":"MyFirstButton1","Top":"50","Left":"30","Caption":"OK"},"collections":{}},"1":{"$sys":{"guid":"5b6b203a-6ba3-b4e9-e153-01c104e699f9","typeGuid":"827a5cb3-e934-e28c-ec11-689be18dae97"},"fields":{"Id":33,"Name":"Grid","Top":"60","Left":"50","HorCells":3,"VerCells":4},"collections":{}},"2":{"$sys":{"guid":"6acec0b4-6601-545c-6f55-7c38b3f73089","typeGuid":"a0e02c45-1600-6258-b17a-30a56301d7f1"},"fields":{"Id":44,"Name":"PropEditor","Top":"10","Left":"700"},"collections":{}},"3":{"$sys":{"guid":"3bdd191f-b188-069f-9736-b578140984b7","typeGuid":"38aec981-30ae-ec1d-8f8f-5004958b4cfa"},"fields":{"Id":55,"Name":"DbNavigator","Top":"240","Left":"20"},"collections":{}}}}};
+	
+	db.deserialize(hehe, {db: this});
+	
+    /*var myRootCont = db.newRootObj(db.getObj(rootCont.classGuid), {fields: {"Id": 11, "Name": "MainContainer"}});
     var myButton = new MemObj(db.getObj(button.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {"Id": 22, "Name": "MyFirstButton1", "Caption": "OK", "Left":"30", "Top":"50"}});
     var myMatrixGrid = new MemObj(db.getObj(matrixGrid.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:33, HorCells:3, VerCells:4, Name:"Grid", "Left":"50", "Top":"60"}});
     var myPropEditor = new MemObj(db.getObj(propEditor.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:44,  Name:"PropEditor", "Left":"700", "Top":"10"}});
-    var myDbNavigator = new MemObj(db.getObj(dbNavigator.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:55,  Name:"DbNavigator", "Left":"20", "Top":"240"}});
+    var myDbNavigator = new MemObj(db.getObj(dbNavigator.classGuid), { obj: myRootCont, colName: "Children"}, {fields: {Id:55,  Name:"DbNavigator", "Left":"20", "Top":"240"}});*/
 
-    return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid, myPropEditor:myPropEditor, myDbNavigator:myDbNavigator};
+    //return {cm:cm, db:db, myRootCont:myRootCont, myButton:myButton, myMatrixGrid:myMatrixGrid, myPropEditor:myPropEditor, myDbNavigator:myDbNavigator};
+	
+	return {cm:cm, db:db, myRootCont: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6")};
 }
 
 // вызывается по событию при создании нового пользователя
