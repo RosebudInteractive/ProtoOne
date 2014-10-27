@@ -31,7 +31,7 @@ define(
 					pvt.parent = parent.obj;	
 					pvt.colName = parent.colName;
 				}
-				
+
 				pvt.$id = this.getDB().getNewLid();		// локальный идентификатор
 				if ((flds) && (flds.$sys) && (flds.$sys.guid))	// если гуид пришел в системных полях, то используем его
 					pvt.guid = flds.$sys.guid;

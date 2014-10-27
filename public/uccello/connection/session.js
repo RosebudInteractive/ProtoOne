@@ -8,21 +8,28 @@ if (typeof define !== 'function') {
  * @module Session
  */
 define(
-    ['../system/event'],
-    function(event) {
+    ['../baseControls/aComponent', '../system/event'],
+    function(AComponent, event) {
 
-    var Session = Class.extend(/** @lends module:Session.Session.prototype */{
+    var Session = AComponent.extend(/** @lends module:Session.Session.prototype */{
+
+        className: "Session",
+        classGuid: "70c9ac53-6fe5-18d1-7d64-45cfff65dbbb",
+        metaFields: [ {fname:"Id", ftype:"int"}, {fname:"Created", ftype:"timestamp"} ],
+        metaCols: [ {"cname": "Connects", "ctype": "control"} ],
 
         /**
          * Инициализация объекта
          * @constructs
-         * @param id {string} ID сессии
-         * @param user {object} пользователь сессии
+         * @param params {object}
          */
-        init: function(id, user) {
+        init: function(cm, params) {
+            this._super(cm, params);
+
+            if (params==undefined) return; // в этом режиме только создаем метаинфо
             this.event = new event(this);
-            this.id = id;
-            this.user = user;
+            this.id = params.session;
+            this.user = params.user;
             this.connects = [];
             this.creationTime = Date.now();
             this.lastOpTime = Date.now();

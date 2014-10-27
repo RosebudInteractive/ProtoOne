@@ -7,18 +7,27 @@ if (typeof define !== 'function') {
  * Модуль User
  * @module User
  */
-define(function() {
+define(
+    ['../baseControls/aComponent'],
+    function(AComponent) {
 
-    var User = Class.extend(/** @lends module:User.User.prototype */{
+    var User = AComponent.extend(/** @lends module:User.User.prototype */{
+
+        className: "User",
+        classGuid: "dccac4fc-c50b-ed17-6da7-1f6230b5b055",
+        metaFields: [ {fname:"Id", ftype:"int"}, {fname:"Name", ftype:"string"}, {fname:"Authenticated", ftype:"boolean"} ],
+        metaCols: [ {cname: "Sessions", ctype: "control"} ],
+
         /**
          * Инициализация
          * @constructs
-         * @param {string} name Имя пользователя
          */
-        init: function(name) {
-			this.pvt = {};
-			this.pvt.data = {};
-            this.name = name;
+        init: function(cm, params) {
+            this._super(cm, params);
+
+            if (params==undefined) return; // в этом режиме только создаем метаинфо
+            this.pvt.data = {};
+            this.name = params.name;
             this.loginTime = false;
             this._isAuthenticated = false;
             this.sessions = {};

@@ -33,7 +33,14 @@ define(
 					if (!("colName" in params)) 
 						var col = "Children";
 					else col = params.colName;
-					this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{ obj: params.obj, "colName": col}, params.ini);
+
+                    params.ini = params.ini ? params.ini : {};
+
+                    // если рутовый то указываем db
+                    if (params.obj===undefined)
+                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{db: cm.getDB()}, params.ini);
+                    else
+                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{obj: params.obj, "colName": col}, params.ini);
 					
 				}
 				cm.add(this);

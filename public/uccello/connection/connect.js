@@ -7,21 +7,29 @@ if (typeof define !== 'function') {
  * Модуль подключений
  * @module Connect
  */
-define(['../system/event'], function(event) {
+define(
+    ['../baseControls/aComponent', '../system/event'],
+    function(AComponent, event) {
 
-    var Connect = Class.extend(/** @lends module:Connect.Connect.prototype */{
+    var Connect = AComponent.extend(/** @lends module:Connect.Connect.prototype */{
+
+        className: "Connect",
+        classGuid: "66105954-4149-1491-1425-eac17fbe5a72",
+        metaFields: [ {fname:"Id", ftype:"int"} ],
+        metaCols: [  ],
 
         /**
          * Инициализация объекта
          * @constructs
-         * @param id {string} ID коннекта
-         * @param ws {object} Объект подключения
          * @param params {object} Параметры подлкючения
          */
-        init: function (id, ws, params) {
+        init: function(cm, params) {
+            this._super(cm, params);
+
+            if (params==undefined) return; // в этом режиме только создаем метаинфо
             this.event = new event(this);
-            this.id = id;
-            this.ws = ws;
+            this.id = params.id;
+            this.ws = params.ws;
             this.session = null;
             this.params = {
                 connectTime: params.connectTime || Date.now(),

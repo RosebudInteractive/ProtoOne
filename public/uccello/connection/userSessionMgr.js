@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./session', './connect', './user', '../system/event'],
-    function(Session, Connect, User,Event) {
+    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', './session', './connect', './user', '../system/event'],
+    function(MemDBController, ControlMgr, AComponent, Session, Connect, User, Event) {
         var UserSessionMgr = Class.extend({
 
             init: function(router, options){
@@ -16,6 +16,17 @@ define(
                 this.userId = 0;
 				this.event = new Event();
                 this.options = options;
+
+                // системные объекты
+                this.dbcsys = new MemDBController();
+                this.dbsys = this.dbcsys.newDataBase({name: "System", kind: "master"});
+                this.cmsys = new ControlMgr(this.dbsys);
+
+                // создаем метаинфо
+                new AComponent(this.cmsys);
+                new User(this.cmsys);
+                new Session(this.cmsys);
+                new Connect(this.cmsys);
 
                 // функции роутера
                 var that = this;
@@ -83,7 +94,7 @@ define(
                 }
 
                 // добавляем коннект в общий список и в сессию
-                var connect = new Connect(socket.getConnectId(), socket,  {sessionID:sessionId, userAgent:data.client.agent, stateReady:1});
+                var connect = new Connect(this.cmsys, {obj:session.pvt.obj, colName: "Connects", id:socket.getConnectId(), ws:socket,  sessionID:sessionId, userAgent:data.client.agent, stateReady:1});
                 this.addConnect(connect);
                 session.addConnect(connect);
 
@@ -104,8 +115,7 @@ define(
             _newSession: function() {
                 var user = this._newUser();
                 var sessionId = ++this.sessionId;
-                //data.user = user;
-                var session = new Session(sessionId, user);
+                var session = new Session(this.cmsys, {obj:user.pvt.obj, user:user, colName: "Sessions", session:sessionId});
                 this.addSession(session);
                 this.addUser(user);
                 user.addSession(session);
@@ -118,7 +128,7 @@ define(
              */
             _newUser: function() {
                 var userId = ++this.userId;
-                var user = new User('noname'+userId);
+                var user = new User(this.cmsys, {name:'noname'+userId});
 				
 				// генерируем событие на создание нового пользователя, чтобы привязать к нему контекст
 				this.event.fire({
