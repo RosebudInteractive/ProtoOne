@@ -12,10 +12,21 @@ define(
 				this._super(objType, parent, flds);
 				
 				// заполнить поля по метаинформации
-				for (var f in flds.fields) {
+				/*for (var f in flds.fields) {
 						var i=this.pvt.objType.pvt.fieldsTable[f].cidx;
 						if (i>=0) this.pvt.fields[i] = flds.fields[f]; // TODO проверять типы?
+				}*/
+				
+				var ot = this.pvt.objType;
+				for (var i=0; i<ot.pvt.fieldsArr.length; i++) {
+						var f = ot.pvt.fieldsArr[i];
+						if ((flds!=undefined) && ("fields" in flds) && (f in flds.fields))
+						  this.pvt.fields[i] = flds.fields[f]; // TODO проверять типы?	
+						else
+						  this.pvt.fields[i] = undefined;
+					
 				}
+				
 				// создать пустые коллекции по типу
 				var ccol = objType.getCol("cols");
 				for (var i=0; i<ccol.count(); i++) {

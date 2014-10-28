@@ -16,8 +16,6 @@ define(
         className: "User",
         classGuid: "dccac4fc-c50b-ed17-6da7-1f6230b5b055",
         metaFields: [
-            {fname:"Id", ftype:"int"},
-            {fname:"Name", ftype:"string"},
             {fname:"Authenticated", ftype:"boolean"},
             {fname:"LoginTime", ftype:"time"}
         ],
