@@ -106,7 +106,7 @@ define(
 					var db=this;
 					controller._subscribe(this,params.proxyMaster, function() {
 						pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
-						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){		
+						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
 								db._buildMetaTables();
 								//console.log('callback result:', result);
 								if (cb !== undefined && (typeof cb == "function")) cb();

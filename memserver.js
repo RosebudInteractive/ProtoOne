@@ -98,13 +98,14 @@ var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate, 
 
 // прикладные методы
 router.add('getGuids', function(data, done) {
-    var userData = userSessionMgr.getConnect(data.connectId).getSession().getUser().getData();
+    var user = userSessionMgr.getConnect(data.connectId).getSession().getUser();
+    var userData = user.getData();
     var db = userData.db;
     result = {
         masterGuid:db.getGuid(),
         myRootContGuid:userData.myRootCont.getGuid(),
         masterSysGuid:userSessionMgr.dbsys.getGuid(),
-        sysRootGuid:userSessionMgr.dbsys.getRoot(0).obj.getGuid()
+        sysRootGuid:user.pvt.obj.getGuid()
     };
     done(result);
     return result;
