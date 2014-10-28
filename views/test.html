@@ -151,7 +151,7 @@
                 console.log('база данных B:', dbsl);
 
                 // создаем системную бд
-                dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}}, subscribeRootSys);
+                dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}});
                 myApp.cmsys = new ControlMgr(dbsys);
                 console.log('база данных Sys:', dbsys);
 
@@ -169,7 +169,7 @@
           // подписываемся на корневой объект контейнера
           dbsys.subscribeRoot(guids.sysRootGuid, function(result){
 			  renderControls();
-          }, createComponent);
+          });
       }
 
       function createDataBase2() {
@@ -310,6 +310,7 @@
     &nbsp; &nbsp; <input type="button" value="Трассировка" onclick="getSessions();">
     <input type="button" value="renderControls" onclick="renderControls();">
 	<input type="button" value="add button" onclick="addButton();">
+	<input type="button" value="subscribe user" onclick="subscribeRootSys();">
 
     <div id="container">
         <div id="result"></div>
