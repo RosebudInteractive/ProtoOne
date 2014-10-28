@@ -9,7 +9,7 @@ if (typeof define !== 'function') {
  */
 define(
     ['../baseControls/aComponent', '../system/event'],
-    function(AComponent, event) {
+    function(AComponent, Event) {
 
     var Session = AComponent.extend(/** @lends module:Session.Session.prototype */{
 
@@ -31,7 +31,7 @@ define(
             this._super(cm, params);
 
             if (params==undefined) return; // в этом режиме только создаем метаинфо
-            this.event = new event(this);
+            this.event = new Event(this);
             this.id = params.session;
             this.user = params.user;
             this.connects = [];

@@ -92,7 +92,10 @@ define(
 				pvt.logIdx = [];			// упорядоченный индекс логов
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
-                pvt.guid = controller.guid();
+				if ("guid" in params)
+					pvt.guid = params.guid;
+				else
+					pvt.guid = controller.guid();
 				pvt.counter = 0;
 
 				
