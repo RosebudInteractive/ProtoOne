@@ -21,6 +21,7 @@ define(
             init: function(cm, params, options) {
                 this._super(cm, params);
                 this.cm = cm;
+                options = options ? options : {};
                 this.options = options;
                 if (!this.options)
                     this.options = {};
