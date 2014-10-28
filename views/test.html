@@ -90,7 +90,7 @@
 
         var clientConnection = null, socket = null;
         var sessionId = $.url('#sid');
-        var dbc=null, dbsl=null, dbs2=null, guids=null, propEditor = null;
+        var dbc=null, dbsl=null, dbs2=null, dbsys=null, guids=null, propEditor = null;
 		
 		var myApp = {};
 		var MemDBController=null, MemDataBase=null, ControlMgr=null;
@@ -150,13 +150,11 @@
                 console.log('контроллер:', dbc);
                 console.log('база данных B:', dbsl);
 
-                // редактор свойств
-                /*propEditor = new PropEditor(myApp.controlMgr, {}, {parent:'#editor', change:function(){
-                        myApp.controller.genDeltas(dbsl.getGuid());
-                        renderControls(false);
-                    }
-                });
-*/
+                // создаем системную бд
+                dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}}, subscribeRootSys);
+                myApp.cmsys = new ControlMgr(dbsys);
+                console.log('база данных Sys:', dbsys);
+
             });
       }
 
@@ -166,7 +164,14 @@
 			  renderControls();
           }, createComponent);
       }
-	  
+
+      function subscribeRootSys() {
+          // подписываемся на корневой объект контейнера
+          dbsys.subscribeRoot(guids.sysRootGuid, function(result){
+			  renderControls();
+          }, createComponent);
+      }
+
       function createDataBase2() {
           dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
           dbs2.subscribeRoot(guids.myRootContGuid, function(result){
@@ -185,6 +190,11 @@
                     myApp.controller.genDeltas(dbsl.getGuid());
                     renderControls(false);
                 };
+            }
+
+            // DbNavigator для системной бд
+            if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
+                options.db = dbsys;
             }
 
 			new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);

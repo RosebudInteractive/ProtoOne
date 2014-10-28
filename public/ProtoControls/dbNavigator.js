@@ -26,11 +26,13 @@ define(
                     this.options = {};
                 if (!this.options.id)
                     this.options.id = 'DBNavigator';
-                this._activeDb = this.cm.getDB();
+                this._activeDb = options.db ? options.db : this.cm.getDB();
             },
 
-            loadTemplates: function() {
 
+            changeDB: function(db) {
+                this._activeDb = db;
+                this.render();
             },
 
             /**

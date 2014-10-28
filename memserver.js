@@ -87,16 +87,25 @@ function fakeAuthenticate(user, pass, done) {
     done(err, row);
 }
 
+// один контроллер на сервер
+var dbc = new MemDBController();
+
 // хранилище коннектов и сессий
 var router = new Router();
 var logger = new Logger();
-var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
+var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate, dbc:dbc});
+
 
 // прикладные методы
 router.add('getGuids', function(data, done) {
     var userData = userSessionMgr.getConnect(data.connectId).getSession().getUser().getData();
     var db = userData.db;
-    result = {masterGuid:db.getGuid(), myRootContGuid:userData.myRootCont.getGuid()};
+    result = {
+        masterGuid:db.getGuid(),
+        myRootContGuid:userData.myRootCont.getGuid(),
+        masterSysGuid:userSessionMgr.dbsys.getGuid(),
+        sysRootGuid:userSessionMgr.dbsys.getRoot(0).obj.getGuid()
+    };
     done(result);
     return result;
 });
@@ -153,7 +162,7 @@ function createDb(dbc, options){
 // вызывается по событию при создании нового пользователя
 function createUserContext(args) {
 	var userData = args.target.getData();
-	userData.controller = new MemDBController();
+	userData.controller = dbc;
 	var r = createDb(userData.controller, {name: "Master", kind: "master"});
 	userData.db = r.db;
 	userData.cm = r.cm;	
