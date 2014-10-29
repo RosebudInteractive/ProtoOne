@@ -45,6 +45,8 @@ define(
                 }
             },
 
+			// Properties
+			
             caption: function(value) {
                 return this._genericSetter("Caption", value);
             }

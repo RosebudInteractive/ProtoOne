@@ -101,8 +101,8 @@ define(
                 // Если возвращен user, то это означает, что сессия авторизована и соответствует пользователю с логином user.user
                 var result = {sessionId: sessionId};
                 var user = session.getUser();
-                if (user.isAuthenticated())
-                    result.user = {user: user.getName(), loginTime: user.getLoginTime()};
+                if (user.authenticated())
+                    result.user = {user: user.name(), loginTime: user.loginTime()};
 
                 return result;
             },
@@ -128,7 +128,8 @@ define(
              */
             _newUser: function() {
                 var userId = ++this.userId;
-                var user = new User(this.cmsys, {name:'noname'+userId});
+                //var user = new User(this.cmsys, {name:'noname'+userId});
+				var user = new User(this.cmsys, { ini: { fields: { Id: userId, Name: 'noname'+userId } }}); //    name:'noname'+userId});
 				
 				// генерируем событие на создание нового пользователя, чтобы привязать к нему контекст
 				this.event.fire({
@@ -156,15 +157,16 @@ define(
                         var userObj = that.getUser(user);
                         var session = that.getSession(sessionId);
                         if (userObj) {
-                            that.removeUser(session.getUser().getName());
+                            that.removeUser(session.getUser().name());
                         } else {
                             userObj = session.getUser();
-                            userObj.setName(user);
+                            //userObj.setName(user);
+							userObj.name(user);
                         }
                         userObj.addSession(session);
-                        userObj.setAuthenticated(true);
-                        userObj.setLoginTime(Date.now());
-                        done({user:{user: userObj.getName(), loginTime: userObj.getLoginTime()}});
+                        userObj.authenticated(true);
+                        userObj.loginTime(Date.now());
+                        done({user:{user: userObj.name(), loginTime: userObj.loginTime()}});
                     }
                     done({user:null});
                 });
@@ -248,7 +250,7 @@ define(
             },
 
             addUser: function(user){
-                this.users[user.getName()] = {item:user, date:new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')};
+                this.users[user.name()] = {item:user, date:new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')};
             },
             getUser: function(name){
                 return this.users[name] ? this.users[name].item : null;

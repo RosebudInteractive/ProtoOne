@@ -30,10 +30,10 @@ define(
 
             if (params==undefined) return; // в этом режиме только создаем метаинфо
             this.pvt.data = {};
-            this.name = params.name;
-            this.loginTime = false;
-            this._isAuthenticated = false;
-            this.sessions = {};
+            //this.pvt.name = params.name;
+            this.pvt.loginTime = false;
+            this.pvt.isAuthenticated = false;
+            this.pvt.sessions = {};
         },
 
         /**
@@ -41,19 +41,19 @@ define(
          * @param session
          */
         addSession: function(session){
-            this.sessions[session.getId()] = {item:session, date:new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')};
+            this.pvt.sessions[session.getId()] = {item:session, date:new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')};
         },
 
         getSession: function(id){
-            return this.sessions[id] ? this.sessions[id].item : null;
+            return this.pvt.sessions[id] ? this.pvt.sessions[id].item : null;
         },
 
         getSessions: function(){
-            return this.sessions;
+            return this.pvt.sessions;
         },
 
         countSession: function(){
-            return Object.keys(this.sessions).length;
+            return Object.keys(this.pvt.sessions).length;
         },
 		
 		getData: function() {
@@ -65,57 +65,58 @@ define(
          * @param id
          */
         removeSession: function(id){
-            if (this.sessions[id])
-                delete this.sessions[id];
+            if (this.pvt.sessions[id])
+                delete this.pvt.sessions[id];
         },
 
-        /**
-         * Изменить имя пользователя
-         * @param name {string}
-         */
-        setName: function(name) {
-            this.name = name;
-        },
-
-        /**
-         * Получить имя пользователя
-         * @returns {string}
-         */
-        getName: function() {
-            return this.name;
-        },
 
         /**
          * Установить таймстамп логина
          * @returns {number}
          */
-        setLoginTime: function(loginTime) {
-            this.loginTime = loginTime;
-        },
+        /*setLoginTime: function(loginTime) {
+            this.pvt.loginTime = loginTime;
+        },*/
 
         /**
          * Получить таймстамп логина
          * @returns {number}
          */
+		 /*
         getLoginTime: function() {
-            return this.loginTime;
-        },
-
+            return this.pvt.loginTime;
+        },*/
+		
 
         /**
          * Залогинен
          * @param val {boolean}
          */
-        setAuthenticated: function(val) {
-            this._isAuthenticated = val;
-        },
+        /*setAuthenticated: function(val) {
+            this.pvt.isAuthenticated = val;
+        },*/
 
         /**
          * Залогинен ли пользователь
          */
-        isAuthenticated: function() {
-            return this._isAuthenticated;
-        }
+        /*isAuthenticated: function() {
+            return this.pvt.isAuthenticated;
+        },*/
+		
+		// Properties				
+		loginTime: function(value) {
+			return this._genericSetter("LoginTime",value);
+		},
+		
+		// TODO сделать ReadOnly property
+		authenticated: function(value) {
+			return this._genericSetter("LoginTime",value);
+		}
+		
+		
+
+		
+		
     });
     return User;
 });
