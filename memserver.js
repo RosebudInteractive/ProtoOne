@@ -88,36 +88,40 @@ function fakeAuthenticate(user, pass, done) {
 }
 
 // один контроллер на сервер
-var dbc = new MemDBController();
+// var dbc = new MemDBController();
 
 // хранилище коннектов и сессий
+
+var myServerApp = {}; // тут все данные
+
+
 var router = new Router();
 var logger = new Logger();
-var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate, dbc:dbc});
-
+//var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate, dbc:dbc});
+myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
 
 // прикладные методы
 router.add('getGuids', function(data, done) {
-    var user = userSessionMgr.getConnect(data.connectId).getSession().getUser();
+    var user = myServerApp.userSessionMgr.getConnect(data.connectId).getSession().getUser();
     var userData = user.getData();
     var db = userData.db;
     result = {
         masterGuid:db.getGuid(),
         myRootContGuid:userData.myRootCont.getGuid(),
-        masterSysGuid:userSessionMgr.dbsys.getGuid(),
-        sysRootGuid:user.pvt.obj.getGuid()
+        masterSysGuid:myServerApp.userSessionMgr.dbsys.getGuid(),
+        sysRootGuid:user.getObj().getGuid()
     };
     done(result);
     return result;
 });
 router.add('getSessions', function(data, done) {
-    var sessions = userSessionMgr.getSessions();
+    var sessions = myServerApp.userSessionMgr.getSessions();
     result = {sessions:[]};
     for(var i in sessions) {
         var session = {id:i, date:sessions[i].date, connects:[]};
         var connects = sessions[i].item.getConnects();
         for(var j in connects) {
-            var connect = {id:j, date:userSessionMgr.getConnectDate(j)};
+            var connect = {id:j, date:myServerApp.userSessionMgr.getConnectDate(j)};
             session.connects.push(connect);
         }
         result.sessions.push(session);
@@ -136,7 +140,7 @@ router.add('getSessions', function(data, done) {
  * @returns {object}
  */
 function createDb(dbc, options){
-    var db = dbc.newDataBase(options);
+    var db = myServerApp.userSessionMgr.getController().newDataBase(options);
 	var cm = new ControlMgr(db);
 
     var component = new AComponent(cm);
@@ -163,14 +167,14 @@ function createDb(dbc, options){
 // вызывается по событию при создании нового пользователя
 function createUserContext(args) {
 	var userData = args.target.getData();
-	userData.controller = dbc;
-	var r = createDb(userData.controller, {name: "Master", kind: "master"});
+	userData.controller = myServerApp.userSessionMgr.getController();
+	var r = createDb(myServerApp.userSessionMgr.getController(), {name: "Master", kind: "master"});
 	userData.db = r.db;
 	userData.cm = r.cm;	
 	userData.myRootCont = r.myRootCont;
     console.log(userData);
 };
-userSessionMgr.event.on({
+myServerApp.userSessionMgr.event.on({
 	type: 'newUser',
 	subscriber: this,
 	callback: createUserContext
@@ -187,7 +191,7 @@ wss.on('connection', function(ws) {
         side: 'server',
         connectId: _connectId,
         close: function(event, connectId) { // при закрытии коннекта
-            var connect = userSessionMgr.getConnect(connectId);
+            var connect = myServerApp.userSessionMgr.getConnect(connectId);
             if (connect)
                 connect.closeConnect();
             console.log("отключился клиент: " + connectId);
@@ -203,6 +207,7 @@ wss.on('connection', function(ws) {
                 data.connectId = connectId;
                 data.socket = socket;
                 router.exec(data, done);
+				// TODO? Почему нет done ?
                 return;
             }
 
@@ -210,7 +215,7 @@ wss.on('connection', function(ws) {
             switch (data.action) {
 
                 case 'subscribe':
-                    var connect = userSessionMgr.getConnect(connectId);
+                    var connect = myServerApp.userSessionMgr.getConnect(connectId);
                     var u = connect.getSession().getUser();
                     var dbc = u.getData().controller;
 
@@ -218,7 +223,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'subscribeRoot':
-                    var connect = userSessionMgr.getConnect(connectId);
+                    var connect = myServerApp.userSessionMgr.getConnect(connectId);
                     var u = connect.getSession().getUser();
                     var dbc = u.getData().controller;
 
@@ -229,7 +234,7 @@ wss.on('connection', function(ws) {
                     break;
 
                 case 'sendDelta':
-                    var dbc = userSessionMgr.getConnect(connectId).getSession().getUser().getData().controller;
+                    var dbc = myServerApp.userSessionMgr.getConnect(connectId).getSession().getUser().getData().controller;
                     dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                     break;
 

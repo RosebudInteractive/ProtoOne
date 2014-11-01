@@ -15,8 +15,8 @@ define(
 
         className: "Connect",
         classGuid: "66105954-4149-1491-1425-eac17fbe5a72",
-        metaFields: [ {fname:"Id", ftype:"int"} ],
-        metaCols: [  ],
+        metaFields: [], //[ {fname:"Id", ftype:"int"} ],
+        metaCols: [],
 
         /**
          * Инициализация объекта
@@ -28,9 +28,9 @@ define(
 
             if (params==undefined) return; // в этом режиме только создаем метаинфо
             this.event = new event(this);
-            this.id = params.id;
+            //this.id = params.id;
             this.ws = params.ws;
-            this.session = null;
+            //this.session = null;
             this.params = {
                 connectTime: params.connectTime || Date.now(),
                 userAgent: params.userAgent || '',
@@ -66,7 +66,7 @@ define(
          * @returns {string}
          */
         getId: function () {
-            return this.id;
+            return this.id();
         },
 
         /**

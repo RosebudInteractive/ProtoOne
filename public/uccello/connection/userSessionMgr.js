@@ -18,7 +18,7 @@ define(
                 this.options = options;
 
                 // системные объекты
-                this.dbcsys = options.dbc;
+                this.dbcsys = new MemDBController(); // options.dbc;
                 this.dbsys = this.dbcsys.newDataBase({name: "System", kind: "master", guid:'fb41702c-faba-b5c0-63a8-8d553bfe54a6'});
                 this.cmsys = new ControlMgr(this.dbsys);
 
@@ -34,6 +34,10 @@ define(
                 router.add('authenticate', function(){ return that.routerAuthenticate.apply(that, arguments); });
                 router.add('deauthenticate', function(){ return that.routerDeauthenticate.apply(that, arguments); });
             },
+			
+			getController: function() {
+				return this.dbcsys;
+			},
 
             /**
              * Подключение с клиента
@@ -94,7 +98,8 @@ define(
                 }
 
                 // добавляем коннект в общий список и в сессию
-                var connect = new Connect(this.cmsys, {obj:session.pvt.obj, colName: "Connects", id:socket.getConnectId(), ws:socket,  sessionID:sessionId, userAgent:data.client.agent, stateReady:1});
+				var ini =  { fields: {Id:socket.getConnectId(), Name: "C"+socket.getConnectId()}}
+                var connect = new Connect(this.cmsys, {parent:session, colName: "Connects", ini: ini, /*id:socket.getConnectId()*/ ws:socket,  /*sessionID:sessionId*/ userAgent:data.client.agent, stateReady:1});
                 this.addConnect(connect);
                 session.addConnect(connect);
 
@@ -115,7 +120,7 @@ define(
             _newSession: function() {
                 var user = this._newUser();
                 var sessionId = ++this.sessionId;
-                var session = new Session(this.cmsys, {obj:user.pvt.obj, user:user, colName: "Sessions", session:sessionId});
+                var session = new Session(this.cmsys, {parent:user, colName: "Sessions", ini: { fields: {Id:sessionId, Name: "S"+sessionId}}});
                 this.addSession(session);
                 this.addUser(user);
                 user.addSession(session);
@@ -134,8 +139,7 @@ define(
 				// генерируем событие на создание нового пользователя, чтобы привязать к нему контекст
 				this.event.fire({
                    type: 'newUser',
-                   target: user,
-				   blalba: 1
+                   target: user
                 });
 				
                 return user;
@@ -166,8 +170,11 @@ define(
                         userObj.addSession(session);
                         userObj.authenticated(true);
                         userObj.loginTime(Date.now());
+						// рассылка дельт 1/9/14
+						that.dbcsys.genDeltas(that.dbsys.getGuid());
                         done({user:{user: userObj.name(), loginTime: userObj.loginTime()}});
                     }
+					//TODO почему без ELSE?
                     done({user:null});
                 });
             },
@@ -189,7 +196,7 @@ define(
 
                 // сессию привязываем к юзеру
                 user.addSession(session);
-                session.setUser(user);
+                //session.setUser(user);
                 done({});
             },
 

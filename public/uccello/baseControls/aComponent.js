@@ -29,7 +29,7 @@ define(
 					//cm.add(this);
 					}
 				else {
-					//  создать пустой объект
+					//  создать новый объект
 					if (!("colName" in params)) 
 						var col = "Children";
 					else col = params.colName;
@@ -37,10 +37,12 @@ define(
                     params.ini = params.ini ? params.ini : {};
 
                     // если рутовый то указываем db
-                    if (params.obj===undefined)
+                    if (params.parent===undefined)
+						// корневой компонент
                         this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{db: cm.getDB()}, params.ini);
                     else
-                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{obj: params.obj, "colName": col}, params.ini);
+						// компонент с парентом
+                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{obj: params.parent.getObj(), "colName": col}, params.ini);
 					
 				}
 				cm.add(this);
@@ -89,6 +91,17 @@ define(
 					
 			getObj: function() {
 				return this.pvt.obj;
+			},
+
+
+            /**
+             * Возвращает родительский элемент или нулл
+             */				
+			getParent: function() {
+				if (this.getObj().getParent() == null)
+					return null
+				else
+					return this.pvt.controlMgr.getByGuid(this.getObj().getParent().getGuid());
 			},
 			
 			getControlMgr: function() {	

@@ -31,8 +31,8 @@ define(
             if (params==undefined) return; // в этом режиме только создаем метаинфо
             this.pvt.data = {};
             //this.pvt.name = params.name;
-            this.pvt.loginTime = false;
-            this.pvt.isAuthenticated = false;
+            //this.pvt.loginTime = false;
+            //this.pvt.isAuthenticated = false;
             this.pvt.sessions = {};
         },
 
@@ -70,39 +70,6 @@ define(
         },
 
 
-        /**
-         * Установить таймстамп логина
-         * @returns {number}
-         */
-        /*setLoginTime: function(loginTime) {
-            this.pvt.loginTime = loginTime;
-        },*/
-
-        /**
-         * Получить таймстамп логина
-         * @returns {number}
-         */
-		 /*
-        getLoginTime: function() {
-            return this.pvt.loginTime;
-        },*/
-		
-
-        /**
-         * Залогинен
-         * @param val {boolean}
-         */
-        /*setAuthenticated: function(val) {
-            this.pvt.isAuthenticated = val;
-        },*/
-
-        /**
-         * Залогинен ли пользователь
-         */
-        /*isAuthenticated: function() {
-            return this.pvt.isAuthenticated;
-        },*/
-		
 		// Properties				
 		loginTime: function(value) {
 			return this._genericSetter("LoginTime",value);

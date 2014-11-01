@@ -16,7 +16,7 @@ define(
         className: "Session",
         classGuid: "70c9ac53-6fe5-18d1-7d64-45cfff65dbbb",
         metaFields: [
-            {fname:"Created", ftype:"timestamp"},
+            {fname:"CreationTime", ftype:"timestamp"},
             {fname:"LastOpTime", ftype:"timestamp"}
         ],
         metaCols: [ {"cname": "Connects", "ctype": "control"} ],
@@ -29,21 +29,24 @@ define(
         init: function(cm, params) {
             this._super(cm, params);
 
-            if (params==undefined) return; // в этом режиме только создаем метаинфо
-            this.event = new Event(this);
-            this.id = params.session;
-            this.user = params.user;
+            if (params==undefined) return;
+            this.pvt.event = new Event(this);
+            //this.id = params.session;
+            //this.user = params.user;
             this.connects = [];
-            this.creationTime = Date.now();
-            this.lastOpTime = Date.now();
+			this.creationTime(Date.now());
+			this.lastOpTime(Date.now());
+            //this.creationTime = Date.now();
+            //this.lastOpTime = Date.now();
         },
 
         /**
          * Получить ID сессии
          * @returns {string}
          */
+		 // TODO заменить вызовы на проперти Id
         getId: function() {
-            return this.id;
+            return this.id();
         },
 
         /**
@@ -53,11 +56,12 @@ define(
          */
         addConnect: function(conn) {
 
-            this.lastOpTime = Date.now();
+            this.lastOpTime(Date.now());
 
             var that = this;
 
             // обработка события закрытия коннекта
+			// TODO ПЕРЕНЕСТИ В КОНСТРУКТОР КОННЕКТА?
             conn.event.on({
                 type: 'socket.close',
                 subscriber: this,
@@ -68,7 +72,7 @@ define(
             });
 
             // добавим ссылку на сессию
-            conn.setSession(this);
+             conn.setSession(this);
 
             this.connects[conn.getId()] = conn;
             return true;
@@ -133,27 +137,22 @@ define(
         },
 
         getUser: function() {
-            return this.user;
+            return this.getParent();
         },
 
+		/*
         setUser: function(user) {
             this.user = user;
+        },*/
+
+		// Properties
+		
+        creationTime: function(value) {
+            return this._genericSetter("CreationTime",value);
         },
 
-        /**
-         * вернуть таймстамп создания
-         * @returns {timestamp}
-         */
-        getCreationTime: function() {
-            return this.creationTime;
-        },
-
-        /**
-         * вернуть таймстамп последней операции в текущей сессии
-         * @returns {timestamp}
-         */
-        getLastOpTime: function() {
-            return this.lastOpTime;
+        lastOpTime: function(value) {
+            return this._genericSetter("LastOpTime",value);
         }
     });
 
