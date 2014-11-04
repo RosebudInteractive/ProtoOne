@@ -106,7 +106,7 @@ define(
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
                 var right = editor.find('.right');
-                var name = centerTop.find('a.active').html();
+                var name = centerBottom.find('a.active').html();
                 left.empty();
                 centerTop.empty();
                 centerBottom.empty();
