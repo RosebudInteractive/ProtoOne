@@ -99,7 +99,7 @@ define(
             },
 
             toParent: function() {
-                if (!this._activeCol) return;
+                if (!this._activeObj) return;
                 var that = this;
                 var editor = $('#'+this.options.id);
                 var left = editor.find('.left');
@@ -113,7 +113,7 @@ define(
                 right.empty();
                 var leftTpl = $(this._templates['left']);
                 var link =  leftTpl.find('a')
-                    .data('obj', this._activeCol)
+                    .data('obj', this._activeObj)
                     .html(name)
                     .click(function(){
                         var a = $(this);
@@ -229,7 +229,7 @@ define(
                 var that = this;
                 var editor = $('#'+this.options.id);
 
-                // отображаем в центре субэлементы  коллекции объекта
+                // отображаем справа поля
                 var right = editor.find('.right');
                 right.empty();
                 for(var i=0, len=obj.count(); i<len; i++) {
