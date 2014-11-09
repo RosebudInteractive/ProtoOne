@@ -193,6 +193,11 @@ define(
 				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
 				var subProxy = this.pvt.subscribers[dbGuid];
 				if (subProxy) {
+					var clog = obj.getLog();
+					if (!clog.getActive()) clog.setActive(true); // если лог неактивен, то активировать, чтобы записывать в него все изменения
+					else {
+						// TODO сформировать дельту и отправить ее всем старым подписчикам
+					}
 					this.pvt.rcoll[rootGuid].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
 					return this.serialize(obj);
 					}
