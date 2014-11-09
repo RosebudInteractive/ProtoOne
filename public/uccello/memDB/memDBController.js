@@ -30,11 +30,36 @@ define(
 				return dbInfo;
 			},			
 	
-			init: function(){
+			init: function(router){
 				this.pvt = {};
 				this.pvt.dbCollection = {};
                 this.event = new Event();
+
+                if (router) {
+                    var that = this;
+                    router.add('subscribe', function(){ return that.routerSubscribe.apply(that, arguments); });
+                    router.add('subscribeRoot', function(){ return that.routerSubscribeRoot.apply(that, arguments); });
+                    router.add('sendDelta', function(){ return that.routerSendDelta.apply(that, arguments); });
+                }
 			},
+
+            routerSubscribe: function(data, done) {
+                var result = {data: this.onSubscribe({connect:data.connect, guid:data.slaveGuid}, data.masterGuid)};
+                done(result);
+            },
+
+            routerSubscribeRoot: function(data, done) {
+                var masterdb = this.getDB(data.masterGuid);
+                if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
+                    dbc.onSubscribe({connect:data.connectId, guid:data.slaveGuid}, data.masterGuid );
+                var result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
+                done(result);
+            },
+
+            routerSendDelta: function(data, done) {
+                this.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
+                done({});
+            },
 			
 			// сгенерировать guid
 			guid: function () {

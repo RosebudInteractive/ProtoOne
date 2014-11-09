@@ -18,7 +18,7 @@ define(
                 this.options = options;
 
                 // системные объекты
-                this.dbcsys = new MemDBController(); // options.dbc;
+                this.dbcsys = new MemDBController(router);
                 this.dbsys = this.dbcsys.newDataBase({name: "System", kind: "master", guid:'fb41702c-faba-b5c0-63a8-8d553bfe54a6'});
                 this.cmsys = new ControlMgr(this.dbsys);
 

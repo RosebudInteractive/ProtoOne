@@ -87,17 +87,9 @@ function fakeAuthenticate(user, pass, done) {
     done(err, row);
 }
 
-// один контроллер на сервер
-// var dbc = new MemDBController();
-
-// хранилище коннектов и сессий
-
 var myServerApp = {}; // тут все данные
-
-
 var router = new Router();
 var logger = new Logger();
-//var userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate, dbc:dbc});
 myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
 
 // прикладные методы
@@ -180,7 +172,6 @@ myServerApp.userSessionMgr.event.on({
 	callback: createUserContext
 });
 
-
 // WebSocket-сервер на порту 8081
 var _connectId = 0;
 var wss = new WebSocketServer.Server({port: 8081});
@@ -203,45 +194,10 @@ wss.on('connection', function(ws) {
             logger.addLog(data);
 
             // обработчик
-            if (data.action!='subscribe' && data.action!='subscribeRoot' && data.action!='sendDelta') {
-                data.connectId = connectId;
-                data.socket = socket;
-                router.exec(data, done);
-				// TODO? Почему нет done ?
-                return;
-            }
-
-            var result = {};
-            switch (data.action) {
-
-                case 'subscribe':
-                    var connect = myServerApp.userSessionMgr.getConnect(connectId);
-                    var u = connect.getSession().getUser();
-                    var dbc = u.getData().controller;
-
-                    result = {data:dbc.onSubscribe({connect:connect, guid:data.slaveGuid}, data.masterGuid)};
-                    break;
-
-                case 'subscribeRoot':
-                    var connect = myServerApp.userSessionMgr.getConnect(connectId);
-                    var u = connect.getSession().getUser();
-                    var dbc = u.getData().controller;
-
-					var masterdb = dbc.getDB(data.masterGuid);
-                    if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
-                        dbc.onSubscribe({connect:connectId, guid:data.slaveGuid}, data.masterGuid );
-                    result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
-                    break;
-
-                case 'sendDelta':
-                    var dbc = myServerApp.userSessionMgr.getConnect(connectId).getSession().getUser().getData().controller;
-                    dbc.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
-                    break;
-
-
-            }
-            done(result);
-            return result;
+            data.connect = myServerApp.userSessionMgr.getConnect(connectId);
+            data.connectId = connectId;
+            data.socket = socket;
+            router.exec(data, done);
         }
     });
 });
