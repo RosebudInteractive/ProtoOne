@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+<style>
+    html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-serif;}
+    p {padding:0;margin: 4px 0;}
+    #container {padding:10px;}
+    #container > div {float:left;}
+    #result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
+    #editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
+    #editor .controls {clear:both;}
+    #console-block {height: 70px;position:absolute;}
+    #console {padding: 0;margin: 0;}
+    #propEditor {position: absolute; padding:10px; border: 1px solid #aaa;background-color: #fff;}
+    #propEditor input {position: relative;}
+    #propEditor .props .name {width:100px;display: inline-block;}
+    .control {position: absolute;top:0;left:0;}
+    .navigator {position: absolute; background-color: #fff;font-size: 12px;}
+    .navigator .left {width:240px;overflow: auto;}
+    .navigator a {text-decoration: none; color:#000000;}
+    .navigator a:hover {text-decoration: none;}
+    .navigator a.active {background-color: #333;color:#fff;}
+    .navigator .centerTop {width:240px;overflow: auto;height: 60px;}
+    .navigator .centerBottom {width:240px;overflow: auto;}
+    .navigator .right {width:260px;overflow: auto;}
+    .navigator td {border:1px solid #999;padding:5px;}
+    .navigator input.value {width:100px;}
+    .navigator input.save {}
+    .navigator .right span {display: inline-block;}
+    .navigator .right span.name {width:70px;}
+    .navigator .right span.type {width:40px;}
+    .navigator .right input {display: inline-block;}
+
+    .divTable
+    {
+        position: absolute;
+        display:  table;
+        width:auto;
+        border:1px solid  #666666;
+        border-spacing:0px;/*cellspacing:poor IE support for  this*/
+        /* border-collapse:separate;*/
+    }
+
+
+    .divRow .divCell:last-child {border-right:0;}
+    .divTable:last-child .divRow:last-child .divCell {border-bottom:0;}
+
+    .divRow
+    {
+        display:table-row;
+        width:auto;
+        clear:both;
+    }
+
+    .divCell
+    {
+        display:table-cell;
+        width:60px;
+        border-right:1px solid  #666666;
+        border-bottom:1px solid  #666666;
+        border-collapse: collapse;
+        padding:10px;
+    }
+
+    .divCell textarea {min-width:50px;min-height: 20px;}
+
+    #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
+    #header {padding:10px;}
+    #loginError {color: #ff0000;}
+</style>
+
+<script src="/public/uccello/uses/class-extend.js"></script>
+<script src="/public/uccello/uses/require.js"></script>
+<script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
+<script src="/public/uccello/uses/url.js"></script>
+<script src="/public/libs/jeditable/jquery.jeditable.mini.js"></script>
+<script src="/public/proto1.js"></script>
+
+</head>
+<body>
+
+<div id="header">
+    <a href="#" id="login" style="display: none;">Войти</a>
+    <a href="#" id="logout" style="display: none;" onclick="return logout();">Выйти</a>
+</div>
+
+<div id="interface">
+    &nbsp; &nbsp; <input type="button" value="Трассировка" onclick="getSessions();">
+    <input type="button" value="renderControls" onclick="renderControls();">
+    <input type="button" value="add button" onclick="addButton();">
+    <input type="button" value="subscribe user" onclick="subscribeRootSys();">
+    &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta"><label for="autoSendDelta">авто отсылка дельты</label> <input type="button" value="Отправить дельту" onclick="sendDeltas(true);">
+
+    <div id="container">
+        <div id="result"></div>
+        <!-- <div id="editor">
+             <p><b>Редактор свойств</b></p>
+         </div>-->
+    </div>
+</div>
+
+<div id="loginForm" style="display: none;">
+    <div id="loginError"></div>
+    Имя:<input type="text" value="user" id="loginName"><br>
+    Пароль:<input type="password" value="123" id="loginPass"><br>
+    <input type="button" value="Войти" onclick="login($('#loginName').val(), $('#loginPass').val())">
+</div>
+
+</body>
+</html>

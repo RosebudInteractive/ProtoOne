@@ -32,7 +32,7 @@ app.engine('html', require('ejs').renderFile);
 
 // обработка /test
 app.get('/test', function(req, res){
-    res.render('test.html');
+    res.render('proto1.html');
 });
 
 // апдейт
