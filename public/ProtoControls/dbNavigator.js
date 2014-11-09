@@ -94,6 +94,7 @@ define(
                                 });
                             left.append(leftTpl);
                         }
+                        this.selectFirst();
                     }
                 }
             },
@@ -247,6 +248,21 @@ define(
                         right.append(rightTpl);
                     }
                 }
+            },
+
+            selectFirst: function(){
+                var editor = $('#'+this.options.id);
+                var left = editor.find('.left');
+                var centerTop = editor.find('.centerTop');
+                var centerBottom = editor.find('.centerBottom');
+                var first;
+
+                var links = left.find('a');
+                if (links.length > 0) $(links[0]).click();
+                var links = centerTop.find('a');
+                if (links.length > 0) $(links[0]).click();
+                var links = centerBottom.find('a');
+                if (links.length > 0) $(links[0]).click();
             },
 
            /* render: function() {
