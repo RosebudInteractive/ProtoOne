@@ -39,7 +39,7 @@ define(
                     // если рутовый то указываем db
                     if (params.parent===undefined)
 						// корневой компонент
-                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{db: cm.getDB()}, params.ini);
+                        this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{db: cm.getDB(), mode: "RW"}, params.ini);
                     else
 						// компонент с парентом
                         this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{obj: params.parent.getObj(), "colName": col}, params.ini);
