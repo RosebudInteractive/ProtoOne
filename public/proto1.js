@@ -21,8 +21,8 @@ $(document).ready( function() {
     require(
         ['./uccello/connection/clientConnection' ,'./uccello/memDB/memDBController','./uccello/memDB/memDataBase','./uccello/baseControls/controlMgr','./ProtoControls/button', './ProtoControls/matrixGrid',
             './ProtoControls/container', './ProtoControls/propEditor', './ProtoControls/dbNavigator',
-            './uccello/connection/user', './uccello/connection/session', './uccello/connection/connect' ],
-        function(ClientConnection,m1,m2,m3,b,g,c,pe,dn,user,session,connect){
+            './uccello/connection/user', './uccello/connection/session', './uccello/connection/connect', './uccello/connection/visualContext' ],
+        function(ClientConnection,m1,m2,m3,b,g,c,pe,dn,user,session,connect,context){
             clientConnection = new ClientConnection();
             clientConnection.connect("ws://"+url('hostname')+":8081", sessionId,  function(result){
                 if (result.user) {
@@ -44,6 +44,7 @@ $(document).ready( function() {
                 typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = user;
                 typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = session;
                 typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = connect;
+                typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = context;
                 createController();
             });
         }
@@ -64,12 +65,12 @@ function createController(done){
             }
         });
 
-        var cb = subscribeRoot;
+        /*var cb = subscribeRoot;
         dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
         myApp.controlMgr = new ControlMgr(dbsl);
         console.log('контроллер:', dbc);
         console.log('база данных B:', dbsl);
-
+*/
         // создаем системную бд
         dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}});
         myApp.cmsys = new ControlMgr(dbsys);
@@ -78,21 +79,24 @@ function createController(done){
     });
 }
 
+/*
 function subscribeRoot() {
     // подписываемся на корневой объект контейнера
     dbsl.subscribeRoot(guids.myRootContGuid, function(result){
         renderControls();
     }, createComponent);
 }
+*/
 
-function subscribeRootSys() {
+/*function subscribeRootSys() {
     // подписываемся на корневой объект контейнера
     console.log('база данных Sys:', dbsys.getObj("fc13e2b8-3600-b537-f9e5-654b7418c156"));
     dbsys.subscribeRoot(guids.sysRootGuid, function(result){
         renderControls();
     });
-}
+}*/
 
+/*
 function createDataBase2() {
     dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
     dbs2.subscribeRoot(guids.myRootContGuid, function(result){
@@ -100,6 +104,7 @@ function createDataBase2() {
     }, createComponent);
     console.log('база данных C:', dbs2);
 }
+*/
 
 function createComponent(obj) {
     var g = obj.getTypeGuid();
@@ -196,7 +201,23 @@ function logout(){
  */
 function sendDeltas(force) {
     if ($('#autoSendDelta').is(':checked') || force)
-        myApp.controller.genDeltas(dbsl.getGuid());
+        myApp.controller.genDeltas(dbcontext.getGuid());
+}
+
+/**
+ * Создать контекст
+ * @param guid
+ */
+var dbcontext = null;
+function createContext(guid) {
+    socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
+        dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: result.masterGuid}}, function(){
+            dbcontext.subscribeRoot(result.myRootContGuid, function(){
+                renderControls();
+            }, createComponent);
+        });
+        myApp.controlMgr = new ControlMgr(dbcontext);
+    });
 }
 
 $(function(){

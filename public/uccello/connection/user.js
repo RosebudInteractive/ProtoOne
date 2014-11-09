@@ -19,7 +19,7 @@ define(
             {fname:"Authenticated", ftype:"boolean"},
             {fname:"LoginTime", ftype:"time"}
         ],
-        metaCols: [ {cname: "Sessions", ctype: "control"} ],
+        metaCols: [ {cname: "Sessions", ctype: "control"},  {cname: "VisualContext", ctype: "control"} ],
 
         /**
          * Инициализация

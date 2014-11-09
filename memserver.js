@@ -11,6 +11,7 @@ var AButton = require('./public/ProtoControls/button');
 var AMatrixGrid = require('./public/ProtoControls/matrixGrid');
 var PropEditor = require('./public/ProtoControls/propEditor');
 var DBNavigator = require('./public/ProtoControls/dbNavigator');
+var VisualContext = require('./public/uccello/connection/VisualContext');
 
 // Коммуникационные модули
 var Socket = require('./public/uccello/connection/socket');
@@ -96,12 +97,12 @@ myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthen
 router.add('getGuids', function(data, done) {
     var user = myServerApp.userSessionMgr.getConnect(data.connectId).getSession().getUser();
     var userData = user.getData();
-    var db = userData.db;
+   // var db = userData.db;
     result = {
-        masterGuid:db.getGuid(),
-        myRootContGuid:userData.myRootCont.getGuid(),
-        masterSysGuid:myServerApp.userSessionMgr.dbsys.getGuid(),
-        sysRootGuid:user.getObj().getGuid()
+        //masterGuid:db.getGuid(),
+      //  myRootContGuid:userData.myRootCont.getGuid(),
+        masterSysGuid:myServerApp.userSessionMgr.dbsys.getGuid()//,
+       // sysRootGuid:user.getObj().getGuid()
     };
     done(result);
     return result;
@@ -122,7 +123,14 @@ router.add('getSessions', function(data, done) {
     return result;
 });
 
-
+router.add('createContext', function(data, done) {
+    var user = myServerApp.userSessionMgr.getConnect(data.connectId).getSession().getUser();
+    var r = createDb(myServerApp.userSessionMgr.getController(), {name: "Master", kind: "master"});
+    var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                        ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid()}}});
+    var result = {masterGuid: r.db.getGuid(), myRootContGuid:r.myRootCont.getGuid()};
+    done(result);
+});
 
 
 /**
@@ -132,7 +140,7 @@ router.add('getSessions', function(data, done) {
  * @returns {object}
  */
 function createDb(dbc, options){
-    var db = myServerApp.userSessionMgr.getController().newDataBase(options);
+    var db = dbc.newDataBase(options);
 	var cm = new ControlMgr(db);
 
     var component = new AComponent(cm);
@@ -157,10 +165,14 @@ function createDb(dbc, options){
 }
 
 // вызывается по событию при создании нового пользователя
-function createUserContext(args) {
-	var userData = args.target.getData();
+/*function createUserContext(args) {
+    var contextGuid = 1;
+	var user = args.target;
+	var userData = user.getData();
 	userData.controller = myServerApp.userSessionMgr.getController();
 	var r = createDb(myServerApp.userSessionMgr.getController(), {name: "Master", kind: "master"});
+    var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                        ini: {fields: {Id: contextGuid, Name: 'context'+contextGuid, DataBase: r.db.getGuid()}}});
 	userData.db = r.db;
 	userData.cm = r.cm;	
 	userData.myRootCont = r.myRootCont;
@@ -170,7 +182,7 @@ myServerApp.userSessionMgr.event.on({
 	type: 'newUser',
 	subscriber: this,
 	callback: createUserContext
-});
+});*/
 
 // WebSocket-сервер на порту 8081
 var _connectId = 0;
