@@ -10,7 +10,9 @@ define(
 
             className: "DBNavigator",
             classGuid: "38aec981-30ae-ec1d-8f8f-5004958b4cfa",
-            metaFields: [{fname:"DataBase",ftype:"string"}],
+            metaFields: [
+                {fname: "DataBase", ftype: "string"}
+            ],
 
             /**
              * Инициализация объекта
@@ -18,7 +20,7 @@ define(
              * @param params
              * @param options
              */
-            init: function(cm, params, options) {
+            init: function (cm, params, options) {
                 this._super(cm, params);
                 this.cm = cm;
                 options = options ? options : {};
@@ -31,7 +33,7 @@ define(
             },
 
 
-            changeDB: function(db) {
+            changeDB: function (db) {
                 this._activeDb = db;
                 this.render();
             },
@@ -39,27 +41,33 @@ define(
             /**
              * Рендер
              */
-            render: function() {
+            render: function () {
                 var that = this;
                 // обработка шаблонов
                 if (!this._templates) {
-                    require(['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'], function(template, tpl){
+                    require(['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'], function (template, tpl) {
                         that._templates = template.parseTemplate(tpl);
                         that.render();
                     });
                 } else {
-                    var editor = $('#'+this.options.id);
+                    var editor = $('#' + this.options.id);
                     if (editor.length == 0) {
                         editor = $(this._templates['navigator']).attr('id', this.options.id);
                         $(this.options.parent).append(editor);
                         // перейти к паренту
-                        editor.find('.dragRight').click(function(){that.toParent();});
+                        editor.find('.dragRight').click(function () {
+                            that.toParent();
+                        });
                         // перейти к чайлду
-                        editor.find('.dragLeft').click(function(){that.toChild();});
+                        editor.find('.dragLeft').click(function () {
+                            that.toChild();
+                        });
                         // перейти к чайлду
-                        editor.find('.refresh').click(function(){that.render();});
+                        editor.find('.refresh').click(function () {
+                            that.render();
+                        });
                     }
-                    editor.css({top:this.top()+'px', left:this.left()+'px'});
+                    editor.css({top: this.top() + 'px', left: this.left() + 'px'});
 
                     var left = editor.find('.left');
                     var centerTop = editor.find('.centerTop');
@@ -75,17 +83,17 @@ define(
 
                     // отображаем слева рут элементы
                     if (this._activeDb) {
-                        for(var i=0, len=this._activeDb.countRoot(); i<len; i++) {
+                        for (var i = 0, len = this._activeDb.countRoot(); i < len; i++) {
                             var root = this._activeDb.getRoot(i);
                             var name = root.obj.get('Name');
                             if (!name)
                                 name = root.obj.getGuid();
 
                             var leftTpl = $(this._templates['left']);
-                            var link =  leftTpl.find('a')
+                            var link = leftTpl.find('a')
                                 .data('obj', root.obj)
                                 .html(name)
-                                .click(function(){
+                                .click(function () {
                                     var a = $(this);
                                     left.find('a').removeClass('active');
                                     a.addClass('active');
@@ -99,10 +107,10 @@ define(
                 }
             },
 
-            toParent: function() {
+            toParent: function () {
                 if (!this._activeObj) return;
                 var that = this;
-                var editor = $('#'+this.options.id);
+                var editor = $('#' + this.options.id);
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -113,10 +121,10 @@ define(
                 centerBottom.empty();
                 right.empty();
                 var leftTpl = $(this._templates['left']);
-                var link =  leftTpl.find('a')
+                var link = leftTpl.find('a')
                     .data('obj', this._activeObj)
                     .html(name)
-                    .click(function(){
+                    .click(function () {
                         var a = $(this);
                         left.find('a').removeClass('active');
                         a.addClass('active');
@@ -127,25 +135,25 @@ define(
                 link.click();
             },
 
-            toChild: function() {
+            toChild: function () {
                 if (!this._activeRoot || !this._activeRoot.getParent()) return;
                 var that = this;
-                var editor = $('#'+this.options.id);
+                var editor = $('#' + this.options.id);
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
                 var right = editor.find('.right');
                 var parent = this._activeRoot.getParent();
-                var name = parent.get('Name')?parent.get('Name'):parent.getGuid();
+                var name = parent.get('Name') ? parent.get('Name') : parent.getGuid();
                 left.empty();
                 centerTop.empty();
                 centerBottom.empty();
                 right.empty();
                 var leftTpl = $(this._templates['left']);
-                var link =  leftTpl.find('a')
+                var link = leftTpl.find('a')
                     .data('obj', parent)
                     .html(name)
-                    .click(function(){
+                    .click(function () {
                         var a = $(this);
                         left.find('a').removeClass('active');
                         a.addClass('active');
@@ -156,13 +164,13 @@ define(
                 link.click();
             },
 
-            selectItem: function(obj){
+            selectItem: function (obj) {
                 this._activeRoot = obj;
                 this._activeCol = null;
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#'+this.options.id);
+                var editor = $('#' + this.options.id);
 
                 // отображаем в центре коллекции объекта
                 var centerTop = editor.find('.centerTop');
@@ -172,48 +180,49 @@ define(
                 centerBottom.empty();
                 right.empty();
                 if (obj.countCol)
-                for(var i=0, len=obj.countCol(); i<len; i++) {
-                    var col = obj.getCol(i);
-                    var name = col.getName();
-                    if (!name)
-                        name = col.getGuid();
-                    var centerTpl = $(this._templates['centerTop']);
-                    var link =  centerTpl.find('a')
-                        .data('obj', col)
-                        .html(name)
-                        .click(function(){
-                            var a = $(this);
-                            centerTop.find('a').removeClass('active');
-                            a.addClass('active');
-                            that.selectCol(a.data('obj'));
-                            return false;
-                        });
-                    centerTop.append(centerTpl);
-                }
+                    for (var i = 0, len = obj.countCol(); i < len; i++) {
+                        var col = obj.getCol(i);
+                        var name = col.getName();
+                        if (!name)
+                            name = col.getGuid();
+                        var centerTpl = $(this._templates['centerTop']);
+                        var link = centerTpl.find('a')
+                            .data('obj', col)
+                            .html(name)
+                            .click(function () {
+                                var a = $(this);
+                                centerTop.find('a').removeClass('active');
+                                a.addClass('active');
+                                that.selectCol(a.data('obj'));
+                                return false;
+                            });
+                        centerTop.append(centerTpl);
+                    }
+                this.selectFirst(1);
             },
 
-            selectCol: function(obj){
+            selectCol: function (obj) {
                 this._activeCol = obj;
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#'+this.options.id);
+                var editor = $('#' + this.options.id);
 
                 // отображаем в центре субэлементы  коллекции объекта
                 var centerBottom = editor.find('.centerBottom');
                 var right = editor.find('.right');
                 centerBottom.empty();
                 right.empty();
-                for(var i=0, len=obj.count(); i<len; i++) {
+                for (var i = 0, len = obj.count(); i < len; i++) {
                     var col = obj.get(i);
                     var name = col.get('Name');
                     if (!name)
                         name = col.getGuid();
                     var centerTpl = $(this._templates['centerTop']);
-                    var link =  centerTpl.find('a')
+                    var link = centerTpl.find('a')
                         .data('obj', col)
                         .html(name)
-                        .click(function(){
+                        .click(function () {
                             var a = $(this);
                             centerBottom.find('a').removeClass('active');
                             a.addClass('active');
@@ -224,22 +233,22 @@ define(
                 }
             },
 
-            selectObj: function(obj){
+            selectObj: function (obj) {
                 this._activeObj = obj;
 
                 var that = this;
-                var editor = $('#'+this.options.id);
+                var editor = $('#' + this.options.id);
 
                 // отображаем справа поля
                 var right = editor.find('.right');
                 right.empty();
-                for(var i=0, len=obj.count(); i<len; i++) {
+                for (var i = 0, len = obj.count(); i < len; i++) {
                     if (obj.getFieldType) {
                         var rightTpl = $(this._templates['right']);
                         rightTpl.find('.name').html(obj.getFieldName(i));
                         rightTpl.find('.type').html(obj.getFieldType(i));
                         rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));
-                        rightTpl.find('.save').click(function(){
+                        rightTpl.find('.save').click(function () {
                             var val = $(this).parent().find('.value');
                             val.data('obj').set(val.attr('name'), val.val());
                             return false;
@@ -250,51 +259,77 @@ define(
                 }
             },
 
-            selectFirst: function(){
-                var editor = $('#'+this.options.id);
+            selectFirst: function (num) {
+                var editor = $('#' + this.options.id);
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
-                var first;
+                var f1, f2, f3;
 
-                var links = left.find('a');
-                if (links.length > 0) $(links[0]).click();
+                if (!num) {
+                    var links = left.find('a');
+                    if (this._activeRoot) {
+                        for(var i= 0, len=links.length; i<len; i++) {
+                            if (this._activeRoot == $(links[i]).data('obj'))
+                                f1 = $(links[i]);
+                        }
+                    } else
+                        f1 = links.length>0 ? $(links[0]) : null;
+                    if (f1) f1.click();
+                }
+
                 var links = centerTop.find('a');
-                if (links.length > 0) $(links[0]).click();
+                if (this._activeCol) {
+                    for(var i= 0, len=links.length; i<len; i++) {
+                        if (this._activeCol == $(links[i]).data('obj'))
+                            f2 = $(links[i]);
+                    }
+                } else
+                    f2 = links.length>0 ? $(links[0]) : null;
+                if (f2) f2.click();
+
                 var links = centerBottom.find('a');
-                if (links.length > 0) $(links[0]).click();
+                if (this._activeObj) {
+                    for(var i= 0, len=links.length; i<len; i++) {
+                        if (this._activeObj == $(links[i]).data('obj'))
+                            f3 = $(links[i]);
+                    }
+                } else
+                    f3 = links.length>0 ? $(links[0]) : null;
+                if (f3) f3.click();
+
+
+
             },
 
-           /* render: function() {
+            /* render: function() {
 
-                var that = this;
-                function renderItem() {
-                    var editor = $('#'+that.options.id);
-                    if (editor.length == 0) {
-                        editor = $(that._templates['navigator']).attr('id', that.options.id);
-                        $(that.options.parent).append(editor);
-                    } else {
+             var that = this;
+             function renderItem() {
+             var editor = $('#'+that.options.id);
+             if (editor.length == 0) {
+             editor = $(that._templates['navigator']).attr('id', that.options.id);
+             $(that.options.parent).append(editor);
+             } else {
 
-                    }
-                    editor.css({top:that.top()+'px', left:that.left()+'px'});
-                    return editor;
-                }
+             }
+             editor.css({top:that.top()+'px', left:that.left()+'px'});
+             return editor;
+             }
 
-                if (!this._templates) {
-                    require(['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'], function(template, tpl){
-                        that._templates = template.parseTemplate(tpl);
-                        renderItem();
-                    });
-                } else {
-                    renderItem();
-                }
-            },*/
+             if (!this._templates) {
+             require(['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'], function(template, tpl){
+             that._templates = template.parseTemplate(tpl);
+             renderItem();
+             });
+             } else {
+             renderItem();
+             }
+             },*/
 
-            dataBase: function(value) {
+            dataBase: function (value) {
                 return this._genericSetter("DataBase", value);
             }
-
         });
         return DBNavigator;
-    }
-);
+});
