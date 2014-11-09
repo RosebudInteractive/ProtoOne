@@ -188,7 +188,7 @@
             // метод обработки изменений для PropEditor
             if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
                 options.change = function(){
-                    myApp.controller.genDeltas(dbsl.getGuid());
+                    sendDeltas();
                     renderControls(false);
                 };
             }
@@ -270,6 +270,15 @@
             return false;
         }
 
+        /**
+         * Отправить дельту
+         * @param force {bool} Всегда отправлять
+         */
+        function sendDeltas(force) {
+            if ($('#autoSendDelta').is(':checked') || force)
+                myApp.controller.genDeltas(dbsl.getGuid());
+        }
+
         $(function(){
 
             // высота окошка результатов
@@ -312,6 +321,7 @@
     <input type="button" value="renderControls" onclick="renderControls();">
 	<input type="button" value="add button" onclick="addButton();">
 	<input type="button" value="subscribe user" onclick="subscribeRootSys();">
+    &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta"><label for="autoSendDelta">авто отсылка дельты</label> <input type="button" value="Отправить дельту" onclick="sendDeltas(true);">
 
     <div id="container">
         <div id="result"></div>
