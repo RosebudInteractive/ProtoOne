@@ -62,6 +62,7 @@ function createController(done){
             subscriber: this,
             callback: function(args){
                 renderControls();
+                getContexts();
             }
         });
 

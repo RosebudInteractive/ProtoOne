@@ -56,7 +56,8 @@ define(
          */
         addConnect: function(conn) {
 
-            this.lastOpTime(Date.now());
+            // TODO выдает ошибку?
+            //this.lastOpTime(Date.now());
 
             var that = this;
 

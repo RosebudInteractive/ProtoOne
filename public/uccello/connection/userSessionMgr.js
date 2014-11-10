@@ -52,12 +52,13 @@ define(
 
                 // обработка события закрытия коннекта
                 var connect = this.getConnect(data.connectId);
+                var that = this;
                 connect.event.on({
                     type: 'socket.close',
                     subscriber: this,
                     callback: function(args){
-                        connect.getSession().getUser().getData().controller.onDisconnect(args.connId);
-                        this.removeConnect(args.connId);
+                        that.getController().onDisconnect(args.connId);
+                        that.removeConnect(args.connId);
                     }
                 });
                 done(result);
