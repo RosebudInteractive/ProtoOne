@@ -78,8 +78,24 @@ define(
 				return  new MemDataBase(this,init,cb);
 			},
 			
-			delDataBase: function(guid) {
-				delete this.pvt.dbCollection[guid];
+			delDataBase: function(guid,cb) {
+				var db = this.pvt.dbCollection[guid];
+				if (db!=undefined) {
+					if (db.isMaster()) {
+						// TODO отписать формированно клиентов
+						delete this.pvt.dbCollection[guid];
+					}
+					else {
+						var master = db.getProxyMaster();
+						
+						// тут нужно вызвать метод отписки, передав ему гуид этой бд и гуид мастера!!! а в коллбэке
+						// сделать :
+						// проверить локал или ремоут
+						//delete this.pvt.dbCollection[guid];
+						// вызов пользовательского коллбэка
+					}
+				}
+				
 			},
 
 			// подписать базу данных на ее мастер (только из инит)
