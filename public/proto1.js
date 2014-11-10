@@ -88,7 +88,7 @@ function createComponent(obj) {
     if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
         options.change = function(){
             sendDeltas();
-            renderControls(false);
+            renderControls();
         };
     }
 
@@ -100,7 +100,7 @@ function createComponent(obj) {
     new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);
 }
 
-function renderControls(renderEditor) {
+function renderControls() {
     if (!myApp.controlMgr) return;
     myApp.controlMgr.render();
     // редактирование ячеек грида
@@ -200,8 +200,10 @@ function createContext(guid) {
  * @param guid
  */
 function selectContext(guid, root) {
+    // если подписан раньше отписаться и удалить
     if (dbcontext) {
         dbcontext.onUnsubscribe();
+        dbc.delDataBase(dbcontext.getGuid());
     }
     dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
         dbcontext.subscribeRoot(root, function(){

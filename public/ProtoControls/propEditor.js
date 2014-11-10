@@ -44,16 +44,16 @@ define(
                 } else {
 
                     var editor = $('#' + this.options.id), props, controls, change;
-                    var that = this;
                     if (editor.length == 0) {
                         editor = $(this._templates['propEditor']).attr('id', this.options.id);
                         controls = $(this._templates['controls']);
                         controls.change(function () {
-                            var editor = $('#' + that.options.id);
-                            var controls = editor.find('.controls');
-                            that.control(controls.val());
-                            if (that.options.change)
-                                that.options.change();
+                            var val = $(this).val();
+                            if (val) {
+                                that.control(val);
+                                if (that.options.change)
+                                    that.options.change();
+                            }
                         });
                         props = $(this._templates['props']);
                         change = $(this._templates['change']);
