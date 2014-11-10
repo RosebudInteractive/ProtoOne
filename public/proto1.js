@@ -207,17 +207,10 @@ function selectContext(guid, root) {
         myApp.controlMgr = new ControlMgr(dbcontext);
     }
 
-    if (dbcontext) {
-        // отписываемся от бд
-        socket.send({action:"unsubscribe", type:'method', masterGuid:dbcontext.getGuid()}, function() {
-            // удаляем бд
-            dbc.delDataBase(dbcontext.getGuid());
-            done();
-        });
-    } else {
+    if (dbcontext)
+        dbc.delDataBase(dbcontext.getGuid(), done);
+    else
         done();
-    }
-
 }
 
 function getContexts() {

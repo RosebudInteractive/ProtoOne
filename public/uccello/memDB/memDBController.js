@@ -50,7 +50,7 @@ define(
             },
 
             routerUnsubscribe: function(data, done) {
-                //this.getDB(data.masterGuid).onUnsubscribe();
+                this.getDB(data.masterGuid).onUnsubscribe(data.connectId, data.slaveGuid);
                 done({});
             },
 
@@ -84,7 +84,7 @@ define(
 				return  new MemDataBase(this,init,cb);
 			},
 			
-			delDataBase: function(guid,cb) {
+			delDataBase: function(guid, cb) {
 				var db = this.pvt.dbCollection[guid];
 				if (db!=undefined) {
 					if (db.isMaster()) {
@@ -93,7 +93,17 @@ define(
 					}
 					else {
 						var master = db.getProxyMaster();
-						
+                        var p = this.findOrCreateProxy(master);
+                        if (master.kind == "remote")
+                            p.connect.send({action:'unsubscribe', type:'method', slaveGuid:guid, masterGuid:master.guid},function(){
+                                delete this.pvt.dbCollection[guid];
+                                if (cb !== undefined && (typeof cb == "function")) cb();
+                            });
+                        else {
+                            this.onUnsubscribe(p.connect, guid);
+                            delete this.pvt.dbCollection[guid];
+                            if (cb !== undefined && (typeof cb == "function")) cb();
+                        }
 						// тут нужно вызвать метод отписки, передав ему гуид этой бд и гуид мастера!!! а в коллбэке
 						// сделать :
 						// проверить локал или ремоут
