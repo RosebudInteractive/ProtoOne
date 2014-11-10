@@ -101,8 +101,8 @@ router.add('getGuids', function(data, done) {
     result = {
         //masterGuid:db.getGuid(),
       //  myRootContGuid:userData.myRootCont.getGuid(),
-        masterSysGuid:myServerApp.userSessionMgr.dbsys.getGuid()//,
-       // sysRootGuid:user.getObj().getGuid()
+        masterSysGuid:myServerApp.userSessionMgr.dbsys.getGuid(),
+        sysRootGuid:user.getObj().getGuid()
     };
     done(result);
     return result;

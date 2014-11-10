@@ -88,13 +88,13 @@ function subscribeRoot() {
 }
 */
 
-/*function subscribeRootSys() {
+function subscribeRootSys() {
     // подписываемся на корневой объект контейнера
     console.log('база данных Sys:', dbsys.getObj("fc13e2b8-3600-b537-f9e5-654b7418c156"));
     dbsys.subscribeRoot(guids.sysRootGuid, function(result){
         renderControls();
     });
-}*/
+}
 
 /*
 function createDataBase2() {
