@@ -9,12 +9,12 @@ requirejs.config({
 });
 
 var clientConnection = null, socket = null;
+var dbc = null, guids = null, propEditor = null, dbcontext = null, dbsys=null;
 var sessionId = $.url('#sid');
-var dbc=null, dbsl=null, dbs2=null, dbsys=null, guids=null, propEditor = null;
-
 var myApp = {};
 var MemDBController=null, MemDataBase=null, ControlMgr=null;
 var typeGuids = {};
+var contextGuid = 0, currContext=null;
 
 // когда документ загружен
 $(document).ready( function() {
@@ -65,46 +65,19 @@ function createController(done){
             }
         });
 
-        /*var cb = subscribeRoot;
-        dbsl = dbc.newDataBase({name:"Slave1", proxyMaster : { connect: socket, guid: guids.masterGuid}},cb);
-        myApp.controlMgr = new ControlMgr(dbsl);
-        console.log('контроллер:', dbc);
-        console.log('база данных B:', dbsl);
-*/
         // создаем системную бд
         dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}});
         myApp.cmsys = new ControlMgr(dbsys);
-
-
     });
 }
-
-/*
-function subscribeRoot() {
-    // подписываемся на корневой объект контейнера
-    dbsl.subscribeRoot(guids.myRootContGuid, function(result){
-        renderControls();
-    }, createComponent);
-}
-*/
 
 function subscribeRootSys() {
     // подписываемся на корневой объект контейнера
-    console.log('база данных Sys:', dbsys.getObj("fc13e2b8-3600-b537-f9e5-654b7418c156"));
     dbsys.subscribeRoot(guids.sysRootGuid, function(result){
         renderControls();
+        getContexts();
     });
 }
-
-/*
-function createDataBase2() {
-    dbs2 = dbc.newDataBase({name:"Slave2", proxyMaster : { connect: socket, guid: dbsl.getGuid()}});
-    dbs2.subscribeRoot(guids.myRootContGuid, function(result){
-        renderControls();
-    }, createComponent);
-    console.log('база данных C:', dbs2);
-}
-*/
 
 function createComponent(obj) {
     var g = obj.getTypeGuid();
@@ -127,6 +100,7 @@ function createComponent(obj) {
 }
 
 function renderControls(renderEditor) {
+    if (!myApp.controlMgr) return;
     myApp.controlMgr.render();
     // редактирование ячеек грида
     $(".divCell").editable(function(value, settings) {
@@ -150,7 +124,6 @@ function addButton() {
     var newb = new typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"](myApp.controlMgr, {parent: myRootCont, colName: "Children", ini:d },{parent:'#result'});
     var db = newb.getObj().getDB();
     myApp.controller.genDeltas(db.getGuid());
-    //myRootCont.addToCol("Children", newb);
     renderControls();
 }
 
@@ -208,16 +181,61 @@ function sendDeltas(force) {
  * Создать контекст
  * @param guid
  */
-var dbcontext = null;
 function createContext(guid) {
     socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
         dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: result.masterGuid}}, function(){
             dbcontext.subscribeRoot(result.myRootContGuid, function(){
                 renderControls();
+                currContext = result.masterGuid + '|' + result.myRootContGuid;
+                getContexts();
             }, createComponent);
         });
         myApp.controlMgr = new ControlMgr(dbcontext);
     });
+}
+
+/**
+ * Выбрать контекст
+ * @param guid
+ */
+function selectContext(guid, root) {
+    if (dbcontext) {
+        dbcontext.onUnsubscribe();
+    }
+    dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
+        dbcontext.subscribeRoot(root, function(){
+            renderControls();
+        }, createComponent);
+    });
+    myApp.controlMgr = new ControlMgr(dbcontext);
+    currContext = guid + '|' + root;
+    getContexts();
+}
+
+function getContexts() {
+    var sel = $('#userContext');
+    sel.empty();
+
+    for (var i = 0, len = dbsys.countRoot(); i < len; i++) {
+        var root = dbsys.getRoot(i);
+        var obj = root.obj;
+        for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
+            var col = obj.getCol(j);
+            var name = col.getName();
+            if (name == "VisualContext") {
+                for (var k = 0, len3 = col.count(); k < len3; k++) {
+                    var item = col.get(k);
+                    var option = $('<option/>');
+                    option.val(item.get('DataBase')+'|'+item.get('Root')).html(item.get('Name'));
+                    sel.append(option);
+                }
+                sel.val(currContext);
+                return;
+            }
+        }
+    }
+
+
 }
 
 $(function(){
@@ -246,4 +264,10 @@ $(function(){
     });
     $(window).click(function(){$('#loginForm').hide();});
     $('#loginForm').click(function(e){e.stopPropagation();});
+
+    $('#userContext').change(function(){
+        currContext = $(this).val();
+        var guids = $(this).val().split('|');
+        selectContext(guids[0], guids[1]);
+    });
 });
