@@ -84,19 +84,21 @@ define(
 				return  new MemDataBase(this,init,cb);
 			},
 			
+			// удалить базу из коллекции
 			delDataBase: function(guid, cb) {
-				var db = this.pvt.dbCollection[guid];
+				var db = this.getDB(guid);
+
 				if (db!=undefined) {
 					if (db.isMaster()) {
-						// TODO отписать формированно клиентов
+						// TODO отписать форсированно подписанных клиентов!
 						delete this.pvt.dbCollection[guid];
 					}
 					else {
 						var master = db.getProxyMaster();
-                        var p = this.findOrCreateProxy(master);
+                        var that=this;
                         if (master.kind == "remote")
-                            p.connect.send({action:'unsubscribe', type:'method', slaveGuid:guid, masterGuid:master.guid},function(){
-                                delete this.pvt.dbCollection[guid];
+                            master.connect.send({action:'unsubscribe', type:'method', slaveGuid:guid, masterGuid:master.guid},function(){
+                                delete that.pvt.dbCollection[guid];
                                 if (cb !== undefined && (typeof cb == "function")) cb();
                             });
                         else {
@@ -104,11 +106,7 @@ define(
                             delete this.pvt.dbCollection[guid];
                             if (cb !== undefined && (typeof cb == "function")) cb();
                         }
-						// тут нужно вызвать метод отписки, передав ему гуид этой бд и гуид мастера!!! а в коллбэке
-						// сделать :
-						// проверить локал или ремоут
-						//delete this.pvt.dbCollection[guid];
-						// вызов пользовательского коллбэка
+						// TODO если есть подписчики - отписать их тоже
 					}
 				}
 				
