@@ -125,10 +125,12 @@ router.add('getSessions', function(data, done) {
 
 router.add('createContext', function(data, done) {
     var user = myServerApp.userSessionMgr.getConnect(data.connectId).getSession().getUser();
-    var r = createDb(myServerApp.userSessionMgr.getController(), {name: "Master", kind: "master"});
+    var controller = myServerApp.userSessionMgr.getController();
+    var r = createDb(controller, {name: "Master", kind: "master"});
     var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
                         ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid(), Root:r.myRootCont.getGuid()}}});
     var result = {masterGuid: r.db.getGuid(), myRootContGuid:r.myRootCont.getGuid()};
+    controller.genDeltas(myServerApp.userSessionMgr.dbsys.getGuid());
     done(result);
 });
 
