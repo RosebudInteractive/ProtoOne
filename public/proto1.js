@@ -205,6 +205,7 @@ function selectContext(guid, root) {
         dbcontext.onUnsubscribe();
         dbc.delDataBase(dbcontext.getGuid());
     }
+    $('#result').empty();
     dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
         dbcontext.subscribeRoot(root, function(){
             renderControls();

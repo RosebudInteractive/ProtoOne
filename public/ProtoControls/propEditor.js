@@ -49,11 +49,9 @@ define(
                         controls = $(this._templates['controls']);
                         controls.change(function () {
                             var val = $(this).val();
-                            if (val) {
-                                that.control(val);
-                                if (that.options.change)
-                                    that.options.change();
-                            }
+                            that.control(val);
+                            if (that.options.change)
+                                that.options.change();
                         });
                         props = $(this._templates['props']);
                         change = $(this._templates['change']);
