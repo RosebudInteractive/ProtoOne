@@ -77,6 +77,10 @@ define(
 			newDataBase: function(init,cb) {
 				return  new MemDataBase(this,init,cb);
 			},
+			
+			delDataBase: function(guid) {
+				delete this.pvt.dbCollection[guid];
+			},
 
 			// подписать базу данных на ее мастер (только из инит)
             _subscribe: function(db,proxyMaster,cb) {
