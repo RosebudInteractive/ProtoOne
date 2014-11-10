@@ -4,8 +4,9 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', './session', './connect', './user', '../system/event'],
-    function(MemDBController, ControlMgr, AComponent, Session, Connect, User, Event) {
+    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', './session', './connect', './user', '../system/event',
+        './visualContext'],
+    function(MemDBController, ControlMgr, AComponent, Session, Connect, User, Event, VisualContext) {
         var UserSessionMgr = Class.extend({
 
             init: function(router, options){
@@ -27,6 +28,7 @@ define(
                 new User(this.cmsys);
                 new Session(this.cmsys);
                 new Connect(this.cmsys);
+                new VisualContext(this.cmsys);
 
                 // функции роутера
                 var that = this;
