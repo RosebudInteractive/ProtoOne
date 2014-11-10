@@ -38,6 +38,7 @@ define(
                 if (router) {
                     var that = this;
                     router.add('subscribe', function(){ return that.routerSubscribe.apply(that, arguments); });
+                    router.add('unsubscribe', function(){ return that.routerUnsubscribe.apply(that, arguments); });
                     router.add('subscribeRoot', function(){ return that.routerSubscribeRoot.apply(that, arguments); });
                     router.add('sendDelta', function(){ return that.routerSendDelta.apply(that, arguments); });
                 }
@@ -46,6 +47,11 @@ define(
             routerSubscribe: function(data, done) {
                 var result = {data: this.onSubscribe({connect:data.connect, guid:data.slaveGuid}, data.masterGuid)};
                 done(result);
+            },
+
+            routerUnsubscribe: function(data, done) {
+                //this.getDB(data.masterGuid).onUnsubscribe();
+                done({});
             },
 
             routerSubscribeRoot: function(data, done) {

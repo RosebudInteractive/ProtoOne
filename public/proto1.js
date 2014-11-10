@@ -183,15 +183,9 @@ function sendDeltas(force) {
  * @param guid
  */
 function createContext(guid) {
+    $('#result').empty();
     socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
-        dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: result.masterGuid}}, function(){
-            dbcontext.subscribeRoot(result.myRootContGuid, function(){
-                renderControls();
-                currContext = result.masterGuid + '|' + result.myRootContGuid;
-                getContexts();
-            }, createComponent);
-        });
-        myApp.controlMgr = new ControlMgr(dbcontext);
+        selectContext(result.masterGuid, result.myRootContGuid);
     });
 }
 
@@ -200,20 +194,30 @@ function createContext(guid) {
  * @param guid
  */
 function selectContext(guid, root) {
-    // если подписан раньше отписаться и удалить
-    if (dbcontext) {
-        dbcontext.onUnsubscribe();
-        dbc.delDataBase(dbcontext.getGuid());
+
+    function done() {
+        $('#result').empty();
+        dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
+            dbcontext.subscribeRoot(root, function(){
+                currContext = guid + '|' + root;
+                getContexts();
+                renderControls();
+            }, createComponent);
+        });
+        myApp.controlMgr = new ControlMgr(dbcontext);
     }
-    $('#result').empty();
-    dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
-        dbcontext.subscribeRoot(root, function(){
-            renderControls();
-        }, createComponent);
-    });
-    myApp.controlMgr = new ControlMgr(dbcontext);
-    currContext = guid + '|' + root;
-    getContexts();
+
+    if (dbcontext) {
+        // отписываемся от бд
+        socket.send({action:"unsubscribe", type:'method', masterGuid:dbcontext.getGuid()}, function() {
+            // удаляем бд
+            dbc.delDataBase(dbcontext.getGuid());
+            done();
+        });
+    } else {
+        done();
+    }
+
 }
 
 function getContexts() {
