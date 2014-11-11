@@ -68,7 +68,9 @@ define(
                 subscriber: this,
                 callback: function(args){
                     that.removeConn(args.connId);
-
+                    that.getObj().getCol("Connects")._del(conn.getObj());
+                    var db = that.getObj().getDB();
+                    db.getController().genDeltas(db.getGuid());
                 }
             });
 
