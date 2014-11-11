@@ -9,7 +9,7 @@ requirejs.config({
 });
 
 var clientConnection = null, socket = null;
-var dbc = null, guids = null, propEditor = null, dbcontext = null, dbsys=null;
+var guids = null, propEditor = null, dbcontext = null;
 var sessionId = $.url('#sid');
 var myApp = {};
 var MemDBController=null, MemDataBase=null, ControlMgr=null;
@@ -55,9 +55,8 @@ function createController(done){
     socket.send({action:"getGuids", type:'method'}, function(result){
         guids = result;
         // создаем  контроллер и бд
-        dbc = new MemDBController();
-        myApp.controller = dbc;
-        dbc.event.on({
+        myApp.controller = new MemDBController();
+        myApp.controller.event.on({
             type: 'applyDeltas',
             subscriber: this,
             callback: function(args){
@@ -67,14 +66,19 @@ function createController(done){
         });
 
         // создаем системную бд
-        dbsys = dbc.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}});
-        myApp.cmsys = new ControlMgr(dbsys);
+        myApp.dbsys = myApp.controller.newDataBase({name:"System", proxyMaster : {connect: socket, guid: guids.masterSysGuid}});
+        myApp.cmsys = new ControlMgr(myApp.dbsys);
+
+        // создаем мастер базу для clientConnection
+        myApp.dbclient = myApp.controller.newDataBase({name:"MasterClient", kind: "master"});
+        myApp.cmclient = new ControlMgr(myApp.dbclient);
+        clientConnection.init(myApp.cmclient);
     });
 }
 
 function subscribeRootSys() {
     // подписываемся на корневой объект контейнера
-    dbsys.subscribeRoot(guids.sysRootGuid, function(result){
+    myApp.dbsys.subscribeRoot(guids.sysRootGuid, function(result){
         renderControls();
         getContexts();
     });
@@ -94,7 +98,7 @@ function createComponent(obj) {
 
     // DbNavigator для системной бд
     if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-        options.db = dbsys;
+        options.db = myApp.dbsys;
     }
 
     new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);
@@ -197,7 +201,7 @@ function selectContext(guid, root) {
 
     function done() {
         $('#result').empty();
-        dbcontext = dbc.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
+        dbcontext = myApp.controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
             dbcontext.subscribeRoot(root, function(){
                 currContext = guid + '|' + root;
                 getContexts();
@@ -208,17 +212,20 @@ function selectContext(guid, root) {
     }
 
     if (dbcontext)
-        dbc.delDataBase(dbcontext.getGuid(), done);
+        myApp.controller.delDataBase(dbcontext.getGuid(), done);
     else
         done();
 }
 
+/**
+ * Получить контексты и отобразить в комбо
+ */
 function getContexts() {
     var sel = $('#userContext');
     sel.empty();
 
-    for (var i = 0, len = dbsys.countRoot(); i < len; i++) {
-        var root = dbsys.getRoot(i);
+    for (var i = 0, len = myApp.dbsys.countRoot(); i < len; i++) {
+        var root = myApp.dbsys.getRoot(i);
         var obj = root.obj;
         for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
             var col = obj.getCol(j);
@@ -235,8 +242,40 @@ function getContexts() {
             }
         }
     }
+}
 
+/**
+ * Создать клиентский контекст
+ * @param guid
+ */
+function createClientContext(guid) {
+    require(
+        ['./uccello/connection/clientConnection', './uccello/connection/visualContext', './uccello/baseControls/aComponent',
+            './uccello/baseControls/aControl', './ProtoControls/container', './ProtoControls/button',
+            './ProtoControls/matrixGrid',  './ProtoControls/propEditor',   './ProtoControls/dbNavigator'  ],
+        function(ClientConnection, VisualContext, AComponent, AControl, AContainer, AButton, AMatrixGrid, PropEditor, DBNavigator) {
+            socket.send({action: "loadRes", type: 'method'}, function (result) {
 
+                // create db and cm
+                var db = myApp.controller.newDataBase({name: "Master", kind: "master"});
+                var cm = new ControlMgr(db);
+
+                // metainfo
+                new AComponent(cm);
+                new AControl(cm);
+                new AContainer(cm);
+                new AButton(cm);
+                new AMatrixGrid(cm);
+                new PropEditor(cm);
+                new DBNavigator(cm);
+                new VisualContext(cm);
+                new ClientConnection(cm);
+
+                db.deserialize(result.res, {db: db});
+                var context = new VisualContext(cm, {parent: clientConnection, colName: "VisualContext",
+                    ini: {fields: {Id: guid, Name: 'contextClient' + guid, DataBase: db.getGuid(), Root: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6").getGuid()}}});
+            });
+        });
 }
 
 $(function(){

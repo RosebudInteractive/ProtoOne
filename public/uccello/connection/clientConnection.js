@@ -7,17 +7,27 @@ if (typeof define !== 'function') {
  * ClientConnection
  * @module ClientConnection
  */
-define(['./socket'], function(Socket) {
+define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) {
 
-    var ClientConnection = Class.extend(/** @lends module:ClientConnection.ClientConnection.prototype */{
+    var ClientConnection = AComponent.extend(/** @lends module:ClientConnection.ClientConnection.prototype */{
+
+        className: "ClientConnection",
+        classGuid: "5f27198a-0dd2-81b1-3eeb-2834b93fb514",
+        metaFields: [],
+        metaCols: [ {cname: "VisualContext", ctype: "control"} ],
+
         /**
          * Инициализация объекта
          * @constructs
          */
-        init: function() {
-            this.socket = null;
-            this.sessionId = null;
-            this.connected = false;
+        init: function(cm, params) {
+            if (cm) {
+                this._super(cm, params);
+            } else {
+                this.socket = null;
+                this.sessionId = null;
+                this.connected = false;
+            }
         },
 
         /**

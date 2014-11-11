@@ -173,9 +173,7 @@ define(
 			
 			resetModifFldLog: function() {
 				this.pvt.fldLog = {};
-			},
-			
-			
+			}
 
 		});
 		return MemProtoObj;

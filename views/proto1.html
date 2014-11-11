@@ -92,7 +92,9 @@
     <input type="button" value="add button" onclick="addButton();">
     <input type="button" value="subscribe user" onclick="subscribeRootSys();">
     &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta">авто отсылка дельты</label> <input type="button" value="Отправить дельту" onclick="sendDeltas(true);">
-    &nbsp; &nbsp;Выбрать контекст: <select id="userContext"></select> <input type="button" value="Создать контекст" onclick="createContext(++contextGuid);">
+    &nbsp; &nbsp;Выбрать контекст: <select id="userContext"></select>
+    <input type="button" value="Создать серверный контекст" onclick="createContext(++contextGuid);">
+    <input type="button" value="Создать клиенсткий контекст" onclick="createClientContext(++contextGuid);">
     <div id="container">
         <div id="result"></div>
         <!-- <div id="editor">

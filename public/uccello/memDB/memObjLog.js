@@ -4,8 +4,8 @@
 }
 
 define(
-	['./memObj'],
-	function(MemObj) {
+	[],
+	function() {
 		var MemObjLog = Class.extend({
 
 			init: function(obj){
