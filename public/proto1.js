@@ -287,8 +287,9 @@ function createClientContext(guid) {
 
                 // create db and cm
                 myApp.dbclientcontext = myApp.controller.newDataBase({name: "Master", kind: "master"});
+				var db = myApp.dbclientcontext;
                 myApp.cmclientcontext = new ControlMgr(db);
-                var db = myApp.dbclientcontext;
+                
                 var cm = myApp.cmclientcontext;
 
                 // metainfo
