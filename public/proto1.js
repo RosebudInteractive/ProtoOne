@@ -45,6 +45,7 @@ $(document).ready( function() {
                 typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = session;
                 typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = connect;
                 typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = context;
+                typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
                 createController();
             });
         }
@@ -72,7 +73,15 @@ function createController(done){
         // создаем мастер базу для clientConnection
         myApp.dbclient = myApp.controller.newDataBase({name:"MasterClient", kind: "master"});
         myApp.cmclient = new ControlMgr(myApp.dbclient);
-        clientConnection.init(myApp.cmclient);
+        require(
+            ['./uccello/connection/clientConnection', './uccello/connection/visualContext', './uccello/baseControls/aComponent'],
+            function(ClientConnection, VisualContext, AComponent) {
+                new AComponent(myApp.cmclient);
+                new VisualContext(myApp.cmclient);
+                new ClientConnection(myApp.cmclient);
+                clientConnection.init(myApp.cmclient, {});
+            });
+
     });
 }
 
@@ -272,7 +281,9 @@ function createClientContext(guid) {
                 new ClientConnection(cm);
 
                 db.deserialize(result.res, {db: db});
-                var context = new VisualContext(cm, {parent: clientConnection, colName: "VisualContext",
+
+                // создаем контекст
+                var context = new VisualContext(myApp.cmclient, {parent: clientConnection, colName: "VisualContext",
                     ini: {fields: {Id: guid, Name: 'contextClient' + guid, DataBase: db.getGuid(), Root: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6").getGuid()}}});
             });
         });
