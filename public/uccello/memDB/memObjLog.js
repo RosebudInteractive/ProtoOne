@@ -97,10 +97,10 @@ define(
 				var db = this.getObj().getDB();
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
-					if ("del" in c) {
+					if ("deleted" in c) {
 						var o = db.getObj(c.parentGuid);
 						// TODO коллбэк на удаление 
-						o.getCol(o.parentColName)._del(db.getObj(c.guid));
+						o.getCol(c.parentColName)._del(db.getObj(c.guid));
 					}
 					else {
 						if ("add" in c) {					
