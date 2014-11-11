@@ -113,6 +113,26 @@ function createComponent(obj) {
     new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);
 }
 
+function createComponentClient(obj) {
+    var g = obj.getTypeGuid();
+    var options = {parent:'#result'};
+
+    // метод обработки изменений для PropEditor
+    if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
+        options.change = function(){
+            sendDeltas();
+            renderControls();
+        };
+    }
+
+    // DbNavigator для системной бд
+    if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
+        options.db = myApp.dbclientcontext;
+    }
+
+    new typeGuids[g](myApp.cmclientcontext, { objGuid: obj.getGuid() }, options);
+}
+
 function renderControls() {
     if (!myApp.controlMgr) return;
     myApp.controlMgr.render();
@@ -266,8 +286,10 @@ function createClientContext(guid) {
             socket.send({action: "loadRes", type: 'method'}, function (result) {
 
                 // create db and cm
-                var db = myApp.controller.newDataBase({name: "Master", kind: "master"});
-                var cm = new ControlMgr(db);
+                myApp.dbclientcontext = myApp.controller.newDataBase({name: "Master", kind: "master"});
+                myApp.cmclientcontext = new ControlMgr(db);
+                var db = myApp.dbclientcontext;
+                var cm = myApp.cmclientcontext;
 
                 // metainfo
                 new AComponent(cm);
@@ -280,11 +302,13 @@ function createClientContext(guid) {
                 new VisualContext(cm);
                 new ClientConnection(cm);
 
-                db.deserialize(result.res, {db: db});
+                db.deserialize(result.res, {db: db}, createComponentClient);
 
                 // создаем контекст
                 var context = new VisualContext(myApp.cmclient, {parent: clientConnection, colName: "VisualContext",
                     ini: {fields: {Id: guid, Name: 'contextClient' + guid, DataBase: db.getGuid(), Root: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6").getGuid()}}});
+
+                cm.render();
             });
         });
 }
