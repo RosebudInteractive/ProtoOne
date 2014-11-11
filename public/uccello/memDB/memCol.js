@@ -37,6 +37,21 @@ define(
 					}
 			},
 			
+			_del: function(obj) {
+				// TODO временный вариант - необходимо будет сделать нормально как можно быстрее
+				for (var i=0; i<this._elems.length; i++) {
+					if (this._elems[i] == obj) {
+						this._elems.splice(i,1);
+						
+						if (this._obj.getLog().getActive()) { // записать в лог если активен
+							var o = { obj:obj, colName: this._name, type:"del"};
+							this._obj.getLog().add(o);					
+						}
+						return;
+					}
+				}
+			},
+			
 			getName: function() {
 				return this._name;
 			},

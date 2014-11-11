@@ -77,6 +77,13 @@ define(
 							else
 								curd.parentGuid = "";
 							break;
+						// удаление объекта из иерархии
+						case "del":
+							var par = c.obj.getParent();
+							curd.parentGuid = par.getGuid();
+							curd.parentColName = c.obj.getColName();
+							curd.deleted = 1;
+							break;
 					}
 				}
 				delta.rootGuid = this.getObj().getRoot().getGuid();
@@ -87,21 +94,28 @@ define(
 			// применить "дельту" изменений к объекту
 			applyDelta: function(delta) {
 				this.setActive(false);
+				var db = this.getObj().getDB();
 				for (var i=0; i<delta.items.length; i++) {
 					var c = delta.items[i];
-					if ("add" in c) {
-						var db = this.getObj().getDB();
+					if ("del" in c) {
 						var o = db.getObj(c.parentGuid);
-						var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
-						o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
+						// TODO коллбэк на удаление 
+						o.getCol(o.parentColName)._del(db.getObj(c.guid));
 					}
-					o2 = this.getObj().getDB().getObj(c.guid);
-					if (o2) {
-						for (var cf in c.fields) {
-							// TODO проверить наличие полей с таким именем в метаинфо
-							o2.set(cf,c.fields[cf]);
+					else {
+						if ("add" in c) {					
+							var o = db.getObj(c.parentGuid);
+							var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
+							o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
 						}
-						
+						o2 = this.getObj().getDB().getObj(c.guid);
+						if (o2) {
+							for (var cf in c.fields) {
+								// TODO проверить наличие полей с таким именем в метаинфо
+								o2.set(cf,c.fields[cf]);
+							}
+							
+						}
 					}
 				}
 				this.setActive(true);				
