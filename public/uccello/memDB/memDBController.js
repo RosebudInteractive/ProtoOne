@@ -227,6 +227,10 @@ define(
                 var root = db.getRoot(delta.rootGuid);
 				
                 // вызывает у лога этого объекта applyDelta(delta)
+				
+				if (db.getVersion() != delta.content.dbVersion-1) {
+					return;
+				}
                 root.obj.getLog().applyDelta(delta.content);
 
 				var deltas = [];
@@ -245,6 +249,7 @@ define(
 				var db  = this.getDB(dbGuid);
 				var deltas = db.genDeltas();
 				this.propagateDeltas(dbGuid,null,deltas);
+				db.newVersion("sent");
 			},
 			
 			// послать подписчикам и мастеру дельты которые либо сгенерированы локально либо пришли снизу либо сверху
@@ -265,7 +270,7 @@ define(
 								// TODO валидировать версию
 								}
 							else {
-								var cb = function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion-db.getVersion("valid")); };
+								var cb = function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion - db.getVersion("valid")); };
 								proxy.connect.send({action:"sendDelta", type:'method', delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()},cb);
 								}
 						}
@@ -273,6 +278,7 @@ define(
 										
 					var root = db.getRoot(delta.rootGuid);
 					
+					// распространить по подписчикам
 					for(var guid in root.subscribers) {
 						var subscriber = root.subscribers[guid];
 						console.log('subscriber', subscriber);

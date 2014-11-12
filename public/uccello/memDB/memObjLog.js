@@ -12,6 +12,7 @@ define(
 				this.pvt = {};
 				this.pvt.obj = obj;
 				this.pvt.log = [];
+				this.pvt.versions = {};
 				this.pvt.active = false;
 				
 			},
