@@ -270,6 +270,12 @@ $(document).ready( function() {
                         });
                     });
                 }
+
+                serializeForm = function(){
+                    if (!dbcontext || !currContext) return;
+                    var root = dbcontext.getObj(currContext.split('|')[1]);
+                    console.log(dbcontext.serialize(root));
+                }
         }
     );
 });

@@ -31,10 +31,11 @@
         <option value="38aec981-30ae-ec1d-8f8f-5004958b4cfa">DbNavigator</option>
     </select><input type="button" value="add control" onclick="addControl($('#selControl').val());">
     <input type="button" value="subscribe user" onclick="subscribeRootSys();">
-    &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="Отправить дельту" onclick="sendDeltas(true);">
-    &nbsp; &nbsp;Выбрать контекст: <select id="userContext"></select>
-    <input type="button" value="+ серверный контекст" onclick="createContext(++contextGuid);">
-    <input type="button" value="+ клиенсткий контекст" onclick="createClientContext(++contextGuid);">
+    &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
+    &nbsp; &nbsp;context: <select id="userContext"></select>
+    <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext(++contextGuid);">
+    <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext(++contextGuid);">
+    <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
     <div id="container">
         <div id="result"></div>
     </div>
@@ -42,8 +43,8 @@
 
 <div id="loginForm" style="display: none;">
     <div id="loginError"></div>
-    Имя:<input type="text" value="user" id="loginName"><br>
-    Пароль:<input type="password" value="123" id="loginPass"><br>
+    Имя:<input type="text" value="u1" id="loginName"><br>
+    Пароль:<input type="password" value="p1" id="loginPass"><br>
     <input type="button" value="Войти" onclick="login($('#loginName').val(), $('#loginPass').val())">
 </div>
 
