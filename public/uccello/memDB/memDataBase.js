@@ -101,11 +101,17 @@ define(
 				
 				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
 				pvt.controller.createLocalProxy(this);
+				pvt.version = 0; // по умолчанию версия = 0
+				pvt.validVersion = 0;
+				pvt.sentVersion = 0;
 				
 				if (params.kind != "master") {
 					var db=this;
-					controller._subscribe(this,params.proxyMaster, function() {
+					controller._subscribe(this,params.proxyMaster, function(result) {
 						pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
+						pvt.version = result.data.dbVersion; // устанавливаем номер версии базы по версии мастера
+						pvt.validVersion = pvt.version;
+						pvt.sentVersion = pvt.version;
 						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
 								db._buildMetaTables();
 								//console.log('callback result:', result);
@@ -118,7 +124,8 @@ define(
 					// Создать объект с коллекцией метаинфо
 					pvt.meta = new MemMetaRoot( { db: this },{});
 					if (cb !== undefined && (typeof cb == "function")) cb(this);
-				}		
+				}	
+				
 				
 			},
 
@@ -305,6 +312,27 @@ define(
              */
 			getName: function() {
 				return this.pvt.name;
+			},
+
+            /**
+             * Вернуть версию БД
+             */			
+			getVersion: function(verType) {
+				switch (verType) {
+					case "sent": return this.pvt.sentVersion;
+					case "valid": return this.pvt.validVersion;
+					default: return this.pvt.version;
+				}				
+			},
+			
+			newVersion: function(verType,val) {
+				if (val == undefined) var vinc=1;
+				else vinc=val;
+				switch (verType) {
+					case "sent": this.pvt.sentVersion+=vinc; break;
+					case "valid": this.pvt.validVersion+=vinc; break;
+					default: this.pvt.version+=vinc; break;
+				}	
 			},
 
             /**

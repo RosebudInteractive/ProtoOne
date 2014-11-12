@@ -87,6 +87,7 @@ define(
 					}
 				}
 				delta.rootGuid = this.getObj().getRoot().getGuid();
+				delta.dbVersion = this.getObj().getDB().getVersion();
 				this.truncate();
 				return delta;
 			},
@@ -118,56 +119,20 @@ define(
 						}
 					}
 				}
-				this.setActive(true);				
+				this.setActive(true);
+				db.newVersion();
 			},
 			
-
 			add: function(item) {
 				if (this.getActive()) {
 					item.idx = this.getObj().getDB().getNewCounter();
 					this.pvt.log.push(item);				// добавить в лог корневого объекта
 				}
+				var db = this.getObj().getDB();
+				var sver = db.getVersion("sent");
+				var ver = db.getVersion();
+				if (ver==sver) db.newVersion();
 			}
-			
-			/*
-			_objModif: function(field, logItem) {
-                if (this.pvt.active) {
-                    //var fldMeta = modifData.target.fields[modifData.property];
-                    var changes = {};
-                    changes.flds = {};
-                    changes.flds[field] = {};
-                    changes.flds[field].old = modifData.oldValue;
-                    changes.flds[field].new = modifData.newValue;
-                    changes.type = "mp";
-                    changes.obj = modifData.target;
-                    this.pvt.log.push(changes); // записываем изменение в лог
-                    //switch (fldMeta.type.toUpperCase()) {
-                        case LogicalType.Enum:
-                            if (!(modifData.oldValue === undefined))
-                                changes.flds[modifData.property].old = fldMeta.values[modifData.oldValue];
-                            if (!(modifData.newValue === undefined))
-                                changes.flds[modifData.property].new = fldMeta.values[modifData.newValue];
-                            break;
-                        case LogicalType.Date, LogicalType.Time, LogicalType.DateTime:
-                            if (!(modifData.oldValue === undefined))
-                                changes.flds[modifData.property].old = modifData.oldValue.getTime() + "|0";
-                            if (!(modifData.newValue === undefined))
-                                changes.flds[modifData.property].new = modifData.newValue.getTime() + "|0";
-                            break;
-                        case LogicalType.Bool:
-                            if (!(modifData.oldValue === undefined))
-                                changes.flds[modifData.property].old = modifData.oldValue ? "True" : "False";
-                            if (!(modifData.newValue === undefined))
-                                changes.flds[modifData.property].new = modifData.newValue ? "True" : "False";
-                            break;
-                        //default:
-
-                }		
-			},*/
-			
-			
-			
-
 		});
 		return MemObjLog;
 	}

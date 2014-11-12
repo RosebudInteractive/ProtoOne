@@ -64,7 +64,7 @@ define(
 
             routerSendDelta: function(data, done) {
                 this.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
-                done({});
+                done({data: {dbVersion: this.getDB(data.dbGuid).getVersion() }});
             },
 			
 			// сгенерировать guid
@@ -129,13 +129,10 @@ define(
 			// proxy - прокси базы, которая подписывается
 			// masterGuid - база данных, на которую подписываем
             onSubscribe: function(proxy,masterGuid) {
-				var p=this.findOrCreateProxy(proxy);
-				
+				var p=this.findOrCreateProxy(proxy);				
 				db=this.getDB(masterGuid);
 				db.onSubscribe(p);
-                /*var db = this.getDB(proxy.guid);
-                if (db)
-                    db.getProxyMaster().db.onSubscribe(proxy);*/
+				return { dbVersion: db.getVersion() };
             },
 
             /**
@@ -265,9 +262,12 @@ define(
 							if (proxy.kind == "local") {
 								//TODO
 								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta.content);
+								// TODO валидировать версию
 								}
-							else
-								proxy.connect.send({action:"sendDelta", delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()});
+							else {
+								var cb = function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion-db.getVersion("valid")); };
+								proxy.connect.send({action:"sendDelta", type:'method', delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()},cb);
+								}
 						}
 					}
 										
