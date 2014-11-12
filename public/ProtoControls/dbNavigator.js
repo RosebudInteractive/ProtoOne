@@ -25,10 +25,6 @@ define(
                 this.cm = cm;
                 options = options ? options : {};
                 this.options = options;
-                if (!this.options)
-                    this.options = {};
-                if (!this.options.id)
-                    this.options.id = 'DBNavigator';
                 this._activeDb = options.db ? options.db : this.cm.getDB();
             },
 
@@ -50,9 +46,9 @@ define(
                         that.render();
                     });
                 } else {
-                    var editor = $('#' + this.options.id);
+                    var editor = $('#' + this.getGuid());
                     if (editor.length == 0) {
-                        editor = $(this._templates['navigator']).attr('id', this.options.id);
+                        editor = $(this._templates['navigator']).attr('id', this.getGuid());
                         $(this.options.parent).append(editor);
                         // перейти к паренту
                         editor.find('.dragRight').click(function () {
@@ -110,7 +106,7 @@ define(
             toParent: function () {
                 if (!this._activeObj) return;
                 var that = this;
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -138,7 +134,7 @@ define(
             toChild: function () {
                 if (!this._activeRoot || !this._activeRoot.getParent()) return;
                 var that = this;
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -170,7 +166,7 @@ define(
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
 
                 // отображаем в центре коллекции объекта
                 var centerTop = editor.find('.centerTop');
@@ -206,7 +202,7 @@ define(
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
 
                 // отображаем в центре субэлементы  коллекции объекта
                 var centerBottom = editor.find('.centerBottom');
@@ -237,7 +233,7 @@ define(
                 this._activeObj = obj;
 
                 var that = this;
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
 
                 // отображаем справа поля
                 var right = editor.find('.right');
@@ -260,7 +256,7 @@ define(
             },
 
             selectFirst: function (num) {
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');

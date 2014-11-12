@@ -7,11 +7,14 @@ p {padding:0;margin: 4px 0;}
 #editor .controls {clear:both;}
 #console-block {height: 70px;position:absolute;}
 #console {padding: 0;margin: 0;}
-#propEditor {position: absolute; padding:10px; border: 1px solid #aaa;background-color: #fff;}
-#propEditor input {position: relative;}
-#propEditor .props .name {width:100px;display: inline-block;}
+
 .control {position: absolute;top:0;left:0;z-index: 1;}
 .control.edit{background-color: #fff;}
+.control.container{background-color: #fff;border:1px solid #999;min-width: 50px;min-height: 50px;}
+.control.prop-editor{padding:10px; border: 1px solid #aaa;background-color: #fff;}
+.control.prop-editor input{position: relative;}
+.control.prop-editor .props .name {width:100px;display: inline-block;}
+
 .navigator {position: absolute; background-color: #fff;font-size: 12px;}
 .navigator .left {width:240px;overflow: auto;}
 .navigator a {text-decoration: none; color:#000000;}

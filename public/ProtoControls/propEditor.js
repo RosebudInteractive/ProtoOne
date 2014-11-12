@@ -24,10 +24,6 @@ define(
                 this._super(cm, params);
                 this.cm = cm;
                 this.options = options;
-                if (!this.options)
-                    this.options = {};
-                if (!this.options.id)
-                    this.options.id = 'propEditor';
             },
 
             /**
@@ -43,9 +39,9 @@ define(
                     });
                 } else {
 
-                    var editor = $('#' + this.options.id), props, controls, change;
+                    var editor = $('#' + this.getGuid()), props, controls, change;
                     if (editor.length == 0) {
-                        editor = $(this._templates['propEditor']).attr('id', this.options.id);
+                        editor = $(this._templates['propEditor']).attr('id', this.getGuid());
                         controls = $(this._templates['controls']);
                         controls.change(function () {
                             var val = $(this).val();
@@ -98,7 +94,7 @@ define(
              */
             changeControl: function (guid) {
 
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
                 var props = editor.find('.props');
                 var change = editor.find('.change');
                 props.empty();
@@ -124,7 +120,7 @@ define(
              * Сохранить свойства
              */
             saveProps: function () {
-                var editor = $('#' + this.options.id);
+                var editor = $('#' + this.getGuid());
                 var props = editor.find('.props');
                 var inputs = props.find('input');
                 var comp = this.cm.getByGuid(editor.find('.controls').val());
