@@ -99,9 +99,14 @@ $(document).ready( function() {
                 });
             }
 
+            var addControlId = 1000;
             addControl = function(guid, ini, cm) {
+
                 if (!cm) cm = myApp.controlMgr;
-                if (!ini) ini = {fields: {"Id": 99, "Name": "Name99", "Left":"300", "Top":"150"}};
+                if (!ini) {
+                    ini = {fields: {"Id": addControlId, "Name": 'Component'+addControlId, "Left":"300", "Top":"150"}};
+                    addControlId++;
+                }
 
                 var rootCont = null;
                 var gl = cm._getCompGuidList();
