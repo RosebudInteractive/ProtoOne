@@ -334,6 +334,14 @@ define(
 					default: this.pvt.version+=vinc; break;
 				}	
 			},
+			
+			setVersion: function(verType,val) {
+				switch (verType) {
+					case "sent": this.pvt.sentVersion=val; break;
+					case "valid": this.pvt.validVersion=val; break;
+					default: this.pvt.version=val; break;
+				}	
+			},
 
             /**
              * countRoot

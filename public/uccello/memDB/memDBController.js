@@ -227,8 +227,9 @@ define(
                 var root = db.getRoot(delta.rootGuid);
 				
                 // вызывает у лога этого объекта applyDelta(delta)
-				
+				console.log("applydeltas");
 				if (db.getVersion() != delta.content.dbVersion-1) {
+					console.log("DB:"+db.getVersion()+" DELTA VER:"+delta.content.dbVersion);
 					return;
 				}
                 root.obj.getLog().applyDelta(delta.content);
@@ -283,8 +284,10 @@ define(
 						var subscriber = root.subscribers[guid];
 						console.log('subscriber', subscriber);
 						// удаленные
-						if (subscriber.kind == 'remote' && srcDbGuid != guid)
+						if (subscriber.kind == 'remote' && srcDbGuid != guid) {
 							subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});
+							console.log("sent to DB : "+subscriber.guid);
+							}
 					}
 					for(var guid in root.subscribers) {
 						var subscriber = root.subscribers[guid];

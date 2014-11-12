@@ -122,6 +122,8 @@ define(
 				}
 				this.setActive(true);
 				db.newVersion();
+				db.setVersion("sent",db.getVersion());
+				db.setVersion("valid",db.getVersion());
 			},
 			
 			add: function(item) {
