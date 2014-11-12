@@ -6,10 +6,10 @@ if (typeof define !== 'function') {
 define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./baseControls/controlMgr', './baseControls/aComponent',
-        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator',
+        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext' ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
-        Button, MatrixGrid, Container, PropEditor, DbNavigator,
+        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit,
         User, Session, Connect, VisualContext) {
         var UccelloClt = Class.extend({
 
@@ -35,6 +35,7 @@ define(
                     that.typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = Connect;
                     that.typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = VisualContext;
                     that.typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
+                    that.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
                     that.createController();
                     if (options.callback)
                         options.callback();

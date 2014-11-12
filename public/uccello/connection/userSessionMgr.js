@@ -114,6 +114,7 @@ define(
                     var AContainer = require('../../../public/ProtoControls/container');
                     var AControl = require('../baseControls/aControl');
                     var AButton = require('../../../public/ProtoControls/button');
+                    var AEdit = require('../../../public/ProtoControls/edit');
                     var AMatrixGrid = require('../../../public/ProtoControls/matrixGrid');
                     var PropEditor = require('../../../public/ProtoControls/propEditor');
                     var DBNavigator = require('../../../public/ProtoControls/dbNavigator');
@@ -123,6 +124,7 @@ define(
                     new AControl(cm);
                     new AContainer(cm);
                     new AButton(cm);
+                    new AEdit(cm);
                     new AMatrixGrid(cm);
                     new PropEditor(cm);
                     new DBNavigator(cm);

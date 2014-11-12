@@ -230,8 +230,8 @@ $(document).ready( function() {
                 require(
                     ['./uccello/connection/clientConnection', './uccello/connection/visualContext', './uccello/baseControls/aComponent',
                         './uccello/baseControls/aControl', './ProtoControls/container', './ProtoControls/button',
-                        './ProtoControls/matrixGrid',  './ProtoControls/propEditor',   './ProtoControls/dbNavigator'  ],
-                    function(ClientConnection, VisualContext, AComponent, AControl, AContainer, AButton, AMatrixGrid, PropEditor, DBNavigator) {
+                        './ProtoControls/matrixGrid',  './ProtoControls/propEditor',   './ProtoControls/dbNavigator',   './ProtoControls/edit'  ],
+                    function(ClientConnection, VisualContext, AComponent, AControl, AContainer, AButton, AMatrixGrid, PropEditor, DBNavigator, AEdit) {
                         socket.send({action: "loadRes", type: 'method'}, function (result) {
 
                             // create db and cm
@@ -245,6 +245,7 @@ $(document).ready( function() {
                             new AControl(cm);
                             new AContainer(cm);
                             new AButton(cm);
+                            new AEdit(cm);
                             new AMatrixGrid(cm);
                             new PropEditor(cm);
                             new DBNavigator(cm);

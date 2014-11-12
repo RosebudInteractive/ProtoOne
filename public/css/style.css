@@ -1,0 +1,66 @@
+html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-serif;}
+p {padding:0;margin: 4px 0;}
+#container {padding:10px;}
+#container > div {float:left;}
+#result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
+#editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
+#editor .controls {clear:both;}
+#console-block {height: 70px;position:absolute;}
+#console {padding: 0;margin: 0;}
+#propEditor {position: absolute; padding:10px; border: 1px solid #aaa;background-color: #fff;}
+#propEditor input {position: relative;}
+#propEditor .props .name {width:100px;display: inline-block;}
+.control {position: absolute;top:0;left:0;z-index: 1;}
+.control.edit{background-color: #fff;}
+.navigator {position: absolute; background-color: #fff;font-size: 12px;}
+.navigator .left {width:240px;overflow: auto;}
+.navigator a {text-decoration: none; color:#000000;}
+.navigator a:hover {text-decoration: none;}
+.navigator a.active {background-color: #333;color:#fff;}
+.navigator .centerTop {width:240px;overflow: auto;height: 60px;}
+.navigator .centerBottom {width:240px;overflow: auto;}
+.navigator .right {width:260px;overflow: auto;}
+.navigator td {border:1px solid #999;padding:5px;}
+.navigator input.value {width:100px;}
+.navigator input.save {}
+.navigator .right span {display: inline-block;}
+.navigator .right span.name {width:70px;}
+.navigator .right span.type {width:40px;}
+.navigator .right input {display: inline-block;}
+
+.divTable
+{
+    position: absolute;
+    display:  table;
+    width:auto;
+    border:1px solid  #666666;
+    border-spacing:0px;/*cellspacing:poor IE support for  this*/
+    /* border-collapse:separate;*/
+}
+
+
+.divRow .divCell:last-child {border-right:0;}
+.divTable:last-child .divRow:last-child .divCell {border-bottom:0;}
+
+.divRow
+{
+    display:table-row;
+    width:auto;
+    clear:both;
+}
+
+.divCell
+{
+    display:table-cell;
+    width:60px;
+    border-right:1px solid  #666666;
+    border-bottom:1px solid  #666666;
+    border-collapse: collapse;
+    padding:10px;
+}
+
+.divCell textarea {min-width:50px;min-height: 20px;}
+
+#loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
+#header {padding:10px;}
+#loginError {color: #ff0000;}
