@@ -429,6 +429,21 @@ define(
 				else	
 					return null;
 			},
+
+            /**
+             * Проиграть назад изменения по логам базы данных
+			 * @param {number} version - номер версии, до которого нужно откатить
+             */			
+			undo: function(version) {	
+				if (version<this.getVersion("valid"))
+					return false;
+				for (var i=0; i<this.countRoot(); i++)
+					this.getRoot(i).obj.getLog().undo(version);	
+
+				this.setVersion("draft",version);
+				if (this.getVersion("sent")>version) this.setVersion("sent",version);
+				return true;
+			},
 			
             /**
              * Сгенерировать "дельты" по логу изменений

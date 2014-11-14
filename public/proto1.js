@@ -163,7 +163,7 @@ $(document).ready( function() {
              * Отправить дельту
              * @param force {bool} Всегда отправлять
              */
-            function sendDeltas(force) {
+            sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
                     myApp.controller.genDeltas(dbcontext.getGuid());
             }

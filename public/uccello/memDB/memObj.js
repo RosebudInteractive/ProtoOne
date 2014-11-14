@@ -4,18 +4,14 @@
 }
 
 define(
-	['./memProtoObj','./memCol'],
-	function(MemProtoObj,MemCol) {
+	['./memProtoObj','./memCol','../system/event'],
+	function(MemProtoObj,MemCol,Event) {
 		var MemObj = MemProtoObj.extend({
 
 			init: function(objType, parent, flds){
 				this._super(objType, parent, flds);
 				
-				// заполнить поля по метаинформации
-				/*for (var f in flds.fields) {
-						var i=this.pvt.objType.pvt.fieldsTable[f].cidx;
-						if (i>=0) this.pvt.fields[i] = flds.fields[f]; // TODO проверять типы?
-				}*/
+				this.pvt.event = new Event();
 				
 				var ot = this.pvt.objType;
 				for (var i=0; i<ot.pvt.fieldsArr.length; i++) {

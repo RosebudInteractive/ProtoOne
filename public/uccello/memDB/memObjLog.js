@@ -35,15 +35,54 @@ define(
 			getObj: function() {
 				return this.pvt.obj;
 			},
-						
+
+            /**
+             * Проиграть назад изменения по логу корневого объекта
+			 * @param {number} version - номер версии, до которого нужно откатить
+             */		
+			undo: function(version) {
+				var ver1=String(version+1);
+				if (!(ver1 in this.pvt.versions)) return;
+				var log = this.pvt.log;
+				var db = this.getObj().getDB();
+				this.setActive(false);
+				for (var i=log.length-1; i>=this.pvt.versions[version+1]; i--) {
+					var c = log[i];
+					var s = c.obj.getGuid();
+					switch(c.type) {
+						case "mp":
+							for (var fld in c.flds) 
+								c.obj.set(fld,c.flds[fld].old);
+							break;	
+						case "add": // удалить ранее добавленный объект
+							var par = c.obj.getParent();
+							par.getCol(c.colName)._del(c.obj);
+							break;
+						case "del":
+							break;
+					}						
+				}
+				this.setActive(true);				
+			},
+			
 			// сгенерировать "дельту" изменений по логу объекта
 			genDelta: function() {
 				var delta = {};
 				var deltaIdx = {};
 				delta.items = [];
+				
 				var log = this.pvt.log;
-				if (log.length == 0) return null;
-				for (var i=0; i<log.length; i++) {
+				//if (log.length == 0) return null;
+				var db = this.getObj().getDB();
+				var sver = db.getVersion("sent");
+				var ver = db.getVersion();
+				if (ver==sver) return null;
+				var k=1;
+				while ((this.pvt.versions[sver+k]==undefined) && (sver+k<=ver)) k++;
+				if (this.pvt.versions[sver+k]==undefined) return null;
+				
+				var start=this.pvt.versions[sver+k];
+				for (var i=start; i<log.length; i++) {
 					var c = log[i];
 					var s = c.obj.getGuid();
                     if (!(s in deltaIdx)) {
@@ -60,12 +99,8 @@ define(
 						// изменение поля (свойства)
 						case "mp":
 							if (!("fields" in curd)) curd.fields = {};
-							for (var fld in c.flds) {
-								/*curd[fld] = {};
-								curd[fld].old = c.flds[fld].old;
-								curd[fld].new = c.flds[fld].new;*/
+							for (var fld in c.flds) 
 								curd.fields[fld] = c.flds[fld].new;
-							}
 							break;
 						// добавление объекта в иерархию
 						case "add":
@@ -89,7 +124,7 @@ define(
 				}
 				delta.rootGuid = this.getObj().getRoot().getGuid();
 				delta.dbVersion = this.getObj().getDB().getVersion();
-				this.truncate();
+				//this.truncate();
 				return delta;
 			},
 			
@@ -121,20 +156,27 @@ define(
 					}
 				}
 				this.setActive(true);
-				db.newVersion();
+				/*db.newVersion();
 				db.setVersion("sent",db.getVersion());
-				db.setVersion("valid",db.getVersion());
+				db.setVersion("valid",db.getVersion());*/
 			},
 			
+
+			
 			add: function(item) {
+			
+				var db = this.getObj().getDB();
+				// инкрементируем версию если нужно
+				var sver = db.getVersion("sent");
+				var ver = db.getVersion();
+				if (ver==sver) db.newVersion();
+				this.pvt.versions[ver+1] = this.pvt.log.length; // отмечаем место в логе, соответствующее началу этой версии
+				
 				if (this.getActive()) {
 					item.idx = this.getObj().getDB().getNewCounter();
 					this.pvt.log.push(item);				// добавить в лог корневого объекта
 				}
-				var db = this.getObj().getDB();
-				var sver = db.getVersion("sent");
-				var ver = db.getVersion();
-				if (ver==sver) db.newVersion();
+
 			}
 		});
 		return MemObjLog;

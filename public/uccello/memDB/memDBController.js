@@ -7,7 +7,21 @@ define(
 	['./memDataBase', '../system/event'],
 	function(MemDataBase, Event) {
 		var MemDBController = Class.extend({
+		
+			init: function(router){
+				this.pvt = {};
+				this.pvt.dbCollection = {};
+                this.event = new Event();
 
+                if (router) {
+                    var that = this;
+                    router.add('subscribe', function(){ return that.routerSubscribe.apply(that, arguments); });
+                    router.add('unsubscribe', function(){ return that.routerUnsubscribe.apply(that, arguments); });
+                    router.add('subscribeRoot', function(){ return that.routerSubscribeRoot.apply(that, arguments); });
+                    router.add('sendDelta', function(){ return that.routerSendDelta.apply(that, arguments); });
+                }
+			},
+			
 			createLocalProxy: function(db) {
 				var dbInfo = {};
 				dbInfo.db = db;
@@ -30,19 +44,7 @@ define(
 				return dbInfo;
 			},			
 	
-			init: function(router){
-				this.pvt = {};
-				this.pvt.dbCollection = {};
-                this.event = new Event();
 
-                if (router) {
-                    var that = this;
-                    router.add('subscribe', function(){ return that.routerSubscribe.apply(that, arguments); });
-                    router.add('unsubscribe', function(){ return that.routerUnsubscribe.apply(that, arguments); });
-                    router.add('subscribeRoot', function(){ return that.routerSubscribeRoot.apply(that, arguments); });
-                    router.add('sendDelta', function(){ return that.routerSendDelta.apply(that, arguments); });
-                }
-			},
 
             routerSubscribe: function(data, done) {
                 var result = {data: this.onSubscribe({connect:data.connect, guid:data.slaveGuid}, data.masterGuid)};
@@ -64,6 +66,7 @@ define(
 
             routerSendDelta: function(data, done) {
                 this.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
+				console.log("VALID:"+this.getDB(data.dbGuid).getVersion("valid")+"draft:"+this.getDB(data.dbGuid).getVersion()+"sent:"+this.getDB(data.dbGuid).getVersion("sent"));
                 done({data: {dbVersion: this.getDB(data.dbGuid).getVersion() }});
             },
 			
@@ -156,7 +159,7 @@ define(
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
 						db.deserialize(obj.data,{db:db, mode:"RW"},cb2);
-						console.log(JSON.stringify(obj.data));
+						//console.log(JSON.stringify(obj.data));
 						if (cb2!==undefined)  // запомнить коллбэк
 							db._cbSetNewObject(rootGuid,cb2);
 						if (cb !== undefined && (typeof cb == "function")) cb();
@@ -188,15 +191,6 @@ define(
 						return dbInfo.db;
 					else return null;
 				}
-				
-				/*
-                for(var i, len=this.dbCollection.length; i<len; i++)
-                    if (this.dbCollection[i].getGuid() == guid)
-                        return this.dbCollection[i];
-
-                // первую
-                if (this.dbCollection.length > 0)
-                    return this.dbCollection[0];*/
 
                 return null;
             },
@@ -228,12 +222,44 @@ define(
 				
                 // вызывает у лога этого объекта applyDelta(delta)
 				console.log("applydeltas");
-				if (db.getVersion() != delta.content.dbVersion-1) {
-					console.log("DB:"+db.getVersion()+" DELTA VER:"+delta.content.dbVersion);
-					return;
-				}
-                root.obj.getLog().applyDelta(delta.content);
 
+				var lval = db.getVersion("valid");
+				var ldraft = db.getVersion();
+				var dval = delta.content.dbVersion;
+				if (db.isMaster()) {
+					if (lval == dval - 1) {
+						//  на сервере сразу валидируется версия при изменениях.
+					}
+					else {
+						console.log("cannot sync server -  valid version:"+lval+"delta version:"+dval);
+						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+						return;				
+					}				
+				}
+				else {
+
+					if (lval == dval - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
+						if (ldraft>lval) db.undo(lval);
+					}
+					else {
+						console.log("cannot sync client -  valid version:"+lval+"delta version:"+dval);
+						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+						return;
+					}
+
+						// TODO подписчикам передать если  делать тему с N базами
+
+				}
+				console.log(" DELTA VER:"+delta.content.dbVersion);
+
+                root.obj.getLog().applyDelta(delta.content);
+				db.setVersion("draft",delta.content.dbVersion);
+				db.setVersion("sent",delta.content.dbVersion);
+				db.setVersion("valid",delta.content.dbVersion);
+
+				console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+
+				
 				var deltas = [];
 				deltas.push(delta);
 			
@@ -249,12 +275,25 @@ define(
 			genDeltas: function(dbGuid) {
 				var db  = this.getDB(dbGuid);
 				var deltas = db.genDeltas();
-				this.propagateDeltas(dbGuid,null,deltas);
-				db.newVersion("sent");
+				if (deltas.length>0) {
+					this.propagateDeltas(dbGuid,null,deltas);
+					if (db.getVersion("sent")<db.getVersion()) db.setVersion("sent",db.getVersion());
+				}
 			},
+			
 			
 			// послать подписчикам и мастеру дельты которые либо сгенерированы локально либо пришли снизу либо сверху
 			propagateDeltas: function(dbGuid, srcDbGuid, deltas) {
+			
+				function cb(result) {
+					if (db.getVersion("valid")<result.data.dbVersion) 
+						db.setVersion("valid", result.data.dbVersion); 
+						
+					if (db.getVersion("valid")>result.data.dbVersion) {
+						// откатить до версии сервера
+						db.undo(result.data.dbVersion);
+					}
+				}
 				//var db = this.getDB(dbGuid);
 				//var deltas = db.genDeltas();
 				var db  = this.getDB(dbGuid);
@@ -271,7 +310,7 @@ define(
 								// TODO валидировать версию
 								}
 							else {
-								var cb = function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion - db.getVersion("valid")); };
+								//var cb = this._receiveResponse; //function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion - db.getVersion("valid")); };
 								proxy.connect.send({action:"sendDelta", type:'method', delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()},cb);
 								}
 						}
@@ -294,6 +333,7 @@ define(
 						// локальные
 						if (subscriber.kind == 'local' && srcDbGuid != guid)
 							subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta.content);
+							// TODO валидировать версию
 					}
 					
 					

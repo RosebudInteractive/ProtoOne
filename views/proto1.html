@@ -18,7 +18,7 @@
 </div>
 
 <div id="interface">
-    &nbsp; &nbsp;<a href="#" id="login" style="display: none;">Войти</a>
+    <a href="#" id="login" style="display: none;">Войти</a>
     <a href="#" id="logout" style="display: none;" onclick="return logout();">Выйти</a>
     <input type="button" value="Трассировка" onclick="getSessions();">
     <input type="button" value="renderControls" onclick="renderControls();">
@@ -31,8 +31,8 @@
         <option value="38aec981-30ae-ec1d-8f8f-5004958b4cfa">DbNavigator</option>
     </select><input type="button" value="add control" onclick="addControl($('#selControl').val());">
     <input type="button" value="subscribe user" onclick="subscribeRootSys();">
-    &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
-    &nbsp; &nbsp;context: <select id="userContext"></select>
+    <input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
+    <select id="userContext"></select>
     <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext(++contextGuid);">
     <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext(++contextGuid);">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">

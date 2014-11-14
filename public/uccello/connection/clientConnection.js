@@ -49,7 +49,7 @@ define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) 
                     that.connected = false;
                 },
                 router: function(data){
-                    console.log('сообщение с сервера:', data);
+                    //console.log('сообщение с сервера:', data);
                     var result = {};
                     switch (data.action) {
                         case 'error': // ошибки

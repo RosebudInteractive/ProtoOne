@@ -4,8 +4,8 @@
 }
 
 define(
-	[],
-	function() {
+	['../system/event'],
+	function(Event) {
 		var MemCol = Class.extend({
 		
 			init: function(name,obj){
@@ -14,6 +14,7 @@ define(
 				this._name = name;
 				this._obj = obj;
 				this._db = obj.getDB();
+				this.event = new Event();
 				obj._addCol(this);
 			},
 			
@@ -50,6 +51,11 @@ define(
 						return;
 					}
 				}
+				this.event.fire({
+                    type: 'delObj',
+                    target: this,
+					obj: obj
+                });
 			},
 			
 			getName: function() {
