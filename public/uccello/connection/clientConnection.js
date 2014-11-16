@@ -94,7 +94,14 @@ define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) 
             this.socket.send({action:'getConnect', type:'method', sid: this.sessionId}, function(result){
                 callback(result.item);
             });
-        }
+        },
+		
+		createSrvContext: function(guid, callback) {
+			this.socket.send({action:"createContext", type:'method', contextGuid:guid}, callback);
+		},
+		
+
+		
     });
 
     return ClientConnection;

@@ -8,8 +8,8 @@
  * @module MemDataBase
  */
 define(
-	["./memCol", "./memObj", "./memMetaRoot", "./memMetaObj", "./memMetaObjFields", "./memMetaObjCols"],
-	function(MemCollection,MemObj,MemMetaRoot,MemMetaObj,MemMetaObjFields,MemMetaObjCols) {
+	["../system/event","./memCol", "./memObj", "./memMetaRoot", "./memMetaObj", "./memMetaObjFields", "./memMetaObjCols"],
+	function(Event,MemCollection,MemObj,MemMetaRoot,MemMetaObj,MemMetaObjFields,MemMetaObjCols) {
 	
 		var metaObjFieldsGuid =  "0fa90328-4e86-eba7-b12b-4fff3a057533";
 		var metaObjColsGuid =  "99628583-1667-3341-78e0-fb2af29dbe8";
@@ -18,6 +18,62 @@ define(
 	
 		var MemDataBase = Class.extend(/** @lends module:MemDataBase.MemDataBase.prototype */{
 
+            /**
+             * params.kind - "master" - значит мастер-база, другое значение - подчиненная база
+             * params.proxyMaster
+             * @constructs
+             * @param controller
+             * @param params
+             * @param cb
+             */
+			init: function(controller, params, cb){
+				var pvt = this.pvt = {};
+				pvt.name = params.name;
+				pvt.robjs = [];				// корневые объекты базы данных
+				pvt.rcoll = {};
+				pvt.objs = {};				// все объекты по гуидам
+				pvt.logIdx = [];			// упорядоченный индекс логов
+				pvt.$idCnt = 0;
+				pvt.subscribers = {}; 		// все базы-подписчики
+				if ("guid" in params)
+					pvt.guid = params.guid;
+				else
+					pvt.guid = controller.guid();
+				pvt.counter = 0;
+
+				
+				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
+				pvt.controller.createLocalProxy(this);
+				pvt.version = 0; // по умолчанию версия = 0
+				pvt.validVersion = 0;
+				pvt.sentVersion = 0;
+				
+				if (params.kind != "master") {
+					var db=this;
+					controller._subscribe(this,params.proxyMaster, function(result) {
+						pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
+						pvt.version = result.data.dbVersion; // устанавливаем номер версии базы по версии мастера
+						pvt.validVersion = pvt.version;
+						pvt.sentVersion = pvt.version;
+						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
+								db._buildMetaTables();
+								//console.log('callback result:', result);
+								if (cb !== undefined && (typeof cb == "function")) cb();
+							});
+						});
+
+					}
+				else { // master base
+					// Создать объект с коллекцией метаинфо
+					pvt.meta = new MemMetaRoot( { db: this },{});
+					if (cb !== undefined && (typeof cb == "function")) cb(this);
+				}	
+				
+				this.event = new Event();
+				
+				
+			},
+		
             /**
              * Добавить корневой объект в БД
              * @param obj
@@ -74,60 +130,17 @@ define(
 			_cbGetNewObject: function(rootGuid) {
 				return this.getRoot(rootGuid).callbackNewObject;
 			},
-
+			
             /**
-             * params.kind - "master" - значит мастер-база, другое значение - подчиненная база
-             * params.proxyMaster
-             * @constructs
-             * @param controller
-             * @param params
-             * @param cb
-             */
-			init: function(controller, params, cb){
-				var pvt = this.pvt = {};
-				pvt.name = params.name;
-				pvt.robjs = [];				// корневые объекты базы данных
-				pvt.rcoll = {};
-				pvt.objs = {};				// все объекты по гуидам
-				pvt.logIdx = [];			// упорядоченный индекс логов
-				pvt.$idCnt = 0;
-				pvt.subscribers = {}; 		// все базы-подписчики
-				if ("guid" in params)
-					pvt.guid = params.guid;
-				else
-					pvt.guid = controller.guid();
-				pvt.counter = 0;
-
-				
-				pvt.controller = controller; //TODO  если контроллер не передан, то ДБ может быть неактивна				
-				pvt.controller.createLocalProxy(this);
-				pvt.version = 0; // по умолчанию версия = 0
-				pvt.validVersion = 0;
-				pvt.sentVersion = 0;
-				
-				if (params.kind != "master") {
-					var db=this;
-					controller._subscribe(this,params.proxyMaster, function(result) {
-						pvt.proxyMaster = controller.getProxy(params.proxyMaster.guid);
-						pvt.version = result.data.dbVersion; // устанавливаем номер версии базы по версии мастера
-						pvt.validVersion = pvt.version;
-						pvt.sentVersion = pvt.version;
-						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
-								db._buildMetaTables();
-								//console.log('callback result:', result);
-								if (cb !== undefined && (typeof cb == "function")) cb();
-							});
-						});
-
-					}
-				else { // master base
-					// Создать объект с коллекцией метаинфо
-					pvt.meta = new MemMetaRoot( { db: this },{});
-					if (cb !== undefined && (typeof cb == "function")) cb(this);
-				}	
-				
-				
+             * вызывается коллекциями при удалении объекта, генерирует событие, на которое можно подписаться
+             */			
+			onDeleteObject: function(obj) {
+				this.event.fire({
+                    type: 'delObj',
+                    target: obj
+                });
 			},
+
 
             /**
              * подписаться у мастер-базы на корневой объект, идентифицированный гуидом rootGuid

@@ -16,7 +16,13 @@ define(
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
-				this.pvt.db = db;	
+				this.pvt.db = db;
+
+				db.event.on({
+					type: "delObj",
+					subscriber: this,
+					callback: this.onDeleteComponent
+				});
 			},
 
             /**
@@ -46,14 +52,22 @@ define(
 			getByGuid: function(guid) {
 				return this.pvt.compByGuid[guid];
 			},
-			
+
+            /**
+			 * Рендеринг компонентов интерфейса
+             */				
 			render: function() {
 				for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
 					this.pvt.compByGuid[g].render();
 					
-				for (var g in this.pvt.compByGuid)
+				for (var g in this.pvt.compByGuid) // обнуляем "измененные" поля
 					this.pvt.compByGuid[g].getObj().resetModifFldLog();
+			},
+
+			onDeleteComponent: function(result) {
+				delete this.pvt.compByGuid[result.obj.getGuid()];
 			}
+			
 
 		});
 		return ControlMgr;

@@ -4,8 +4,8 @@
 }
 
 define(
-	['../system/event'],
-	function(Event) {
+	[],
+	function() {
 		var MemCol = Class.extend({
 		
 			init: function(name,obj){
@@ -14,7 +14,7 @@ define(
 				this._name = name;
 				this._obj = obj;
 				this._db = obj.getDB();
-				this.event = new Event();
+				//this.event = new Event();
 				obj._addCol(this);
 			},
 			
@@ -48,14 +48,11 @@ define(
 							var o = { obj:obj, colName: this._name, type:"del"};
 							this._obj.getLog().add(o);					
 						}
+						this.getDB().onDeleteObject(obj);  // уведомить свою базу данных
 						return;
 					}
 				}
-				this.event.fire({
-                    type: 'delObj',
-                    target: this,
-					obj: obj
-                });
+				
 			},
 			
 			getName: function() {

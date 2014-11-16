@@ -10,7 +10,7 @@ requirejs.config({
 
 var clientConnection = null, socket = null;
 var sessionId = $.url('#sid');
-var myApp = {};
+//var myApp = {};
 var typeGuids = {};
 var contextGuid = 0, currContext=null, dbcontext = null;
 var uccelloClt = null;
@@ -28,20 +28,19 @@ $(document).ready( function() {
                 } else {
                     $('#logout').hide(); $('#login').show();
                 }
-                myApp = uccelloClt.myApp;
-                clientConnection = uccelloClt.clientConnection;
-                socket = uccelloClt.clientConnection.socket;
+                clientConnection = uccelloClt.getClient();
+                socket = uccelloClt.getClient().socket;
                 typeGuids = uccelloClt.typeGuids;
             }});
 
 
-            subscribeRootSys = function() {
+            /*subscribeRootSys = function() {
                 // подписываемся на корневой объект контейнера
                 myApp.dbsys.subscribeRoot(myApp.guids.sysRootGuid, function(result){
                     renderControls();
                     getContexts();
                 });
-            }
+            }*/
 
             createComponent = function(obj) {
                 var g = obj.getTypeGuid();
@@ -57,12 +56,13 @@ $(document).ready( function() {
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    options.db = myApp.dbsys;
+                    options.db = uccelloClt.getSysDB(); //myApp.dbsys;
                 }
 
                 new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);
             }
 
+			/*
             createComponentClient = function(obj) {
                 var g = obj.getTypeGuid();
                 var options = {parent:'#result'};
@@ -82,9 +82,10 @@ $(document).ready( function() {
 
                 new typeGuids[g](myApp.cmclientcontext, { objGuid: obj.getGuid() }, options);
             }
+			*/
 
             renderControls = function(cm) {
-                if (!cm) cm = myApp.controlMgr;
+                if (!cm) cm = uccelloClt.getContextCM(); //myApp.controlMgr;
                 if (!cm) return;
                 cm.render();
                 // редактирование ячеек грида
@@ -102,7 +103,7 @@ $(document).ready( function() {
             var addControlId = 1000;
             addControl = function(guid, ini, cm) {
 
-                if (!cm) cm = myApp.controlMgr;
+                if (!cm) cm = uccelloClt.getContextCM(); //myApp.controlMgr;
                 if (!ini) {
                     ini = {fields: {"Id": addControlId, "Name": 'Component'+addControlId, "Left":"300", "Top":"150"}};
                     addControlId++;
@@ -114,7 +115,8 @@ $(document).ready( function() {
                     if (gl[f].getClassName() == "Container") { rootCont=gl[f]; break; }
 
                 var control = new typeGuids[guid](cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:'#result'});
-                myApp.controller.genDeltas(cm.getDB().getGuid());
+                //myApp.controller.genDeltas(cm.getDB().getGuid());
+				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 renderControls(cm);
             }
 
@@ -165,18 +167,22 @@ $(document).ready( function() {
              */
             sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
-                    myApp.controller.genDeltas(dbcontext.getGuid());
+					uccelloClt.getController().genDeltas(dbcontext.getGuid());
+                    //myApp.controller.genDeltas(dbcontext.getGuid());
             }
 
             /**
-             * Создать контекст
-             * @param guid
+             * Создать серверный контекст
+             * @param guid - гуид ресурса, который загружается в контекст
              */
             createContext = function(guid) {
                 $('#result').empty();
-                socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
+				uccelloClt.getClient().createSrvContext(guid, function(result){
+                    selectContext(result.masterGuid, result.myRootContGuid); });
+				
+                /*socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
                     selectContext(result.masterGuid, result.myRootContGuid);
-                });
+                });*/
             }
 
             /**
@@ -184,8 +190,10 @@ $(document).ready( function() {
              * @param guid
              */
             selectContext = function(guid, root) {
+			
+				uccelloClt.selectContext(guid,root, function() { currContext = guid + '|' + root;  getContexts();  renderControls(); } );
 
-                function done() {
+                /*function done() {
                     $('#result').empty();
                     dbcontext = myApp.controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
                         dbcontext.subscribeRoot(root, function(){
@@ -200,7 +208,7 @@ $(document).ready( function() {
                 if (dbcontext)
                     myApp.controller.delDataBase(dbcontext.getGuid(), done);
                 else
-                    done();
+                    done();*/
             }
 
             /**
@@ -210,8 +218,8 @@ $(document).ready( function() {
                 var sel = $('#userContext');
                 sel.empty();
 
-                for (var i = 0, len = myApp.dbsys.countRoot(); i < len; i++) {
-                    var root = myApp.dbsys.getRoot(i);
+                for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
+                    var root = uccelloClt.getSysDB().getRoot(i);
                     var obj = root.obj;
                     for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
                         var col = obj.getCol(j);
@@ -234,6 +242,7 @@ $(document).ready( function() {
              * Создать клиентский контекст
              * @param guid
              */
+			 /*
             createClientContext = function(guid) {
                 require(
                     ['./uccello/connection/clientConnection', './uccello/connection/visualContext', './uccello/baseControls/aComponent',
@@ -270,6 +279,7 @@ $(document).ready( function() {
                         });
                     });
                 }
+				*/
 
                 serializeForm = function(){
                     if (!dbcontext || !currContext) return;
