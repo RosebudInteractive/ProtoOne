@@ -34,13 +34,15 @@ $(document).ready( function() {
             }});
 
 
-            /*subscribeRootSys = function() {
+            subscribeRootSys = function() {
                 // подписываемся на корневой объект контейнера
-                myApp.dbsys.subscribeRoot(myApp.guids.sysRootGuid, function(result){
+				
+				// TODO переделать uccelloClt.pvt.guids.
+                uccelloClt.getSysDB().subscribeRoot(uccelloClt.pvt.guids.sysRootGuid, function(result){
                     renderControls();
                     getContexts();
                 });
-            }*/
+            }
 
             createComponent = function(obj) {
                 var g = obj.getTypeGuid();
