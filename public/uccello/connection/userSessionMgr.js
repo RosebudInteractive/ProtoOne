@@ -4,9 +4,9 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', './session', './connect', './user', '../system/event',
+    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', '../baseControls/aControl', './session', './connect', './user', '../system/event',
         './visualContext'],
-    function(MemDBController, ControlMgr, AComponent, Session, Connect, User, Event, VisualContext) {
+    function(MemDBController, ControlMgr, AComponent, AControl, Session, Connect, User, Event, VisualContext) {
         var UserSessionMgr = Class.extend({
 
             init: function(router, options){
@@ -111,17 +111,18 @@ define(
                 function createDb(dbc, options){
                     var db = dbc.newDataBase(options);
                     var cm = new ControlMgr(db);
+
+                    // meta
+                    new AComponent(cm);
+                    new AControl(cm);
+
+                    // загружать динамически
                     var AContainer = require('../../../public/ProtoControls/container');
-                    var AControl = require('../baseControls/aControl');
                     var AButton = require('../../../public/ProtoControls/button');
                     var AEdit = require('../../../public/ProtoControls/edit');
                     var AMatrixGrid = require('../../../public/ProtoControls/matrixGrid');
                     var PropEditor = require('../../../public/ProtoControls/propEditor');
                     var DBNavigator = require('../../../public/ProtoControls/dbNavigator');
-
-                    // meta
-                    new AComponent(cm);
-                    new AControl(cm);
                     new AContainer(cm);
                     new AButton(cm);
                     new AEdit(cm);
@@ -129,8 +130,9 @@ define(
                     new PropEditor(cm);
                     new DBNavigator(cm);
 
+                    //this.loadControls();
                     var hehe = loadRes();
-                    db.deserialize(hehe, {db: db});
+                    db.deserialize(hehe, {db: db, cm:cm});
                     return {cm:cm, db:db, myRootCont: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6")};
                 }
 

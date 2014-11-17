@@ -27,17 +27,20 @@ define(
                     that.pvt.sessionId = result.sessionId;
                     that.pvt.user = result.user;
                     document.location.hash = '#sid='+sessionId;
+
+                    // загружать динамически
                     that.pvt.typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
                     that.pvt.typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
                     that.pvt.typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
                     that.pvt.typeGuids["a0e02c45-1600-6258-b17a-30a56301d7f1"] = PropEditor;
                     that.pvt.typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = DbNavigator;
+                    that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
+
                     that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
                     that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;
                     that.pvt.typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = Connect;
                     that.pvt.typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = VisualContext;
                     that.pvt.typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
-                    that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
                     that.createController();
                     if (options.callback)
                         options.callback();
@@ -95,6 +98,14 @@ define(
 			// получить конструктор по его guid
 			getConstr: function(guid) {
 				return this.pvt.typeGuids[guid];
+			},
+
+            /**
+             * Добавить конструктор
+             * @param obj
+             */
+			addConstr: function(obj) {
+				this.pvt.typeGuids[obj.classGuid] = obj;
 			},
 
             getLoggedUser: function(){

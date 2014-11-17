@@ -67,7 +67,7 @@ define(
 			onDeleteComponent: function(result) {
 				delete this.pvt.compByGuid[result.obj.getGuid()];
 			}
-			
+
 
 		});
 		return ControlMgr;
