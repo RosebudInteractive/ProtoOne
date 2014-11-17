@@ -97,6 +97,10 @@ define(
 				return this.pvt.typeGuids[guid];
 			},
 
+            getLoggedUser: function(){
+                return this.pvt.user;
+            },
+
             createComponent: function(obj) {
                 var g = obj.getTypeGuid();
                 var options = {parent:'#result'};
@@ -138,7 +142,8 @@ define(
 					controller.delDataBase(dbcontext.getGuid(), done);
 				else
 					done();			
-			}			
+			}
+
 			
         });
         return UccelloClt;

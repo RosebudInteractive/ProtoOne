@@ -23,7 +23,7 @@ $(document).ready( function() {
         function(UccelloClt, ControlMgr){
 
             uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, callback: function(){
-                if (uccelloClt.user) {
+                if (uccelloClt.getLoggedUser()) {
                     $('#login').hide(); $('#logout').show();
                 } else {
                     $('#logout').hide(); $('#login').show();
