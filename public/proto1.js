@@ -170,7 +170,7 @@ $(document).ready( function() {
              */
             sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
-					uccelloClt.getController().genDeltas(dbcontext.getGuid());
+					uccelloClt.getController().genDeltas(uccelloClt.getContextCM().getDB().getGuid());
                     //myApp.controller.genDeltas(dbcontext.getGuid());
             }
 
