@@ -91,6 +91,11 @@ define(
 			getContextCM: function() {
 				return this.pvt.controlMgr;
 			},
+			
+			// получить конструктор по его guid
+			getConstr: function(guid) {
+				return this.pvt.typeGuids[guid];
+			},
 
             createComponent: function(obj) {
                 var g = obj.getTypeGuid();

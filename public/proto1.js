@@ -116,7 +116,8 @@ $(document).ready( function() {
                 for (var f in gl)
                     if (gl[f].getClassName() == "Container") { rootCont=gl[f]; break; }
 
-                var control = new typeGuids[guid](cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:'#result'});
+				var constr = uccelloClt.getConstr(guid);
+                var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:'#result'});
                 //myApp.controller.genDeltas(cm.getDB().getGuid());
 				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 renderControls(cm);
