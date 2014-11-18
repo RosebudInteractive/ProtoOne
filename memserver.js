@@ -16,7 +16,7 @@ var app = express();
 // обработчик файлов html будет шаблонизатор ejs
 app.engine('html', require('ejs').renderFile);
 
-// обработка /test
+// обработка /tests
 app.get('/test', function(req, res){
     res.render('proto1.html');
 });
@@ -38,6 +38,7 @@ app.get("/update", function(req, res){
 
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
+app.use("/tests", express.static(__dirname + '/tests'));
 
 // ----------------------------------------------------------------------------------------------------------------------
 // база данных

@@ -4,6 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Jasmine Spec Runner v2.0.2</title>
 
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" media="all">
+    <script src="/public/uccello/uses/class-extend.js"></script>
+
+    <script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
+    <script src="/public/uccello/uses/url.js"></script>
+    <script src="/public/libs/jeditable/jquery.jeditable.mini.js"></script>
+    <script src="proto1.js"></script>
+
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.2/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.2/jasmine.css">
 
@@ -18,5 +26,43 @@
 </head>
 
 <body>
+
+<div style="display: none;">
+    <div id="header">
+
+    </div>
+
+    <div id="interface">
+        &nbsp; &nbsp;<a href="#" id="login" style="display: none;">Войти</a>
+        <a href="#" id="logout" style="display: none;" onclick="return logout();">Выйти</a>
+        <input type="button" value="Трассировка" onclick="getSessions();">
+        <input type="button" value="renderControls" onclick="renderControls();">
+        <select id="selControl">
+            <option value="f79d78eb-4315-5fac-06e0-d58d07572482">Edit</option>
+            <option value="af419748-7b25-1633-b0a9-d539cada8e0d">Button</option>
+            <option value="827a5cb3-e934-e28c-ec11-689be18dae97">MatrixGrid</option>
+            <option value="1d95ab61-df00-aec8-eff5-0f90187891cf">Container</option>
+            <option value="a0e02c45-1600-6258-b17a-30a56301d7f1">PropEditor</option>
+            <option value="38aec981-30ae-ec1d-8f8f-5004958b4cfa">DbNavigator</option>
+        </select><input type="button" value="add control" onclick="addControl($('#selControl').val());">
+        <input type="button" value="subscribe user" onclick="subscribeRootSys();">
+        &nbsp; &nbsp;<input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
+        &nbsp; &nbsp;context: <select id="userContext"></select>
+        <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext(++contextGuid);">
+        <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext(++contextGuid);">
+        <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
+        <div id="container">
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <div id="loginForm" style="display: none;">
+        <div id="loginError"></div>
+        Имя:<input type="text" value="u1" id="loginName"><br>
+        Пароль:<input type="password" value="p1" id="loginPass"><br>
+        <input type="button" value="Войти" onclick="login($('#loginName').val(), $('#loginPass').val())">
+    </div>
+</div>
+
 </body>
 </html>

@@ -56,6 +56,7 @@ define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) 
                             console.log(data.error);
                             break;
                         case 'sendDelta':
+                            console.timeEnd('applyDeltas');
                             that.getObj().getDB().getController().applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
                             break;
                     }

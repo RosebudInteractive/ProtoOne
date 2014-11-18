@@ -65,7 +65,9 @@ define(
             },
 
             routerSendDelta: function(data, done) {
+                console.time('applyDeltas');
                 this.applyDeltas(data.dbGuid, data.srcDbGuid, data.delta);
+                console.timeEnd('applyDeltas');
 				console.log("VALID:"+this.getDB(data.dbGuid).getVersion("valid")+"draft:"+this.getDB(data.dbGuid).getVersion()+"sent:"+this.getDB(data.dbGuid).getVersion("sent"));
                 done({data: {dbVersion: this.getDB(data.dbGuid).getVersion() }});
             },
@@ -284,7 +286,7 @@ define(
 			
 			// послать подписчикам и мастеру дельты которые либо сгенерированы локально либо пришли снизу либо сверху
 			propagateDeltas: function(dbGuid, srcDbGuid, deltas) {
-			
+
 				function cb(result) {
 					if (db.getVersion("valid")<result.data.dbVersion) 
 						db.setVersion("valid", result.data.dbVersion); 
