@@ -39,7 +39,7 @@ define(
                     });
                 } else {
 
-                    var editor = $('#' + this.getGuid()), props, controls, change;
+                    var editor = $('#' + this.getGuid()), props, controls, change, delbtn;
                     if (editor.length == 0) {
                         editor = $(this._templates['propEditor']).attr('id', this.getGuid());
                         controls = $(this._templates['controls']);
@@ -54,9 +54,16 @@ define(
                         change.click(function () {
                             that.saveProps.apply(that, arguments);
                         });
+                        delbtn = $(this._templates['delbtn']);
+                        delbtn.click(function () {
+                            that.delControl.apply(that, arguments);
+                            if (that.options.delete)
+                                that.options.delete();
+                        });
                         editor.append(controls);
                         editor.append(props);
                         editor.append(change);
+                        editor.append(delbtn);
                         $(this.options.parent).append(editor);
                         editor.css({top: this.top() + 'px', left: this.left() + 'px'});
                     } else {
@@ -97,13 +104,16 @@ define(
                 var editor = $('#' + this.getGuid());
                 var props = editor.find('.props');
                 var change = editor.find('.change');
+                var delbtn = editor.find('.delbtn');
                 props.empty();
 
                 if (guid == '') {
                     change.hide();
+                    delbtn.hide();
                     return;
                 }
                 change.show();
+                delbtn.show();
 
                 var comp = this.cm.getByGuid(guid);
                 var countProps = comp.countProps();
@@ -114,6 +124,15 @@ define(
                     p.find('.value input').val(comp[propName.charAt(0).toLowerCase() + propName.slice(1)]()).attr('name', propName);
                     props.append(p);
                 }
+            },
+
+            /**
+             * Удаление текущего контрола
+             * @param guid
+             */
+            delControl: function () {
+                var editor = $('#' + this.getGuid());
+                this.cm.del(editor.find('.controls').val());
             },
 
             /**

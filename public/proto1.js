@@ -118,7 +118,18 @@ $(document).ready( function() {
 
 				var constr = uccelloClt.getConstr(guid);
                 var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:'#result'});
-                //myApp.controller.genDeltas(cm.getDB().getGuid());
+				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
+                renderControls(cm);
+            }
+
+            /**
+             * Удалить контрол
+             * @param guid
+             * @param cm
+             */
+            delControl = function(guid, cm) {
+                if (!cm) cm = uccelloClt.getContextCM();
+                cm.del(guid);
 				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 renderControls(cm);
             }

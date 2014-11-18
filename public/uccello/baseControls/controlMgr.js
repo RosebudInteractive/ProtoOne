@@ -33,7 +33,16 @@ define(
 				this.pvt.compByLid[component.getLid()] = component;
 				this.pvt.compByGuid[component.getGuid()] = component;
 			},
-			
+
+
+            /**
+			 * Удалить компонент из менеджера контролов
+             * @param guid
+             */
+			del: function(guid) {
+                console.log('заглушка удаления: '+guid);
+			},
+
 			// временно
 			_getCompGuidList: function() {
 				return this.pvt.compByGuid;

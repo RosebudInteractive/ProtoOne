@@ -122,6 +122,10 @@ define(
                         sendDeltas();
                         renderControls();
                     };
+                    options.delete = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
                 }
 
                 // DbNavigator для системной бд
