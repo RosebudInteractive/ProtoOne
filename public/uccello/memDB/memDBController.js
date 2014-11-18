@@ -11,6 +11,7 @@ define(
 			init: function(router){
 				this.pvt = {};
 				this.pvt.dbCollection = {};
+				this.pvt.bufdeltas = {};		// буферизация входящих дельт
                 this.event = new Event();
 
                 if (router) {
@@ -212,60 +213,74 @@ define(
                 }
             },
 
-			// пока только 1 дельта!!!!
+			// пока только 1 дельта!!!! НО с буферизацией
             applyDeltas: function(dbGuid, srcDbGuid, delta) {
 			
-				console.log("incoming delta");
+				console.log("incoming delta: ");
 				console.log(delta);
-			
                 // находим рутовый объект к которому должна быть применена дельта
                 var db  = this.getDB(dbGuid);
                 var root = db.getRoot(delta.rootGuid);
 				
-                // вызывает у лога этого объекта applyDelta(delta)
-				console.log("applydeltas");
-
+				var buf = this.pvt.bufdeltas;
+				
+				if (!(srcDbGuid in buf)) buf[srcDbGuid] = {};
+				if (!(dbGuid in buf[srcDbGuid])) buf[srcDbGuid][dbGuid] = {};
+				var cur = buf[srcDbGuid][dbGuid];
+				var tr = delta.tran.toString();
+				if (!(tr in cur)) cur[tr] = [];
+				cur[tr].push(delta);
+				
+				if (!("last" in delta)) return; // буферизовали и ждем последнюю, чтобы применить все сразу
+				
+				// TODO ничто не гарантирует, что транзакция закроется и что она будет выполняться в правильном порядке
+				// если мы хотим это контролировать нужно немного иначе организовать хранилище незавершенных транзакций (дельт)
+				
 				var lval = db.getVersion("valid");
 				var ldraft = db.getVersion();
-				var dval = delta.content.dbVersion;
-				if (db.isMaster()) {
-					if (lval == dval - 1) {
-						//  на сервере сразу валидируется версия при изменениях.
+				var dval = delta.dbVersion;				
+				for (var i=0; i<cur[tr].length; i++) {
+					
+					delta = cur[tr][i];
+
+					if (db.isMaster()) {
+						if (lval == dval - 1) {
+							//  на сервере сразу валидируется версия при изменениях.
+						}
+						else {
+							console.log("cannot sync server -  valid version:"+lval+"delta version:"+dval);
+							console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+							return;				
+						}				
 					}
 					else {
-						console.log("cannot sync server -  valid version:"+lval+"delta version:"+dval);
-						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-						return;				
-					}				
-				}
-				else {
+						if (lval == dval - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
+							if (ldraft>lval) db.undo(lval);
+						}
+						else {
+							console.log("cannot sync client -  valid version:"+lval+"delta version:"+dval);
+							console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+							return;
+						}
 
-					if (lval == dval - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
-						if (ldraft>lval) db.undo(lval);
-					}
-					else {
-						console.log("cannot sync client -  valid version:"+lval+"delta version:"+dval);
-						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-						return;
+							// TODO подписчикам передать если  делать тему с N базами
+
 					}
 
-						// TODO подписчикам передать если  делать тему с N базами
+					root.obj.getLog().applyDelta(delta);
+					db.setVersion("draft",delta.dbVersion);
+					db.setVersion("sent",delta.dbVersion);
+					db.setVersion("valid",delta.dbVersion);
 
+					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
 				}
-				console.log(" DELTA VER:"+delta.content.dbVersion);
-
-                root.obj.getLog().applyDelta(delta.content);
-				db.setVersion("draft",delta.content.dbVersion);
-				db.setVersion("sent",delta.content.dbVersion);
-				db.setVersion("valid",delta.content.dbVersion);
-
-				console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-
 				
-				var deltas = [];
-				deltas.push(delta);
+				//var deltas = [];
+				//deltas.push(delta);
 			
-				this.propagateDeltas(dbGuid,srcDbGuid,deltas);
+				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]); //deltas);
+				
+				delete cur[tr];
 
                 this.event.fire({
                     type: 'applyDeltas',
@@ -311,7 +326,7 @@ define(
 						if (proxy != undefined && proxy.guid != srcDbGuid) {
 							if (proxy.kind == "local") {
 								//TODO
-								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta.content);
+								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta); //.content);
 								// TODO валидировать версию
 								}
 							else {
@@ -337,7 +352,7 @@ define(
 						var subscriber = root.subscribers[guid];
 						// локальные
 						if (subscriber.kind == 'local' && srcDbGuid != guid)
-							subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta.content);
+							subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta); //.content);
 							// TODO валидировать версию
 					}
 					

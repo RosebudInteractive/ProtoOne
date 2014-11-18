@@ -468,13 +468,19 @@ define(
 				var allDeltas = [];
 				for (var i=0; i<this.countRoot(); i++) {
 					var d=this.getRoot(i).obj.getLog().genDelta();
-					if (d!=null)
-						allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
+					if (d!=null) {
+						d.tran = this.pvt.tranCounter;
+						allDeltas.push(d);
+					}
+						//allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
 				}
 				
 				//TODO добавить вызовы методов
-				
-				if (allDeltas.length>0) tranCounter++;
+							
+				if (allDeltas.length>0) {
+					this.pvt.tranCounter++;
+					allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции
+				}
 				
 				return allDeltas;
 
