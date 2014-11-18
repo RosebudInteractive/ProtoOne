@@ -11,7 +11,7 @@ requirejs.config({
 var clientConnection = null, socket = null;
 var sessionId = $.url('#sid');
 var typeGuids = {};
-var contextGuid = 0, currContext=null;
+var contextGuid = 0, currContext=null, currRoot=null;
 var uccelloClt = null;
 var masterGuid = null;
 var rootsGuids = null;
@@ -204,9 +204,11 @@ $(document).ready( function() {
              * @param guid
              */
             selectContext = function(guid, root) {
-				uccelloClt.selectContext(guid, root, function() {
-                    currContext = guid + '|' + root;
+                uccelloClt.selectContext(guid, root, function() {
+                    currContext = guid;
+                    currRoot = root;
                     getContexts();
+                    $(resultForm).empty();
                     renderControls();
                 });
             }
@@ -228,7 +230,7 @@ $(document).ready( function() {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
                                 var option = $('<option/>');
-                                option.val(item.get('DataBase')+'|'+item.get('Root')).html(item.get('Name'));
+                                option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
                             sel.val(currContext);
@@ -283,7 +285,7 @@ $(document).ready( function() {
 
                 serializeForm = function(){
                     if (!currContext) return;
-                    var root = uccelloClt.getContextCM().getDB().getObj(currContext.split('|')[1]);
+                    var root = uccelloClt.getContextCM().getDB().getObj(currRoot);
                     console.log(uccelloClt.getContextCM().getDB().serialize(root));
                 }
         }
@@ -319,8 +321,11 @@ $(function(){
 
     $('#userContext').change(function(){
         currContext = $(this).val();
-        var guids = $(this).val().split('|');
-        selectContext(guids[0], guids[1]);
+        /*if (!rootsGuids && uccelloClt.getContextCM()) {
+            var db = uccelloClt.getContextCM().getDB();
+            rootsGuids = [db.getRoot(0).getGuid(), db.getRoot(1).getGuid()];
+        }*/
+        selectContext(currContext, rootsGuids[0]);
     });
 
     selectTab = function (i){

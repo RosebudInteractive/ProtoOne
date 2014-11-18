@@ -211,10 +211,8 @@ define(
                 var user = this.getConnect(data.connectId).getSession().getUser();
                 var controller = this.getController();
                 var r = createDb(controller, {name: "Master", kind: "master"});
-                var context1 = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
-                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid(), Root:r.roots[0]}}});
-                var context2 = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
-                    ini: {fields: {Id: data.contextGuid+1, Name: 'context'+data.contextGuid+1, DataBase: r.db.getGuid(), Root:r.roots[1]}}});
+                var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid()}}});
                 var result = {masterGuid: r.db.getGuid(), roots:r.roots};
                 controller.genDeltas(this.dbsys.getGuid());
                 done(result);
