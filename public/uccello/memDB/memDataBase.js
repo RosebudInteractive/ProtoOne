@@ -35,6 +35,7 @@ define(
 				pvt.logIdx = [];			// упорядоченный индекс логов
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
+				pvt.tranCounter = 0;		// счетчик транзакции
 				if ("guid" in params)
 					pvt.guid = params.guid;
 				else
@@ -461,7 +462,6 @@ define(
             /**
              * Сгенерировать "дельты" по логу изменений
              * (для сервера нужно будет передавать ИД подписчика)
-             * возможно, надо сделать отдельный служебный класс для этого функционала
              * @returns {Array}
              */
 			genDeltas: function() {
@@ -469,8 +469,12 @@ define(
 				for (var i=0; i<this.countRoot(); i++) {
 					var d=this.getRoot(i).obj.getLog().genDelta();
 					if (d!=null)
-						allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d });
+						allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
 				}
+				
+				//TODO добавить вызовы методов
+				
+				if (allDeltas.length>0) tranCounter++;
 				
 				return allDeltas;
 

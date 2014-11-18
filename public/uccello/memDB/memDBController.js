@@ -273,7 +273,10 @@ define(
                 });
             },
 			
-			// сгенерить и разослать дельты
+            /**
+             * Сгенерировать и разослать "дельты" 
+             * @param dbGuid - гуид базы данных, для которой генерим дельты
+             */
 			genDeltas: function(dbGuid) {
 				var db  = this.getDB(dbGuid);
 				var deltas = db.genDeltas();

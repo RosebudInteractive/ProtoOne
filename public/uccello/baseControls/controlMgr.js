@@ -74,7 +74,7 @@ define(
 			},
 
 			onDeleteComponent: function(result) {
-				delete this.pvt.compByGuid[result.obj.getGuid()];
+				delete this.pvt.compByGuid[result.target.getGuid()];
 			}
 
 
