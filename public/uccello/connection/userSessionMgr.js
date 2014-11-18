@@ -92,12 +92,81 @@ define(
              */
             routerCreateContext: function(data, done) {
 
+                var that = this;
                 /**
                  * Загрузить ресурс
                  * @returns {obj}
                  */
-                function loadRes() {
-                    var hehe = {"$sys":{"guid":"ac949125-ce74-3fad-5b4a-b943e3ee67c6","typeGuid":"1d95ab61-df00-aec8-eff5-0f90187891cf"},"fields":{"Id":11,"Name":"MainContainer"},"collections":{"Children":{"0":{"$sys":{"guid":"65704a87-4310-30ef-7b31-b8fe8bffa211","typeGuid":"af419748-7b25-1633-b0a9-d539cada8e0d"},"fields":{"Id":22,"Name":"MyFirstButton1","Top":"50","Left":"30","Caption":"OK"},"collections":{}},"1":{"$sys":{"guid":"5b6b203a-6ba3-b4e9-e153-01c104e699f9","typeGuid":"827a5cb3-e934-e28c-ec11-689be18dae97"},"fields":{"Id":33,"Name":"Grid","Top":"60","Left":"50","HorCells":3,"VerCells":4},"collections":{}},"2":{"$sys":{"guid":"6acec0b4-6601-545c-6f55-7c38b3f73089","typeGuid":"a0e02c45-1600-6258-b17a-30a56301d7f1"},"fields":{"Id":44,"Name":"PropEditor","Top":"10","Left":"700"},"collections":{}},"3":{"$sys":{"guid":"3bdd191f-b188-069f-9736-b578140984b7","typeGuid":"38aec981-30ae-ec1d-8f8f-5004958b4cfa"},"fields":{"Id":55,"Name":"DbNavigator","Top":"240","Left":"20"},"collections":{}}}}};
+                function loadRes(guidRoot) {
+                    var hehe = {
+                        "$sys": {
+                            "guid": guidRoot,
+                            "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                        },
+                        "fields": {
+                            "Id": 11,
+                            "Name": "MainContainer"
+                        },
+                        "collections": {
+                            "Children": {
+                                "0": {
+                                    "$sys": {
+                                        "guid": that.dbcsys.guid(),
+                                        "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                    },
+                                    "fields": {
+                                        "Id": 22,
+                                        "Name": "MyFirstButton1",
+                                        "Top": "50",
+                                        "Left": "30",
+                                        "Caption": "OK"
+                                    },
+                                    "collections": {}
+                                },
+                                "1": {
+                                    "$sys": {
+                                        "guid":  that.dbcsys.guid(),
+                                        "typeGuid": "827a5cb3-e934-e28c-ec11-689be18dae97"
+                                    },
+                                    "fields": {
+                                        "Id": 33,
+                                        "Name": "Grid",
+                                        "Top": "60",
+                                        "Left": "50",
+                                        "HorCells": 3,
+                                        "VerCells": 4
+                                    },
+                                    "collections": {}
+                                },
+                                "2": {
+                                    "$sys": {
+                                        "guid":  that.dbcsys.guid(),
+                                        "typeGuid": "a0e02c45-1600-6258-b17a-30a56301d7f1"
+                                    },
+                                    "fields": {
+                                        "Id": 44,
+                                        "Name": "PropEditor",
+                                        "Top": "10",
+                                        "Left": "700"
+                                    },
+                                    "collections": {}
+                                },
+                                "3": {
+                                    "$sys": {
+                                        "guid":  that.dbcsys.guid(),
+                                        "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
+                                    },
+                                    "fields": {
+                                        "Id": 55,
+                                        "Name": "DbNavigator",
+                                        "Top": "240",
+                                        "Left": "20"
+                                    },
+                                    "collections": {}
+                                }
+                            }
+                        }
+                    };
                     return hehe;
                 }
 
@@ -131,17 +200,22 @@ define(
                     new DBNavigator(cm);
 
                     //this.loadControls();
-                    var hehe = loadRes();
-                    db.deserialize(hehe, {db: db, cm:cm});
-                    return {cm:cm, db:db, myRootCont: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6")};
+                    var roots = [ that.dbcsys.guid(),  that.dbcsys.guid()];
+                    var hehe1 = loadRes(roots[0]);
+                    var hehe2 = loadRes(roots[1]);
+                    db.deserialize(hehe1, {db: db, cm:cm});
+                    db.deserialize(hehe2, {db: db, cm:cm});
+                    return {cm:cm, db:db, roots: [db.getObj(roots[0]).getGuid(), db.getObj(roots[1]).getGuid()]};
                 }
 
                 var user = this.getConnect(data.connectId).getSession().getUser();
                 var controller = this.getController();
                 var r = createDb(controller, {name: "Master", kind: "master"});
-                var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
-                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid(), Root:r.myRootCont.getGuid()}}});
-                var result = {masterGuid: r.db.getGuid(), myRootContGuid:r.myRootCont.getGuid()};
+                var context1 = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid(), Root:r.roots[0]}}});
+                var context2 = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                    ini: {fields: {Id: data.contextGuid+1, Name: 'context'+data.contextGuid+1, DataBase: r.db.getGuid(), Root:r.roots[1]}}});
+                var result = {masterGuid: r.db.getGuid(), roots:r.roots};
                 controller.genDeltas(this.dbsys.getGuid());
                 done(result);
             },

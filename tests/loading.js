@@ -43,43 +43,62 @@ $(document).ready( function() {
                 socket = uccelloClt.getClient().socket;
                 typeGuids = uccelloClt.typeGuids;
 
-                for(var c=0; c<testNumContexts; c++) {
-                    // создать контекст
-                    uccelloClt.getClient().createSrvContext(++contextGuid, function(result){
-                        // выбрать контекст
-                        uccelloClt.selectContext(result.masterGuid, result.myRootContGuid, function() {
-                            currContext = result.masterGuid  + '|' + result.myRootContGuid;
-
-                            // все свойства всех контролов
-                            var props = [];
-                            var cm = uccelloClt.getContextCM();
-                            var gl = cm._getCompGuidList();
-                            for (var f in gl) {
-                                var guid = gl[f].getGuid();
-                                var comp = cm.getByGuid(guid);
-                                var countProps = comp.countProps();
-                                for (var i = 0; i < countProps; i++) {
-                                    var name = comp.getPropName(i);
-                                    name = name.charAt(0).toLowerCase() + name.slice(1);
-                                    var val = comp[name]();
-                                    props.push({comp:comp, guid:guid, name:name, val:val});
-                                }
-                            }
-
-                            // изменение произвольным образом testNumProp свойств на клиенте
-                            for(var i=0; i<testNumProp; i++) {
-                                if (props[i].name != 'id')
-                                    props[i].comp[props[i].name](props[i].val+props[i].val)
-                            }
-
-                            // отсылка дельт на сервер
-                            console.time('applyDeltas');
-                            uccelloClt.getController().genDeltas(uccelloClt.getContextCM().getDB().getGuid());
-                        });
+                setTimeout(function(){
+                    // подписка на системную бд
+                    uccelloClt.getSysDB().subscribeRoot(uccelloClt.pvt.guids.sysRootGuid, function(result){
+                        console.log(getContexts())
+                        var contexts = getContexts();
+                        if (contexts.length==0) {
+                            // создать контекст
+                            uccelloClt.getClient().createSrvContext(++contextGuid, function(result){
+                                selectContext(result.masterGuid, result.myRootContGuid);
+                            });
+                        } else {
+                            selectContext(contexts[0].db, contexts[0].root);
+                        }
                     });
-                }
+                }, 1000);
+
+
 
             }});
+
+
+            selectContext = function(db, root) {
+                // выбрать контекст
+                uccelloClt.selectContext(db, root, function() {
+                    currContext = db  + '|' + root;
+                    uccelloClt.getSysDB().subscribeRoot(uccelloClt.pvt.guids.sysRootGuid, function(result){
+
+                        // все свойства всех контролов
+                        var props = [];
+                        var cm = uccelloClt.getContextCM();
+                        var gl = cm._getCompGuidList();
+                        for (var f in gl) {
+                            var guid = gl[f].getGuid();
+                            var comp = cm.getByGuid(guid);
+                            var countProps = comp.countProps();
+                            for (var i = 0; i < countProps; i++) {
+                                var name = comp.getPropName(i);
+                                name = name.charAt(0).toLowerCase() + name.slice(1);
+                                var val = comp[name]();
+                                props.push({comp:comp, guid:guid, name:name, val:val});
+                            }
+                        }
+
+                        // изменение произвольным образом testNumProp свойств на клиенте
+                        for(var i=0; i<testNumProp; i++) {
+                            if (props[i].name != 'id')
+                                props[i].comp[props[i].name](props[i].val+props[i].val)
+                        }
+
+                        // отсылка дельт на сервер
+                        console.time('applyDeltas');
+                        uccelloClt.getController().genDeltas(uccelloClt.getContextCM().getDB().getGuid());
+                    });
+                });
+            }
+
 
 
             subscribeRootSys = function() {
@@ -201,11 +220,10 @@ $(document).ready( function() {
             }
 
             /**
-             * Получить контексты и отобразить в комбо
+             * Получить контексты
              */
             getContexts = function() {
-                var sel = $('#userContext');
-                sel.empty();
+                var contexts = [];
 
                 for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
                     var root = uccelloClt.getSysDB().getRoot(i);
@@ -216,15 +234,13 @@ $(document).ready( function() {
                         if (name == "VisualContext") {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
-                                var option = $('<option/>');
-                                option.val(item.get('DataBase')+'|'+item.get('Root')).html(item.get('Name'));
-                                sel.append(option);
+                                contexts.push({db:item.get('DataBase'), root:item.get('Root'), name:item.get('Name')});
                             }
-                            sel.val(currContext);
-                            return;
+                            return contexts;
                         }
                     }
                 }
+                return null;
             }
 
 

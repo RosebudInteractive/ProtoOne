@@ -21,7 +21,7 @@ define(
                 this.pvt.clientConnection = new ClientConnection();
                 this.pvt.typeGuids = {};
 				this.pvt.dbcontext = null;
-
+                this.options = options;
 
                 this.getClient().connect(options.host, options.sessionId,  function(result){
                     that.pvt.sessionId = result.sessionId;
@@ -114,7 +114,7 @@ define(
 
             createComponent: function(obj) {
                 var g = obj.getTypeGuid();
-                var options = {parent:'#result'};
+                var options = {parent:this.options.container};
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
@@ -130,28 +130,25 @@ define(
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    options.db = uccelloClt.getSysDB(); //myApp.dbsys;
+                    options.db = this.getSysDB(); //myApp.dbsys;
                 }
 				// TODO!! временно, надо научиться передавать контекст!!!
-                new uccelloClt.pvt.typeGuids[g](uccelloClt.pvt.controlMgr, { objGuid: obj.getGuid() }, options);
+                new this.pvt.typeGuids[g](uccelloClt.pvt.controlMgr, { objGuid: obj.getGuid() }, options);
             },
 			
 			selectContext: function(guid,root,callback) {
+                var that = this;
 				function done() {
 					dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
 						dbcontext.subscribeRoot(root, function(){
 							callback();
-							//currContext = guid + '|' + root;					
-							//getContexts();
-							//renderControls();
-						}, that.createComponent);
+						}, function(){ that.createComponent.apply(that, arguments); });
 					});
 					that.pvt.controlMgr = new ControlMgr(dbcontext);
 				}
 				
 				var dbcontext = this.pvt.dbcontext;
 				var controller = this.getController();
-				var that = this;
 
 				if (dbcontext)
 					controller.delDataBase(dbcontext.getGuid(), done);

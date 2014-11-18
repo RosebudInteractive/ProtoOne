@@ -10,10 +10,12 @@ requirejs.config({
 
 var clientConnection = null, socket = null;
 var sessionId = $.url('#sid');
-//var myApp = {};
 var typeGuids = {};
-var contextGuid = 0, currContext=null, dbcontext = null;
+var contextGuid = 0, currContext=null;
 var uccelloClt = null;
+var masterGuid = null;
+var rootsGuids = null;
+var resultForm = '#result';
 
 
 // когда документ загружен
@@ -22,7 +24,7 @@ $(document).ready( function() {
         ['./uccello/uccelloClt', './uccello/baseControls/ControlMgr' ],
         function(UccelloClt, ControlMgr){
 
-            uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, callback: function(){
+            uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, container:'#result', callback: function(){
                 if (uccelloClt.getLoggedUser()) {
                     $('#login').hide(); $('#logout').show();
                 } else {
@@ -46,7 +48,7 @@ $(document).ready( function() {
 
             createComponent = function(obj) {
                 var g = obj.getTypeGuid();
-                var options = {parent:'#result'};
+                var options = {parent:resultForm};
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
@@ -117,7 +119,7 @@ $(document).ready( function() {
                     if (gl[f].getClassName() == "Container") { rootCont=gl[f]; break; }
 
 				var constr = uccelloClt.getConstr(guid);
-                var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:'#result'});
+                var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:resultForm});
 				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 renderControls(cm);
             }
@@ -182,7 +184,6 @@ $(document).ready( function() {
             sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
 					uccelloClt.getController().genDeltas(uccelloClt.getContextCM().getDB().getGuid());
-                    //myApp.controller.genDeltas(dbcontext.getGuid());
             }
 
             /**
@@ -190,13 +191,12 @@ $(document).ready( function() {
              * @param guid - гуид ресурса, который загружается в контекст
              */
             createContext = function(guid) {
-                $('#result').empty();
+                $(resultForm).empty();
 				uccelloClt.getClient().createSrvContext(guid, function(result){
-                    selectContext(result.masterGuid, result.myRootContGuid); });
-				
-                /*socket.send({action:"createContext", type:'method', contextGuid:guid}, function(result){
-                    selectContext(result.masterGuid, result.myRootContGuid);
-                });*/
+                    masterGuid = result.masterGuid;
+                    rootsGuids = result.roots;
+                    selectContext(masterGuid, rootsGuids[0]);
+                });
             }
 
             /**
@@ -204,25 +204,11 @@ $(document).ready( function() {
              * @param guid
              */
             selectContext = function(guid, root) {
-			
-				uccelloClt.selectContext(guid,root, function() { currContext = guid + '|' + root;  getContexts();  renderControls(); } );
-
-                /*function done() {
-                    $('#result').empty();
-                    dbcontext = myApp.controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
-                        dbcontext.subscribeRoot(root, function(){
-                            currContext = guid + '|' + root;
-                            getContexts();
-                            renderControls();
-                        }, createComponent);
-                    });
-                    myApp.controlMgr = new ControlMgr(dbcontext);
-                }
-
-                if (dbcontext)
-                    myApp.controller.delDataBase(dbcontext.getGuid(), done);
-                else
-                    done();*/
+				uccelloClt.selectContext(guid, root, function() {
+                    currContext = guid + '|' + root;
+                    getContexts();
+                    renderControls();
+                });
             }
 
             /**
@@ -296,9 +282,9 @@ $(document).ready( function() {
 				*/
 
                 serializeForm = function(){
-                    if (!dbcontext || !currContext) return;
-                    var root = dbcontext.getObj(currContext.split('|')[1]);
-                    console.log(dbcontext.serialize(root));
+                    if (!currContext) return;
+                    var root = uccelloClt.getContextCM().getDB().getObj(currContext.split('|')[1]);
+                    console.log(uccelloClt.getContextCM().getDB().serialize(root));
                 }
         }
     );
@@ -309,7 +295,7 @@ $(function(){
     // высота окошка результатов
     function fixHeight() {
         var h = $(window).height();
-        $('#result').height(h-80);
+        $('.tabs-page').height(h-120);
         $('#editor').height(h-100);
         $('#console').width('100%');
     };
@@ -336,4 +322,14 @@ $(function(){
         var guids = $(this).val().split('|');
         selectContext(guids[0], guids[1]);
     });
+
+    selectTab = function (i){
+        $('.tabs').removeClass('active');
+        $($('.tabs')[i]).addClass('active');
+        $('.tabs-page').hide();
+        $($('.tabs-page')[i]).show();
+        resultForm = '#result'+(i>0?i:'');
+        uccelloClt.options.container = resultForm;
+        selectContext(masterGuid, rootsGuids[i]);
+    }
 });

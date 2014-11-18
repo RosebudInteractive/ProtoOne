@@ -18,10 +18,7 @@ define(
                 this.router.add('getGuids', function(data, done) {
                     var user = that.userSessionMgr.getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
-                    // var db = userData.db;
                     result = {
-                        //masterGuid:db.getGuid(),
-                        //  myRootContGuid:userData.myRootCont.getGuid(),
                         masterSysGuid:that.userSessionMgr.dbsys.getGuid(),
                         sysRootGuid:user.getObj().getGuid()
                     };

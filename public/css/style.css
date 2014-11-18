@@ -2,7 +2,8 @@ html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-se
 p {padding:0;margin: 4px 0;}
 #container {padding:10px;}
 #container > div {float:left;}
-#result {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
+.tabs-page {position: relative;border:1px solid #999; width: 100%; overflow: auto;height:100%;box-sizing: border-box;}
+.tabs.active {background-color: #fff;}
 #editor {position: relative;width:200px;border:1px solid #999;width: 30%;box-sizing: border-box;padding:10px;border-left:0;overflow: auto;}
 #editor .controls {clear:both;}
 #console-block {height: 70px;position:absolute;}
