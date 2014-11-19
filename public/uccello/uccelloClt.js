@@ -136,13 +136,34 @@ define(
                 new this.pvt.typeGuids[g](uccelloClt.pvt.controlMgr, { objGuid: obj.getGuid() }, options);
             },
 			
-			selectContext: function(guid,root,callback) {
+			selectContext: function(guid,callback) {
                 var that = this;
 				function done() {
 					dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
-						dbcontext.subscribeRoot(root, function(){
-							callback();
-						}, function(){ that.createComponent.apply(that, arguments); });
+                        // запросить гуиды рутов
+                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, type:'method'}, function(result) {
+                            var roots = result.roots;
+
+                            var exec = 0;
+                            function syncCallback() {
+                                exec--;
+                                if (exec == 0)
+                                    callback();
+                            }
+
+                            // подписка на все руты
+                            for (var i = 0; i < roots.length; i++) {
+                                (function(i) {
+                                    exec++;
+                                    dbcontext.subscribeRoot(roots[i], function () {
+                                        syncCallback();
+                                    }, function () {
+                                        that.options.container = '#result'+i;
+                                        that.createComponent.apply(that, arguments);
+                                    });
+                                })(i);
+                            }
+                        });
 					});
 					that.pvt.controlMgr = new ControlMgr(dbcontext);
 				}

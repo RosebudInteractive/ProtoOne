@@ -26,6 +26,15 @@ define(
                     return result;
                 });
 
+                this.router.add('getRootGuids', function(data, done) {
+                    console.log(that.userSessionMgr.getController().getDB(data.db))
+                    var result = {
+                        roots: that.userSessionMgr.getController().getDB(data.db).getRootGuids()
+                    };
+                    done(result);
+                    return result;
+                });
+
                 this.router.add('getSessions', function(data, done) {
                     var sessions = that.userSessionMgr.getSessions();
                     result = {sessions:[]};

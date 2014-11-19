@@ -195,7 +195,7 @@ $(document).ready( function() {
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     masterGuid = result.masterGuid;
                     rootsGuids = result.roots;
-                    selectContext(masterGuid, rootsGuids[0]);
+                    selectContext(masterGuid);
                 });
             }
 
@@ -203,10 +203,9 @@ $(document).ready( function() {
              * Выбрать контекст
              * @param guid
              */
-            selectContext = function(guid, root) {
-                uccelloClt.selectContext(guid, root, function() {
+            selectContext = function(guid) {
+                uccelloClt.selectContext(guid, function() {
                     currContext = guid;
-                    currRoot = root;
                     getContexts();
                     $(resultForm).empty();
                     renderControls();
@@ -238,6 +237,10 @@ $(document).ready( function() {
                         }
                     }
                 }
+            }
+
+            selectRoot = function(root) {
+                currRoot = root;
             }
 
             /**
@@ -335,6 +338,6 @@ $(function(){
         $($('.tabs-page')[i]).show();
         resultForm = '#result'+(i>0?i:'');
         uccelloClt.options.container = resultForm;
-        selectContext(masterGuid, rootsGuids[i]);
+        selectRoot(rootsGuids[i]);
     }
 });
