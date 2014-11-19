@@ -36,12 +36,8 @@
     <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext(++contextGuid);">
     <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext(++contextGuid);">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();"><br><br>
-    <input type="button" class="tabs active" value="Tab1" onclick="selectTab(0);">
-    <input type="button" class="tabs" value="Tab2" onclick="selectTab(1);">
-    <div id="container">
-        <div id="result0" class="tabs-page"></div>
-        <div id="result1" class="tabs-page" style="display: none;"></div>
-    </div>
+    <div id="tabs"></div>
+    <div id="container"></div>
 </div>
 
 <div id="loginForm" style="display: none;">

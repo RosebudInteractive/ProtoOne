@@ -195,8 +195,19 @@ $(document).ready( function() {
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     masterGuid = result.masterGuid;
                     rootsGuids = result.roots;
+                    createTabs();
                     selectContext(masterGuid);
                 });
+            }
+
+            createTabs = function() {
+                $('#tabs').empty();
+                $('#container').empty();
+                for(var i=0; i<rootsGuids.length; i++) {
+                    $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
+                    $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i==0?'display: none;':'')+'"/>');
+                }
+                fixHeight();
             }
 
             /**
@@ -298,7 +309,7 @@ $(document).ready( function() {
 $(function(){
 
     // высота окошка результатов
-    function fixHeight() {
+    fixHeight = function() {
         var h = $(window).height();
         $('.tabs-page').height(h-120);
         $('#editor').height(h-100);
@@ -328,6 +339,7 @@ $(function(){
             // запросить гуиды рутов
             uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, type:'method'}, function(result) {
                 rootsGuids = result.roots;
+                createTabs();
                 selectContext(currContext);
             });
         } else {
