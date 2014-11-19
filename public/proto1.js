@@ -324,11 +324,15 @@ $(function(){
 
     $('#userContext').change(function(){
         currContext = $(this).val();
-        /*if (!rootsGuids && uccelloClt.getContextCM()) {
-            var db = uccelloClt.getContextCM().getDB();
-            rootsGuids = [db.getRoot(0).getGuid(), db.getRoot(1).getGuid()];
-        }*/
-        selectContext(currContext, rootsGuids[0]);
+        if (!rootsGuids) {
+            // запросить гуиды рутов
+            uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, type:'method'}, function(result) {
+                rootsGuids = result.roots;
+                selectContext(currContext);
+            });
+        } else {
+            selectContext(currContext);
+        }
     });
 
     selectTab = function (i){
