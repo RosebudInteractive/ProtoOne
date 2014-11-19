@@ -343,6 +343,7 @@ $(function(){
                 selectContext(currContext);
             });
         } else {
+            createTabs();
             selectContext(currContext);
         }
     });
