@@ -11,6 +11,7 @@ define(
 	["../system/event","./memCol", "./memObj", "./memMetaRoot", "./memMetaObj", "./memMetaObjFields", "./memMetaObjCols"],
 	function(Event,MemCollection,MemObj,MemMetaRoot,MemMetaObj,MemMetaObjFields,MemMetaObjCols) {
 	
+	
 		var metaObjFieldsGuid =  "0fa90328-4e86-eba7-b12b-4fff3a057533";
 		var metaObjColsGuid =  "99628583-1667-3341-78e0-fb2af29dbe8";
 		var metaRootGuid =  "fc13e2b8-3600-b537-f9e5-654b7418c156";
@@ -74,7 +75,7 @@ define(
 				
 				
 			},
-		
+			
             /**
              * Добавить корневой объект в БД
              * @param obj
@@ -131,6 +132,22 @@ define(
 			_cbGetNewObject: function(rootGuid) {
 				return this.getRoot(rootGuid).callbackNewObject;
 			},
+
+            /**
+             * вернуть список гуидов корневых объектов за исключение метинфо
+             */	
+			getRootGuids: function() {
+				var guids = [];
+				var ro = this.pvt.robjs;
+				for (var i=0; i<ro.length; i++) {
+					var cguid = ro[i].obj.getGuid();
+					if (cguid!=metaRootGuid) guids.push(cguid);
+				}
+				
+				return guids;
+				
+			},
+		
 			
             /**
              * вызывается коллекциями при удалении объекта, генерирует событие, на которое можно подписаться
