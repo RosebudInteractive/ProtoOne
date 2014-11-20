@@ -134,8 +134,20 @@ define(
 			},
 
             /**
-             * вернуть список гуидов корневых объектов за исключение метинфо
+             * вернуть список корневых объектов за исключение метинфо
              */	
+			getRoots: function() {
+				var roots = [];
+				var ro = this.pvt.robjs;
+				for (var i=0; i<ro.length; i++)
+					if (ro[i].obj.getGuid() != metaRootGuid)
+                        roots.push(ro[i].obj);
+				return roots;
+			},
+
+            /**
+             * вернуть список гуидов корневых объектов за исключение метинфо
+             */
 			getRootGuids: function() {
 				var guids = [];
 				var ro = this.pvt.robjs;
@@ -143,9 +155,9 @@ define(
 					var cguid = ro[i].obj.getGuid();
 					if (cguid!=metaRootGuid) guids.push(cguid);
 				}
-				
+
 				return guids;
-				
+
 			},
 		
 			

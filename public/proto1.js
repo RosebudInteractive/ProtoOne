@@ -89,9 +89,15 @@ $(document).ready( function() {
 			*/
 
             renderControls = function(cm) {
-                if (!cm) cm = uccelloClt.getContextCM(); //myApp.controlMgr;
-                if (!cm) return;
-                cm.render();
+                var roots = [];
+                roots = cm? [currRoot] : rootsGuids;
+
+                if (roots)
+                for(var i=0, len=roots.length; i<len; i++) {
+                    cm = uccelloClt.getContextCM(roots[i]);
+                    cm.render();
+                }
+
                 // редактирование ячеек грида
                 $(".divCell").editable(function(value, settings) {
                     return(value);
@@ -107,7 +113,7 @@ $(document).ready( function() {
             var addControlId = 1000;
             addControl = function(guid, ini, cm) {
 
-                if (!cm) cm = uccelloClt.getContextCM(); //myApp.controlMgr;
+                if (!cm) cm = uccelloClt.getContextCM(currRoot); //myApp.controlMgr;
                 if (!ini) {
                     ini = {fields: {"Id": addControlId, "Name": 'Component'+addControlId, "Left":"300", "Top":"150"}};
                     addControlId++;
@@ -130,7 +136,7 @@ $(document).ready( function() {
              * @param cm
              */
             delControl = function(guid, cm) {
-                if (!cm) cm = uccelloClt.getContextCM();
+                if (!cm) cm = uccelloClt.getContextCM(currRoot);
                 cm.del(guid);
 				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 renderControls(cm);
@@ -183,7 +189,7 @@ $(document).ready( function() {
              */
             sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
-					uccelloClt.getController().genDeltas(uccelloClt.getContextCM().getDB().getGuid());
+					uccelloClt.getController().genDeltas(uccelloClt.getContextCM(currRoot).getDB().getGuid());
             }
 
             /**
@@ -205,7 +211,7 @@ $(document).ready( function() {
                 $('#container').empty();
                 for(var i=0; i<rootsGuids.length; i++) {
                     $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
-                    $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i==0?'display: none;':'')+'"/>');
+                    $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
                 }
                 fixHeight();
             }
@@ -217,6 +223,7 @@ $(document).ready( function() {
             selectContext = function(guid) {
                 uccelloClt.selectContext(guid, function() {
                     currContext = guid;
+                    currRoot = rootsGuids[0];
                     getContexts();
                     $(resultForm).empty();
                     renderControls();
@@ -299,8 +306,8 @@ $(document).ready( function() {
 
                 serializeForm = function(){
                     if (!currContext) return;
-                    var root = uccelloClt.getContextCM().getDB().getObj(currRoot);
-                    console.log(uccelloClt.getContextCM().getDB().serialize(root));
+                    var root = uccelloClt.getContextCM(currRoot).getDB().getObj(currRoot);
+                    console.log(uccelloClt.getContextCM(currRoot).getDB().serialize(root));
                 }
         }
     );
@@ -355,6 +362,6 @@ $(function(){
         $($('.tabs-page')[i]).show();
         resultForm = '#result'+(i>0?i:'');
         uccelloClt.options.container = resultForm;
-        selectRoot(rootsGuids[i]);
+        currRoot = rootsGuids[i];
     }
 });

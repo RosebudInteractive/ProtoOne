@@ -21,6 +21,7 @@ define(
                 this.pvt.clientConnection = new ClientConnection();
                 this.pvt.typeGuids = {};
 				this.pvt.dbcontext = null;
+                this.pvt.controlMgr = {};
                 this.options = options;
 
                 this.getClient().connect(options.host, options.sessionId,  function(result){
@@ -91,8 +92,8 @@ define(
 				return this.pvt.dbsys; 
 			},
 			
-			getContextCM: function() {
-				return this.pvt.controlMgr;
+			getContextCM: function(rootGuid) {
+				return this.pvt.controlMgr[rootGuid];
 			},
 			
 			// получить конструктор по его guid
@@ -112,7 +113,7 @@ define(
                 return this.pvt.user;
             },
 
-            createComponent: function(obj) {
+            createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
                 var options = {parent:this.options.container};
 
@@ -133,7 +134,7 @@ define(
                     options.db = this.getSysDB(); //myApp.dbsys;
                 }
 				// TODO!! временно, надо научиться передавать контекст!!!
-                new this.pvt.typeGuids[g](uccelloClt.pvt.controlMgr, { objGuid: obj.getGuid() }, options);
+                new this.pvt.typeGuids[g](cm, { objGuid: obj.getGuid() }, options);
             },
 			
 			selectContext: function(guid,callback) {
@@ -143,7 +144,7 @@ define(
                         // запросить гуиды рутов
                         that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, type:'method'}, function(result) {
                             var roots = result.roots;
-
+                            currRoot = roots[0];
                             var exec = 0;
                             function syncCallback() {
                                 exec--;
@@ -153,19 +154,23 @@ define(
 
                             // подписка на все руты
                             for (var i = 0; i < roots.length; i++) {
-                                (function(i) {
+                                var cm = new ControlMgr(dbcontext);
+                                that.pvt.controlMgr[roots[i]] = cm;
+                                (function(i, cm) {
                                     exec++;
                                     dbcontext.subscribeRoot(roots[i], function () {
                                         syncCallback();
                                     }, function () {
                                         that.options.container = '#result'+i;
-                                        that.createComponent.apply(that, arguments);
+                                        var mainArguments = Array.prototype.slice.call(arguments);
+                                        mainArguments.push(cm);
+                                        that.createComponent.apply(that, mainArguments);
                                     });
-                                })(i);
+                                })(i, cm);
                             }
                         });
 					});
-					that.pvt.controlMgr = new ControlMgr(dbcontext);
+					//that.pvt.controlMgr = new ControlMgr(dbcontext);
 				}
 				
 				var dbcontext = this.pvt.dbcontext;

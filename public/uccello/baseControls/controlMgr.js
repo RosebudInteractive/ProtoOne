@@ -10,19 +10,23 @@ define(
 
             /**
              * @constructs
-             * @param db {MemDataBase} - база, в которой хранится метаинформация компонентов
+             * @param dbOrRoot {MemDataBase|MemObj} - база данных или корневой элемент
              */
-			init: function(db){	
+			init: function(dbOrRoot){
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
-				this.pvt.db = db;
 
-				db.event.on({
-					type: "delObj",
-					subscriber: this,
-					callback: this.onDeleteComponent
-				});
+                if (typeof(dbOrRoot.isMaster) == "function") { // MemDataBase
+                    this.pvt.db = dbOrRoot;
+                } else { // MemObj
+                    this.pvt.root = dbOrRoot;
+                    dbOrRoot.pvt.event.on({
+                        type: "delObj",
+                        subscriber: this,
+                        callback: this.onDeleteComponent
+                    });
+                }
 			},
 
             /**

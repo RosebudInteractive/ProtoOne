@@ -179,39 +179,37 @@ define(
                  */
                 function createDb(dbc, options){
                     var db = dbc.newDataBase(options);
-                    var cm = new ControlMgr(db);
 
-                    // meta
-                    new AComponent(cm);
-                    new AControl(cm);
-
-                    // загружать динамически
                     var AContainer = require('../../../public/ProtoControls/container');
                     var AButton = require('../../../public/ProtoControls/button');
                     var AEdit = require('../../../public/ProtoControls/edit');
                     var AMatrixGrid = require('../../../public/ProtoControls/matrixGrid');
                     var PropEditor = require('../../../public/ProtoControls/propEditor');
                     var DBNavigator = require('../../../public/ProtoControls/dbNavigator');
-                    new AContainer(cm);
-                    new AButton(cm);
-                    new AEdit(cm);
-                    new AMatrixGrid(cm);
-                    new PropEditor(cm);
-                    new DBNavigator(cm);
 
-                    //this.loadControls();
-                    var roots = [ that.dbcsys.guid(),  that.dbcsys.guid()];
-                    var hehe1 = loadRes(roots[0]);
-                    var hehe2 = loadRes(roots[1]);
-                    db.deserialize(hehe1, {db: db, cm:cm});
-                    db.deserialize(hehe2, {db: db, cm:cm});
-                    return {cm:cm, db:db, roots: [db.getObj(roots[0]).getGuid(), db.getObj(roots[1]).getGuid()]};
+                    var roots = [that.dbcsys.guid(), that.dbcsys.guid()];
+                    for (var i=0; i<roots.length; i++) {
+                        var cm = new ControlMgr(db);
+                        if (i==0) {
+                            // meta
+                            new AComponent(cm);
+                            new AControl(cm);
+                            new AContainer(cm);
+                            new AButton(cm);
+                            new AEdit(cm);
+                            new AMatrixGrid(cm);
+                            new PropEditor(cm);
+                            new DBNavigator(cm);
+                        }
+                        db.deserialize(loadRes(roots[i]), {db: db});
+                    }
+                    return {db: db, roots: roots};
                 }
 
                 var user = this.getConnect(data.connectId).getSession().getUser();
                 var controller = this.getController();
                 var r = createDb(controller, {name: "Master", kind: "master"});
-                var context = new VisualContext(r.cm, {parent: user, colName: "VisualContext",
+                var context = new VisualContext(this.cmsys, {parent: user, colName: "VisualContext",
                     ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, DataBase: r.db.getGuid()}}});
                 var result = {masterGuid: r.db.getGuid(), roots:r.roots};
                 controller.genDeltas(this.dbsys.getGuid());
