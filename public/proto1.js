@@ -216,6 +216,15 @@ $(document).ready( function() {
                 fixHeight();
             }
 
+            createRoot = function(){
+                if (!currRoot) return;
+                uccelloClt.getClient().createRoot(currContext, function(result){
+                    rootsGuids.push(result.rootGuid);
+                    createTabs();
+                    selectContext(currContext);
+                });
+            }
+
             /**
              * Выбрать контекст
              * @param guid
@@ -342,17 +351,12 @@ $(function(){
 
     $('#userContext').change(function(){
         currContext = $(this).val();
-        if (!rootsGuids) {
-            // запросить гуиды рутов
-            uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, type:'method'}, function(result) {
-                rootsGuids = result.roots;
-                createTabs();
-                selectContext(currContext);
-            });
-        } else {
+        // запросить гуиды рутов
+        uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, type:'method'}, function(result) {
+            rootsGuids = result.roots;
             createTabs();
             selectContext(currContext);
-        }
+        });
     });
 
     selectTab = function (i){

@@ -170,7 +170,6 @@ define(
                             }
                         });
 					});
-					//that.pvt.controlMgr = new ControlMgr(dbcontext);
 				}
 				
 				var dbcontext = this.pvt.dbcontext;

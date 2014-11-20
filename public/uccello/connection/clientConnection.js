@@ -99,6 +99,10 @@ define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) 
 		
 		createSrvContext: function(guid, callback) {
 			this.socket.send({action:"createContext", type:'method', contextGuid:guid}, callback);
+		},
+
+		createRoot: function(dbGuid, callback) {
+			this.socket.send({action:"createRoot", type:'method', dbGuid:dbGuid}, callback);
 		}
 		
 

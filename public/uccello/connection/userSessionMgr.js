@@ -36,6 +36,7 @@ define(
                 router.add('authenticate', function(){ return that.routerAuthenticate.apply(that, arguments); });
                 router.add('deauthenticate', function(){ return that.routerDeauthenticate.apply(that, arguments); });
                 router.add('createContext', function(){ return that.routerCreateContext.apply(that, arguments); });
+                router.add('createRoot', function(){ return that.routerCreateRoot.apply(that, arguments); });
             },
 			
 			getController: function() {
@@ -85,6 +86,8 @@ define(
                 this.deauthenticate(session.getId(), done);
             },
 
+
+
             /**
              * Создать серверный контекст
              * @param data
@@ -93,83 +96,6 @@ define(
             routerCreateContext: function(data, done) {
 
                 var that = this;
-                /**
-                 * Загрузить ресурс
-                 * @returns {obj}
-                 */
-                function loadRes(guidRoot) {
-                    var hehe = {
-                        "$sys": {
-                            "guid": guidRoot,
-                            "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
-                        },
-                        "fields": {
-                            "Id": 11,
-                            "Name": "MainContainer"
-                        },
-                        "collections": {
-                            "Children": {
-                                "0": {
-                                    "$sys": {
-                                        "guid": that.dbcsys.guid(),
-                                        "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                    },
-                                    "fields": {
-                                        "Id": 22,
-                                        "Name": "MyFirstButton1",
-                                        "Top": "50",
-                                        "Left": "30",
-                                        "Caption": "OK"
-                                    },
-                                    "collections": {}
-                                },
-                                "1": {
-                                    "$sys": {
-                                        "guid":  that.dbcsys.guid(),
-                                        "typeGuid": "827a5cb3-e934-e28c-ec11-689be18dae97"
-                                    },
-                                    "fields": {
-                                        "Id": 33,
-                                        "Name": "Grid",
-                                        "Top": "60",
-                                        "Left": "50",
-                                        "HorCells": 3,
-                                        "VerCells": 4
-                                    },
-                                    "collections": {}
-                                },
-                                "2": {
-                                    "$sys": {
-                                        "guid":  that.dbcsys.guid(),
-                                        "typeGuid": "a0e02c45-1600-6258-b17a-30a56301d7f1"
-                                    },
-                                    "fields": {
-                                        "Id": 44,
-                                        "Name": "PropEditor",
-                                        "Top": "10",
-                                        "Left": "700"
-                                    },
-                                    "collections": {}
-                                },
-                                "3": {
-                                    "$sys": {
-                                        "guid":  that.dbcsys.guid(),
-                                        "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
-                                    },
-                                    "fields": {
-                                        "Id": 55,
-                                        "Name": "DbNavigator",
-                                        "Top": "240",
-                                        "Left": "20"
-                                    },
-                                    "collections": {}
-                                }
-                            }
-                        }
-                    };
-                    return hehe;
-                }
-
 
                 /**
                  * Создать базу данных
@@ -201,7 +127,7 @@ define(
                             new PropEditor(cm);
                             new DBNavigator(cm);
                         }
-                        db.deserialize(loadRes(roots[i]), {db: db});
+                        db.deserialize(that.loadRes(roots[i]), {db: db});
                     }
                     return {db: db, roots: roots};
                 }
@@ -216,7 +142,101 @@ define(
                 done(result);
             },
 
-        /**
+            /**
+             * Создать рут
+             * @param data
+             * @param done
+             */
+            routerCreateRoot: function(data, done) {
+                var controller = this.getController();
+                var db = controller.getDB(data.dbGuid);
+                var rootGuid = this.dbcsys.guid();
+                var cm = new ControlMgr(db);
+                db.deserialize(this.loadRes(rootGuid), {db: db});
+                controller.genDeltas(db.getGuid());
+                done({rootGuid:rootGuid});
+            },
+
+            /**
+             * Загрузить ресурс
+             * @returns {obj}
+             */
+            loadRes: function (guidRoot) {
+                var hehe = {
+                    "$sys": {
+                        "guid": guidRoot,
+                        "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                    },
+                    "fields": {
+                        "Id": 11,
+                        "Name": "MainContainer"
+                    },
+                    "collections": {
+                        "Children": {
+                            "0": {
+                                "$sys": {
+                                    "guid": this.dbcsys.guid(),
+                                    "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                },
+                                "fields": {
+                                    "Id": 22,
+                                    "Name": "MyFirstButton1",
+                                    "Top": "50",
+                                    "Left": "30",
+                                    "Caption": "OK"
+                                },
+                                "collections": {}
+                            },
+                            "1": {
+                                "$sys": {
+                                    "guid":  this.dbcsys.guid(),
+                                    "typeGuid": "827a5cb3-e934-e28c-ec11-689be18dae97"
+                                },
+                                "fields": {
+                                    "Id": 33,
+                                    "Name": "Grid",
+                                    "Top": "60",
+                                    "Left": "50",
+                                    "HorCells": 3,
+                                    "VerCells": 4
+                                },
+                                "collections": {}
+                            },
+                            "2": {
+                                "$sys": {
+                                    "guid":  this.dbcsys.guid(),
+                                    "typeGuid": "a0e02c45-1600-6258-b17a-30a56301d7f1"
+                                },
+                                "fields": {
+                                    "Id": 44,
+                                    "Name": "PropEditor",
+                                    "Top": "10",
+                                    "Left": "700"
+                                },
+                                "collections": {}
+                            },
+                            "3": {
+                                "$sys": {
+                                    "guid":  this.dbcsys.guid(),
+                                    "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
+                                },
+                                "fields": {
+                                    "Id": 55,
+                                    "Name": "DbNavigator",
+                                    "Top": "240",
+                                    "Left": "20"
+                                },
+                                "collections": {}
+                            }
+                        }
+                    }
+                };
+                return hehe;
+            },
+
+
+
+            /**
              * Подключаемся к серверу с клиента
              * @param {object} socket
              * @param {object} data Данные в формате {client:{...}}
