@@ -10,13 +10,14 @@ define(
 
             /**
              * @constructs
-             * @param db {MemDataBase} - база, в которой хранится метаинформация компонентов
+             * @param root - корневой объект 
              */
-			init: function(db){	
+			init: function(root){	
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
-				this.pvt.db = db;
+				this.pvt.db = root.getDB();
+				this.pvt.root = root;
 
 				db.event.on({
 					type: "delObj",
@@ -53,6 +54,13 @@ define(
              */					
 			getDB: function() {
 				return this.pvt.db;
+			},
+
+            /**
+			 * Вернуть корневой объект, с которым связан менеджер контролов
+             */				
+			getRoot: function() {
+				return this.pvt.root;
 			},
 
             /**
