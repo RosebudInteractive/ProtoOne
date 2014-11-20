@@ -60,6 +60,13 @@ define(
 			},
 
             /**
+			 * Вернуть корневой объект, с которым связан менеджер контролов
+             */				
+			getRoot: function() {
+				return this.pvt.root;
+			},
+
+            /**
 			 * Вернуть компонент по его гуид
              */	
 			getByGuid: function(guid) {

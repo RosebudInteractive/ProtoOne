@@ -331,6 +331,8 @@ define(
 								}
 							else {
 								//var cb = this._receiveResponse; //function(result) { if (db.getVersion("valid")<result.data.dbVersion) db.newVersion("valid", result.data.dbVersion - db.getVersion("valid")); };
+								console.log("sending delta db: "+db.getGuid());
+								console.log(delta);
 								proxy.connect.send({action:"sendDelta", type:'method', delta:delta, dbGuid:proxy.guid, srcDbGuid: db.getGuid()},cb);
 								}
 						}
