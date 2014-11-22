@@ -224,6 +224,10 @@ $(document).ready( function() {
                     selectContext(currContext);
                 });
             }
+			
+			setProps = function() {
+				
+			}
 
             /**
              * Выбрать контекст

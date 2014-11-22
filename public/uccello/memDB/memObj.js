@@ -61,6 +61,7 @@ define(
 			set: function(field,value) {
 				var i=this.pvt.objType.pvt.fieldsTable[field].cidx;
 				var oldValue = this.pvt.fields[i];
+				if (this.pvt.fields[i] == value) return;
 				this.pvt.fields[i] = value;
 				if (this.getLog().getActive()) {
 					var o = { flds: {}, obj:this, type:"mp"};

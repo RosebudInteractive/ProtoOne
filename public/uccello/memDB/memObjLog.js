@@ -169,8 +169,13 @@ define(
 				// инкрементируем версию если нужно
 				var sver = db.getVersion("sent");
 				var ver = db.getVersion();
-				if (ver==sver) db.newVersion();
-				this.pvt.versions[ver+1] = this.pvt.log.length; // отмечаем место в логе, соответствующее началу этой версии
+				if (ver==sver) {
+					db.newVersion();
+					ver = db.getVersion();
+				}
+				if (!(ver.toString() in this.pvt.versions))
+					this.pvt.versions[ver] = this.pvt.log.length; // отмечаем место в логе, соответствующее началу этой версии
+				
 				
 				if (this.getActive()) {
 					item.idx = this.getObj().getDB().getNewCounter();
