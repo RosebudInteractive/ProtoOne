@@ -24,7 +24,7 @@ define(
 						db.event.on( {
 							type: "newRoot",
 							subscriber: this,
-							callBack: this.onNewRoot
+							callback: this.onNewRoot
 						});
 					}
 				}
@@ -114,7 +114,7 @@ define(
 			},
 			
 			onNewRoot: function(result) {
-				if (result.obj.getGuid() == this.pvt.rootGuid) {
+				if (result.target.getGuid() == this.pvt.rootGuid) {
 	                    this.getDB().getRoot(this.pvt.rootGuid).event.on({
 							type: "delObj",
 							subscriber: this,
