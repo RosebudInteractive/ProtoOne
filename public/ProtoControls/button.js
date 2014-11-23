@@ -29,13 +29,16 @@ define(
              */
             render: function() {
                 var that = this;
+				console.log("ext render button "+this.getGuid());
                 // обработка шаблонов
                 if (!this._templates) {
                     require(['/public/uccello/uses/template.js', 'text!./templates/button.html'], function(template, tpl){
                         that._templates = template.parseTemplate(tpl);
-                        that.render();
+                        //that.render();
+						that.render.apply(that);
                     });
                 } else {
+					console.log("render button "+this.getGuid());
                     var item = $('#' + this.getGuid());
                     if (item.length == 0) {
                         item = $(this._templates['button']).attr('id', this.getGuid());

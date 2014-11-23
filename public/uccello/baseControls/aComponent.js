@@ -37,12 +37,16 @@ define(
                     params.ini = params.ini ? params.ini : {};
 
                     // если рутовый то указываем db
-                    if (params.parent===undefined)
+                    if (params.parent===undefined) {
 						// корневой компонент
                         this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{db: cm.getDB(), mode: "RW"}, params.ini);
-                    else
+						this.pvt.parent = null;
+						}
+                    else {
 						// компонент с парентом
                         this.pvt.obj = new MemObj(cm.getDB().getObj(this.classGuid),{obj: params.parent.getObj(), "colName": col}, params.ini);
+						this.pvt.parent = params.parent; 
+						}
 					
 				}
 				cm.add(this);
@@ -96,7 +100,8 @@ define(
 
             /**
              * Возвращает родительский элемент или нулл
-             */				
+             */		
+			// TODO брать парент непосредственно из контрола
 			getParent: function() {
 				if (this.getObj().getParent() == null)
 					return null
