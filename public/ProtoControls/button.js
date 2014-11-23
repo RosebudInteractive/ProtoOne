@@ -29,7 +29,7 @@ define(
              */
             render: function() {
                 var that = this;
-				console.log("ext render button "+this.getGuid());
+				//console.log("ext render button "+this.getGuid());
                 // обработка шаблонов
                 if (!this._templates) {
                     require(['/public/uccello/uses/template.js', 'text!./templates/button.html'], function(template, tpl){

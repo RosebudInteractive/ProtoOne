@@ -15,7 +15,7 @@ var contextGuid = 0, currContext=null, currRoot=null;
 var uccelloClt = null;
 var masterGuid = null;
 var rootsGuids = null;
-var resultForm = '#result';
+var resultForm = '#result0';
 
 
 // когда документ загружен
@@ -368,7 +368,7 @@ $(function(){
         $($('.tabs')[i]).addClass('active');
         $('.tabs-page').hide();
         $($('.tabs-page')[i]).show();
-        resultForm = '#result'+(i>0?i:'');
+        resultForm = '#result'+i; //(i>0?i:'');
         uccelloClt.options.container = resultForm;
         currRoot = rootsGuids[i];
     }
