@@ -126,7 +126,8 @@ $(document).ready( function() {
 
 				var constr = uccelloClt.getConstr(guid);
                 var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:resultForm});
-				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
+				//uccelloClt.getController().genDeltas(cm.getDB().getGuid());
+				sendDeltas(false);
                 renderControls(cm);
             }
 

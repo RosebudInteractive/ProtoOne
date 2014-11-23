@@ -89,6 +89,7 @@ define(
 				root.subscribers = {};	// подписчики корневого объекта
 				root.master = null;		// мастер
 				root.callbackNewObject = undefined;
+				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
 			},
@@ -166,10 +167,19 @@ define(
              * вызывается коллекциями при удалении объекта, генерирует событие, на которое можно подписаться
              */			
 			onDeleteObject: function(obj) {
+				var root = this.getRoot(obj.getRoot().getGuid());
+				delete this.pvt.objs[obj.getGuid()];
+				// TODO проверить не корневой ли объект - и тогда тоже удалить его со всей обработкой
 				this.event.fire({
                     type: 'delObj',
                     target: obj
                 });
+				root.event.fire({
+                    type: 'delObj',
+                    target: obj				
+				});
+				
+				
 			},
 
 

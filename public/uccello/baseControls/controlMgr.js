@@ -21,7 +21,8 @@ define(
                     this.pvt.db = dbOrRoot;
                 } else { // MemObj
                     this.pvt.root = dbOrRoot;
-                    dbOrRoot.pvt.event.on({
+					// подписаться на удаление объектов
+                    dbOrRoot.getDB().getRoot(dbOrRoot.getRoot().getGuid()).event.on({
                         type: "delObj",
                         subscriber: this,
                         callback: this.onDeleteComponent
