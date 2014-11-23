@@ -153,8 +153,8 @@ define(
                             }
 
                             // подписка на все руты
-                            for (var i = 0; i < roots.length; i++) {
-                                var cm = new ControlMgr(dbcontext);
+							for (var i = 0; i < roots.length; i++) {
+								var cm = new ControlMgr(dbcontext,roots[i]); 
                                 that.pvt.controlMgr[roots[i]] = cm;
                                 (function(i, cm) {
                                     exec++;
@@ -166,7 +166,7 @@ define(
                                         mainArguments.push(cm);
                                         that.createComponent.apply(that, mainArguments);
                                     });
-                                })(i, cm);
+                                })(i, cm);								
                             }
                         });
 					});

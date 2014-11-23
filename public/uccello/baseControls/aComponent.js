@@ -72,6 +72,29 @@ define(
 					db._buildMetaTables();
                 }
             },
+			
+            /**
+             * Приватный рендер - не переопределяется наследниками
+             */				
+			_render: function() {
+				this.render();
+				var col=this.pvt.obj.getCol("Children");
+				if (col == undefined) return;
+				for (var i=0; i<col.count(); i++) {
+					var c=this.getControlMgr().get(col.get(i).getGuid());
+					c.render();
+				}
+			
+			},
+			
+            /**
+             * no op рендер - переопределяется наследниками для реализации рендеринга
+             */					
+			render: function() {
+			
+			},
+			
+			
 
             /**
              * Возвращает локальный идентификатор
@@ -95,6 +118,13 @@ define(
 					
 			getObj: function() {
 				return this.pvt.obj;
+			},
+
+            /**
+             * Возвращает корневой компонент для данного
+             */					
+			getRoot: function() {
+				return this.pvt.controlMgr.get(this.pvt.obj.getRoot().getGuid());
 			},
 
 

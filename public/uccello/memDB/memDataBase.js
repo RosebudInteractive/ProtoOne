@@ -49,6 +49,7 @@ define(
 				pvt.version = 0; // по умолчанию версия = 0
 				pvt.validVersion = 0;
 				pvt.sentVersion = 0;
+				this.event = new Event();
 				
 				if (params.kind != "master") {
 					var db=this;
@@ -71,7 +72,7 @@ define(
 					if (cb !== undefined && (typeof cb == "function")) cb(this);
 				}	
 				
-				this.event = new Event();
+				
 				
 				
 			},
@@ -92,6 +93,12 @@ define(
 				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
+
+				this.event.fire({
+                    type: 'newRoot',
+                    target: obj				
+				});				
+				
 			},
 			
             /**

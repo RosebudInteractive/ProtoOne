@@ -10,16 +10,26 @@ define(
 
             /**
              * @constructs
-             * @param dbOrRoot {MemDataBase|MemObj} - база данных или корневой элемент
+             * @param db {MemDataBase} - база данных
+			 * @param rootGuid - гуид рутового элемента
              */
-			init: function(dbOrRoot){
+			init: function(db, rootGuid){
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
-
-                if (typeof(dbOrRoot.isMaster) == "function") { // MemDataBase
-                    this.pvt.db = dbOrRoot;
-                } else { // MemObj
+				this.pvt.db = db;
+				this.pvt.rootGuid = rootGuid;
+				if (rootGuid) {
+					if (db.getObj(rootGuid)==undefined) {
+						db.event.on( {
+							type: "newRoot",
+							subscriber: this,
+							callBack: this.onNewRoot
+						});
+					}
+				}
+                    
+/*                } else { // MemObj
                     this.pvt.root = dbOrRoot;
 					// подписаться на удаление объектов
                     dbOrRoot.getDB().getRoot(dbOrRoot.getRoot().getGuid()).event.on({
@@ -27,7 +37,7 @@ define(
                         subscriber: this,
                         callback: this.onDeleteComponent
                     });
-                }
+                }*/
 			},
 
             /**
@@ -64,7 +74,10 @@ define(
 			 * Вернуть корневой объект, с которым связан менеджер контролов
              */				
 			getRoot: function() {
-				return this.pvt.root;
+				if (this.pvt.rootGuid==undefined)
+					return undefined;
+				else
+					return this.get(this.pvt.rootGuid); //this.getDB().getObj(this.pvt.rootGuid);
 			},
 
             /**
@@ -73,13 +86,24 @@ define(
 			getByGuid: function(guid) {
 				return this.pvt.compByGuid[guid];
 			},
+			
+			get: function(guid) {
+				return this.pvt.compByGuid[guid];
+			},
 
             /**
 			 * Рендеринг компонентов интерфейса
+			 *  @param component - корневой элемент, с которого запускается рендеринг, если undef, то с корня
              */				
-			render: function() {
-				for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
+			render: function(component) {
+				var c = (component === undefined) ? this.getRoot()  : component;
+				if (c.getRoot() != this.getRoot()) return;
+				
+				c._render();
+				/*for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
 					this.pvt.compByGuid[g].render();
+				*/
+				
 					
 				for (var g in this.pvt.compByGuid) // обнуляем "измененные" поля
 					this.pvt.compByGuid[g].getObj().resetModifFldLog();
@@ -87,6 +111,18 @@ define(
 
 			onDeleteComponent: function(result) {
 				delete this.pvt.compByGuid[result.target.getGuid()];
+			},
+			
+			onNewRoot: function(result) {
+				if (result.obj.getGuid() == this.pvt.rootGuid) {
+	                    this.getDB().getRoot(this.pvt.rootGuid).event.on({
+							type: "delObj",
+							subscriber: this,
+							callback: this.onDeleteComponent
+                    });				
+					
+				}
+				
 			}
 
 
