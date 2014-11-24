@@ -174,6 +174,12 @@ define(
 			
 			resetModifFldLog: function() {
 				this.pvt.fldLog = {};
+				
+				for (var col in this.pvt.colLog) {
+					this.pvt.colLog[col].del = {};
+					this.pvt.colLog[col].add = {};
+				}
+				
 			},
 			
 			logColModif: function(op,colName,obj) {
