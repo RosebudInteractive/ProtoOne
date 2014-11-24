@@ -34,6 +34,11 @@ define(
                         $(parent).append(item);
                     }
                     item.css({top: this.top() + 'px', left: this.left() + 'px'});
+
+                    // убираем удаленные объекты
+                    var del = this.getObj().getLogCol('Children').del;
+                    for (var guid in del)
+                        $('#' + del[guid].getLid()).remove();
                 }
             }
 
