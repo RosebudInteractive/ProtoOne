@@ -51,12 +51,13 @@ define(
 							this._obj.getLog().add(o);					
 						}
 						this.getDB().onDeleteObject(obj);  // уведомить свою базу данных
+						var p = this.getParent();
+						p.logColModif("del",this._name,obj);
 						return;
 					}
 				}
 				
-				var p = this.getParent();
-				p.logColModif("del",this._name,obj);
+
 				
 			},
 			
