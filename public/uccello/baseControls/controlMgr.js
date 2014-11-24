@@ -55,7 +55,11 @@ define(
              * @param guid
              */
 			del: function(guid) {
-                console.log('заглушка удаления: '+guid);
+				var c = this.get(guid);
+				delete this.pvt.compByLid[c.getLid()];
+				delete this.pvt.compByGuid[c.getGuid()];
+				c.getParent()._delChild(c.getObj().getColName(),c);
+                //console.log('заглушка удаления: '+guid);
 			},
 
 			// временно
