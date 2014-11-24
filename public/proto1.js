@@ -24,7 +24,7 @@ $(document).ready( function() {
         ['./uccello/uccelloClt', './uccello/baseControls/ControlMgr' ],
         function(UccelloClt, ControlMgr){
 
-            uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, container:'#result', callback: function(){
+            uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, container:'#result0', callback: function(){
                 if (uccelloClt.getLoggedUser()) {
                     $('#login').hide(); $('#logout').show();
                 } else {
@@ -49,10 +49,11 @@ $(document).ready( function() {
             createComponent = function(obj) {
                 var g = obj.getTypeGuid();
                 var options = {parent:resultForm};
+                var params = {objGuid: obj.getGuid()};
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    options.change = function(){
+                    params.change = function(){
                         sendDeltas();
                         renderControls();
                     };
@@ -60,10 +61,10 @@ $(document).ready( function() {
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    options.db = uccelloClt.getSysDB(); //myApp.dbsys;
+                    params.db = uccelloClt.getSysDB(); //myApp.dbsys;
                 }
 
-                new typeGuids[g](myApp.controlMgr, { objGuid: obj.getGuid() }, options);
+                new typeGuids[g](myApp.controlMgr, params);
             }
 
 			/*

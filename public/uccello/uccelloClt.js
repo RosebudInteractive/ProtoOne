@@ -115,15 +115,15 @@ define(
 
             createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
-                var options = {parent:this.options.container};
+                var params = {objGuid: obj.getGuid(), rootContainer:this.options.container};
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    options.change = function(){
+                    params.change = function(){
                         sendDeltas();
                         renderControls();
                     };
-                    options.delete = function(){
+                    params.delete = function(){
                         sendDeltas();
                         renderControls();
                     };
@@ -131,10 +131,10 @@ define(
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    options.db = this.getSysDB(); //myApp.dbsys;
+                    params.db = this.getSysDB(); //myApp.dbsys;
                 }
 				// TODO!! временно, надо научиться передавать контекст!!!
-                new this.pvt.typeGuids[g](cm, { objGuid: obj.getGuid() }, options);
+                new this.pvt.typeGuids[g](cm, params);
             },
 			
 			selectContext: function(guid,callback) {

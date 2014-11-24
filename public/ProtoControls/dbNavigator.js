@@ -18,21 +18,13 @@ define(
              * Инициализация объекта
              * @param cm ссылка на контрол менеджер
              * @param params
-             * @param options
              */
-            init: function (cm, params, options) {
+            init: function (cm, params) {
                 this._super(cm, params);
                 this.cm = cm;
-                options = options ? options : {};
-                this.options = options;
-                this._activeDb = options.db ? options.db : this.cm.getDB();
+                this.params = params;
             },
 
-
-            changeDB: function (db) {
-                this._activeDb = db;
-                this.render();
-            },
 
             /**
              * Рендер
@@ -46,10 +38,11 @@ define(
                         that.render();
                     });
                 } else {
-                    var editor = $('#' + this.getGuid());
+                    var editor = $('#' + this.getLid());
                     if (editor.length == 0) {
-                        editor = $(this._templates['navigator']).attr('id', this.getGuid());
-                        $(this.options.parent).append(editor);
+                        editor = $(this._templates['navigator']).attr('id', this.getLid());
+                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                        $(parent).append(editor);
                         // перейти к паренту
                         editor.find('.dragRight').click(function () {
                             that.toParent();
@@ -78,9 +71,9 @@ define(
                     this._activeObj = null;
 
                     // отображаем слева рут элементы
-                    if (this._activeDb) {
-                        for (var i = 0, len = this._activeDb.countRoot(); i < len; i++) {
-                            var root = this._activeDb.getRoot(i);
+                    if (this.params.db) {
+                        for (var i = 0, len = this.params.db.countRoot(); i < len; i++) {
+                            var root = this.params.db.getRoot(i);
                             var name = root.obj.get('Name');
                             if (!name)
                                 name = root.obj.getGuid();
@@ -106,7 +99,7 @@ define(
             toParent: function () {
                 if (!this._activeObj) return;
                 var that = this;
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -134,7 +127,7 @@ define(
             toChild: function () {
                 if (!this._activeRoot || !this._activeRoot.getParent()) return;
                 var that = this;
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -166,7 +159,7 @@ define(
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
 
                 // отображаем в центре коллекции объекта
                 var centerTop = editor.find('.centerTop');
@@ -202,7 +195,7 @@ define(
                 this._activeObj = null;
 
                 var that = this;
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
 
                 // отображаем в центре субэлементы  коллекции объекта
                 var centerBottom = editor.find('.centerBottom');
@@ -233,7 +226,7 @@ define(
                 this._activeObj = obj;
 
                 var that = this;
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
 
                 // отображаем справа поля
                 var right = editor.find('.right');
@@ -256,7 +249,7 @@ define(
             },
 
             selectFirst: function (num) {
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 var left = editor.find('.left');
                 var centerTop = editor.find('.centerTop');
                 var centerBottom = editor.find('.centerBottom');
@@ -297,31 +290,6 @@ define(
 
 
             },
-
-            /* render: function() {
-
-             var that = this;
-             function renderItem() {
-             var editor = $('#'+that.options.id);
-             if (editor.length == 0) {
-             editor = $(that._templates['navigator']).attr('id', that.options.id);
-             $(that.options.parent).append(editor);
-             } else {
-
-             }
-             editor.css({top:that.top()+'px', left:that.left()+'px'});
-             return editor;
-             }
-
-             if (!this._templates) {
-             require(['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'], function(template, tpl){
-             that._templates = template.parseTemplate(tpl);
-             renderItem();
-             });
-             } else {
-             renderItem();
-             }
-             },*/
 
             dataBase: function (value) {
                 return this._genericSetter("DataBase", value);

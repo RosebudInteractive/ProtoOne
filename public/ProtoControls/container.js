@@ -13,9 +13,9 @@ define(
             metaCols: [ {"cname": "Children", "ctype": "control"} ],
             metaFields: [],
 
-            init: function(cm, params, options) {
+            init: function(cm, params) {
                 this._super(cm, params);
-                this.options = options;
+                this.params = params;
             },
 
             render: function() {
@@ -27,10 +27,11 @@ define(
                         that.render();
                     });
                 } else {
-                    var item = $('#' + this.getGuid());
+                    var item = $('#' + this.getLid());
+                    var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
                     if (item.length == 0) {
-                        item = $(this._templates['container']).attr('id', this.getGuid());
-                        $(this.options.parent).append(item);
+                        item = $(this._templates['container']).attr('id', this.getLid());
+                        $(parent).append(item);
                     }
                     item.css({top: this.top() + 'px', left: this.left() + 'px'});
                 }

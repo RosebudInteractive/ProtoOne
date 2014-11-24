@@ -17,12 +17,10 @@ define(
              * Инициализация объекта
              * @param cm на контрол менеджер
              * @param guid гуид объекта
-             * @param options {parent:parentId}
              */
-            init: function(cm, params, options) {
+            init: function(cm, params) {
                 this._super(cm,params);
-
-                this.options = options;
+                this.params = params;
             },
 
             /**
@@ -37,10 +35,11 @@ define(
                         that.render();
                     });
                 } else {
-                    var table = $('#' + this.getGuid());
+                    var table = $('#' + this.getLid());
                     if (table.length == 0) {
-                        table = $(this._templates['matrixGrid']).attr('id', this.getGuid());
-                        $(this.options.parent).append(table);
+                        table = $(this._templates['matrixGrid']).attr('id', this.getLid());
+                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                        $(parent).append(table);
                     } else {
                         table.empty();
                     }

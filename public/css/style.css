@@ -11,7 +11,7 @@ p {padding:0;margin: 4px 0;}
 
 .control {position: absolute;top:0;left:0;z-index: 1;}
 .control.edit{background-color: #fff;}
-.control.container{background-color: #fff;border:1px solid #999;min-width: 50px;min-height: 50px;}
+.control.container{background-color: #fff;border:1px solid #999;position:relative;width: 100%;box-sizing: border-box;}
 .control.prop-editor{padding:10px; border: 1px solid #aaa;background-color: #fff;}
 .control.prop-editor input{position: relative;}
 .control.prop-editor .props .name {width:100px;display: inline-block;}

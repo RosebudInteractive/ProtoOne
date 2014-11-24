@@ -18,12 +18,11 @@ define(
              * Инициализация объекта
              * @param cm ссылка на контрол менеджер
              * @param params
-             * @param options
              */
-            init: function (cm, params, options) {
+            init: function (cm, params) {
                 this._super(cm, params);
                 this.cm = cm;
-                this.options = options;
+                this.params = params;
             },
 
             /**
@@ -39,15 +38,15 @@ define(
                     });
                 } else {
 
-                    var editor = $('#' + this.getGuid()), props, controls, change, delbtn;
+                    var editor = $('#' + this.getLid()), props, controls, change, delbtn;
                     if (editor.length == 0) {
-                        editor = $(this._templates['propEditor']).attr('id', this.getGuid());
+                        editor = $(this._templates['propEditor']).attr('id', this.getLid());
                         controls = $(this._templates['controls']);
                         controls.change(function () {
                             var val = $(this).val();
                             that.control(val);
-                            if (that.options.change)
-                                that.options.change();
+                            if (that.params.change)
+                                that.params.change();
                         });
                         props = $(this._templates['props']);
                         change = $(this._templates['change']);
@@ -57,14 +56,15 @@ define(
                         delbtn = $(this._templates['delbtn']);
                         delbtn.click(function () {
                             that.delControl.apply(that, arguments);
-                            if (that.options.delete)
-                                that.options.delete();
+                            if (that.params.delete)
+                                that.params.delete();
                         });
                         editor.append(controls);
                         editor.append(props);
                         editor.append(change);
                         editor.append(delbtn);
-                        $(this.options.parent).append(editor);
+                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                        $(parent).append(editor);
                         editor.css({top: this.top() + 'px', left: this.left() + 'px'});
                     } else {
                         controls = editor.find('.controls');
@@ -101,7 +101,7 @@ define(
              */
             changeControl: function (guid) {
 
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 var props = editor.find('.props');
                 var change = editor.find('.change');
                 var delbtn = editor.find('.delbtn');
@@ -131,7 +131,7 @@ define(
              * @param guid
              */
             delControl: function () {
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 this.cm.del(editor.find('.controls').val());
             },
 
@@ -139,7 +139,7 @@ define(
              * Сохранить свойства
              */
             saveProps: function () {
-                var editor = $('#' + this.getGuid());
+                var editor = $('#' + this.getLid());
                 var props = editor.find('.props');
                 var inputs = props.find('input');
                 var comp = this.cm.getByGuid(editor.find('.controls').val());
@@ -149,8 +149,8 @@ define(
                     var value = $(inputs[i]).val();
                     comp[propName.charAt(0).toLowerCase() + propName.slice(1)](value);
                 }
-                if (this.options.change)
-                    this.options.change();
+                if (this.params.change)
+                    this.params.change();
             },
 
             control: function (value) {

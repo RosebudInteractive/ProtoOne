@@ -16,11 +16,10 @@ define(
              * Инициализация объекта
              * @param cm ссылка на контрол менеджер
              * @param guid гуид объекта
-             * @param options {parent:parentId}
              */
-            init: function(cm, params, options) {
+            init: function(cm, params) {
                 this._super(cm, params);
-                this.options = options;
+                this.params = params;
             },
 
             render: function() {
@@ -32,10 +31,11 @@ define(
                         that.render();
                     });
                 } else {
-                    var item = $('#' + this.getGuid());
+                    var item = $('#' + this.getLid());
                     if (item.length == 0) {
-                        item = $(this._templates['edit']).attr('id', this.getGuid());
-                        $(this.options.parent).append(item);
+                        item = $(this._templates['edit']).attr('id', this.getLid());
+                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                        $(parent).append(item);
                     }
                     item.css({top: this.top() + 'px', left: this.left() + 'px'}).val(this.value());
                 }

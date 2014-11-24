@@ -15,13 +15,11 @@ define(
             /**
              * Инициализация объекта
              * @param cm ссылка на контрол менеджер
-             * @param guid гуид объекта
-             * @param options {parent:parentId}
+             * @param params
              */
-            init: function(cm, params, options) {
+            init: function(cm, params) {
                 this._super(cm, params);
-
-                this.options = options;
+                this.params = params;
             },
 
             /**
@@ -29,7 +27,6 @@ define(
              */
             render: function() {
                 var that = this;
-				//console.log("ext render button "+this.getGuid());
                 // обработка шаблонов
                 if (!this._templates) {
                     require(['/public/uccello/uses/template.js', 'text!./templates/button.html'], function(template, tpl){
@@ -38,11 +35,11 @@ define(
 						that.render.apply(that);
                     });
                 } else {
-					console.log("render button "+this.getGuid());
-                    var item = $('#' + this.getGuid());
+                    var item = $('#' + this.getLid());
                     if (item.length == 0) {
-                        item = $(this._templates['button']).attr('id', this.getGuid());
-                        $(this.options.parent).append(item);
+                        item = $(this._templates['button']).attr('id', this.getLid());
+                        var parent = '#' + (this.getParent()? this.getParent().getLid():this.params.rootContainer);
+                        $(parent).append(item);
                     }
                     item.css({top: this.top() + 'px', left: this.left() + 'px'}).val(this.caption());
                 }
