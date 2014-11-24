@@ -33,7 +33,7 @@ define(
                         item = $(this._templates['container']).attr('id', this.getLid());
                         $(parent).append(item);
                     }
-                    item.css({top: this.top() + 'px', left: this.left() + 'px'});
+                    item.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
 
                     // убираем удаленные объекты
                     var del = this.getObj().getLogCol('Children').del;

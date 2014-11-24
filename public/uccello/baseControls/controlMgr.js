@@ -59,7 +59,6 @@ define(
 				delete this.pvt.compByLid[c.getLid()];
 				delete this.pvt.compByGuid[c.getGuid()];
 				c.getParent()._delChild(c.getObj().getColName(),c.getObj());
-                //console.log('заглушка удаления: '+guid);
 			},
 
 			// временно

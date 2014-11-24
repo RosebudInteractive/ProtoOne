@@ -82,7 +82,7 @@ define(
 				if (col == undefined) return;
 				for (var i=0; i<col.count(); i++) {
 					var c=this.getControlMgr().get(col.get(i).getGuid());
-					c.render();
+					c._render();
 				}
 			
 			},

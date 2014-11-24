@@ -172,8 +172,8 @@ define(
                         "Name": "MainContainer"
                     },
                     "collections": {
-                        "Children": {
-                            "0": {
+                        "Children": [
+                            {
                                 "$sys": {
                                     "guid": this.dbcsys.guid(),
                                     "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
@@ -187,7 +187,7 @@ define(
                                 },
                                 "collections": {}
                             },
-                            "1": {
+                            {
                                 "$sys": {
                                     "guid":  this.dbcsys.guid(),
                                     "typeGuid": "827a5cb3-e934-e28c-ec11-689be18dae97"
@@ -202,7 +202,7 @@ define(
                                 },
                                 "collections": {}
                             },
-                            "2": {
+                            {
                                 "$sys": {
                                     "guid":  this.dbcsys.guid(),
                                     "typeGuid": "a0e02c45-1600-6258-b17a-30a56301d7f1"
@@ -215,7 +215,7 @@ define(
                                 },
                                 "collections": {}
                             },
-                            "3": {
+                            {
                                 "$sys": {
                                     "guid":  this.dbcsys.guid(),
                                     "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
@@ -227,8 +227,54 @@ define(
                                     "Left": "20"
                                 },
                                 "collections": {}
+                            },
+                            {
+                                "$sys": {
+                                    "guid": this.dbcsys.guid(),
+                                    "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                                },
+                                "fields": {
+                                    "Id": 100,
+                                    "Name": "Container2",
+                                    "Width":220,
+                                    "Height":50,
+                                    "Top": "5",
+                                    "Left": "230"
+                                },
+                                "collections": {
+                                    "Children": [
+                                        {
+                                            "$sys": {
+                                                "guid": this.dbcsys.guid(),
+                                                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                            },
+                                            "fields": {
+                                                "Id": 101,
+                                                "Name": "Button1",
+                                                "Top": "5",
+                                                "Left": "30",
+                                                "Caption": "Button1"
+                                            },
+                                            "collections": {}
+                                        },
+                                        {
+                                            "$sys": {
+                                                "guid": this.dbcsys.guid(),
+                                                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                            },
+                                            "fields": {
+                                                "Id": 101,
+                                                "Name": "Button2",
+                                                "Top": "5",
+                                                "Left": "130",
+                                                "Caption": "Button2"
+                                            },
+                                            "collections": {}
+                                        }
+                                    ]
+                                }
                             }
-                        }
+                        ]
                     }
                 };
                 return hehe;
