@@ -77,6 +77,7 @@ function fakeAuthenticate(user, pass, done) {
 var myServerApp = {}; // тут все данные
 var router = new Router();
 myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
+var logger = new Logger();
 
 // запускаем вебсокетсервер
 var ucelloApp = new UccelloServ({port:8081, userSessionMgr:myServerApp.userSessionMgr, router:router});
