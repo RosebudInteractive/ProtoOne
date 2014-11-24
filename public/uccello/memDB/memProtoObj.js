@@ -20,6 +20,7 @@ define(
 				pvt.log = null; 
 				pvt.state = 0;
 				pvt.fldLog = {};
+				pvt.colLog = {};				// лог изменений в дочерних коллекциях
 				
 				if (!parent.obj) {	// корневой объект
 					pvt.col = null;
@@ -173,7 +174,22 @@ define(
 			
 			resetModifFldLog: function() {
 				this.pvt.fldLog = {};
+			},
+			
+			logColModif: function(op,colName,obj) {
+				if (!(colName in this.pvt.colLog))  {
+					this.pvt.colLog[colName] = {};
+					this.pvt.colLog[colName].del = {};
+					this.pvt.colLog[colName].add = {};
+				}
+				this.pvt.colLog[colName][op][obj.getGuid()] = obj;
+			},
+			
+			getLogCol: function(colName) {
+				return this.pvt.colLog[colName];
 			}
+			
+			
 
 		});
 		return MemProtoObj;

@@ -36,6 +36,8 @@ define(
 						var o = { adObj: newObj, obj:obj, colName: this._name, type:"add"};
 						this._obj.getLog().add(o);
 					}
+				var p = this.getParent();
+				p.logColModif("add",this._name,obj);
 			},
 			
 			_del: function(obj) {
@@ -52,6 +54,9 @@ define(
 						return;
 					}
 				}
+				
+				var p = this.getParent();
+				p.logColModif("del",this._name,obj);
 				
 			},
 			
