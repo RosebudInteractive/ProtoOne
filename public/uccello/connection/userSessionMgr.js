@@ -211,7 +211,7 @@ define(
                                     "Id": 44,
                                     "Name": "PropEditor",
                                     "Top": "10",
-                                    "Left": "700"
+                                    "Left": "900"
                                 },
                                 "collections": {}
                             },
