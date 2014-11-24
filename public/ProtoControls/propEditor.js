@@ -116,6 +116,10 @@ define(
                 delbtn.show();
 
                 var comp = this.cm.getByGuid(guid);
+                if (!comp) {
+                    this.changeControl('');
+                    return;
+                }
                 var countProps = comp.countProps();
                 for (var i = 0; i < countProps; i++) {
                     var propName = comp.getPropName(i);
