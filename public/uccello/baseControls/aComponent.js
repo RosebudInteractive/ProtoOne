@@ -143,6 +143,10 @@ define(
 				return this.pvt.controlMgr;
 			},
 			
+			delChild: function(colName, obj) {
+				this.getObj().getCol(colName)._del(obj);
+			},
+			
 			// метаинформация (properties)
 			
 			countProps: function() {
