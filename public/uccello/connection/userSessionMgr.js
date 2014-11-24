@@ -115,7 +115,7 @@ define(
 
                     var roots = [that.dbcsys.guid(), that.dbcsys.guid()];
                     for (var i=0; i<roots.length; i++) {
-                        var cm = new ControlMgr(db);
+                        var cm = new ControlMgr(db, roots[i]);
                         if (i==0) {
                             // meta
                             new AComponent(cm);
@@ -151,7 +151,7 @@ define(
                 var controller = this.getController();
                 var db = controller.getDB(data.dbGuid);
                 var rootGuid = this.dbcsys.guid();
-                var cm = new ControlMgr(db);
+                var cm = new ControlMgr(db, rootGuid);
                 db.deserialize(this.loadRes(rootGuid), {db: db});
                 controller.genDeltas(db.getGuid());
                 done({rootGuid:rootGuid});
