@@ -1,9 +1,8 @@
 define(
     [],
     function() {
-        var VDBNavigator = {};
-
-        VDBNavigator.render = function () {
+        var vDBNavigator = {};
+        vDBNavigator.render = function () {
             var that = this;
             require(['/public/uccello/uses/template.js', 'text!./ProtoControls/simpleview/templates/dbNavigator.html'], function(template, tpl){
                 if (!that._templates)
@@ -16,15 +15,15 @@ define(
                     $(parent).append(editor);
                     // перейти к паренту
                     editor.find('.dragRight').click(function () {
-                        VDBNavigator.toParent.apply(that);
+                        vDBNavigator.toParent.apply(that);
                     });
                     // перейти к чайлду
                     editor.find('.dragLeft').click(function () {
-                        VDBNavigator.toChild.apply(that);
+                        vDBNavigator.toChild.apply(that);
                     });
                     // перейти к чайлду
                     editor.find('.refresh').click(function () {
-                        VDBNavigator.render.apply(that);
+                        vDBNavigator.render.apply(that);
                     });
                 }
                 editor.css({top: that.top() + 'px', left: that.left() + 'px'});
@@ -57,17 +56,17 @@ define(
                                 var a = $(this);
                                 left.find('a').removeClass('active');
                                 a.addClass('active');
-                                VDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                                vDBNavigator.selectItem.apply(that, [a.data('obj')]);
                                 return false;
                             });
                         left.append(leftTpl);
                     }
-                    VDBNavigator.selectFirst.apply(that);
+                    vDBNavigator.selectFirst.apply(that);
                 }
             });
         };
 
-        VDBNavigator.toParent = function (vcomp) {
+        vDBNavigator.toParent = function (vcomp) {
             if (!this._activeObj) return;
             var that = this;
             var editor = $('#' + this.getLid());
@@ -88,14 +87,14 @@ define(
                     var a = $(this);
                     left.find('a').removeClass('active');
                     a.addClass('active');
-                    VDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                    vDBNavigator.selectItem.apply(that, [a.data('obj')]);
                     return false;
                 });
             left.append(leftTpl);
             link.click();
         };
 
-        VDBNavigator.toChild = function (vcomp) {
+        vDBNavigator.toChild = function (vcomp) {
             if (!this._activeRoot || !this._activeRoot.getParent()) return;
             var that = this;
             var editor = $('#' + this.getLid());
@@ -117,14 +116,14 @@ define(
                     var a = $(this);
                     left.find('a').removeClass('active');
                     a.addClass('active');
-                    VDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                    vDBNavigator.selectItem.apply(that, [a.data('obj')]);
                     return false;
                 });
             left.append(leftTpl);
             link.click();
         };
 
-        VDBNavigator.selectItem = function (obj) {
+        vDBNavigator.selectItem = function (obj) {
             this._activeRoot = obj;
             this._activeCol = null;
             this._activeObj = null;
@@ -153,15 +152,15 @@ define(
                             var a = $(this);
                             centerTop.find('a').removeClass('active');
                             a.addClass('active');
-                            VDBNavigator.selectCol.apply(that, [a.data('obj')]);
+                            vDBNavigator.selectCol.apply(that, [a.data('obj')]);
                             return false;
                         });
                     centerTop.append(centerTpl);
                 }
-            VDBNavigator.selectFirst.apply(this, [1]);
+            vDBNavigator.selectFirst.apply(this, [1]);
         };
 
-        VDBNavigator.selectCol = function (obj) {
+        vDBNavigator.selectCol = function (obj) {
             this._activeCol = obj;
             this._activeObj = null;
 
@@ -186,14 +185,14 @@ define(
                         var a = $(this);
                         centerBottom.find('a').removeClass('active');
                         a.addClass('active');
-                        VDBNavigator.selectObj.apply(that, [a.data('obj')]);
+                        vDBNavigator.selectObj.apply(that, [a.data('obj')]);
                         return false;
                     });
                 centerBottom.append(centerTpl);
             }
         };
 
-        VDBNavigator.selectObj = function (obj) {
+        vDBNavigator.selectObj = function (obj) {
             this._activeObj = obj;
 
             var that = this;
@@ -219,7 +218,7 @@ define(
             }
         };
 
-        VDBNavigator.selectFirst = function (num) {
+        vDBNavigator.selectFirst = function (num) {
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
             var centerTop = editor.find('.centerTop');
@@ -258,5 +257,5 @@ define(
                 f3 = links.length>0 ? $(links[0]) : null;
             if (f3) f3.click();
         };
-        return VDBNavigator;
+        return vDBNavigator;
 });
