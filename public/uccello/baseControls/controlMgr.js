@@ -19,7 +19,10 @@ define(
 				this.pvt.compByGuid = {};
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
-				this.pvt.viewSet = new ViewSet(this, {path:'./ProtoControls/simpleview/'});
+				this.pvt.viewSet = [
+                    new ViewSet(this, {path:'./ProtoControls/simpleview/'}),
+                    new ViewSet(this, {path:'./ProtoControls/simpleview/'})
+                ];
 				if (rootGuid) {
 					if (db.getObj(rootGuid)==undefined) {
 						db.event.on( {
@@ -61,6 +64,14 @@ define(
 				delete this.pvt.compByGuid[c.getGuid()];
 				c.getParent()._delChild(c.getObj().getColName(),c.getObj());
 			},
+
+            /**
+             * Переместить контрол
+             * @param guid
+             */
+            move: function(guid, parentGuid) {
+                console.log('заглушка перемещения контрола: '+guid+' в '+parentGuid)
+            },
 
 			// временно
 			_getCompGuidList: function() {
@@ -104,8 +115,9 @@ define(
 				if (c.getRoot() != this.getRoot()) return;
 
                 //c._render();
-                if (this.pvt.viewSet.enable())
-                    this.pvt.viewSet.render(c);
+                for(var i in this.pvt.viewSet)
+                if (this.pvt.viewSet[i].enable())
+                    this.pvt.viewSet[i].render(c);
 
 				/*for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
 					this.pvt.compByGuid[g].render();

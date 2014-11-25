@@ -8,7 +8,7 @@ define(
                 if (!that._templates)
                     that._templates = template.parseTemplate(tpl);
 
-                var editor = $('#' + that.getLid()), props, controls, change, delbtn;
+                var editor = $('#' + that.getLid()), props, controls, change, delbtn, parents;
                 if (editor.length == 0) {
                     editor = $(that._templates['propEditor']).attr('id', that.getLid());
                     controls = $(that._templates['controls']);
@@ -18,6 +18,7 @@ define(
                         if (that.params.change)
                             that.params.change();
                     });
+                    parents = $(that._templates['parents']);
                     props = $(that._templates['props']);
                     change = $(that._templates['change']);
                     change.click(function () {
@@ -30,6 +31,7 @@ define(
                             that.params.delete();
                     });
                     editor.append(controls);
+                    editor.append(parents);
                     editor.append(props);
                     editor.append(change);
                     editor.append(delbtn);
@@ -39,14 +41,20 @@ define(
                 } else {
                     controls = editor.find('.controls');
                     controls.empty();
+                    parents = editor.find('.parents');
+                    parents.find('select').empty();
+                    parents.hide();
                     props = editor.find('.props');
                     props.empty();
                     change = editor.find('.change');
                     change.hide();
+                    delbtn = editor.find('.delbtn');
+                    delbtn.hide();
                     if (that.getObj().isFldModified('Top') || that.getObj().isFldModified('Left'))
                         editor.css({top: that.top() + 'px', left: that.left() + 'px'});
                 }
 
+                parents.find('select').append('<option value=""></option>');
                 controls.append('<option value=""></option>');
                 var gl = that.cm._getCompGuidList();
                 for (var f in gl) {
@@ -54,6 +62,9 @@ define(
                     var id = gl[f].getGuid();
                     var option = $('<option/>').val(id).html(gl[f].getObj().get('Name'));
                     controls.append(option);
+                    if (gl[f].pvt.obj.getCol("Children")) {
+                        parents.find('select').append(option);
+                    }
                 }
 
                 // отобразить текущий контрол
@@ -73,21 +84,26 @@ define(
             var props = editor.find('.props');
             var change = editor.find('.change');
             var delbtn = editor.find('.delbtn');
+            var parents = editor.find('.parents');
             props.empty();
 
             if (guid == '') {
                 change.hide();
                 delbtn.hide();
+                parents.hide();
                 return;
             }
             change.show();
             delbtn.show();
+            parents.show();
 
             var comp = this.cm.getByGuid(guid);
             if (!comp) {
                 vPropEditor.changeControl.apply(this, ['']);
                 return;
             }
+
+            parents.find('select').val(comp.getParent().getGuid());
             var countProps = comp.countProps();
             for (var i = 0; i < countProps; i++) {
                 var propName = comp.getPropName(i);
@@ -115,12 +131,18 @@ define(
             var props = editor.find('.props');
             var inputs = props.find('input');
             var comp = this.cm.getByGuid(editor.find('.controls').val());
+            var parents = editor.find('.parents');
 
+            // свойства
             for (var i = 0; i < inputs.length; i++) {
                 var propName = $(inputs[i]).attr('name');
                 var value = $(inputs[i]).val();
                 comp[propName.charAt(0).toLowerCase() + propName.slice(1)](value);
             }
+
+            // родитель
+            this.cm.move(comp.getGuid(), parents.find('select').val());
+
             if (this.params.change)
                 this.params.change();
         }

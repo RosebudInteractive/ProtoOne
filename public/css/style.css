@@ -16,6 +16,7 @@ p {padding:0;margin: 4px 0;}
 .control.prop-editor{padding:10px; border: 1px solid #aaa;background-color: #fff;}
 .control.prop-editor input{position: relative;}
 .control.prop-editor .props .name {width:100px;display: inline-block;}
+.control.prop-editor .parents .name {width:100px;display: inline-block;}
 
 .navigator {position: absolute; background-color: #fff;font-size: 12px;}
 .navigator .left {width:240px;overflow: auto;}
