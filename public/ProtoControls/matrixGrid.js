@@ -8,7 +8,6 @@ define(
     function(AControl) {
         var MatrixGrid = AControl.extend({
 
-
             className: "MatrixGrid",
             classGuid: "827a5cb3-e934-e28c-ec11-689be18dae97",
             metaFields: [ {fname:"HorCells", ftype:"int"}, {fname:"VerCells", ftype:"int"} ],
@@ -21,40 +20,6 @@ define(
             init: function(cm, params) {
                 this._super(cm,params);
                 this.params = params;
-            },
-
-            /**
-             * Рендер
-             */
-            render: function() {
-                var that = this;
-                // обработка шаблонов
-                if (!this._templates) {
-                    require(['/public/uccello/uses/template.js', 'text!./templates/matrixGrid.html'], function(template, tpl){
-                        that._templates = template.parseTemplate(tpl);
-                        that.render();
-                    });
-                } else {
-                    var table = $('#' + this.getLid());
-                    if (table.length == 0) {
-                        table = $(this._templates['matrixGrid']).attr('id', this.getLid());
-                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
-                        $(parent).append(table);
-                    } else {
-                        table.empty();
-                    }
-                    var x = this.horCells();
-                    var y = this.verCells();
-                    for (var i = 0; i < y; i++) {
-                        var row = $(this._templates['row']);
-                        for (var j = 0; j < x; j++) {
-                            var cell = $(this._templates['cell']);
-                            row.append(cell);
-                        }
-                        table.append(row);
-                    }
-                    table.css({top: this.top() + 'px', left: this.left() + 'px'});
-                }
             },
 
             horCells: function(value) {

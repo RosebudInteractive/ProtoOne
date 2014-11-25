@@ -22,32 +22,10 @@ define(
                 this.params = params;
             },
 
-            render: function() {
-                var that = this;
-                // обработка шаблонов
-                if (!this._templates) {
-                    require(['/public/uccello/uses/template.js', 'text!./templates/edit.html'], function(template, tpl){
-                        that._templates = template.parseTemplate(tpl);
-                        that.render();
-                    });
-                } else {
-                    var item = $('#' + this.getLid());
-                    if (item.length == 0) {
-                        item = $(this._templates['edit']).attr('id', this.getLid());
-                        var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
-                        $(parent).append(item);
-                    }
-                    item.css({top: this.top() + 'px', left: this.left() + 'px'}).val(this.value());
-                }
-            },
-
             // Properties
-
             value: function(value) {
                 return this._genericSetter("Value", value);
             }
-
-
         });
         return Edit;
     }

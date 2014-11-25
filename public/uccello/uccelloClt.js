@@ -67,7 +67,7 @@ define(
 
                     // создаем системную бд
                     that.pvt.dbsys = that.pvt.controller.newDataBase({name:"System", proxyMaster : {connect: that.pvt.clientConnection.socket, guid: that.pvt.guids.masterSysGuid}});
-                    that.pvt.cmsys = new ControlMgr(that.pvt.dbsys, that.pvt.guids.sysRootGuid);
+                    that.pvt.cmsys = new ControlMgr(that.pvt.dbsys);
 
                     // создаем мастер базу для clientConnection
                     that.pvt.dbclient = that.pvt.controller.newDataBase({name:"MasterClient", kind: "master"});
@@ -166,7 +166,7 @@ define(
                                         mainArguments.push(cm);
                                         that.createComponent.apply(that, mainArguments);
                                     });
-                                })(i, cm);								
+                                })(i, cm);
                             }
                         });
 					});

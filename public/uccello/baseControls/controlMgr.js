@@ -4,8 +4,8 @@
 }
 
 define(
-	[],
-	function() {
+	['../controls/viewset'],
+	function(ViewSet) {
 		var ControlMgr = Class.extend({
 
             /**
@@ -19,6 +19,7 @@ define(
 				this.pvt.compByGuid = {};
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
+				this.pvt.viewSet = new ViewSet(this, {path:'./ProtoControls/simpleview/'});
 				if (rootGuid) {
 					if (db.getObj(rootGuid)==undefined) {
 						db.event.on( {
@@ -101,8 +102,11 @@ define(
 			render: function(component) {
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;
-				
-				c._render();
+
+                //c._render();
+                if (this.pvt.viewSet.enable())
+                    this.pvt.viewSet.render(c);
+
 				/*for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
 					this.pvt.compByGuid[g].render();
 				*/
@@ -126,7 +130,11 @@ define(
 					
 				}
 				
-			}
+			},
+
+            createViewSet: function() {
+
+            }
 
 
 		});

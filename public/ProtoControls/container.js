@@ -16,30 +16,6 @@ define(
             init: function(cm, params) {
                 this._super(cm, params);
                 this.params = params;
-            },
-
-            render: function() {
-                var that = this;
-                // обработка шаблонов
-                if (!this._templates) {
-                    require(['/public/uccello/uses/template.js', 'text!./templates/container.html'], function(template, tpl){
-                        that._templates = template.parseTemplate(tpl);
-                        that.render();
-                    });
-                } else {
-                    var item = $('#' + this.getLid());
-                    var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
-                    if (item.length == 0) {
-                        item = $(this._templates['container']).attr('id', this.getLid());
-                        $(parent).append(item);
-                    }
-                    item.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
-
-                    // убираем удаленные объекты
-                    var del = this.getObj().getLogCol('Children').del;
-                    for (var guid in del)
-                        $('#' + del[guid].getLid()).remove();
-                }
             }
 
         });

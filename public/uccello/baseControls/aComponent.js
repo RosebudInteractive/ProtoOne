@@ -74,29 +74,6 @@ define(
             },
 			
             /**
-             * Приватный рендер - не переопределяется наследниками
-             */				
-			_render: function() {
-				this.render();
-				var col=this.pvt.obj.getCol("Children");
-				if (col == undefined) return;
-				for (var i=0; i<col.count(); i++) {
-					var c=this.getControlMgr().get(col.get(i).getGuid());
-					c._render();
-				}
-			
-			},
-			
-            /**
-             * no op рендер - переопределяется наследниками для реализации отрисовки
-             */					
-			render: function() {
-			
-			},
-			
-			
-
-            /**
              * Возвращает локальный идентификатор
              */			
 			getLid: function() {
