@@ -45,7 +45,13 @@ define(
                 function renderComponent(c) {
                     // 'path/to/controls/vcontrol'
                     require([that.ini.path+'v'+c.className.toLowerCase()], function(VComponent){
-                        if (VComponent) {
+                        /*if (VComponent) {
+                            var comp = new VComponent();
+                            comp.render.apply(c, [comp]);
+                        }*/
+                        if (c.className == 'DBNavigator') {
+                            VComponent.render.apply(c);
+                        }else {
                             var comp = new VComponent();
                             comp.render.apply(c, [comp]);
                         }
