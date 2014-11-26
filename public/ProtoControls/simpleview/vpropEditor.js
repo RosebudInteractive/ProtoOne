@@ -69,7 +69,7 @@ define(
                 if (that.control()) {
                     controls.val(that.control());
                     //vPropEditor.changeControl.apply(that, [that.control()]);
-					vPropEditor.renderProps.apply(that
+					vPropEditor.renderProps.apply(that);
                 }
             });
         },
@@ -97,7 +97,7 @@ define(
 
             var comp = this.getControlMgr().getByGuid(guid);
             if (!comp) {
-                vPropEditor.changeControl.apply(this, ['']);
+                vPropEditor.renderProps.apply(this, ['']);
                 return;
             }
 
