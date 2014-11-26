@@ -1,33 +1,28 @@
 define(
-    [],
-    function() {
+    ['/public/uccello/uses/template.js', 'text!./templates/matrixGrid.html'],
+    function(template, tpl) {
         var vMatrixGrid = {};
+        vMatrixGrid._templates = template.parseTemplate(tpl);
         vMatrixGrid.render = function() {
-            var that = this;
-            require(['/public/uccello/uses/template.js', 'text!./ProtoControls/simpleview/templates/matrixGrid.html'], function(template, tpl){
-                if (!that._templates)
-                    that._templates = template.parseTemplate(tpl);
-
-                var table = $('#' + that.getLid());
-                if (table.length == 0) {
-                    table = $(that._templates['matrixGrid']).attr('id', that.getLid());
-                    var parent = (that.getParent()? '#' + that.getParent().getLid(): that.params.rootContainer);
-                    $(parent).append(table);
-                } else {
-                    table.empty();
+            var table = $('#' + this.getLid());
+            if (table.length == 0) {
+                table = $(vMatrixGrid._templates['matrixGrid']).attr('id', this.getLid());
+                var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                $(parent).append(table);
+            } else {
+                table.empty();
+            }
+            var x = this.horCells();
+            var y = this.verCells();
+            for (var i = 0; i < y; i++) {
+                var row = $(vMatrixGrid._templates['row']);
+                for (var j = 0; j < x; j++) {
+                    var cell = $(vMatrixGrid._templates['cell']);
+                    row.append(cell);
                 }
-                var x = that.horCells();
-                var y = that.verCells();
-                for (var i = 0; i < y; i++) {
-                    var row = $(that._templates['row']);
-                    for (var j = 0; j < x; j++) {
-                        var cell = $(that._templates['cell']);
-                        row.append(cell);
-                    }
-                    table.append(row);
-                }
-                table.css({top: that.top() + 'px', left: that.left() + 'px'});
-            });
+                table.append(row);
+            }
+            table.css({top: this.top() + 'px', left: this.left() + 'px'});
         }
         return vMatrixGrid;
     }

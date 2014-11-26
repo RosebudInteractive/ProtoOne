@@ -1,69 +1,65 @@
 define(
-    [],
-    function() {
+    ['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'],
+    function(template, tpl) {
         var vDBNavigator = {};
+        vDBNavigator._templates = template.parseTemplate(tpl);
         vDBNavigator.render = function () {
             var that = this;
-            require(['/public/uccello/uses/template.js', 'text!./ProtoControls/simpleview/templates/dbNavigator.html'], function(template, tpl){
-                if (!that._templates)
-                    that._templates = template.parseTemplate(tpl);
+            var editor = $('#' + that.getLid());
+            if (editor.length == 0) {
+                editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
+                var parent = (that.getParent()? '#' + that.getParent().getLid(): that.params.rootContainer);
+                $(parent).append(editor);
+                // перейти к паренту
+                editor.find('.dragRight').click(function () {
+                    vDBNavigator.toParent.apply(that);
+                });
+                // перейти к чайлду
+                editor.find('.dragLeft').click(function () {
+                    vDBNavigator.toChild.apply(that);
+                });
+                // перейти к чайлду
+                editor.find('.refresh').click(function () {
+                    vDBNavigator.render.apply(that);
+                });
+            }
+            editor.css({top: that.top() + 'px', left: that.left() + 'px'});
 
-                var editor = $('#' + that.getLid());
-                if (editor.length == 0) {
-                    editor = $(that._templates['navigator']).attr('id', that.getLid());
-                    var parent = (that.getParent()? '#' + that.getParent().getLid(): that.params.rootContainer);
-                    $(parent).append(editor);
-                    // перейти к паренту
-                    editor.find('.dragRight').click(function () {
-                        vDBNavigator.toParent.apply(that);
-                    });
-                    // перейти к чайлду
-                    editor.find('.dragLeft').click(function () {
-                        vDBNavigator.toChild.apply(that);
-                    });
-                    // перейти к чайлду
-                    editor.find('.refresh').click(function () {
-                        vDBNavigator.render.apply(that);
-                    });
+            var left = editor.find('.left');
+            var centerTop = editor.find('.centerTop');
+            var centerBottom = editor.find('.centerBottom');
+            var right = editor.find('.right');
+            left.empty();
+            centerTop.empty();
+            centerBottom.empty();
+            right.empty();
+            that._activeRoot = null;
+            that._activeCol = null;
+            that._activeObj = null;
+
+            // отображаем слева рут элементы
+            if (that.params.db) {
+                for (var i = 0, len = that.params.db.countRoot(); i < len; i++) {
+                    var root = that.params.db.getRoot(i);
+                    var name = root.obj.get('Name');
+                    if (!name)
+                        name = root.obj.getGuid();
+
+                    var leftTpl = $(vDBNavigator._templates['left']);
+                    var link = leftTpl.find('a')
+                        .data('obj', root.obj)
+                        .html(name)
+                        .click(function () {
+                            var a = $(this);
+                            left.find('a').removeClass('active');
+                            a.addClass('active');
+                            vDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                            return false;
+                        });
+                    left.append(leftTpl);
                 }
-                editor.css({top: that.top() + 'px', left: that.left() + 'px'});
-
-                var left = editor.find('.left');
-                var centerTop = editor.find('.centerTop');
-                var centerBottom = editor.find('.centerBottom');
-                var right = editor.find('.right');
-                left.empty();
-                centerTop.empty();
-                centerBottom.empty();
-                right.empty();
-                that._activeRoot = null;
-                that._activeCol = null;
-                that._activeObj = null;
-
-                // отображаем слева рут элементы
-                if (that.params.db) {
-                    for (var i = 0, len = that.params.db.countRoot(); i < len; i++) {
-                        var root = that.params.db.getRoot(i);
-                        var name = root.obj.get('Name');
-                        if (!name)
-                            name = root.obj.getGuid();
-
-                        var leftTpl = $(that._templates['left']);
-                        var link = leftTpl.find('a')
-                            .data('obj', root.obj)
-                            .html(name)
-                            .click(function () {
-                                var a = $(this);
-                                left.find('a').removeClass('active');
-                                a.addClass('active');
-                                vDBNavigator.selectItem.apply(that, [a.data('obj')]);
-                                return false;
-                            });
-                        left.append(leftTpl);
-                    }
-                    vDBNavigator.selectFirst.apply(that);
-                }
-            });
+                vDBNavigator.selectFirst.apply(that);
+            }
         };
 
         vDBNavigator.toParent = function (vcomp) {
@@ -79,7 +75,7 @@ define(
             centerTop.empty();
             centerBottom.empty();
             right.empty();
-            var leftTpl = $(this._templates['left']);
+            var leftTpl = $(vDBNavigator._templates['left']);
             var link = leftTpl.find('a')
                 .data('obj', this._activeObj)
                 .html(name)
@@ -108,7 +104,7 @@ define(
             centerTop.empty();
             centerBottom.empty();
             right.empty();
-            var leftTpl = $(this._templates['left']);
+            var leftTpl = $(vDBNavigator._templates['left']);
             var link = leftTpl.find('a')
                 .data('obj', parent)
                 .html(name)
@@ -144,7 +140,7 @@ define(
                     var name = col.getName();
                     if (!name)
                         name = col.getGuid();
-                    var centerTpl = $(this._templates['centerTop']);
+                    var centerTpl = $(vDBNavigator._templates['centerTop']);
                     var link = centerTpl.find('a')
                         .data('obj', col)
                         .html(name)
@@ -177,7 +173,7 @@ define(
                 var name = col.get('Name');
                 if (!name)
                     name = col.getGuid();
-                var centerTpl = $(this._templates['centerTop']);
+                var centerTpl = $(vDBNavigator._templates['centerTop']);
                 var link = centerTpl.find('a')
                     .data('obj', col)
                     .html(name)
@@ -203,7 +199,7 @@ define(
             right.empty();
             for (var i = 0, len = obj.count(); i < len; i++) {
                 if (obj.getFieldType) {
-                    var rightTpl = $(this._templates['right']);
+                    var rightTpl = $(vDBNavigator._templates['right']);
                     rightTpl.find('.name').html(obj.getFieldName(i));
                     rightTpl.find('.type').html(obj.getFieldType(i));
                     rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));

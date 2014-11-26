@@ -2,9 +2,7 @@ define(
     ['/public/uccello/uses/template.js', 'text!./templates/propEditor.html'],
     function(template, tpl) {
         var vPropEditor = {};
-
         vPropEditor._templates = template.parseTemplate(tpl);
-
         vPropEditor.render = function () {
             var that = this;
             var editor = $('#' + this.getLid()), props, controls, change, delbtn, parents;
