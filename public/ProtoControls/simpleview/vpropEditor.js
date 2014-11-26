@@ -60,10 +60,9 @@ define(
                 for (var f in gl) {
                     var name = gl[f].getClassName();
                     var id = gl[f].getGuid();
-                    var option = $('<option/>').val(id).html(gl[f].getObj().get('Name'));
-                    controls.append(option);
+                    controls.append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
                     if (gl[f].pvt.obj.getCol("Children")) {
-                        parents.find('select').append(option);
+                        parents.find('select').append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
                     }
                 }
 
@@ -103,7 +102,7 @@ define(
                 return;
             }
 
-            parents.find('select').val(comp.getParent().getGuid());
+            parents.find('select').val(comp.getParent()?comp.getParent().getGuid():'');
             var countProps = comp.countProps();
             for (var i = 0; i < countProps; i++) {
                 var propName = comp.getPropName(i);
