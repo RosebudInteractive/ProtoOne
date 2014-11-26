@@ -68,20 +68,16 @@ define(
                 // отобразить текущий контрол
                 if (that.control()) {
                     controls.val(that.control());
-                    vPropEditor.changeControl.apply(that, [that.control()]);
+                    //vPropEditor.changeControl.apply(that, [that.control()]);
+					vPropEditor.renderProps.apply(that
                 }
             });
-        }
+        },
+		
+		vPropEditor.renderProps = function() {
 
-        /**
-         * Изменение текущего контрола
-         * @param guid
-         */
-        vPropEditor.changeControl = function (guid) {
-
-            // устанавливаем новое значение выбраннного контрола
-            this.control(guid);
-
+			var guid = this.control();
+			
             var editor = $('#' + this.getLid());
             var props = editor.find('.props');
             var change = editor.find('.change');
@@ -113,7 +109,19 @@ define(
                 p.find('.name').html(propName);
                 p.find('.value input').val(comp[propName.charAt(0).toLowerCase() + propName.slice(1)]()).attr('name', propName);
                 props.append(p);
-            }
+            }			
+		},
+
+        /**
+         * Изменение текущего контрола
+         * @param guid
+         */
+        vPropEditor.changeControl = function (guid) {
+
+            // устанавливаем новое значение выбраннного контрола
+            this.control(guid);
+			vPropEditor.renderProps.apply(this);
+
         }
 
         /**
