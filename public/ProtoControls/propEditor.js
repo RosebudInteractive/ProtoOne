@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../uccello/baseControls/aControl'],
+    ['../uccello/controls/aControl'],
     function(AControl) {
         var PropEditor = AControl.extend({
 

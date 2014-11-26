@@ -5,7 +5,7 @@ if (typeof define !== 'function') {
 
 define(
     ['./connection/clientConnection' ,
-        './memDB/memDBController','./memDB/memDataBase','./baseControls/controlMgr', './baseControls/aComponent',
+        './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
         '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext' ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,

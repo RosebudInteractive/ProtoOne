@@ -5,7 +5,7 @@ var typeGuids = {};
 var contextGuid = 0, currContext=null, dbcontext = null;
 var uccelloClt = null;
 
-define(['../../public/uccello/uccelloClt', '../../public/uccello/baseControls/ControlMgr'], function(UccelloClt, ControlMgr) {
+define(['../../public/uccello/uccelloClt', '../../public/uccello/controls/controlMgr'], function(UccelloClt, ControlMgr) {
 describe('Unit Connect', function() {
         it('connect', function() {
 

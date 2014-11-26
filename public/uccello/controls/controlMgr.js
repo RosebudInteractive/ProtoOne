@@ -4,7 +4,7 @@
 }
 
 define(
-	['../controls/viewset'],
+	['./viewset'],
 	function(ViewSet) {
 		var ControlMgr = Class.extend({
 

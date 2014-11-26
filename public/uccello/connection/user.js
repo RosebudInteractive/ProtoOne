@@ -8,7 +8,7 @@ if (typeof define !== 'function') {
  * @module User
  */
 define(
-    ['../baseControls/aComponent'],
+    ['../controls/aComponent'],
     function(AComponent) {
 
     var User = AComponent.extend(/** @lends module:User.User.prototype */{

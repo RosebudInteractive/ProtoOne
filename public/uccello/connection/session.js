@@ -8,7 +8,7 @@ if (typeof define !== 'function') {
  * @module Session
  */
 define(
-    ['../baseControls/aComponent', '../system/event'],
+    ['../controls/aComponent', '../system/event'],
     function(AComponent, Event) {
 
     var Session = AComponent.extend(/** @lends module:Session.Session.prototype */{

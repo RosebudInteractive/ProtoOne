@@ -7,7 +7,7 @@ if (typeof define !== 'function') {
  * ClientConnection
  * @module ClientConnection
  */
-define(['./socket', '../baseControls/aComponent'], function(Socket, AComponent) {
+define(['./socket', '../controls/aComponent'], function(Socket, AComponent) {
 
     var ClientConnection = AComponent.extend(/** @lends module:ClientConnection.ClientConnection.prototype */{
 

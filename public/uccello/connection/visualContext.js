@@ -8,7 +8,7 @@ if (typeof define !== 'function') {
  * @module VisualContext
  */
 define(
-    ['../baseControls/aComponent'],
+    ['../controls/aComponent'],
     function(AComponent) {
 
         var VisualContext = AComponent.extend(/** @lends module:VisualContext.VisualContext.prototype */{

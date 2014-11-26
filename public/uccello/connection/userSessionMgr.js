@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../memDB/memDBController', '../baseControls/controlMgr', '../baseControls/aComponent', '../baseControls/aControl', './session', './connect', './user', '../system/event',
+    ['../memDB/memDBController', '../controls/controlMgr', '../controls/aComponent', '../controls/aControl', './session', './connect', './user', '../system/event',
         './visualContext'],
     function(MemDBController, ControlMgr, AComponent, AControl, Session, Connect, User, Event, VisualContext) {
         var UserSessionMgr = Class.extend({

@@ -21,7 +21,7 @@ var resultForm = '#result0';
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/uccelloClt', './uccello/baseControls/ControlMgr' ],
+        ['./uccello/uccelloClt', './uccello/controls/controlMgr' ],
         function(UccelloClt, ControlMgr){
 
             uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, container:'#result0', callback: function(){

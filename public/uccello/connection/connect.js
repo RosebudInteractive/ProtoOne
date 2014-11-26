@@ -8,7 +8,7 @@ if (typeof define !== 'function') {
  * @module Connect
  */
 define(
-    ['../baseControls/aComponent', '../system/event'],
+    ['../controls/aComponent', '../system/event'],
     function(AComponent, event) {
 
     var Connect = AComponent.extend(/** @lends module:Connect.Connect.prototype */{
