@@ -13,8 +13,7 @@ define(
                     editor = $(that._templates['propEditor']).attr('id', that.getLid());
                     controls = $(that._templates['controls']);
                     controls.change(function () {
-                        var val = $(this).val();
-                        that.control(val);
+                        vPropEditor.changeControl.apply(that, [$(this).val()]);
                         if (that.params.change)
                             that.params.change();
                     });
@@ -56,7 +55,7 @@ define(
 
                 parents.find('select').append('<option value=""></option>');
                 controls.append('<option value=""></option>');
-                var gl = that.cm._getCompGuidList();
+                var gl = that.getControlMgr()._getCompGuidList();
                 for (var f in gl) {
                     var name = gl[f].getClassName();
                     var id = gl[f].getGuid();
@@ -79,6 +78,10 @@ define(
          * @param guid
          */
         vPropEditor.changeControl = function (guid) {
+
+            // устанавливаем новое значение выбраннного контрола
+            this.control(guid);
+
             var editor = $('#' + this.getLid());
             var props = editor.find('.props');
             var change = editor.find('.change');
@@ -96,7 +99,7 @@ define(
             delbtn.show();
             parents.show();
 
-            var comp = this.cm.getByGuid(guid);
+            var comp = this.getControlMgr().getByGuid(guid);
             if (!comp) {
                 vPropEditor.changeControl.apply(this, ['']);
                 return;
@@ -119,7 +122,7 @@ define(
          */
         vPropEditor.delControl = function () {
             var editor = $('#' + this.getLid());
-            this.cm.del(editor.find('.controls').val());
+            this.getControlMgr().del(editor.find('.controls').val());
         }
 
         /**
@@ -129,7 +132,7 @@ define(
             var editor = $('#' + this.getLid());
             var props = editor.find('.props');
             var inputs = props.find('input');
-            var comp = this.cm.getByGuid(editor.find('.controls').val());
+            var comp = this.getControlMgr().getByGuid(editor.find('.controls').val());
             var parents = editor.find('.parents');
 
             // свойства
@@ -140,10 +143,10 @@ define(
             }
 
             // родитель
-            this.cm.move(comp.getGuid(), parents.find('select').val());
+            this.getControlMgr().move(comp.getGuid(), parents.find('select').val());
 
             if (this.params.change)
                 this.params.change();
         }
         return vPropEditor;
-});
+    });
