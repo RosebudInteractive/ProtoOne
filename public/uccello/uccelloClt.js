@@ -131,7 +131,7 @@ define(
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    params.db = this.getSysDB(); //myApp.dbsys;
+                    params.db = this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
                 }
 				// TODO!! временно, надо научиться передавать контекст!!!
                 new this.pvt.typeGuids[g](cm, params);
@@ -140,7 +140,7 @@ define(
 			selectContext: function(guid,callback) {
                 var that = this;
 				function done() {
-					dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
+                    that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
                         // запросить гуиды рутов
                         that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, type:'method'}, function(result) {
                             var roots = result.roots;
@@ -154,11 +154,11 @@ define(
 
                             // подписка на все руты
 							for (var i = 0; i < roots.length; i++) {
-								var cm = new ControlMgr(dbcontext,roots[i]); 
+								var cm = new ControlMgr(that.pvt.dbcontext,roots[i]);
                                 that.pvt.controlMgr[roots[i]] = cm;
                                 (function(i, cm) {
                                     exec++;
-                                    dbcontext.subscribeRoot(roots[i], function () {
+                                    that.pvt.dbcontext.subscribeRoot(roots[i], function () {
                                         syncCallback();
                                     }, function () {
                                         that.options.container = '#result'+i;
@@ -172,11 +172,9 @@ define(
 					});
 				}
 				
-				var dbcontext = this.pvt.dbcontext;
 				var controller = this.getController();
-
-				if (dbcontext)
-					controller.delDataBase(dbcontext.getGuid(), done);
+				if (this.pvt.dbcontext)
+					controller.delDataBase(this.pvt.dbcontext.getGuid(), done);
 				else
 					done();			
 			}
