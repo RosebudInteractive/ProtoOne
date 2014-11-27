@@ -52,15 +52,18 @@ define(
             // отображаем слева рут элементы
             if (that.params.db) {
                 var rootElemLink = null;
-                for (var i = 0, len = that.params.db.countRoot(); i < len; i++) {
-                    var root = that.params.db.getRoot(i);
-                    var name = root.obj.get('Name');
+                var rootElem = this.level()==0? null: this.rootElem();
+                var cnt = rootElem? 1: that.params.db.countRoot();
+
+                for (var i = 0; i < cnt; i++) {
+                    var root = rootElem? that.params.db.getObj(rootElem): that.params.db.getRoot(i).obj;
+                    var name = root.get('Name');
                     if (!name)
-                        name = root.obj.getGuid();
+                        name = root.getGuid();
 
                     var leftTpl = $(vDBNavigator._templates['left']);
                     var link = leftTpl.find('a')
-                        .data('obj', root.obj)
+                        .data('obj', root)
                         .html(name)
                         .click(function () {
                             var a = $(this);
@@ -73,10 +76,10 @@ define(
                         });
                     left.append(leftTpl);
 
-                    if (!rootElemLink && this.rootElem() == root.obj.getGuid()) {
+                    if (!rootElemLink && this.rootElem() == root.getGuid())
                         rootElemLink = link;
-                    }
                 }
+
 
                 if (rootElemLink) {
                     left.find('a').removeClass('active');
@@ -95,6 +98,8 @@ define(
 
         vDBNavigator.toParent = function (vcomp) {
             if (!this._activeObj) return;
+            this.rootElem(this._activeObj.getGuid());
+            this.level(this.level()+1);
             var that = this;
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
@@ -119,10 +124,14 @@ define(
                 });
             left.append(leftTpl);
             link.click();
+            if (that.params.change)
+                that.params.change();
         };
 
         vDBNavigator.toChild = function (vcomp) {
             if (!this._activeRoot || !this._activeRoot.getParent()) return;
+            this.rootElem(this._activeRoot.getParent().getGuid());
+            this.level(this.level()-1);
             var that = this;
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
@@ -148,6 +157,8 @@ define(
                 });
             left.append(leftTpl);
             link.click();
+            if (that.params.change)
+                that.params.change();
         };
 
         vDBNavigator.selectItem = function (obj, level) {
