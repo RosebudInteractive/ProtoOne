@@ -11,7 +11,10 @@ define(
             className: "DBNavigator",
             classGuid: "38aec981-30ae-ec1d-8f8f-5004958b4cfa",
             metaFields: [
-                {fname: "DataBase", ftype: "string"}
+                {fname: "DataBase", ftype: "string"},
+                {fname: "Level", ftype: "int"},
+                {fname: "RootElem", ftype: "string"},
+                {fname: "Nlevels", ftype: "int"}
             ],
 
             /**
@@ -21,12 +24,23 @@ define(
              */
             init: function (cm, params) {
                 this._super(cm, params);
-                this.cm = cm;
                 this.params = params;
             },
 
             dataBase: function (value) {
                 return this._genericSetter("DataBase", value);
+            },
+
+            level: function (value) {
+                return this._genericSetter("Level", value);
+            },
+
+            rootElem: function (value) {
+                return this._genericSetter("RootElem", value);
+            },
+
+            nlevels: function (value) {
+                return this._genericSetter("Nlevels", value);
             }
         });
         return DBNavigator;

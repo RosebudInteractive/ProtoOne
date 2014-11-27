@@ -5,10 +5,13 @@
             <td><u>список объектов</u><div class="left"></div></td>
             <td>
                 <table>
-                    <tr valign="top"><td><u>коллекции объекта</u><div class="centerTop"></div></td></tr>
-                    <tr valign="top"><td><u>субэлементы коллекции объекта</u><div class="centerBottom"></div></td></tr>
                     <tr valign="top">
                     <td>
+                        <div class="levels"></div>
+                    </td>
+                    </tr>
+                    <tr valign="top">
+                    <td colspan="100">
                         <input type="button" class="dragRight" value="сдвинуть влево">
                         <input type="button" class="dragLeft" value="сдвинуть вправо">
                         <input type="button" class="refresh" value="обновить">
@@ -19,6 +22,12 @@
             <td><u>список полей текущего выделенного объекта</u><div class="right"></div></td>
         </tr>
     </table>
+</div>
+
+<!-- template: levelCol -->
+<div class="level">
+    <u>коллекции объекта</u><div class="centerTop"></div>
+    <u>субэлементы коллекции объекта</u><div class="centerBottom"></div>
 </div>
 
 <!-- template: left -->

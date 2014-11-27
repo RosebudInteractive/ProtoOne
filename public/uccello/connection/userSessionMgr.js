@@ -224,7 +224,10 @@ define(
                                     "Id": 55,
                                     "Name": "DbNavigator",
                                     "Top": "240",
-                                    "Left": "20"
+                                    "Left": "20",
+                                    "Nlevels": 3,
+                                    "RootElem": "fc13e2b8-3600-b537-f9e5-654b7418c156",
+                                    "Level": 1
                                 },
                                 "collections": {}
                             },
@@ -236,8 +239,8 @@ define(
                                 "fields": {
                                     "Id": 100,
                                     "Name": "Container2",
-                                    "Width":220,
-                                    "Height":50,
+                                    "Width":500,
+                                    "Height":100,
                                     "Top": "5",
                                     "Left": "230"
                                 },
@@ -270,6 +273,52 @@ define(
                                                 "Caption": "Button2"
                                             },
                                             "collections": {}
+                                        },
+                                        {
+                                            "$sys": {
+                                                "guid": this.dbcsys.guid(),
+                                                "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                                            },
+                                            "fields": {
+                                                "Id": 100,
+                                                "Name": "Container3",
+                                                "Width":220,
+                                                "Height":50,
+                                                "Top": "5",
+                                                "Left": "230"
+                                            },
+                                            "collections": {
+                                                "Children": [
+                                                    {
+                                                        "$sys": {
+                                                            "guid": this.dbcsys.guid(),
+                                                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                                        },
+                                                        "fields": {
+                                                            "Id": 103,
+                                                            "Name": "Button3.1",
+                                                            "Top": "5",
+                                                            "Left": "30",
+                                                            "Caption": "Button3.1"
+                                                        },
+                                                        "collections": {}
+                                                    },
+                                                    {
+                                                        "$sys": {
+                                                            "guid": this.dbcsys.guid(),
+                                                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                                                        },
+                                                        "fields": {
+                                                            "Id": 104,
+                                                            "Name": "Button3.2",
+                                                            "Top": "5",
+                                                            "Left": "130",
+                                                            "Caption": "Button3.2"
+                                                        },
+                                                        "collections": {}
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }

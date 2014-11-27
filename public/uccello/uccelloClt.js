@@ -119,19 +119,14 @@ define(
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
-                    params.delete = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
+                    params.change = sendAndRender;
+                    params.delete = sendAndRender;
                 }
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.db = this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
+                    params.change = sendAndRender;
                 }
 				// TODO!! временно, надо научиться передавать контекст!!!
                 new this.pvt.typeGuids[g](cm, params);

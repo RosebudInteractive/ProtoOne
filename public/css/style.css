@@ -33,6 +33,7 @@ p {padding:0;margin: 4px 0;}
 .navigator .right span.name {width:70px;}
 .navigator .right span.type {width:40px;}
 .navigator .right input {display: inline-block;}
+.navigator .levels .level{width:284px;padding:5px;margin:5px;border:1px solid #999;}
 
 .divTable
 {

@@ -8,6 +8,7 @@ define(
             var editor = $('#' + that.getLid());
             if (editor.length == 0) {
                 editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
+
                 var parent = (that.getParent()? '#' + that.getParent().getLid(): that.params.rootContainer);
                 $(parent).append(editor);
                 // перейти к паренту
@@ -33,12 +34,24 @@ define(
             centerTop.empty();
             centerBottom.empty();
             right.empty();
+
+            // добавляем уровни
+            var levels = editor.find('.levels');
+            levels.empty();
+            for(var i=0, len=this.nlevels(); i<len; i++) {
+                var levelCol = $(vDBNavigator._templates['levelCol']);
+                levelCol.find('.centerTop').addClass('level'+i);
+                levelCol.find('.centerBottom').addClass('level'+i);
+                levels.append(levelCol);
+            }
+
             that._activeRoot = null;
             that._activeCol = null;
             that._activeObj = null;
 
             // отображаем слева рут элементы
             if (that.params.db) {
+                var rootElemLink = null;
                 for (var i = 0, len = that.params.db.countRoot(); i < len; i++) {
                     var root = that.params.db.getRoot(i);
                     var name = root.obj.get('Name');
@@ -53,22 +66,40 @@ define(
                             var a = $(this);
                             left.find('a').removeClass('active');
                             a.addClass('active');
-                            vDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                            vDBNavigator.changeRootElem.apply(that, [a.data('obj')]);
+                            if (that.params.change)
+                                that.params.change();
                             return false;
                         });
                     left.append(leftTpl);
+
+                    if (!rootElemLink && this.rootElem() == root.obj.getGuid()) {
+                        rootElemLink = link;
+                    }
                 }
-                vDBNavigator.selectFirst.apply(that);
+
+                if (rootElemLink) {
+                    left.find('a').removeClass('active');
+                    rootElemLink.addClass('active');
+                    vDBNavigator.selectItem.apply(this, [rootElemLink.data('obj'), 0]);
+                }
+
+                //vDBNavigator.selectFirst.apply(that);
             }
         };
+
+        vDBNavigator.changeRootElem = function(obj){
+            this.rootElem(obj.getGuid());
+            vDBNavigator.selectItem.apply(this, [obj, 0]);
+        }
 
         vDBNavigator.toParent = function (vcomp) {
             if (!this._activeObj) return;
             var that = this;
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
-            var centerTop = editor.find('.centerTop');
-            var centerBottom = editor.find('.centerBottom');
+            var centerTop = editor.find('.centerTop.level0');
+            var centerBottom = editor.find('.centerBottom.level0');
             var right = editor.find('.right');
             var name = centerBottom.find('a.active').html();
             left.empty();
@@ -83,7 +114,7 @@ define(
                     var a = $(this);
                     left.find('a').removeClass('active');
                     a.addClass('active');
-                    vDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                    vDBNavigator.selectItem.apply(that, [a.data('obj'), 0]);
                     return false;
                 });
             left.append(leftTpl);
@@ -112,28 +143,33 @@ define(
                     var a = $(this);
                     left.find('a').removeClass('active');
                     a.addClass('active');
-                    vDBNavigator.selectItem.apply(that, [a.data('obj')]);
+                    vDBNavigator.selectItem.apply(that, [a.data('obj'), 0]);
                     return false;
                 });
             left.append(leftTpl);
             link.click();
         };
 
-        vDBNavigator.selectItem = function (obj) {
-            this._activeRoot = obj;
-            this._activeCol = null;
-            this._activeObj = null;
+        vDBNavigator.selectItem = function (obj, level) {
+
+            if (level==0) {
+                this._activeRoot = obj;
+                this._activeCol = null;
+                this._activeObj = null;
+            }
 
             var that = this;
             var editor = $('#' + this.getLid());
 
+            // очищаем все низшие уровни
+            for(var i=level; i<this.nlevels(); i++) {
+                editor.find('.centerTop.level'+i).empty();
+                editor.find('.centerBottom.level'+i).empty();
+            }
+
             // отображаем в центре коллекции объекта
-            var centerTop = editor.find('.centerTop');
-            var centerBottom = editor.find('.centerBottom');
-            var right = editor.find('.right');
-            centerTop.empty();
-            centerBottom.empty();
-            right.empty();
+            var centerTop = editor.find('.centerTop.level'+level);
+            var centerBottom = editor.find('.centerBottom.level'+level);
             if (obj.countCol)
                 for (var i = 0, len = obj.countCol(); i < len; i++) {
                     var col = obj.getCol(i);
@@ -148,26 +184,32 @@ define(
                             var a = $(this);
                             centerTop.find('a').removeClass('active');
                             a.addClass('active');
-                            vDBNavigator.selectCol.apply(that, [a.data('obj')]);
+                            vDBNavigator.selectCol.apply(that, [a.data('obj'), level]);
                             return false;
                         });
                     centerTop.append(centerTpl);
                 }
-            vDBNavigator.selectFirst.apply(this, [1]);
+            //vDBNavigator.selectFirst.apply(this, [1]);
+            vDBNavigator.viewRight.apply(this, [obj]);
         };
 
-        vDBNavigator.selectCol = function (obj) {
-            this._activeCol = obj;
-            this._activeObj = null;
+        vDBNavigator.selectCol = function (obj, level) {
+
+            if (level==0){
+                this._activeCol = obj;
+                this._activeObj = null;
+            }
 
             var that = this;
             var editor = $('#' + this.getLid());
 
+            // очищаем все низшие уровни
+            for(var i=level; i<this.nlevels(); i++) {
+                editor.find('.centerBottom.level'+i).empty();
+            }
+
             // отображаем в центре субэлементы  коллекции объекта
-            var centerBottom = editor.find('.centerBottom');
-            var right = editor.find('.right');
-            centerBottom.empty();
-            right.empty();
+            var centerBottom = editor.find('.centerBottom.level'+level);
             for (var i = 0, len = obj.count(); i < len; i++) {
                 var col = obj.get(i);
                 var name = col.get('Name');
@@ -181,16 +223,23 @@ define(
                         var a = $(this);
                         centerBottom.find('a').removeClass('active');
                         a.addClass('active');
-                        vDBNavigator.selectObj.apply(that, [a.data('obj')]);
+                        vDBNavigator.selectObj.apply(that, [a.data('obj'), level]);
                         return false;
                     });
                 centerBottom.append(centerTpl);
             }
+            vDBNavigator.viewRight.apply(this, [obj]);
         };
 
-        vDBNavigator.selectObj = function (obj) {
-            this._activeObj = obj;
+        vDBNavigator.selectObj = function (obj, level) {
+            if (level==0)
+                this._activeObj = obj;
+            if (this.nlevels()>level+1)
+                vDBNavigator.selectItem.apply(this, [obj, level+1]);
+            vDBNavigator.viewRight.apply(this, [obj]);
+        };
 
+        vDBNavigator.viewRight = function (obj) {
             var that = this;
             var editor = $('#' + this.getLid());
 
@@ -208,11 +257,11 @@ define(
                         val.data('obj').set(val.attr('name'), val.val());
                         return false;
                     });
-
                     right.append(rightTpl);
                 }
             }
-        };
+        }
+
 
         vDBNavigator.selectFirst = function (num) {
             var editor = $('#' + this.getLid());

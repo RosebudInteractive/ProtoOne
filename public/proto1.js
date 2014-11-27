@@ -46,6 +46,11 @@ $(document).ready( function() {
                 });
             }
 
+            sendAndRender = function(){
+                    sendDeltas();
+                    renderControls();
+            }
+
             createComponent = function(obj) {
                 var g = obj.getTypeGuid();
                 var options = {parent:resultForm};
@@ -53,15 +58,13 @@ $(document).ready( function() {
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
+                    params.change = sendAndRender;
                 }
 
-                // DbNavigator для системной бд
+                // DbNavigator
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.db = uccelloClt.getSysDB(); //myApp.dbsys;
+                    params.change = sendAndRender;
                 }
 
                 new typeGuids[g](myApp.controlMgr, params);
