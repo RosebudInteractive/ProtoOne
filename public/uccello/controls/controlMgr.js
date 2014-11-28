@@ -119,13 +119,11 @@ define(
                 if (this.pvt.viewSet[i].enable())
                     this.pvt.viewSet[i].render(c);
 
-				/*for (var g in this.pvt.compByGuid)  // Упрощенная реализация - вызываем рендер в цикле
-					this.pvt.compByGuid[g].render();
-				*/
-				
 					
-				for (var g in this.pvt.compByGuid) // обнуляем "измененные" поля
-					this.pvt.compByGuid[g].getObj().resetModifFldLog();
+				for (var g in this.pvt.compByGuid) { 
+					this.pvt.compByGuid[g].getObj().resetModifFldLog();	// обнуляем "измененные" поля в объектах 
+					this.pvt.compByGuid[g]._isRendered(true);			// выставляем флаг рендеринга
+				}
 			},
 
 			onDeleteComponent: function(result) {

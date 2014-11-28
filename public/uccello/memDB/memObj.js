@@ -72,6 +72,13 @@ define(
 				if (!this.isFldModified(field)) { // запоминаем измененные свойства
 					this.pvt.fldLog[field] = oldValue;
 				}
+				
+				this.event.fire({
+                    type: 'mod',
+                    target: this,
+					field: field
+				});	
+				
 			},
 						
 			// получить имя поля по индексу

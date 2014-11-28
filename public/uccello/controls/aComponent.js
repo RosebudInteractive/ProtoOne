@@ -21,6 +21,7 @@ define(
             init: function(cm, params){
 				this.pvt = {};
 				this.pvt.controlMgr = cm;
+				this.pvt.isRendered = false;
 				this._buildMetaInfo(cm.getDB());
 
 				if (params==undefined) return; // в этом режиме только создаем метаинфо
@@ -49,6 +50,11 @@ define(
 						}
 					
 				}
+				this.pvt.obj.event.on({ // подписка на изменение объекта свойств, чтобы сбрасывать флаг рендеринга (TODO коллекции тоже)
+						type: "mod", // TODO не забыть про отписку
+						subscriber: this,
+						callback: this._onDirtyRender
+                    });
 				cm.add(this);
 				
             },
@@ -72,6 +78,10 @@ define(
 					db._buildMetaTables();
                 }
             },
+			
+			_onDirtyRender: function(result) {
+				this.pvt.isRendered = false;
+			},
 			
             /**
              * Возвращает локальный идентификатор
@@ -141,14 +151,28 @@ define(
 			},
 
 			
-
+			_isRendered: function(value) {
+				if (value === undefined)
+					return this.pvt.isRendered;
+				if (value)
+				  this.pvt.isRendered = true;
+				else
+				  this.pvt.isRendered = false;
+				return this.pvt.isRendered;
+			},
+			
             /**
              * сеттер-геттер свойств по умолчанию (дженерик) - используется если нет дополнительной логики в свойствах
              */
 			
 			_genericSetter: function(fldName,fldVal) {
-				if (fldVal!==undefined) 
-					this.pvt.obj.set(fldName,fldVal);
+				if (fldVal!==undefined) {
+					var val=this.getObj().get(fldName);
+					if (val!=fldVal) {
+						this.pvt.obj.set(fldName,fldVal);
+					}
+						
+				}
 
 				return this.pvt.obj.get(fldName);					
 			},			
