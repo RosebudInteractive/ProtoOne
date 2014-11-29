@@ -22,17 +22,32 @@ app.get('/test', function(req, res){
 });
 
 // апдейт
-app.get("/update", function(req, res){
+app.get("/update/:what", function(req, res){
+
     var shell = require('shelljs');
-    res.writeHead(200,{"Content-Type" : "text/html"});
-    res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
-    res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
-    res.write('$ git pull<br>');
-    res.write(shell.exec('git pull').output+'<br><br>');
-    res.write('$ jsdoc public -r -d public/docs<br>');
-    res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
-    res.write('$ forever restart calypso.js<br>');
-    res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
+
+    switch (req.params.what){
+        case 'uccello':
+            res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
+            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
+            res.write('$ git pull<br>');
+            res.write(shell.exec('git pull').output+'<br><br>');
+            res.write('$ jsdoc public -r -d public/docs<br>');
+            res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
+            res.write('$ forever restart calypso.js<br>');
+            res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
+            break;
+        case 'mobimed':
+            res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
+            res.write(shell.exec('cd /var/www/sites/mobimed/docs/').output+'<br><br>');
+            res.write('$ git pull<br>');
+            res.write(shell.exec('git pull').output+'<br><br>');
+            break;
+
+    }
+
     res.end();
 });
 
