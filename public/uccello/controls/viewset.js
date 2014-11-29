@@ -53,7 +53,7 @@ define(
                     });
                 }
 
-                renderComponent(component);
+				if (!component._isRendered()) renderComponent(component);
                 var col=component.pvt.obj.getCol("Children");
                 if (col == undefined) return;
                 for (var i=0; i<col.count(); i++) {
