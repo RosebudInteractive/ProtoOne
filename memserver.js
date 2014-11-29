@@ -40,8 +40,8 @@ app.get("/update/:what", function(req, res){
             break;
         case 'mobimed':
             res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
-            res.write(shell.exec('cd /var/www/sites/mobimed/docs/').output+'<br><br>');
+            res.write('$ cd /var/www/sites/mobimed/docs/MobiDoc/<br>');
+            res.write(shell.exec('cd /var/www/sites/mobimed/docs/MobiDoc/').output+'<br><br>');
             res.write('$ git pull<br>');
             res.write(shell.exec('git pull').output+'<br><br>');
             break;
