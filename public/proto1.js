@@ -333,8 +333,9 @@ $(document).ready( function() {
                     // запрашиваем данные
                     uccelloClt.getClient().query(masterGuid, function(result2){
                         dataRoots.push(result2.rootGuid);
-                        createTabs();
-                        selectContext(currContext);
+                        uccelloClt.getContextCM(currRoot).getDB().subscribeRoot(result2.rootGuid, function () {
+                        }, function () {
+                        });
                     });
                 }
         }
