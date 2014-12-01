@@ -8,21 +8,19 @@ define(
 	function(ControlMgr, DataRoot, DataContact) {
 		var Dataman = Class.extend({
 
-			init: function(serv){
+			init: function(router, controller){
 				this.pvt = {};
-				this.pvt.server = serv;
+				this.pvt.router = router;
+				this.pvt.controller = controller;
 				var that = this;
-                serv.getRouter().add('query', function(){ return that.query.apply(that, arguments); });
+                router.add('query', function(){ return that.query.apply(that, arguments); });
 			},
 
             query: function(data, done) {
 				var result = {};
-                var controller = this.pvt.server.getUserMgr().getController();
+                var controller = this.pvt.controller;
                 var db = controller.getDB(data.dbGuid);
                 var rootGuid = controller.guid();
-                var cm = new ControlMgr(db, rootGuid);
-                new DataRoot(cm);
-                new DataContact(cm);
                 db.deserialize(this.loadQuery(rootGuid), {db: db});
                 controller.genDeltas(db.getGuid());
                 done({rootGuid:rootGuid});

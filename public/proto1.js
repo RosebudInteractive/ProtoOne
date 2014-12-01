@@ -16,7 +16,7 @@ var uccelloClt = null;
 var masterGuid = null;
 var rootsGuids = null;
 var resultForm = '#result0';
-var dataRoot = null;
+var dataRoots = [];
 
 // когда документ загружен
 $(document).ready( function() {
@@ -206,13 +206,8 @@ $(document).ready( function() {
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     masterGuid = result.masterGuid;
                     rootsGuids = result.roots;
-
-                    // запрашиваем данные
-                    uccelloClt.getClient().query(masterGuid, function(result2){
-                        dataRoot = result2.rootGuid;
-                        createTabs();
-                        selectContext(masterGuid);
-                    });
+                    createTabs();
+                    selectContext(masterGuid);
                 });
             }
 
@@ -332,6 +327,16 @@ $(document).ready( function() {
                     var root = uccelloClt.getContextCM(currRoot).getDB().getObj(currRoot);
                     console.log(uccelloClt.getContextCM(currRoot).getDB().serialize(root));
                 }
+
+                loadQuery = function(){
+                    if (!currContext) return;
+                    // запрашиваем данные
+                    uccelloClt.getClient().query(masterGuid, function(result2){
+                        dataRoots.push(result2.rootGuid);
+                        createTabs();
+                        selectContext(currContext);
+                    });
+                }
         }
     );
 });
@@ -366,7 +371,7 @@ $(function(){
     $('#userContext').change(function(){
         currContext = $(this).val();
         // запросить гуиды рутов
-        uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, type:'method'}, function(result) {
+        uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rtype:'res', type:'method'}, function(result) {
             rootsGuids = result.roots;
             createTabs();
             selectContext(currContext);

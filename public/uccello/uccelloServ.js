@@ -14,7 +14,7 @@ define(
                 this.pvt.logger = new Logger();
                 this.pvt.router = new Router();
                 this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate});
-                this.pvt.dataman = new Dataman(this);
+                this.pvt.dataman = new Dataman(this.getRouter(), that.getUserMgr().getController());
 
                 this.getRouter().add('getGuids', function(data, done) {
                     var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
@@ -30,7 +30,7 @@ define(
                 this.getRouter().add('getRootGuids', function(data, done) {
                     console.log(that.getUserMgr().getController().getDB(data.db))
                     var result = {
-                        roots: that.getUserMgr().getController().getDB(data.db).getRootGuids()
+                        roots: that.getUserMgr().getController().getDB(data.db).getRootGuids(data.rtype)
                     };
                     done(result);
                     return result;

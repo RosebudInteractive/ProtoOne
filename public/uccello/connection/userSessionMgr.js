@@ -112,6 +112,8 @@ define(
                     var PropEditor = require('../../../public/ProtoControls/propEditor');
                     var DBNavigator = require('../../../public/ProtoControls/dbNavigator');
                     var Grid = require('../../../public/ProtoControls/grid');
+                    var DataRoot = require('../dataman/dataRoot');
+                    var DataContact = require('../dataman/dataContact');
                     var roots = [that.dbcsys.guid(), that.dbcsys.guid()];
                     for (var i=0; i<roots.length; i++) {
                         var cm = new ControlMgr(db, roots[i]);
@@ -126,6 +128,9 @@ define(
                             new PropEditor(cm);
                             new DBNavigator(cm);
                             new Grid(cm);
+                            // data
+                            new DataRoot(cm);
+                            new DataContact(cm);
                         }
                         db.deserialize(that.loadRes(roots[i]), {db: db});
                     }

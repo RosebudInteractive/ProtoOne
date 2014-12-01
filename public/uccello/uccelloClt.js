@@ -150,7 +150,7 @@ define(
 				function done() {
                     that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
                         // запросить гуиды рутов
-                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, type:'method'}, function(result) {
+                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rtype:'res', type:'method'}, function(result) {
                             var roots = result.roots;
                             currRoot = roots[0];
                             var exec = 0;
