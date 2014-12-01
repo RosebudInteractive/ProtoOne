@@ -1,10 +1,6 @@
 // модуль сервера
 var UccelloServ = require('./public/uccello/uccelloServ');
 
-// Коммуникационные модули
-var Router = require('./public/uccello/connection/router');
-var UserSessionMgr = require('./public/uccello/connection/userSessionMgr');
-
 // Модули nodejs
 var http = require('http');
 var express = require('express');
@@ -89,12 +85,8 @@ function fakeAuthenticate(user, pass, done) {
     done(err, row);
 }
 
-var myServerApp = {}; // тут все данные
-var router = new Router();
-myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
-
 // запускаем вебсокетсервер
-var ucelloApp = new UccelloServ({port:8081, userSessionMgr:myServerApp.userSessionMgr});
+var ucelloApp = new UccelloServ({port:8081, authenticate:fakeAuthenticate});
 
 // запускаем http сервер
 http.createServer(app).listen(1325);

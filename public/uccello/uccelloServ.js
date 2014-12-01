@@ -4,48 +4,46 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './public/uccello/connection/router'],
-    function(Socket, Logger, Dataman, WebSocketServer, Router) {
+    ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './connection/router', './connection/userSessionMgr'],
+    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr) {
         var UccelloServ = Class.extend({
             init: function(options){
-				this.pvt = {};
-
                 var that = this;
                 this._connectId = 0;
-                this.logger = new Logger();
-                this.pvt = {};
-                this.pvt.userSessionMgr = options.userSessionMgr;
+				this.pvt = {};
+                this.pvt.logger = new Logger();
                 this.pvt.router = new Router();
-                this.pvt.dataman = new Dataman(this.pvt.router);
+                this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate});
+                this.pvt.dataman = new Dataman(this.getRouter());
 
-                this.router.add('getGuids', function(data, done) {
+                this.getRouter().add('getGuids', function(data, done) {
                     var user = that.userSessionMgr.getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
                     result = {
-                        masterSysGuid:that.pvt.userSessionMgr.dbsys.getGuid(),
+                        masterSysGuid:that.getUserMgr().dbsys.getGuid(),
                         sysRootGuid:user.getObj().getGuid()
                     };
                     done(result);
                     return result;
                 });
 
-                this.pvt.router.add('getRootGuids', function(data, done) {
-                    console.log(that.pvt.userSessionMgr.getController().getDB(data.db))
+                this.getRouter().add('getRootGuids', function(data, done) {
+                    console.log(that.getUserMgr().getController().getDB(data.db))
                     var result = {
-                        roots: that.pvt.userSessionMgr.getController().getDB(data.db).getRootGuids()
+                        roots: that.getUserMgr().getController().getDB(data.db).getRootGuids()
                     };
                     done(result);
                     return result;
                 });
 
-                this.pvt.router.add('getSessions', function(data, done) {
-                    var sessions = that.pvt.userSessionMgr.getSessions();
+                this.getRouter().add('getSessions', function(data, done) {
+                    var sessions = that.getUserMgr().getSessions();
                     result = {sessions:[]};
                     for(var i in sessions) {
                         var session = {id:i, date:sessions[i].date, connects:[]};
                         var connects = sessions[i].item.getConnects();
                         for(var j in connects) {
-                            var connect = {id:j, date:that.pvt.userSessionMgr.getConnectDate(j)};
+                            var connect = {id:j, date:that.getUserMgr().getConnectDate(j)};
                             session.connects.push(connect);
                         }
                         result.sessions.push(session);
@@ -54,8 +52,8 @@ define(
                     return result;
                 });
 
-                this.pvt.router.add('loadRes', function(data, done) {
-                    var result = {res:this.pvt.userSessionMgr.loadRes(this.pvt.userSessionMgr.getController().guid())};
+                this.getRouter().add('loadRes', function(data, done) {
+                    var result = {res:this.getUserMgr().loadRes(this.getUserMgr().getController().guid())};
                     done(result);
                 });
 
@@ -69,7 +67,7 @@ define(
                         side: 'server',
                         connectId: that._connectId,
                         close: function(event, connectId) { // при закрытии коннекта
-                            var connect = that.pvt.userSessionMgr.getConnect(that._connectId);
+                            var connect = that.getUserMgr().getConnect(that._connectId);
                             if (connect)
                                 connect.closeConnect();
                             console.log("отключился клиент: " + that._connectId);
@@ -78,17 +76,21 @@ define(
                             console.log('сообщение с клиента '+that._connectId+':', data);
 
                             // логирование входящих запросов
-                            that.logger.addLog(data);
+                            that.pvt.logger.addLog(data);
 
                             // обработчик
-                            data.connect = that.pvt.userSessionMgr.getConnect(that._connectId);
+                            data.connect = that.getUserMgr().getConnect(that._connectId);
                             data.connectId = that._connectId;
                             data.socket = socket;
-                            that.pvt.router.exec(data, done);
+                            that.getRouter().exec(data, done);
                         }
                     });
                 });
             },
+			
+			getUserMgr: function() {
+				return this.getUserMgr();
+			},
 			
 			getRouter: function() {
 				return this.pvt.router;
