@@ -4,17 +4,23 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./connection/socket', './system/logger', 'ws'],
-    function(Socket, Logger, WebSocketServer) {
+    ['./connection/socket', './system/logger', './dataman/dataman','ws'],
+    function(Socket, Logger, Dataman, WebSocketServer) {
         var UccelloServ = Class.extend({
             init: function(options){
+				this.pvt = {};
 
                 var that = this;
                 this._connectId = 0;
                 this.logger = new Logger();
                 this.userSessionMgr = options.userSessionMgr;
+				
+				
+				
                 this.router = options.router;
-
+				
+				this.pvt.dataman = new Dataman(this.router);
+				
                 this.router.add('getGuids', function(data, done) {
                     var user = that.userSessionMgr.getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
@@ -85,7 +91,11 @@ define(
                         }
                     });
                 });
-            }
+            },
+			
+			getRouter: function() {
+				return this.router;
+			}
         });
         return UccelloServ;
     }
