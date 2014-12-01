@@ -19,10 +19,7 @@ define(
 				this.pvt.compByGuid = {};
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
-				this.pvt.viewSet = [
-                    new ViewSet(this, {path:'./ProtoControls/simpleview/'}),
-                    new ViewSet(this, {path:'./ProtoControls/simpleview/'})
-                ];
+				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
 				if (rootGuid) {
 					if (db.getObj(rootGuid)==undefined) {
 						db.event.on( {
@@ -115,9 +112,9 @@ define(
 				if (c.getRoot() != this.getRoot()) return;
 
                 //c._render();
-                for(var i in this.pvt.viewSet)
-                if (this.pvt.viewSet[i].enable())
-                    this.pvt.viewSet[i].render(c);
+                for(var i in this.pvt.viewSets)
+                if (this.pvt.viewSets[i].enable())
+                    this.pvt.viewSets[i].render(c);
 
 					
 				for (var g in this.pvt.compByGuid) { 
@@ -142,8 +139,8 @@ define(
 				
 			},
 
-            createViewSet: function() {
-
+            createViewSet: function(ini) {
+                return new ViewSet(this, ini);
             }
 
 
