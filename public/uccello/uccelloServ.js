@@ -4,20 +4,22 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./connection/socket', './system/logger', 'ws'],
-    function(Socket, Logger, WebSocketServer) {
+    ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './public/uccello/connection/router'],
+    function(Socket, Logger, Dataman, WebSocketServer, Router) {
         var UccelloServ = Class.extend({
             init: function(options){
+				this.pvt = {};
 
                 var that = this;
                 this._connectId = 0;
                 this.logger = new Logger();
                 this.pvt = {};
                 this.pvt.userSessionMgr = options.userSessionMgr;
-                this.pvt.router = options.router;
+                this.pvt.router = new Router();
+                this.pvt.dataman = new Dataman(this.pvt.router);
 
-                this.pvt.router.add('getGuids', function(data, done) {
-                    var user = that.pvt.userSessionMgr.getConnect(data.connectId).getSession().getUser();
+                this.router.add('getGuids', function(data, done) {
+                    var user = that.userSessionMgr.getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
                     result = {
                         masterSysGuid:that.pvt.userSessionMgr.dbsys.getGuid(),
@@ -86,7 +88,11 @@ define(
                         }
                     });
                 });
-            }
+            },
+			
+			getRouter: function() {
+				return this.pvt.router;
+			}
         });
         return UccelloServ;
     }

@@ -94,7 +94,7 @@ var router = new Router();
 myServerApp.userSessionMgr = new UserSessionMgr(router, {authenticate:fakeAuthenticate});
 
 // запускаем вебсокетсервер
-var ucelloApp = new UccelloServ({port:8081, userSessionMgr:myServerApp.userSessionMgr, router:router});
+var ucelloApp = new UccelloServ({port:8081, userSessionMgr:myServerApp.userSessionMgr});
 
 // запускаем http сервер
 http.createServer(app).listen(1325);

@@ -70,23 +70,20 @@ define(
 					// Создать объект с коллекцией метаинфо
 					pvt.meta = new MemMetaRoot( { db: this },{});
 					if (cb !== undefined && (typeof cb == "function")) cb(this);
-				}	
-				
-				
-				
-				
+				}				
 			},
 			
             /**
              * Добавить корневой объект в БД
              * @param obj
-             * @param mode
+             * @param opt - опции opt.type - тип (res|data), opt.mode - режим ("RO"|"RW")
              * @private
              */
-			_addRoot: function(obj,mode) {
+			_addRoot: function(obj,opt) {
 				var root = {};
 				root.obj = obj;
-				root.mode = mode;
+				root.mode = opt.mode;
+				root.type = opt.type;
 				root.subscribers = {};	// подписчики корневого объекта
 				root.master = null;		// мастер
 				root.callbackNewObject = undefined;
