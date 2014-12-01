@@ -16,7 +16,7 @@ var uccelloClt = null;
 var masterGuid = null;
 var rootsGuids = null;
 var resultForm = '#result0';
-
+var dataRoot = null;
 
 // когда документ загружен
 $(document).ready( function() {
@@ -206,8 +206,13 @@ $(document).ready( function() {
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     masterGuid = result.masterGuid;
                     rootsGuids = result.roots;
-                    createTabs();
-                    selectContext(masterGuid);
+
+                    // запрашиваем данные
+                    uccelloClt.getClient().query(masterGuid, function(result2){
+                        dataRoot = result2.rootGuid;
+                        createTabs();
+                        selectContext(masterGuid);
+                    });
                 });
             }
 

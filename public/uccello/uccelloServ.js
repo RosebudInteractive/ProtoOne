@@ -14,10 +14,10 @@ define(
                 this.pvt.logger = new Logger();
                 this.pvt.router = new Router();
                 this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate});
-                this.pvt.dataman = new Dataman(this.getRouter());
+                this.pvt.dataman = new Dataman(this);
 
                 this.getRouter().add('getGuids', function(data, done) {
-                    var user = that.userSessionMgr.getConnect(data.connectId).getSession().getUser();
+                    var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
                     result = {
                         masterSysGuid:that.getUserMgr().dbsys.getGuid(),
@@ -57,7 +57,6 @@ define(
                     done(result);
                 });
 
-
                 // запускаем вебсокетсервер
                 this.wss = new WebSocketServer.Server({port: options.port});
                 this.wss.on('connection', function(ws) {
@@ -89,7 +88,7 @@ define(
             },
 			
 			getUserMgr: function() {
-				return this.getUserMgr();
+				return this.pvt.userSessionMgr;
 			},
 			
 			getRouter: function() {

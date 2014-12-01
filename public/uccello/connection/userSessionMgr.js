@@ -105,14 +105,13 @@ define(
                  */
                 function createDb(dbc, options){
                     var db = dbc.newDataBase(options);
-
                     var AContainer = require('../../../public/ProtoControls/container');
                     var AButton = require('../../../public/ProtoControls/button');
                     var AEdit = require('../../../public/ProtoControls/edit');
                     var AMatrixGrid = require('../../../public/ProtoControls/matrixGrid');
                     var PropEditor = require('../../../public/ProtoControls/propEditor');
                     var DBNavigator = require('../../../public/ProtoControls/dbNavigator');
-
+                    var Grid = require('../../../public/ProtoControls/grid');
                     var roots = [that.dbcsys.guid(), that.dbcsys.guid()];
                     for (var i=0; i<roots.length; i++) {
                         var cm = new ControlMgr(db, roots[i]);
@@ -126,6 +125,7 @@ define(
                             new AMatrixGrid(cm);
                             new PropEditor(cm);
                             new DBNavigator(cm);
+                            new Grid(cm);
                         }
                         db.deserialize(that.loadRes(roots[i]), {db: db});
                     }
@@ -173,6 +173,21 @@ define(
                     },
                     "collections": {
                         "Children": [
+                            {
+                                "$sys": {
+                                    "guid": this.dbcsys.guid(),
+                                    "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                                },
+                                "fields": {
+                                    "Id": 22,
+                                    "Name": "Grid",
+                                    "Top": "107",
+                                    "Left": "230",
+                                    "Width":500,
+                                    "Height":100
+                                },
+                                "collections": {}
+                            },
                             {
                                 "$sys": {
                                     "guid": this.dbcsys.guid(),
@@ -328,8 +343,6 @@ define(
                 };
                 return hehe;
             },
-
-
 
             /**
              * Подключаемся к серверу с клиента

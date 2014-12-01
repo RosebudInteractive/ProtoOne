@@ -6,11 +6,15 @@ if (typeof define !== 'function') {
 define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
-        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
-        './connection/user', './connection/session', './connection/connect', './connection/visualContext' ],
+        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit', '../ProtoControls/grid',
+        './connection/user', './connection/session', './connection/connect', './connection/visualContext',
+        './dataman/dataContact', './dataman/dataRoot'
+    ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
-        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit,
-        User, Session, Connect, VisualContext) {
+        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit, Grid,
+        User, Session, Connect, VisualContext,
+        DataContact, DataRoot
+        ) {
         var UccelloClt = Class.extend({
 
             init: function(options){
@@ -36,12 +40,16 @@ define(
                     that.pvt.typeGuids["a0e02c45-1600-6258-b17a-30a56301d7f1"] = PropEditor;
                     that.pvt.typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = DbNavigator;
                     that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
+                    that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = Grid;
 
                     that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
                     that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;
                     that.pvt.typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = Connect;
                     that.pvt.typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = VisualContext;
                     that.pvt.typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
+
+                    that.pvt.typeGuids["73596fd8-6901-2f90-12d7-d1ba12bae8f4"] = DataContact;
+                    that.pvt.typeGuids["87510077-53d2-00b3-0032-f1245ab1b74d"] = DataRoot;
                     that.createController();
                     if (options.callback)
                         options.callback();
@@ -128,6 +136,11 @@ define(
                     params.db = this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
                     params.change = sendAndRender;
                 }
+
+                // Grid
+                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
+                }
+
 				// TODO!! временно, надо научиться передавать контекст!!!
                 new this.pvt.typeGuids[g](cm, params);
             },

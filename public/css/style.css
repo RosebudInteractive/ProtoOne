@@ -68,6 +68,13 @@ p {padding:0;margin: 4px 0;}
 
 .divCell textarea {min-width:50px;min-height: 20px;}
 
+.grid {position: absolute;display:  table;width:auto;border:1px solid  #666666;border-spacing:0px;}
+.grid .row .cell:last-child {border-right:0;}
+.grid:last-child .row:last-child .cell {border-bottom:0;}
+.grid .row{display:table-row;width:auto;clear:both;}
+.grid .cell{display:table-cell;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:10px;}
+.grid .header{display:table-caption;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:10px;}
+
 #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
 #header {padding:10px;}
 #loginError {color: #ff0000;}
