@@ -153,13 +153,14 @@ define(
 
             /**
              * вернуть список гуидов корневых объектов за исключением метаинфо
+			 * @param rtype - "res"|"data" - тип рута 
              */
-			getRootGuids: function() {
+			getRootGuids: function(rtype) {
 				var guids = [];
 				var ro = this.pvt.robjs;
 				for (var i=0; i<ro.length; i++) {
 					var cguid = ro[i].obj.getGuid();
-					if (cguid!=metaRootGuid) guids.push(cguid);
+					if ((cguid!=metaRootGuid) && ((ro[i].type==rtype) || (rtype===undefined))) guids.push(cguid);
 				}
 
 				return guids;
