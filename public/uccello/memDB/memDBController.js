@@ -19,6 +19,7 @@ define(
                     router.add('subscribe', function(){ return that.routerSubscribe.apply(that, arguments); });
                     router.add('unsubscribe', function(){ return that.routerUnsubscribe.apply(that, arguments); });
                     router.add('subscribeRoot', function(){ return that.routerSubscribeRoot.apply(that, arguments); });
+					router.add('subscribeManyRoots', function(){ return that.routerSubscribeManyRoots.apply(that, arguments); });
                     router.add('sendDelta', function(){ return that.routerSendDelta.apply(that, arguments); });
                 }
 			},
@@ -61,9 +62,18 @@ define(
                 var masterdb = this.getDB(data.masterGuid);
                 if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
                     dbc.onSubscribe({connect:data.connectId, guid:data.slaveGuid}, data.masterGuid );
-                var result = {data:masterdb.onSubscribeRoot(data.slaveGuid, data.objGuid)};
+                var result = {data:masterdb.onSubscribeRoots(data.slaveGuid, data.objGuid)};
                 done(result);
             },
+			
+            routerSubscribeManyRoots: function(data, done) {
+                var masterdb = this.getDB(data.masterGuid);
+                if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
+                    dbc.onSubscribe({connect:data.connectId, guid:data.slaveGuid}, data.masterGuid );
+                var result = {data:masterdb.onSubscribeRoots(data.slaveGuid, data.objGuids)};
+                done(result);
+            },
+
 
             routerSendDelta: function(data, done) {
                 console.time('applyDeltas');
@@ -142,12 +152,47 @@ define(
             },
 
             /**
-             * подписать базу db на рутовый элемент с гуидом rootGuid
+             * подписать базу db на рутовые элементы с гуидами rootGuids
 			 * @param {MemDataBase} db - база данных
-             * @param rootGuid
+             * @param rootGuids - одиночный элемент или массив элементов
              * @param cb - вызывается после того, как подписка произошла и данные сериализовались в базе
 			 * @param cb2 - вызывается по ходу создания объектов
              */
+			subscribeRoots: function(db,rootGuids, cb, cb2) {
+				var rg = [];
+				var res = [];
+				if (Array.isArray(rootGuids))
+					rg = rootGuids;				
+				else
+					rg.push(rootGuids);
+					
+				var p = db.getProxyMaster();
+				if (p.kind == "local") { // мастер-база доступна локально
+					var newObjs = p.db.onSubscribeRoots(db.getGuid(),rg);
+					for (var i=0; i<newObjs.length; i++) {
+						db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
+						if (cb2!==undefined)  // запомнить коллбэк
+							db._cbSetNewObject(rg[i],cb2);
+						if (cb !== undefined && (typeof cb == "function")) cb();
+					}
+				}
+				else { // мастер-база доступна удаленно
+					callback2 = function(obj) {
+						for (var i=0; i<obj.data.length; i++) {
+							db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
+							if (cb2!==undefined)  // запомнить коллбэк
+								db._cbSetNewObject(rg[i],cb2);
+							if (cb !== undefined && (typeof cb == "function")) cb();
+						}
+					}
+					p.connect.send({action:'subscribeManyRoots', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuids:rg},callback2);
+
+					// TODO обработать асинхронность
+				}
+			
+			},
+			
+			 /*
 			subscribeRoot: function(db,rootGuid, cb, cb2) {
 
 				
@@ -172,7 +217,7 @@ define(
 					// TODO обработать асинхронность
 				}
 			},
-			
+			*/
 			//onSubscribeRoot: function(proxy,dbGuid
 			
 			// отписать либо все базы данного коннекта либо БД с гуидом guid

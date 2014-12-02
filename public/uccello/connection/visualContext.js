@@ -22,29 +22,39 @@ define(
             className: "VisualContext",
             classGuid: "d5fbf382-8deb-36f0-8882-d69338c28b56",
             metaFields: [
-                {fname: "DataBase", ftype: "string"}
+                {fname: "DataBase", ftype: "string"}, // runtime
+				{fname: "Kind", ftype: "string", fdefault: "master"} // enum (master,slave)
             ],
             metaCols: [],
 
              /**
              * Инициализация объекта
              * @constructs
-             * @param params {object}
+             * @param params {object} 
              */
             init: function(cm, params) {
                 this._super(cm, params);
-
                 if (params == undefined) return;
-                var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
-                this.dataBase(result.db.getGuid());
+								 
+                //var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
+				if (this.kind()!="slave")
+					var db = this.createDb(cm.getDB().getController(), {name: "VisualContextDB", kind: "master"});
+				else { //TODO подписка?
+					var db = null;
+				}
+                this.dataBase(db.getGuid());
             },
 
             dataBase: function (value) {
                 return this._genericSetter("DataBase", value);
             },
+			
+			kind: function (value) {
+                return this._genericSetter("Kind", value);
+            },
 
             /**
-             * Создать базу данных
+             * Создать базу данных - ВРЕМЕННАЯ ЗАГЛУШКА!
              * @param dbc
              * @param options
              * @returns {object}
@@ -52,26 +62,25 @@ define(
              createDb: function(dbc, options){
                 var db = dbc.newDataBase(options);
                 var roots = [dbc.guid(), dbc.guid()];
-                for (var i=0; i<roots.length; i++) {
-                    var cm = new ControlMgr(db, roots[i]);
-                    if (i==0) {
-                        // meta
-                        new AComponent(cm);
-                        new AControl(cm);
-                        new AContainer(cm);
-                        new AButton(cm);
-                        new AEdit(cm);
-                        new AMatrixGrid(cm);
-                        new PropEditor(cm);
-                        new DBNavigator(cm);
-                        new Grid(cm);
-                        // data
-                        new DataRoot(cm);
-                        new DataContact(cm);
-                    }
+				// meta
+				var cm = new ControlMgr(db, roots[0]);
+				new AComponent(cm);
+				new AControl(cm);
+				new AContainer(cm);
+				new AButton(cm);
+				new AEdit(cm);
+				new AMatrixGrid(cm);
+				new PropEditor(cm);
+				new DBNavigator(cm);
+				new Grid(cm);
+				// data
+				new DataRoot(cm);
+				new DataContact(cm);
+				
+                for (var i=0; i<roots.length; i++)
                     db.deserialize(this.loadRes(roots[i]), {db: db});
-                }
-                return {db: db, roots: roots};
+                
+                return db;
             },
 
 

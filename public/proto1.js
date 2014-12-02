@@ -40,7 +40,7 @@ $(document).ready( function() {
                 // подписываемся на корневой объект контейнера
 				
 				// TODO переделать uccelloClt.pvt.guids.
-                uccelloClt.getSysDB().subscribeRoot(uccelloClt.pvt.guids.sysRootGuid, function(result){
+                uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
                     renderControls();
                     getContexts();
                 });
@@ -333,7 +333,7 @@ $(document).ready( function() {
                     // запрашиваем данные
                     uccelloClt.getClient().query(masterGuid, function(result2){
                         dataRoots.push(result2.rootGuid);
-                        uccelloClt.getContextCM(currRoot).getDB().subscribeRoot(result2.rootGuid, function () {
+                        uccelloClt.getContextCM(currRoot).getDB().subscribeRoots(result2.rootGuid, function () {
                         }, function () {
                         });
                     });

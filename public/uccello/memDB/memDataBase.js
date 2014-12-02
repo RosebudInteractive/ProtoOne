@@ -58,7 +58,7 @@ define(
 						pvt.version = result.data.dbVersion; // устанавливаем номер версии базы по версии мастера
 						pvt.validVersion = pvt.version;
 						pvt.sentVersion = pvt.version;
-						controller.subscribeRoot(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
+						controller.subscribeRoots(db,"fc13e2b8-3600-b537-f9e5-654b7418c156", function(){
 								db._buildMetaTables();
 								//console.log('callback result:', result);
 								if (cb !== undefined && (typeof cb == "function")) cb();
@@ -195,8 +195,8 @@ define(
              * @param callback - вызывается после того, как подписка произошла и данные сериализовались в базе
 			 * @param callback2 - вызывается по ходу создания объектов
              */
-			subscribeRoot: function(rootGuid,callback,callback2) {
-				this.pvt.controller.subscribeRoot(this,rootGuid,callback,callback2);
+			subscribeRoots: function(rootGuid,callback,callback2) {
+				this.pvt.controller.subscribeRoots(this,rootGuid,callback,callback2);
 			},
 			
             /**
@@ -244,9 +244,47 @@ define(
             /**
              * Стать подписчиком корневого объекта с гуидом rootGuid
              * @param dbGuid
-             * @param rootGuid
+             * @param rootGuids - 1 гуид или массив гуидов
              * @returns {*}
              */
+			onSubscribeRoots: function(dbGuid, rootGuids) {
+				// TODO проверить что база подписана на базу
+				var rg = [];
+				var res = [];
+				if (Array.isArray(rootGuids))
+					rg = rootGuids;				
+				else
+					rg.push(rootGuids);
+					
+				var obj = null;
+				
+				
+				for (var i=0; i<rg.length; i++) {
+					if (this.pvt.robjs.length > 0) 
+						obj = this.pvt.rcoll[rg[i]].obj; // ВРЕМЕННО
+
+				//if (!obj) return null;
+				
+					// добавляем подписчика
+					var subProxy = this.pvt.subscribers[dbGuid];
+					if (subProxy) {
+						var clog = obj.getLog();
+						if (!clog.getActive()) clog.setActive(true); // если лог неактивен, то активировать, чтобы записывать в него все изменения
+
+						this.pvt.rcoll[rg[i]].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
+						res.push(this.serialize(obj));
+						}
+					//else 
+					//	return null;
+				}
+				// TODO ВАЖНО! нужно сделать рассылку только для данного корневого объекта - оптимизировать потом!!!!
+				this.pvt.controller.genDeltas(this.getGuid());	
+				if (Array.isArray(rootGuids))
+					return res;
+				else
+					return res[0];			
+			},
+			 /*
 			onSubscribeRoot: function(dbGuid, rootGuid) {
 				// TODO проверить что база подписана на базу
 				var obj = null;
@@ -270,7 +308,7 @@ define(
 					}
 				else 
 					return null;
-			},
+			},*/
 			
             /**
              * "сериализация" объекта базы

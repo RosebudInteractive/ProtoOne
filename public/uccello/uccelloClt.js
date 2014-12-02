@@ -33,7 +33,7 @@ define(
                     that.pvt.user = result.user;
                     document.location.hash = '#sid='+sessionId;
 
-                    // загружать динамически
+                    // TODO: загружать динамически
                     that.pvt.typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
                     that.pvt.typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
                     that.pvt.typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
@@ -145,6 +145,12 @@ define(
                 new this.pvt.typeGuids[g](cm, params);
             },
 			
+			
+			selectContextNew: function(guid,callback) {
+				var context = new VisualContext(this.pvt.cmsys, { ini: {kind: "slave"}});
+				
+			},
+			
 			selectContext: function(guid,callback) {
                 var that = this;
 				function done() {
@@ -166,7 +172,7 @@ define(
                                 that.pvt.controlMgr[roots[i]] = cm;
                                 (function(i, cm) {
                                     exec++;
-                                    that.pvt.dbcontext.subscribeRoot(roots[i], function () {
+                                    that.pvt.dbcontext.subscribeRoots(roots[i], function () {
                                         syncCallback();
                                     }, function () {
                                         that.options.container = '#result'+i;
