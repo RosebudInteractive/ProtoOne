@@ -166,7 +166,7 @@ define(
              */
 			
 			_genericSetter: function(fldName,fldVal) {
-                console.log(fldName, fldVal, this.getObj())
+                //console.log(fldName, fldVal, this.getObj())
 				if (fldVal!==undefined) {
 					var val=this.getObj().get(fldName);
 					if (val!=fldVal) {
