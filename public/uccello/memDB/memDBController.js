@@ -173,7 +173,7 @@ define(
 						db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
 						if (cb2!==undefined)  // запомнить коллбэк
 							db._cbSetNewObject(rg[i],cb2);
-						if (cb !== undefined && (typeof cb == "function")) cb();
+						if (cb !== undefined && (typeof cb == "function")) cb(rg[i]);
 					}
 				}
 				else { // мастер-база доступна удаленно
@@ -182,7 +182,7 @@ define(
 							db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
 							if (cb2!==undefined)  // запомнить коллбэк
 								db._cbSetNewObject(rg[i],cb2);
-							if (cb !== undefined && (typeof cb == "function")) cb();
+							if (cb !== undefined && (typeof cb == "function")) cb(rg[i]);
 						}
 					}
 					p.connect.send({action:'subscribeManyRoots', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuids:rg},callback2);
