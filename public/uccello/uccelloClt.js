@@ -159,29 +159,20 @@ define(
                         that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rtype:'res', type:'method'}, function(result) {
                             var roots = result.roots;
                             currRoot = roots[0];
-                            var exec = 0;
-                            function syncCallback() {
-                                exec--;
-                                if (exec == 0)
-                                    callback();
-                            }
 
-                            // подписка на все руты
+                            // Для всех рутов делаем контролМенеджер
+                            var indexToRoot = {};
 							for (var i = 0; i < roots.length; i++) {
 								var cm = new ControlMgr(that.pvt.dbcontext,roots[i]);
                                 that.pvt.controlMgr[roots[i]] = cm;
-                                (function(i, cm) {
-                                    exec++;
-                                    that.pvt.dbcontext.subscribeRoots(roots[i], function () {
-                                        syncCallback();
-                                    }, function () {
-                                        that.options.container = '#result'+i;
-                                        var mainArguments = Array.prototype.slice.call(arguments);
-                                        mainArguments.push(cm);
-                                        that.createComponent.apply(that, mainArguments);
-                                    });
-                                })(i, cm);
+                                indexToRoot[roots[i]] = i;
                             }
+                            // подписываемся на все руты
+                            that.pvt.dbcontext.subscribeRoots(roots, callback, function (obj) {
+                                var rootGuid = obj.getRoot().getGuid();
+                                that.options.container = '#result'+indexToRoot[rootGuid];
+                                that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
+                            });
                         });
 					});
 				}

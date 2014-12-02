@@ -92,9 +92,9 @@ $(document).ready( function() {
             }
 			*/
 
-            renderControls = function(cm) {
+            renderControls = function(cm, renderRoot) {
                 var roots = [];
-                roots = cm? [currRoot] : rootsGuids;
+                roots = cm? [currRoot] : (renderRoot?[renderRoot]:rootsGuids);
 
                 if (roots)
                 for(var i=0, len=roots.length; i<len; i++) {
@@ -239,12 +239,12 @@ $(document).ready( function() {
              * @param guid
              */
             selectContext = function(guid) {
-                uccelloClt.selectContext(guid, function() {
+                $(resultForm).empty();
+                uccelloClt.selectContext(guid, function(renderRoot) {
                     currContext = guid;
                     currRoot = rootsGuids[0];
                     getContexts();
-                    $(resultForm).empty();
-                    renderControls();
+                    renderControls(null, renderRoot);
                 });
             }
 
