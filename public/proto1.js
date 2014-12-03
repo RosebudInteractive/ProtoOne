@@ -234,7 +234,7 @@ $(document).ready( function() {
                 //}
                 fixHeight();
 				this.tabCount++;
-				return "result"+i;
+				return "#result"+i;
             }
 			
 			
