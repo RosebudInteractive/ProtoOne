@@ -151,12 +151,12 @@ define(
 				
 			},
 			
-			selectContext: function(guid,callback) {
+			selectContext: function(guid,cbNewRoot, callback) {
                 var that = this;
 				function done() {
                     that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
                         // запросить гуиды рутов
-                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rtype:'res', type:'method'}, function(result) {
+                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rootKind:'res', type:'method'}, function(result) {
                             var roots = result.roots;
                             currRoot = roots[0];
 
@@ -168,11 +168,21 @@ define(
                                 indexToRoot[roots[i]] = i;
                             }
                             // подписываемся на все руты
-                            that.pvt.dbcontext.subscribeRoots(roots, callback, function (obj) {
+
+							function cbRoot(guid) {
+								that.options.container = cbNewRoot();
+								callback(guid);
+							}
+							
+							that.options.container = cbNewRoot();
+                            that.pvt.dbcontext.subscribeRoots(roots, cbRoot, function (obj) {
                                 var rootGuid = obj.getRoot().getGuid();
-                                that.options.container = '#result'+indexToRoot[rootGuid];
+								
+                                //that.options.container = cbNewRoot(); //'#result'+indexToRoot[rootGuid];
                                 that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
+								
                             });
+							
                         });
 					});
 				}

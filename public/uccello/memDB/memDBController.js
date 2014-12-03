@@ -62,7 +62,7 @@ define(
                 var masterdb = this.getDB(data.masterGuid);
                 if (!masterdb.isSubscribed(data.slaveGuid)) // если клиентская база еще не подписчик
                     dbc.onSubscribe({connect:data.connectId, guid:data.slaveGuid}, data.masterGuid );
-                var result = {data:masterdb.onSubscribeRoots(data.slaveGuid, data.objGuid)};
+                var result = {data:masterdb.onSubscribeRoots(data.slaveGuid, data.objGuids)};
                 done(result);
             },
 			
@@ -154,38 +154,38 @@ define(
             /**
              * подписать базу db на рутовые элементы с гуидами rootGuids
 			 * @param {MemDataBase} db - база данных
-             * @param rootGuids - одиночный элемент или массив элементов
+             * @param rootGuids - одиночный элемент или массив элементов с гуидами корневых элементов
              * @param cb - вызывается после того, как подписка произошла и данные сериализовались в базе
 			 * @param cb2 - вызывается по ходу создания объектов
              */
 			subscribeRoots: function(db,rootGuids, cb, cb2) {
-				var rg = [];
+				/*var rg = [];
 				var res = [];
 				if (Array.isArray(rootGuids))
 					rg = rootGuids;				
 				else
-					rg.push(rootGuids);
+					rg.push(rootGuids);*/
 					
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
-					var newObjs = p.db.onSubscribeRoots(db.getGuid(),rg);
+					var newObjs = p.db.onSubscribeRoots(db.getGuid(),rootGuids);
 					for (var i=0; i<newObjs.length; i++) {
-						db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
+						var o=db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
 						if (cb2!==undefined)  // запомнить коллбэк
-							db._cbSetNewObject(rg[i],cb2);
-						if (cb !== undefined && (typeof cb == "function")) cb(rg[i]);
+							db._cbSetNewObject(o.getGuid(),cb2);
+						if (cb !== undefined && (typeof cb == "function")) cb(o.getGuid());
 					}
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
 						for (var i=0; i<obj.data.length; i++) {
-							db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
+							o=db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
 							if (cb2!==undefined)  // запомнить коллбэк
-								db._cbSetNewObject(rg[i],cb2);
-							if (cb !== undefined && (typeof cb == "function")) cb(rg[i]);
+								db._cbSetNewObject(o.getGuid(),cb2);
+							if (cb !== undefined && (typeof cb == "function")) cb(o.getGuid());
 						}
 					}
-					p.connect.send({action:'subscribeManyRoots', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuids:rg},callback2);
+					p.connect.send({action:'subscribeManyRoots', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuids:rootGuids},callback2);
 
 					// TODO обработать асинхронность
 				}

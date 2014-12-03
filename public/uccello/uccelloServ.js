@@ -30,7 +30,7 @@ define(
                 this.getRouter().add('getRootGuids', function(data, done) {
                     console.log(that.getUserMgr().getController().getDB(data.db))
                     var result = {
-                        roots: that.getUserMgr().getController().getDB(data.db).getRootGuids(data.rtype)
+                        roots: that.getUserMgr().getController().getDB(data.db).getRootGuids(data.rootKind)
                     };
                     done(result);
                     return result;

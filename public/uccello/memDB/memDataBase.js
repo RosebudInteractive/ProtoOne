@@ -139,28 +139,15 @@ define(
 			},
 
             /**
-             * вернуть список корневых объектов за исключением метаинфо
-             */	
-			/*
-			getRoots: function() {
-				var roots = [];
-				var ro = this.pvt.robjs;
-				for (var i=0; i<ro.length; i++)
-					if (ro[i].obj.getGuid() != metaRootGuid)
-                        roots.push(ro[i].obj);
-				return roots;
-			},*/
-
-            /**
              * вернуть список гуидов корневых объектов за исключением метаинфо
-			 * @param rtype - "res"|"data" - тип рута 
+			 * @param rootKind - "res"|"data" - тип рута, если не передается или "all", то все
              */
-			getRootGuids: function(rtype) {
+			getRootGuids: function(rootKind) {
 				var guids = [];
 				var ro = this.pvt.robjs;
 				for (var i=0; i<ro.length; i++) {
 					var cguid = ro[i].obj.getGuid();
-					if ((cguid!=metaRootGuid) && ((ro[i].type==rtype) || (rtype===undefined))) guids.push(cguid);
+					if ((cguid!=metaRootGuid) && ((ro[i].type==rootKind) || (rootKind===undefined) || (rootKind==="all"))) guids.push(cguid);
 				}
 
 				return guids;
@@ -244,18 +231,24 @@ define(
             /**
              * Стать подписчиком корневого объекта с гуидом rootGuid
              * @param dbGuid
-             * @param rootGuids - 1 гуид или массив гуидов
+             * @param rootGuids - 1 гуид или массив гуидов либо селектор - "res" для ресурсов, "data" для данных, "all" для всех
              * @returns {*}
              */
 			onSubscribeRoots: function(dbGuid, rootGuids) {
 				// TODO проверить что база подписана на базу
 				var rg = [];
 				var res = [];
-				if (Array.isArray(rootGuids))
-					rg = rootGuids;				
-				else
-					rg.push(rootGuids);
-					
+				//var g1 = false;
+				if (Array.isArray(rootGuids))				
+					rg = rootGuids;
+				else {
+					if ((rootGuids == "res") || (rootGuids == "data") || (rootGuids == "all")) 
+						rg = this.getRootGuids(rootKind);
+					else {
+						rg.push(rootGuids);
+						//g1=true;
+					}						
+				}	
 				var obj = null;
 				
 				
@@ -279,10 +272,11 @@ define(
 				}
 				// TODO ВАЖНО! нужно сделать рассылку только для данного корневого объекта - оптимизировать потом!!!!
 				this.pvt.controller.genDeltas(this.getGuid());	
-				if (Array.isArray(rootGuids))
-					return res;
+				return res;
+				/*if (g1)
+					return res[0];
 				else
-					return res[0];			
+					return res;	*/		
 			},
 			 /*
 			onSubscribeRoot: function(dbGuid, rootGuid) {

@@ -23,6 +23,8 @@ $(document).ready( function() {
     require(
         ['./uccello/uccelloClt', './uccello/controls/controlMgr' ],
         function(UccelloClt, ControlMgr){
+		
+			this.tabCount = 0;
 
             uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:sessionId, container:'#result0', callback: function(){
                 if (uccelloClt.getLoggedUser()) {
@@ -206,7 +208,7 @@ $(document).ready( function() {
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     masterGuid = result.masterGuid;
                     rootsGuids = result.roots;
-                    createTabs();
+                    //createTabs();
                     selectContext(masterGuid);
                 });
             }
@@ -221,6 +223,21 @@ $(document).ready( function() {
                 fixHeight();
             }
 
+            createNewTab = function() {
+				
+				var i = this.tabCount;
+                //$('#tabs').empty();
+                //$('#container').empty();
+                //for(var i=0; i<rootsGuids.length; i++) {
+				$('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
+				$('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
+                //}
+                fixHeight();
+				this.tabCount++;
+				return "result"+i;
+            }
+			
+			
             createRoot = function(){
                 if (!currRoot) return;
                 uccelloClt.getClient().createRoot(currContext, function(result){
@@ -240,12 +257,12 @@ $(document).ready( function() {
              */
             selectContext = function(guid) {
                 $(resultForm).empty();
-                uccelloClt.selectContext(guid, function(renderRoot) {
+                uccelloClt.selectContext(guid, this.createNewTab, function(renderRoot) {
                     currContext = guid;
                     currRoot = rootsGuids[0];
                     getContexts();
                     renderControls(null, renderRoot);
-                });
+                } );
             }
 
             /**
@@ -372,7 +389,7 @@ $(function(){
     $('#userContext').change(function(){
         currContext = $(this).val();
         // запросить гуиды рутов
-        uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rtype:'res', type:'method'}, function(result) {
+        uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {
             rootsGuids = result.roots;
             createTabs();
             selectContext(currContext);
