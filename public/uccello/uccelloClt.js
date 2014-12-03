@@ -176,14 +176,10 @@ define(
                                 contToRoot[roots[i]] = cbNewRoot();
                             }
 
-							function cbRoot(guid) {
-                                that.options.container = contToRoot[guid];
-                                callback(guid);
-                            }
-							
                             // подписываемся на все руты
-                            that.pvt.dbcontext.subscribeRoots(roots, cbRoot, function (obj) {
+                            that.pvt.dbcontext.subscribeRoots(roots, callback, function (obj) {
                                 var rootGuid = obj.getRoot().getGuid();
+                                that.options.container = contToRoot[rootGuid];
                                 that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
                             });
 							
