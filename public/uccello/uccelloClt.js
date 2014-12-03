@@ -31,7 +31,7 @@ define(
                 this.getClient().connect(options.host, options.sessionId,  function(result){
                     that.pvt.sessionId = result.sessionId;
                     that.pvt.user = result.user;
-                    document.location.hash = '#sid='+sessionId;
+                    document.location.hash = '#sid='+options.sessionId;
 
                     // TODO: загружать динамически
                     that.pvt.typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
@@ -127,14 +127,23 @@ define(
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    params.change = sendAndRender;
-                    params.delete = sendAndRender;
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    }
+                    params.delete = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
                 }
 
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.db = this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
-                    params.change = sendAndRender;
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
                 }
 
                 // Grid
@@ -151,36 +160,31 @@ define(
 				
 			},
 			
-			selectContext: function(guid,cbNewRoot, callback) {
+			selectContext: function(guid, cbNewRoot, callback) {
                 var that = this;
 				function done() {
-                    that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: socket, guid: guid}}, function(){
+                    that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: that.pvt.clientConnection.socket, guid: guid}}, function(){
                         // запросить гуиды рутов
                         that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rootKind:'res', type:'method'}, function(result) {
                             var roots = result.roots;
-                            currRoot = roots[0];
 
-                            // Для всех рутов делаем контролМенеджер
-                            var indexToRoot = {};
+                            // Для всех рутов делаем контролМенеджер и контейнеры
+                            var contToRoot = {};
 							for (var i = 0; i < roots.length; i++) {
 								var cm = new ControlMgr(that.pvt.dbcontext,roots[i]);
                                 that.pvt.controlMgr[roots[i]] = cm;
-                                indexToRoot[roots[i]] = i;
+                                contToRoot[roots[i]] = cbNewRoot();
                             }
-                            // подписываемся на все руты
 
 							function cbRoot(guid) {
-								that.options.container = cbNewRoot();
-								callback(guid);
-							}
+                                that.options.container = contToRoot[guid];
+                                callback(guid);
+                            }
 							
-							that.options.container = cbNewRoot();
+                            // подписываемся на все руты
                             that.pvt.dbcontext.subscribeRoots(roots, cbRoot, function (obj) {
                                 var rootGuid = obj.getRoot().getGuid();
-								
-                                //that.options.container = cbNewRoot(); //'#result'+indexToRoot[rootGuid];
                                 that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
-								
                             });
 							
                         });
