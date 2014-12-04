@@ -149,8 +149,8 @@ define(
 					var cguid = ro[i].obj.getGuid();
 					if ((cguid!=metaRootGuid) && ((ro[i].type==rootKind) || (rootKind===undefined) || (rootKind==="all"))) guids.push(cguid);
 				}
-
 				return guids;
+				
 
 			},
 		
@@ -243,7 +243,7 @@ define(
 					rg = rootGuids;
 				else {
 					if ((rootGuids == "res") || (rootGuids == "data") || (rootGuids == "all")) 
-						rg = this.getRootGuids(rootKind);
+						rg = this.getRootGuids(rootGuids);
 					else {
 						rg.push(rootGuids);
 						//g1=true;

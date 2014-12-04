@@ -26,6 +26,7 @@ define(
                 this.pvt.typeGuids = {};
 				this.pvt.dbcontext = null;
                 this.pvt.controlMgr = {};
+				this.pvt.vc = null; // VisualContext
                 this.options = options;
 
                 this.getClient().connect(options.host, options.sessionId,  function(result){
@@ -101,7 +102,7 @@ define(
 			},
 			
 			getContextCM: function(rootGuid) {
-				return this.pvt.controlMgr[rootGuid];
+				return this.pvt.vc.getContextCM(rootGuid);
 			},
 			
 			// получить конструктор по его guid
@@ -121,73 +122,18 @@ define(
                 return this.pvt.user;
             },
 
-            createComponent: function(obj, cm) {
-                var g = obj.getTypeGuid();
-                var params = {objGuid: obj.getGuid()};
-
-                // метод обработки изменений для PropEditor
-                if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    }
-                    params.delete = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
-                }
-
-                // DbNavigator для системной бд
-                if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-                    params.db = this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
-                }
-
-                // Grid
-                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
-                }
-
-				// TODO!! временно, надо научиться передавать контекст!!!
-                new this.pvt.typeGuids[g](cm, params);
-            },
-			
-			
-			selectContextNew: function(guid,callback) {
-				var context = new VisualContext(this.pvt.cmsys, { ini: {kind: "slave"}});
-				
-			},
-			
-			selectContext: function(guid, cbNewRoot, callback) {
+			selectContext: function(guid, callback) {
                 var that = this;
 				function done() {
-                    that.pvt.dbcontext = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: that.pvt.clientConnection.socket, guid: guid}}, function(){
-                        // запросить гуиды рутов
-                        that.pvt.clientConnection.socket.send({action:"getRootGuids", db:guid, rootKind:'res', type:'method'}, function(result) {
-                            var roots = result.roots;
-
-                            // Для всех рутов делаем контролМенеджер и контейнеры
-							for (var i = 0; i < roots.length; i++) {
-								var cm = new ControlMgr(that.pvt.dbcontext,roots[i]);
-                                that.pvt.controlMgr[roots[i]] = cm;
-                                cbNewRoot();
-                            }
-
-                            // подписываемся на все руты
-                            that.pvt.dbcontext.subscribeRoots(roots, callback, function (obj) {
-                                var rootGuid = obj.getRoot().getGuid();
-                                that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
-                            });
-							
-                        });
-					});
+					var s = that.pvt.clientConnection.socket;
+					var p = { typeGuids: that.pvt.typeGuids, callback: callback, socket: s,ini: {fields:{Kind: "slave", MasterGuid: guid}}}
+					var vc = new VisualContext(that.pvt.cmclient, p);
+					that.pvt.vc = vc;
 				}
 				
 				var controller = this.getController();
-				if (this.pvt.dbcontext)
-					controller.delDataBase(this.pvt.dbcontext.getGuid(), done);
+				if (this.pvt.vc)
+					this.pvt.vc.dispose(done); //delDataBase(this.pvt.dbcontext.getGuid(), done);
 				else
 					done();			
 			}

@@ -23,7 +23,8 @@ define(
             classGuid: "d5fbf382-8deb-36f0-8882-d69338c28b56",
             metaFields: [
                 {fname: "DataBase", ftype: "string"}, // runtime
-				{fname: "Kind", ftype: "string", fdefault: "master"} // enum (master,slave)
+				{fname: "Kind", ftype: "string"}, // , fdefault: "master" enum (master,slave
+				{fname: "MasterGuid", ftype: "string"}
             ],
             metaCols: [],
 
@@ -32,25 +33,102 @@ define(
              * @constructs
              * @param params {object} 
              */
-            init: function(cm, params) {
+            init: function(cm, params,cb) {
                 this._super(cm, params);
+				
+				this.pvt.cmgs = {};
+
+				this.pvt.db = null;
+				
                 if (params == undefined) return;
+				
+				this.pvt.typeGuids = params.typeGuids;
+				
+				var controller = cm.getDB().getController();
 								 
                 //var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
-				if (this.kind()!="slave")
-					var db = this.createDb(cm.getDB().getController(), {name: "VisualContextDB", kind: "master"});
-				else { //TODO подписка?
-					var db = null;
+				if (this.kind()!="slave") {
+					this.pvt.db = this.createDb(controller, {name: "VisualContextDB", kind: "master"});
+					this.dataBase(this.pvt.db.getGuid());
+					if (cb !== undefined && (typeof cb == "function")) cb();
 				}
-                this.dataBase(db.getGuid());
+				else { // подписка
+					var guid = this.masterGuid();
+					var that = this;
+					this.pvt.db = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: params.socket, guid: guid}}, function(){
+                            // подписываемся на все руты
+                            that.getDB().subscribeRoots("res", params.callback, function (obj) {
+                                var rootGuid = obj.getRoot().getGuid();
+								if (!(that.pvt.cmgs[rootGuid]))
+									that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid);
+                                that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);
+								that.dataBase(that.getDB().getGuid());
+								if (cb !== undefined && (typeof cb == "function")) cb();
+                            });
+						});
+				}
+                
             },
+			
+            createComponent: function(obj, cm) {
+                var g = obj.getTypeGuid();
+                var params = {objGuid: obj.getGuid()};
 
+                // метод обработки изменений для PropEditor
+                if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    }
+                    params.delete = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
+                }
+
+                // DbNavigator для системной бд
+                if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
+                    params.db = this.getDB(); //this.pvt.dbcontext;//this.getSysDB(); //myApp.dbsys;
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
+                }
+
+                // Grid
+                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
+                }
+
+                new this.pvt.typeGuids[g](cm, params);
+            },
+			
+			dispose: function(cb) {			
+				if (this.kind()=="slave") {
+					var controller = this.getControlMgr().getDB().getController();
+					controller.delDataBase(this.pvt.dbcontext.getGuid(), cb);
+				}
+				else cb();
+			},
+			
+			getDB: function() {
+				return this.pvt.db;
+			},
+			
+			getContextCM: function(guid) {
+				return this.pvt.cmgs[guid];
+			},
+			
+			
             dataBase: function (value) {
                 return this._genericSetter("DataBase", value);
             },
 			
 			kind: function (value) {
                 return this._genericSetter("Kind", value);
+            },
+			
+			masterGuid: function (value) {
+                return this._genericSetter("MasterGuid", value);
             },
 
             /**
