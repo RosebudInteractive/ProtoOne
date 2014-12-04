@@ -5,7 +5,7 @@ define(
 
         vPropEditor._templates = template.parseTemplate(tpl);
 
-        vPropEditor.render = function () {
+        vPropEditor.render = function (options) {
             var that = this;
             var editor = $('#' + this.getLid()), props, controls, change, delbtn, parents;
             if (editor.length == 0) {
@@ -33,7 +33,7 @@ define(
                 editor.append(props);
                 editor.append(change);
                 editor.append(delbtn);
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
                 $(parent).append(editor);
                 editor.css({top: this.top() + 'px', left: this.left() + 'px'});
             } else {

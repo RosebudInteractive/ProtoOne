@@ -123,7 +123,7 @@ define(
 
             createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
-                var params = {objGuid: obj.getGuid(), rootContainer:this.options.container};
+                var params = {objGuid: obj.getGuid()};
 
                 // метод обработки изменений для PropEditor
                 if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
@@ -169,17 +169,15 @@ define(
                             var roots = result.roots;
 
                             // Для всех рутов делаем контролМенеджер и контейнеры
-                            var contToRoot = {};
 							for (var i = 0; i < roots.length; i++) {
 								var cm = new ControlMgr(that.pvt.dbcontext,roots[i]);
                                 that.pvt.controlMgr[roots[i]] = cm;
-                                contToRoot[roots[i]] = cbNewRoot();
+                                cbNewRoot();
                             }
 
                             // подписываемся на все руты
                             that.pvt.dbcontext.subscribeRoots(roots, callback, function (obj) {
                                 var rootGuid = obj.getRoot().getGuid();
-                                that.options.container = contToRoot[rootGuid];
                                 that.createComponent.apply(that, [obj, that.pvt.controlMgr[rootGuid]]);
                             });
 							

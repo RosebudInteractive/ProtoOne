@@ -107,14 +107,14 @@ define(
 			 * Рендеринг компонентов интерфейса
 			 *  @param component - корневой элемент, с которого запускается рендеринг, если undef, то с корня
              */				
-			render: function(component) {
+			render: function(component, options) {
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;
 
                 //c._render();
                 for(var i in this.pvt.viewSets)
                 if (this.pvt.viewSets[i].enable())
-                    this.pvt.viewSets[i].render(c);
+                    this.pvt.viewSets[i].render(c, options);
 
 					
 				for (var g in this.pvt.compByGuid) { 

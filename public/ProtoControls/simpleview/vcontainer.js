@@ -3,9 +3,9 @@ define(
     function(template, tpl) {
         var vContainer = {};
         vContainer._templates = template.parseTemplate(tpl);
-        vContainer.render = function() {
+        vContainer.render = function(options) {
             var item = $('#' + this.getLid());
-            var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+            var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
             if (item.length == 0) {
                 item = $(vContainer._templates['container']).attr('id', this.getLid());
                 $(parent).append(item);

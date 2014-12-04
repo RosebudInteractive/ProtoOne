@@ -23,6 +23,7 @@ $(document).ready( function() {
             this.currRoot=null;
             this.masterGuid=null;
             this.rootsGuids=null;
+            this.rootsContainers={};
             this.resultForm = '#result0';
 
             uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:$.url('#sid'), container:'#result0', callback: function(){
@@ -63,7 +64,7 @@ $(document).ready( function() {
                 if (roots)
                 for(var i=0, len=roots.length; i<len; i++) {
                     cm = uccelloClt.getContextCM(roots[i]);
-                    cm.render();
+                    cm.render(undefined, {rootContainer: '#result'+that.rootsContainers[roots[i]]});
                 }
 
                 // редактирование ячеек грида
@@ -231,9 +232,11 @@ $(document).ready( function() {
             this.createTabs = function() {
                 $('#tabs').empty();
                 $('#container').empty();
+                this.rootsContainers={};
                 for(var i=0; i<that.rootsGuids.length; i++) {
                     $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
                     $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
+                    that.rootsContainers[that.rootsGuids[i]] = i;
                 }
                 fixHeight();
             }
@@ -246,6 +249,7 @@ $(document).ready( function() {
                 var i = this.tabCount;
                 $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
                 $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
+                that.rootsContainers[that.rootsGuids[i]] = i;
                 fixHeight();
                 this.tabCount++;
                 return "#result"+i;

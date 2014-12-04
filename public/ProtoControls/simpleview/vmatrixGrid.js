@@ -3,11 +3,11 @@ define(
     function(template, tpl) {
         var vMatrixGrid = {};
         vMatrixGrid._templates = template.parseTemplate(tpl);
-        vMatrixGrid.render = function() {
+        vMatrixGrid.render = function(options) {
             var table = $('#' + this.getLid());
             if (table.length == 0) {
                 table = $(vMatrixGrid._templates['matrixGrid']).attr('id', this.getLid());
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): this.params.rootContainer);
+                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
                 $(parent).append(table);
             } else {
                 table.empty();

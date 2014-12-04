@@ -3,13 +3,13 @@ define(
     function(template, tpl) {
         var vDBNavigator = {};
         vDBNavigator._templates = template.parseTemplate(tpl);
-        vDBNavigator.render = function () {
+        vDBNavigator.render = function (options) {
             var that = this;
             var editor = $('#' + that.getLid());
             if (editor.length == 0) {
                 editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
 
-                var parent = (that.getParent()? '#' + that.getParent().getLid(): that.params.rootContainer);
+                var parent = (that.getParent()? '#' + that.getParent().getLid(): options.rootContainer);
                 $(parent).append(editor);
                 // перейти к паренту
                 editor.find('.dragRight').click(function () {

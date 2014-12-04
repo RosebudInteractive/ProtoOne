@@ -35,30 +35,31 @@ define(
              * Рендеринг начиная с компонента component и ниже.
              * Если без параметров, то рендеринг идет с корневого элемента.
              * @param component
+             * @param options
              */
-            render: function(component) {
+            render: function(component, options) {
 
                 var that = this;
                 if (!component)
                     component = this.cm.getRoot();
 
-                function renderComponent(c) {
+                function renderComponent(c, opts) {
                     // 'path/to/controls/vcontrol'
                     require([that.ini.path+'v'+c.className.toLowerCase()], function(vComponent){
-                        vComponent.render.apply(c);
+                        vComponent.render.apply(c, [opts]);
                     }, function (err) { // рендермодуль не найден, рендер по умолчанию
                         require([that.ini.path+'default'], function(vDefault){
-                            vDefault.render.apply(c);
+                            vDefault.render.apply(c, [opts]);
                         });
                     });
                 }
 
-				if (!component._isRendered()) renderComponent(component);
+				if (!component._isRendered()) renderComponent(component, options);
                 var col=component.pvt.obj.getCol("Children");
                 if (col == undefined) return;
                 for (var i=0; i<col.count(); i++) {
                     var co=this.cm.get(col.get(i).getGuid());
-                    this.render(co);
+                    this.render(co, options);
                 }
             }
 
