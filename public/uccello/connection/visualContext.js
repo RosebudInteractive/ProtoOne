@@ -62,7 +62,19 @@ define(
 				var controller = cm.getDB().getController();
 				this.pvt.rpc = params.rpc;
 				this.pvt.proxyServer = params.proxyServer;
-								 
+				
+				var that = this;	
+				var createCompCallback = undefined;
+				if (params.callback)
+					createCompCallback = function (obj) {
+						var rootGuid = obj.getRoot().getGuid();
+						if (!(that.pvt.cmgs[rootGuid]))
+							that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid);
+						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);
+						that.dataBase(that.getDB().getGuid());
+						if (cb !== undefined && (typeof cb == "function")) cb();
+					}
+					 
                 //var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
 				if (this.kind()!="slave") { // главная (master)
 				
@@ -71,7 +83,7 @@ define(
 						this.pvt.proxyContext = params.rpc.getProxy(this.getGuid()).proxy;
 					}
 				
-					this.pvt.db = this.createDb(controller, {name: "VisualContextDB", kind: "master"});
+					this.pvt.db = this.createDb(controller, {name: "VisualContextDB", kind: "master", rootcb:params.callback, compcb: createCompCallback});
 					this.dataBase(this.pvt.db.getGuid());
 					
 					if (cb !== undefined && (typeof cb == "function")) cb();
@@ -89,22 +101,43 @@ define(
 					pholder.proxy.loadRes1(4,function(result) 
 					{ console.log("callback proxy1"+result); } );
 					*/
-
 					var guid = this.masterGuid();
-					var that = this;
+
 					this.pvt.db = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: params.socket, guid: guid}}, function(){
                             // подписываемся на все руты
-                            that.getDB().subscribeRoots("res", params.callback, function (obj) {
-                                var rootGuid = obj.getRoot().getGuid();
-								if (!(that.pvt.cmgs[rootGuid]))
-									that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid);
-                                that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);
-								that.dataBase(that.getDB().getGuid());
-								if (cb !== undefined && (typeof cb == "function")) cb();
-                            });
+                            that.getDB().subscribeRoots("res", params.callback,createCompCallBack);
 						});
 				}
                 
+            },
+
+            /**
+             * Создать базу данных - ВРЕМЕННАЯ ЗАГЛУШКА!
+             * @param dbc
+             * @param options
+             * @returns {object}
+             */
+             createDb: function(dbc, options){
+                var db = dbc.newDataBase(options);
+                var roots = [dbc.guid(), dbc.guid()];
+				// meta
+				var cm = new ControlMgr(db, roots[0]);
+				new AComponent(cm); new AControl(cm); new AContainer(cm);
+				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
+				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm);
+				// data
+				new DataRoot(cm);	new DataContact(cm);
+				
+                for (var i=0; i<roots.length; i++) {
+					//var result=this.pvt.proxyContext.loadRes1(roots[i]);
+					// db.deserialize(result.resource, {db: db});
+					this.pvt.proxyServer.loadResource(roots[i], function(result) { 
+						var res=db.deserialize(result.resource, {db: db}, options.compcb); 
+						options.rootcb(res.getGuid()); 
+					}); 				
+                    //db.deserialize(this.loadRes(roots[i]), {db: db});
+                }
+                return db;
             },
 			
             createComponent: function(obj, cm) {
@@ -142,7 +175,7 @@ define(
 			dispose: function(cb) {			
 				if (this.kind()=="slave") {
 					var controller = this.getControlMgr().getDB().getController();
-					controller.delDataBase(this.pvt.dbcontext.getGuid(), cb);
+					controller.delDataBase(this.pvt.db.getGuid(), cb);
 				}
 				else cb();
 			},
@@ -168,38 +201,7 @@ define(
                 return this._genericSetter("MasterGuid", value);
             },
 
-            /**
-             * Создать базу данных - ВРЕМЕННАЯ ЗАГЛУШКА!
-             * @param dbc
-             * @param options
-             * @returns {object}
-             */
-             createDb: function(dbc, options){
-                var db = dbc.newDataBase(options);
-                var roots = [dbc.guid(), dbc.guid()];
-				// meta
-				var cm = new ControlMgr(db, roots[0]);
-				new AComponent(cm);
-				new AControl(cm);
-				new AContainer(cm);
-				new AButton(cm);
-				new AEdit(cm);
-				new AMatrixGrid(cm);
-				new PropEditor(cm);
-				new DBNavigator(cm);
-				new Grid(cm);
-				// data
-				new DataRoot(cm);
-				new DataContact(cm);
-				
-                for (var i=0; i<roots.length; i++) {
-					//var result=this.pvt.proxyContext.loadRes1(roots[i]);
-					// db.deserialize(result.resource, {db: db});
-					this.pvt.proxyServer.loadResource(roots[i], function(result) { db.deserialize(result.resource, {db: db}); }); 				
-                    //db.deserialize(this.loadRes(roots[i]), {db: db});
-                }
-                return db;
-            },
+
 			
 			
 			/*

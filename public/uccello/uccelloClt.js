@@ -135,11 +135,19 @@ define(
                 return this.pvt.user;
             },
 
-			selectContext: function(params, callback) {
+			setContext: function(params, callback) {
                 var that = this;
 				function done() {
 					var s = that.pvt.clientConnection.socket;
-					var p = { typeGuids: that.pvt.typeGuids, callback: callback, socket: s, vc: params.vc, ini: {fields:{Kind: "slave", MasterGuid: params.guid}}, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
+					var p = { typeGuids: that.pvt.typeGuids, callback: callback, socket: s, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
+					p.side = params.side;
+					if (p.side == "server") {
+						p.vc = params.vc;
+						p.ini = {fields:{Kind: "slave", MasterGuid: params.guid}};
+					}
+					else {
+						p.ini = {fields:{Kind: "master"}};
+					}
 					//p.rpc = null;
 					var vc = new VisualContext(that.pvt.cmclient, p);
 					that.pvt.vc = vc;

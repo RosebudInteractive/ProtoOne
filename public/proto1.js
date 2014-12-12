@@ -22,7 +22,7 @@ $(document).ready( function() {
             this.currContext=null;
             this.currRoot=null;
             this.masterGuid=null;
-            this.rootsGuids=null;
+            this.rootsGuids=[];
             this.rootsContainers={};
             this.resultForm = '#result0';
 
@@ -173,10 +173,37 @@ $(document).ready( function() {
 					that.vc = result.vc;
                     that.rootsGuids = result.roots;
                     that.tabCount = that.rootsGuids.length;
-                    that.selectContext({guid: that.masterGuid, vc: that.vc});
+                    that.selectContext({guid: that.masterGuid, vc: that.vc, side: "server"});
                 });
             }
 
+			
+            /**
+             * Создать клиентский контекст
+             * @param guid
+             */
+            window.createClientContext = function(guid) {
+				this.selectContext({side: "client"});
+            },
+
+            /**
+             * Выбрать контекст
+             * @param guid
+             */
+            this.selectContext = function(params) {
+                $(that.resultForm).empty();
+                that.currContext = params.guid;
+				that.vc = params.vc;
+                //that.currRoot = that.rootsGuids[0];
+                that.tabCount = 0;
+                $('#tabs').empty();
+                $('#container').empty();
+                uccelloClt.setContext(params, function(renderRoot) {
+					that.createTab(renderRoot);
+                    renderControls(null, renderRoot);
+                });
+            }
+			
             /**
              * Выбрать рут
              * @param i
@@ -199,7 +226,7 @@ $(document).ready( function() {
                 uccelloClt.getClient().createRoot(that.currContext, function(result){
                     that.rootsGuids.push(result.rootGuid);
                     that.createTabs();
-                    that.selectContext({guid: that.currContext, vc: that.vc}); //that.currContext);
+                    that.selectContext({guid: that.currContext, vc: that.vc, side: "server"}); //that.currContext);
                 });
             }
 
@@ -246,10 +273,11 @@ $(document).ready( function() {
              * Создать переключать рута
              * @returns {string}
              */
-            this.createTab = function() {
+            this.createTab = function(rootGuid) {
                 var i = this.tabCount;
                 $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
                 $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
+				that.rootsGuids[i]=rootGuid;
                 that.rootsContainers[that.rootsGuids[i]] = i;
                 fixHeight();
                 this.tabCount++;
@@ -257,23 +285,7 @@ $(document).ready( function() {
             }
 
 
-            /**
-             * Выбрать контекст
-             * @param guid
-             */
-            this.selectContext = function(params) {
-                $(that.resultForm).empty();
-                that.currContext = params.guid;
-				that.vc = params.vc;
-                that.currRoot = that.rootsGuids[0];
-                that.tabCount = 0;
-                $('#tabs').empty();
-                $('#container').empty();
-                uccelloClt.selectContext(params, function(renderRoot) {
-					this.createTab();
-                    renderControls(null, renderRoot);
-                });
-            }
+
 
             /**
              * Получить контексты и отобразить в комбо
@@ -327,48 +339,6 @@ $(document).ready( function() {
              new uccelloClt.typeGuids[g](myApp.cmclientcontext, { objGuid: obj.getGuid() }, options);
              }
              */
-
-            /**
-             * Создать клиентский контекст
-             * @param guid
-             */
-			 /*
-            createClientContext = function(guid) {
-                require(
-                    ['./uccello/connection/clientConnection', './uccello/connection/visualContext', './uccello/baseControls/aComponent',
-                        './uccello/baseControls/aControl', './ProtoControls/container', './ProtoControls/button',
-                        './ProtoControls/matrixGrid',  './ProtoControls/propEditor',   './ProtoControls/dbNavigator',   './ProtoControls/edit'  ],
-                    function(ClientConnection, VisualContext, AComponent, AControl, AContainer, AButton, AMatrixGrid, PropEditor, DBNavigator, AEdit) {
-                        uccelloClt.getClient().socket.send({action: "loadRes", type: 'method'}, function (result) {
-                            // create db and cm
-                            myApp.dbclientcontext = myApp.controller.newDataBase({name: "Master", kind: "master"});
-                            var db = myApp.dbclientcontext;
-                            myApp.cmclientcontext = new ControlMgr(db);
-                            var cm = myApp.cmclientcontext;
-
-                            // metainfo
-                            new AComponent(cm);
-                            new AControl(cm);
-                            new AContainer(cm);
-                            new AButton(cm);
-                            new AEdit(cm);
-                            new AMatrixGrid(cm);
-                            new PropEditor(cm);
-                            new DBNavigator(cm);
-                            new VisualContext(cm);
-                            new ClientConnection(cm);
-
-                            db.deserialize(result.res, {db: db}, createComponentClient);
-
-                            // создаем контекст
-                            var context = new VisualContext(myApp.cmclient, {parent: uccelloClt.getClient(), colName: "VisualContext",
-                                ini: {fields: {Id: guid, Name: 'contextClient' + guid, DataBase: db.getGuid(), Root: db.getObj("ac949125-ce74-3fad-5b4a-b943e3ee67c6").getGuid()}}});
-
-                            cm.render();
-                        });
-                    });
-                }
-				*/
 
 
 

@@ -35,7 +35,7 @@ define (
 						
 					if (this.pvt.proxy.connect) {						
 						var params={action:"remoteCall",type:"method",func:functionName,guidIntf:pholder.guidIntf, guidObj: pholder.guidObj, args: newArgs };
-						if (lastArg) 
+						if (typeof lastArg == "function") 
 							this.pvt.proxy.connect.send(params,lastArg); // с коллбэком
 						else
 							this.pvt.proxy.connect.send(params); // без колбэка
@@ -46,7 +46,7 @@ define (
 						var realObject = this.pvt.proxy.obj,
 							realFunction = realObject[functionName];
 						var result = realFunction.apply(realObject, newArgs);
-						if (lastArg) lastArg(result); // вызвать коллбэк
+						if (typeof lastArg == "function") lastArg(result); // вызвать коллбэк
 						return result; 
 					}
 				};
