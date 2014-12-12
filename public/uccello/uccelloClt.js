@@ -8,12 +8,12 @@ define(
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
         '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit', '../ProtoControls/grid',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext',
-        './dataman/dataContact', './dataman/dataRoot'
+        './dataman/dataContact', './dataman/dataRoot','./system/rpc'
     ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
         Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit, Grid,
         User, Session, Connect, VisualContext,
-        DataContact, DataRoot
+        DataContact, DataRoot,Rpc
         ) {
         var UccelloClt = Class.extend({
 
@@ -22,7 +22,9 @@ define(
 				this.pvt = {};
                 this.pvt.sessionId = options.sessionId;
                 this.pvt.user = null;
-                this.pvt.clientConnection = new ClientConnection();
+				var rpc = this.pvt.rpc = new Rpc( { router: this.pvt.router } );
+
+                var clt = this.pvt.clientConnection = new ClientConnection();
                 this.pvt.typeGuids = {};
 				this.pvt.dbcontext = null;
                 this.pvt.controlMgr = {};
@@ -54,7 +56,17 @@ define(
                     that.createController();
                     if (options.callback)
                         options.callback();
-                });
+						
+					that.pvt.clientConnection.socket.send({action:"testIntf", type:'method'}, function(result){
+						console.log("POPO: "+result.intf);
+						var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
+						that.pvt.servInterface = result.intf;
+						that.pvt.proxyServer = rpc._publProxy(guidServer, clt.socket, result.intf); // публикуем прокси серверного интерфейса
+					//result.func
+					});
+
+				});
+
             },
 
             createController: function(done){
@@ -65,6 +77,7 @@ define(
 
                     // создаем  контроллер и бд
                     that.pvt.controller = new MemDBController();
+					console.log(that.pvt.controller.guid());
                     that.pvt.controller.event.on({
                         type: 'applyDeltas',
                         subscriber: this,
@@ -122,11 +135,12 @@ define(
                 return this.pvt.user;
             },
 
-			selectContext: function(guid, callback) {
+			selectContext: function(params, callback) {
                 var that = this;
 				function done() {
 					var s = that.pvt.clientConnection.socket;
-					var p = { typeGuids: that.pvt.typeGuids, callback: callback, socket: s,ini: {fields:{Kind: "slave", MasterGuid: guid}}}
+					var p = { typeGuids: that.pvt.typeGuids, callback: callback, socket: s, vc: params.vc, ini: {fields:{Kind: "slave", MasterGuid: params.guid}}, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
+					//p.rpc = null;
 					var vc = new VisualContext(that.pvt.cmclient, p);
 					that.pvt.vc = vc;
 				}

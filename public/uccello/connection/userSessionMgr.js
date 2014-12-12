@@ -17,6 +17,8 @@ define(
                 this.userId = 0;
 				this.event = new Event();
                 this.options = options;
+				this.rpc = options.rpc;
+				this.proxyServer =  options.proxyServer;
 
                 // системные объекты
                 this.dbcsys = new MemDBController(router);
@@ -97,9 +99,9 @@ define(
                 var that = this;
                 var user = this.getConnect(data.connectId).getSession().getUser();
                 var controller = this.getController();
-                var context = new VisualContext(this.cmsys, {parent: user, colName: "VisualContext",
-                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid}}});
-                var result = {masterGuid: context.dataBase(), roots: controller.getDB(context.dataBase()).getRootGuids()};
+                var context = new VisualContext(this.cmsys, {parent: user, colName: "VisualContext", socket: this.getConnect(data.connectId).getConnection(), rpc: this.rpc, proxyServer: this.proxyServer,
+                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, Kind: "master"}}});
+                var result = {masterGuid: context.dataBase(), roots: controller.getDB(context.dataBase()).getRootGuids(), vc: context.getGuid()};
                 controller.genDeltas(this.dbsys.getGuid());
                 done(result);
             },

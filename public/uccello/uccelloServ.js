@@ -4,8 +4,28 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './connection/router', './connection/userSessionMgr'],
-    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr) {
+    ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './connection/router', './connection/userSessionMgr',
+	'./system/rpc'],
+    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr, Rpc) {
+	
+		var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
+	
+		var interface1 = {
+		
+			className: "Interfsrv",
+			classGuid: "ef9bfa83-8371-6aaa-b510-28cd83291ce9",
+
+			loadResource: "function" //function(guid) {},
+		}
+	
+        /*var Interfsrv = Interf.extend({
+		
+			className: "Interfsrv",
+			classGuid: "ef9bfa83-8371-6aaa-b510-28cd83291ce9",
+
+			loadResource:function(guid) {},
+		});	*/
+	
         var UccelloServ = Class.extend({
             init: function(options){
                 var that = this;
@@ -13,19 +33,27 @@ define(
 				this.pvt = {};
                 this.pvt.logger = new Logger();
                 this.pvt.router = new Router();
-                this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate});
+				var rpc = this.pvt.rpc = new Rpc( { router: this.pvt.router } );
+				
+				this.pvt.proxyServer = rpc._publ(this, interface1); //
+
+
+                this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate, rpc:this.pvt.rpc, proxyServer: this.pvt.proxyServer});
                 this.pvt.dataman = new Dataman(this.getRouter(), that.getUserMgr().getController());
 
                 this.getRouter().add('getGuids', function(data, done) {
                     var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
-                    result = {
+                    var result = {
                         masterSysGuid:that.getUserMgr().dbsys.getGuid(),
                         sysRootGuid:user.getObj().getGuid()
                     };
                     done(result);
                     return result;
                 });
+				
+				
+				this.getRouter().add('testIntf', function(data, done) { console.log("interface get"); done({ intf: interface1 }); }); 
 
                 this.getRouter().add('getRootGuids', function(data, done) {
                     console.log(that.getUserMgr().getController().getDB(data.db))
@@ -93,6 +121,14 @@ define(
 			
 			getRouter: function() {
 				return this.pvt.router;
+			},
+			
+			getGuid: function() {
+				return guidServer;
+			},
+			
+			loadResource: function(guidRoot) {
+				return { resource: this.pvt.userSessionMgr.loadRes(guidRoot) };// временная заглушка
 			}
         });
         return UccelloServ;

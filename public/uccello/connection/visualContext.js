@@ -17,6 +17,23 @@ define(
              AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, DataRoot, DataContact,
              ControlMgr) {
 
+        var Interfvc = {	
+			className: "Interfvc",
+			classGuid: "ed318f95-fc97-be3f-d54c-1ad707f0996c",
+
+			//loadRes1: "function",
+			attachRes: "function"
+		}
+		
+		/*Interf.extend({
+		
+			className: "Interfvc",
+			classGuid: "ed318f95-fc97-be3f-d54c-1ad707f0996c",
+
+			loadRes1:function(i) {},
+			attachRes: function(guid) {}
+		});*/
+			 
         var VisualContext = AComponent.extend(/** @lends module:VisualContext.VisualContext.prototype */{
 
             className: "VisualContext",
@@ -37,22 +54,42 @@ define(
                 this._super(cm, params);
 				
 				this.pvt.cmgs = {};
-
 				this.pvt.db = null;
 				
                 if (params == undefined) return;
 				
 				this.pvt.typeGuids = params.typeGuids;
-				
 				var controller = cm.getDB().getController();
+				this.pvt.rpc = params.rpc;
+				this.pvt.proxyServer = params.proxyServer;
 								 
                 //var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
-				if (this.kind()!="slave") {
+				if (this.kind()!="slave") { // главная (master)
+				
+					if (params.rpc) {
+						params.rpc._publ(this, Interfvc);
+						this.pvt.proxyContext = params.rpc.getProxy(this.getGuid()).proxy;
+					}
+				
 					this.pvt.db = this.createDb(controller, {name: "VisualContextDB", kind: "master"});
 					this.dataBase(this.pvt.db.getGuid());
+					
 					if (cb !== undefined && (typeof cb == "function")) cb();
 				}
-				else { // подписка
+				else { // подписка (slave)
+					
+					if (params.rpc) {
+						params.rpc._publProxy(params.vc, params.socket, Interfvc); // публикуем как прокси - гуид уникален?
+						this.pvt.proxyContext = params.rpc.getProxy(params.vc).proxy;
+					}
+					
+					//test
+					/*
+					var pholder=params.rpc.getProxy(params.vc);
+					pholder.proxy.loadRes1(4,function(result) 
+					{ console.log("callback proxy1"+result); } );
+					*/
+
 					var guid = this.masterGuid();
 					var that = this;
 					this.pvt.db = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: params.socket, guid: guid}}, function(){
@@ -155,200 +192,36 @@ define(
 				new DataRoot(cm);
 				new DataContact(cm);
 				
-                for (var i=0; i<roots.length; i++)
-                    db.deserialize(this.loadRes(roots[i]), {db: db});
-                
+                for (var i=0; i<roots.length; i++) {
+					//var result=this.pvt.proxyContext.loadRes1(roots[i]);
+					// db.deserialize(result.resource, {db: db});
+					this.pvt.proxyServer.loadResource(roots[i], function(result) { db.deserialize(result.resource, {db: db}); }); 				
+                    //db.deserialize(this.loadRes(roots[i]), {db: db});
+                }
                 return db;
             },
+			
+			
+			/*
+			loadResource: function(guidRoot, cb) {
+				if (this.kind() == "slave") {
+					// TODO загрузка в базу контекста только на мастер-контексте!
+				}
+				else {
+					if (server) { // server side
+						var db = this.getDB();
+						db.deserialize(this.loadRes(guidRoot), {db: db});						
+					}
+					else { // client side
+						//this.
+					}
+				}
+			},*/
+			/*
+			loadRes1: function(guidRoot) {
+				return { resource: this.loadRes(guidRoot) };
+			},*/
 
-
-            /**
-             * Загрузить ресурс
-             * @returns {obj}
-             */
-            loadRes: function (guidRoot) {
-                var dbc = this.getControlMgr().getDB().getController();
-                var hehe = {
-                    "$sys": {
-                        "guid": guidRoot,
-                        "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
-                    },
-                    "fields": {
-                        "Id": 11,
-                        "Name": "MainContainer"
-                    },
-                    "collections": {
-                        "Children": [
-                            {
-                                "$sys": {
-                                    "guid": dbc.guid(),
-                                    "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
-                                },
-                                "fields": {
-                                    "Id": 22,
-                                    "Name": "Grid",
-                                    "Top": "107",
-                                    "Left": "230",
-                                    "Width":500,
-                                    "Height":100
-                                },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid": dbc.guid(),
-                                    "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                },
-                                "fields": {
-                                    "Id": 22,
-                                    "Name": "MyFirstButton1",
-                                    "Top": "50",
-                                    "Left": "30",
-                                    "Caption": "OK"
-                                },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid":  dbc.guid(),
-                                    "typeGuid": "827a5cb3-e934-e28c-ec11-689be18dae97"
-                                },
-                                "fields": {
-                                    "Id": 33,
-                                    "Name": "Grid",
-                                    "Top": "60",
-                                    "Left": "50",
-                                    "HorCells": 3,
-                                    "VerCells": 4
-                                },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid":  dbc.guid(),
-                                    "typeGuid": "a0e02c45-1600-6258-b17a-30a56301d7f1"
-                                },
-                                "fields": {
-                                    "Id": 44,
-                                    "Name": "PropEditor",
-                                    "Top": "10",
-                                    "Left": "900"
-                                },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid":  dbc.guid(),
-                                    "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
-                                },
-                                "fields": {
-                                    "Id": 55,
-                                    "Name": "DbNavigator",
-                                    "Top": "240",
-                                    "Left": "20",
-                                    "Nlevels": 3,
-                                    "RootElem": "fc13e2b8-3600-b537-f9e5-654b7418c156",
-                                    "Level": 0
-                                },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid": dbc.guid(),
-                                    "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
-                                },
-                                "fields": {
-                                    "Id": 100,
-                                    "Name": "Container2",
-                                    "Width":500,
-                                    "Height":100,
-                                    "Top": "5",
-                                    "Left": "230"
-                                },
-                                "collections": {
-                                    "Children": [
-                                        {
-                                            "$sys": {
-                                                "guid": dbc.guid(),
-                                                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                            },
-                                            "fields": {
-                                                "Id": 101,
-                                                "Name": "Button1",
-                                                "Top": "5",
-                                                "Left": "30",
-                                                "Caption": "Button1"
-                                            },
-                                            "collections": {}
-                                        },
-                                        {
-                                            "$sys": {
-                                                "guid": dbc.guid(),
-                                                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                            },
-                                            "fields": {
-                                                "Id": 101,
-                                                "Name": "Button2",
-                                                "Top": "5",
-                                                "Left": "130",
-                                                "Caption": "Button2"
-                                            },
-                                            "collections": {}
-                                        },
-                                        {
-                                            "$sys": {
-                                                "guid": dbc.guid(),
-                                                "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
-                                            },
-                                            "fields": {
-                                                "Id": 100,
-                                                "Name": "Container3",
-                                                "Width":220,
-                                                "Height":50,
-                                                "Top": "5",
-                                                "Left": "230"
-                                            },
-                                            "collections": {
-                                                "Children": [
-                                                    {
-                                                        "$sys": {
-                                                            "guid": dbc.guid(),
-                                                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                                        },
-                                                        "fields": {
-                                                            "Id": 103,
-                                                            "Name": "Button3.1",
-                                                            "Top": "5",
-                                                            "Left": "30",
-                                                            "Caption": "Button3.1"
-                                                        },
-                                                        "collections": {}
-                                                    },
-                                                    {
-                                                        "$sys": {
-                                                            "guid": dbc.guid(),
-                                                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-                                                        },
-                                                        "fields": {
-                                                            "Id": 104,
-                                                            "Name": "Button3.2",
-                                                            "Top": "5",
-                                                            "Left": "130",
-                                                            "Caption": "Button3.2"
-                                                        },
-                                                        "collections": {}
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                };
-                return hehe;
-            }
 
         });
 

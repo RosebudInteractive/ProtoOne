@@ -170,9 +170,10 @@ $(document).ready( function() {
                 $(that.resultForm).empty();
 				uccelloClt.getClient().createSrvContext(guid, function(result){
                     that.masterGuid = result.masterGuid;
+					that.vc = result.vc;
                     that.rootsGuids = result.roots;
                     that.tabCount = that.rootsGuids.length;
-                    that.selectContext(that.masterGuid);
+                    that.selectContext({guid: that.masterGuid, vc: that.vc});
                 });
             }
 
@@ -198,7 +199,7 @@ $(document).ready( function() {
                 uccelloClt.getClient().createRoot(that.currContext, function(result){
                     that.rootsGuids.push(result.rootGuid);
                     that.createTabs();
-                    that.selectContext(that.currContext);
+                    that.selectContext({guid: that.currContext, vc: that.vc}); //that.currContext);
                 });
             }
 
@@ -260,14 +261,15 @@ $(document).ready( function() {
              * Выбрать контекст
              * @param guid
              */
-            this.selectContext = function(guid) {
+            this.selectContext = function(params) {
                 $(that.resultForm).empty();
-                that.currContext = guid;
+                that.currContext = params.guid;
+				that.vc = params.vc;
                 that.currRoot = that.rootsGuids[0];
                 that.tabCount = 0;
                 $('#tabs').empty();
                 $('#container').empty();
-                uccelloClt.selectContext(guid, function(renderRoot) {
+                uccelloClt.selectContext(params, function(renderRoot) {
 					this.createTab();
                     renderControls(null, renderRoot);
                 });
