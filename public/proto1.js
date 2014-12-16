@@ -169,11 +169,13 @@ $(document).ready( function() {
             window.createContext = function(guid) {
                 $(that.resultForm).empty();
 				uccelloClt.getClient().createSrvContext(guid, function(result){
+                    console.log(result)
                     that.masterGuid = result.masterGuid;
 					that.vc = result.vc;
                     that.rootsGuids = result.roots;
                     that.tabCount = that.rootsGuids.length;
                     that.selectContext({guid: that.masterGuid, vc: that.vc, side: "server"});
+                    that.getContexts();
                 });
             }
 
@@ -356,7 +358,7 @@ $(document).ready( function() {
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:that.currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
                     that.createTabs();
-                    that.selectContext(that.currContext);
+                    that.selectContext({guid: that.currContext, side: "server"});
                 });
             });
 
