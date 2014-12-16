@@ -322,30 +322,6 @@ $(document).ready( function() {
 
 
 
-            /*
-             createComponentClient = function(obj) {
-             var g = obj.getTypeGuid();
-             var options = {parent:'#result'};
-
-             // метод обработки изменений для PropEditor
-             if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-             options.change = function(){
-             sendDeltas();
-             renderControls();
-             };
-             }
-
-             // DbNavigator для системной бд
-             if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
-             options.db = myApp.dbclientcontext;
-             }
-
-             new uccelloClt.typeGuids[g](myApp.cmclientcontext, { objGuid: obj.getGuid() }, options);
-             }
-             */
-
-
-
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
