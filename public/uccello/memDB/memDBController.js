@@ -159,31 +159,32 @@ define(
 			 * @param cb2 - вызывается по ходу создания объектов
              */
 			subscribeRoots: function(db,rootGuids, cb, cb2) {
-				/*var rg = [];
-				var res = [];
-				if (Array.isArray(rootGuids))
-					rg = rootGuids;				
-				else
-					rg.push(rootGuids);*/
 					
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
 					var newObjs = p.db.onSubscribeRoots(db.getGuid(),rootGuids);
+					var rootGuids = [];
 					for (var i=0; i<newObjs.length; i++) {
 						var o=db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
+						rootGuids.push(o.getGuid());
 						if (cb2!==undefined)  // запомнить коллбэк
 							db._cbSetNewObject(o.getGuid(),cb2);
-						if (cb !== undefined && (typeof cb == "function")) cb(o.getGuid());
+						
 					}
+					if (cb !== undefined && (typeof cb == "function")) cb(rootGuids);
+					//if (cbfinal !== undefined && (typeof cbfinal == "function")) cbfinal();
 				}
 				else { // мастер-база доступна удаленно
 					callback2 = function(obj) {
+						var rootGuids = [];
 						for (var i=0; i<obj.data.length; i++) {
 							o=db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
+							rootGuids.push(o.getGuid());
 							if (cb2!==undefined)  // запомнить коллбэк
-								db._cbSetNewObject(o.getGuid(),cb2);
-							if (cb !== undefined && (typeof cb == "function")) cb(o.getGuid());
+								db._cbSetNewObject(o.getGuid(),cb2);						
 						}
+						if (cb !== undefined && (typeof cb == "function")) cb(rootGuids);
+						//if (cbfinal !== undefined && (typeof cbfinal == "function")) cbfinal();
 					}
 					p.connect.send({action:'subscribeManyRoots', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuids:rootGuids},callback2);
 
@@ -192,33 +193,6 @@ define(
 			
 			},
 			
-			 /*
-			subscribeRoot: function(db,rootGuid, cb, cb2) {
-
-				
-				var p = db.getProxyMaster();
-				if (p.kind == "local") { // мастер-база доступна локально
-					var newObj = p.db.onSubscribeRoot(db.getGuid(),rootGuid);
-					db.deserialize(newObj,{db:db, mode:"RW"},cb2);
-					if (cb2!==undefined)  // запомнить коллбэк
-						db._cbSetNewObject(rootGuid,cb2);
-					if (cb !== undefined && (typeof cb == "function")) cb();
-				}
-				else { // мастер-база доступна удаленно
-					callback2 = function(obj) {
-						db.deserialize(obj.data,{db:db, mode:"RW"},cb2);
-						//console.log(JSON.stringify(obj.data));
-						if (cb2!==undefined)  // запомнить коллбэк
-							db._cbSetNewObject(rootGuid,cb2);
-						if (cb !== undefined && (typeof cb == "function")) cb();
-					}
-					p.connect.send({action:'subscribeRoot', type:'method', slaveGuid:db.getGuid(), masterGuid: p.guid, objGuid:rootGuid},callback2);
-
-					// TODO обработать асинхронность
-				}
-			},
-			*/
-			//onSubscribeRoot: function(proxy,dbGuid
 			
 			// отписать либо все базы данного коннекта либо БД с гуидом guid
 			onUnsubscribe: function(connect, dbGuid) {

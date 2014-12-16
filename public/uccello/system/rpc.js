@@ -45,8 +45,12 @@ define (
 						// 'this' in here is the proxy object.
 						var realObject = this.pvt.proxy.obj,
 							realFunction = realObject[functionName];
+							
+						var result = realFunction.apply(realObject, arguments);
+						/*
 						var result = realFunction.apply(realObject, newArgs);
 						if (typeof lastArg == "function") lastArg(result); // вызвать коллбэк
+						*/
 						return result; 
 					}
 				};
@@ -65,14 +69,6 @@ define (
 				};
 
 				// Create a proxy function for each of the public functions.
-				/*
-				for (var functionName in intfObj.prototype) {
-					if (functionName == "constructor" || functionName.substr(0,1)=="_") continue;
-					var func = intfObj.prototype[functionName];
-					if (typeof func === "function") {
-						proxyClass.prototype[functionName] = createProxyFunction(functionName);
-					}
-				}*/
 				for (var functionName in intfObj) {
 					if (functionName == "constructor" || functionName.substr(0,1)=="_") continue;
 					var func = intfObj[functionName];
@@ -114,10 +110,16 @@ define (
 					go = data.guidObj,
 					p = this.pvt.intfs[gi][go];
 				
-				if (p) {
+				/*if (p) {
 					var r = p.proxy[data.func].apply(p.proxy,data.args);
 				}
-				done(r);
+				done(r);*/
+				if (p) {
+					data.args.push(done);
+					var r = p.proxy[data.func].apply(p.proxy,data.args);
+					//var r = p.proxy[data.func].apply(p.proxy,data.args,done);
+				}
+				if (r!="XXX") done(r);
 			},
 			
 			// опубликовать 

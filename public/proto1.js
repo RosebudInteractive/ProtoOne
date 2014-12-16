@@ -194,14 +194,17 @@ $(document).ready( function() {
                 $(that.resultForm).empty();
                 that.currContext = params.guid;
 				that.vc = params.vc;
-                //that.currRoot = that.rootsGuids[0];
                 that.tabCount = 0;
                 $('#tabs').empty();
                 $('#container').empty();
-                uccelloClt.setContext(params, function(renderRoot) {
-					that.createTab(renderRoot);
-                    renderControls(null, renderRoot);
-                });
+                uccelloClt.setContext(params, function(roots) {
+					for (var i=0; i<roots.length; i++) {
+						that.createTab(roots[i]);
+						renderControls(null, roots[i]);
+					}
+					that.rootsGuids = roots; //uccelloClt.getContext().getDB().getRootGuids("res");
+					that.currRoot = that.rootsGuids[0];
+				});
             }
 			
             /**
@@ -245,11 +248,12 @@ $(document).ready( function() {
             loadQuery = function(){
                 if (!that.currContext) return;
                 // запрашиваем данные
-                uccelloClt.getClient().query(that.masterGuid, function(result2){
+				uccelloClt.loadQuery();
+                /*uccelloClt.getClient().query(that.masterGuid, function(result2){
                     uccelloClt.getContextCM(that.currRoot).getDB().subscribeRoots(result2.rootGuid, function () {
                     }, function () {
                     });
-                });
+                });*/
             }
 
             // ---------------------------------------------------------------------------------------------------------

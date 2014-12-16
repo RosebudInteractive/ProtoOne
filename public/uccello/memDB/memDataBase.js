@@ -181,7 +181,7 @@ define(
              * @param rootGuid
              * @param callback - вызывается после того, как подписка произошла и данные сериализовались в базе
 			 * @param callback2 - вызывается по ходу создания объектов
-             */
+	         */
 			subscribeRoots: function(rootGuid,callback,callback2) {
 				this.pvt.controller.subscribeRoots(this,rootGuid,callback,callback2);
 			},
@@ -278,31 +278,7 @@ define(
 				else
 					return res;	*/		
 			},
-			 /*
-			onSubscribeRoot: function(dbGuid, rootGuid) {
-				// TODO проверить что база подписана на базу
-				var obj = null;
-				if (this.pvt.robjs.length > 0) 
-					obj = this.pvt.rcoll[rootGuid].obj; // ВРЕМЕННО
 
-				if (!obj) return null;
-				
-				// добавляем подписчика
-				//var g = (subProxy.dataBase) ? subProxy.dataBase.getGuid() : subProxy.guid;
-				var subProxy = this.pvt.subscribers[dbGuid];
-				if (subProxy) {
-					var clog = obj.getLog();
-					if (!clog.getActive()) clog.setActive(true); // если лог неактивен, то активировать, чтобы записывать в него все изменения
-					else {
-						// TODO ВАЖНО! нужно сделать рассылку только для данного корневого объекта - оптимизировать потом!!!!
-						this.pvt.controller.genDeltas(this.getGuid());
-					}
-					this.pvt.rcoll[rootGuid].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
-					return this.serialize(obj);
-					}
-				else 
-					return null;
-			},*/
 			
             /**
              * "сериализация" объекта базы
@@ -365,7 +341,7 @@ define(
 							o = new MemMetaObj(parent,sobj);
 							break;
 						default:
-							var typeObj = that.getObj(sobj.$sys.typeGuid); //.obj;
+							var typeObj = that.getObj(sobj.$sys.typeGuid);
 							if ("db" in parent) parent.nolog=true;
 							o = new MemObj( typeObj,parent,sobj);
 							if (cb!==undefined) cb(o);

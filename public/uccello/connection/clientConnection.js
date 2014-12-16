@@ -103,12 +103,12 @@ define(['./socket', '../controls/aComponent'], function(Socket, AComponent) {
 
 		createRoot: function(dbGuid, callback) {
 			this.socket.send({action:"createRoot", type:'method', dbGuid:dbGuid}, callback);
-		},
-
+		}
+/*
 		query: function(dbGuid, callback) {
 			this.socket.send({action:"query", type:'method', dbGuid:dbGuid}, callback);
 		}
-		
+	*/	
 
 		
     });

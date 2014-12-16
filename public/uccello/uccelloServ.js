@@ -15,16 +15,9 @@ define(
 			className: "Interfsrv",
 			classGuid: "ef9bfa83-8371-6aaa-b510-28cd83291ce9",
 
-			loadResource: "function" //function(guid) {},
+			loadResources: "function",
+			queryDatas: "function"
 		}
-	
-        /*var Interfsrv = Interf.extend({
-		
-			className: "Interfsrv",
-			classGuid: "ef9bfa83-8371-6aaa-b510-28cd83291ce9",
-
-			loadResource:function(guid) {},
-		});	*/
 	
         var UccelloServ = Class.extend({
             init: function(options){
@@ -126,10 +119,34 @@ define(
 			getGuid: function() {
 				return guidServer;
 			},
-			
-			loadResource: function(guidRoot) {
-				return { resource: this.pvt.userSessionMgr.loadRes(guidRoot) };// временная заглушка
+
+            /**
+             * Загрузить ресурсы по их гуидам
+			 * @param rootGuids - массив гуидов ресурсов
+             * @returns {obj} - массив ресурсов в result.resources
+             */
+			loadResources: function(rootGuids, done) {
+				var result = [];
+				for (var i=0; i<rootGuids.length; i++) 
+					result.push(this.pvt.userSessionMgr.loadRes(rootGuids[i]));
+				console.log("load resources");
+				if (done !== undefined && (typeof done == "function")) done({ resources: result });
+				return { resources: result };// временная заглушка
+			},
+
+            /**
+             * Загрузить данные по их гуидам - ???
+			 * @param rootGuids - массив гуидов данных
+             * @returns {obj} - массив ресурсов в result.datas
+             */			
+			queryDatas: function(rootGuids,done) {
+				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0])] };
+				if (done !== undefined && (typeof done == "function")) done(result);
+				return result;
 			}
+			
+			
+			
         });
         return UccelloServ;
     }
