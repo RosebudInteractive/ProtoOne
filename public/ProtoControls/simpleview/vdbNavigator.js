@@ -23,6 +23,24 @@ define(
                 editor.find('.refresh').click(function () {
                     vDBNavigator.render.apply(that);
                 });
+
+                var dbSelector = editor.find('.dbSelector');
+                dbSelector.append('<option />');
+                for(var i=0, len=this.params.dbSelector.length; i<len; i++) {
+                    var option = $('<option />').attr('value', this.params.dbSelector[i].guid).html(this.params.dbSelector[i].name);
+                    dbSelector.append(option);
+                }
+                dbSelector.change(function(){
+                    var val = $(this).val();
+                    for(var i=0, len=that.params.dbSelector.length; i<len; i++) {
+                        if (val == that.params.dbSelector[i].guid) {
+                            that.dataBase(val);
+                            vDBNavigator.render.apply(that);
+                            return;
+                        }
+                    }
+                });
+
             }
             editor.css({top: that.top() + 'px', left: that.left() + 'px'});
 
@@ -30,6 +48,7 @@ define(
             var centerTop = editor.find('.centerTop');
             var centerBottom = editor.find('.centerBottom');
             var right = editor.find('.right');
+            var dbSelector = editor.find('.dbSelector');
             left.empty();
             centerTop.empty();
             centerBottom.empty();
@@ -50,13 +69,16 @@ define(
             that._activeObj = null;
 
             // отображаем слева рут элементы
-            if (that.params.db) {
+            dbSelector.val(that.dataBase());
+            var controller = that.getControlMgr().getDB().getController();
+            var db = that.dataBase()? controller.getDB(that.dataBase()): null;
+            if (db) {
                 var rootElemLink = null;
                 var rootElem = this.level()==0? null: this.rootElem();
-                var cnt = rootElem? 1: that.params.db.countRoot();
+                var cnt = rootElem? 1: db.countRoot();
 
                 for (var i = 0; i < cnt; i++) {
-                    var root = rootElem? that.params.db.getObj(rootElem): that.params.db.getRoot(i).obj;
+                    var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
                     var name = root.get('Name');
                     if (!name)
                         name = root.getGuid();
