@@ -239,7 +239,7 @@ define(
 				console.log(delta);
                 // находим рутовый объект к которому должна быть применена дельта
                 var db  = this.getDB(dbGuid);
-                var root = db.getRoot(delta.rootGuid);
+                //var root = db.getRoot(delta.rootGuid);
 				
 				var buf = this.pvt.bufdeltas;
 				
@@ -257,10 +257,12 @@ define(
 				
 				var lval = db.getVersion("valid");
 				var ldraft = db.getVersion();
-				var dval = delta.dbVersion;				
+								
 				for (var i=0; i<cur[tr].length; i++) {
 					
-					delta = cur[tr][i];
+					var cdelta = cur[tr][i];
+					var root = db.getRoot(cdelta.rootGuid);
+					var dval = cdelta.dbVersion;
 
 					if (db.isMaster()) {
 						if (lval == dval - 1) {
@@ -286,10 +288,10 @@ define(
 
 					}
 
-					root.obj.getLog().applyDelta(delta);
-					db.setVersion("draft",delta.dbVersion);
-					db.setVersion("sent",delta.dbVersion);
-					db.setVersion("valid",delta.dbVersion);
+					root.obj.getLog().applyDelta(cdelta);
+					db.setVersion("draft",cdelta.dbVersion);
+					db.setVersion("sent",cdelta.dbVersion);
+					db.setVersion("valid",cdelta.dbVersion);
 
 					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
 				}

@@ -90,6 +90,14 @@ define(
 				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
+				
+				/*
+				if (obj.getLog().getActive()) { 
+						var newObj=this._obj.getDB().serialize(obj);
+						var o = { adObj: newObj, obj:obj, colName: this._name, type:"add"};
+						this._obj.getLog().add(o);
+				}*/
+				
 
 				this.event.fire({
                     type: 'newRoot',
@@ -342,7 +350,11 @@ define(
 							break;
 						default:
 							var typeObj = that.getObj(sobj.$sys.typeGuid);
-							if ("db" in parent) parent.nolog=true;
+							//if ("db" in parent) parent.nolog=true;
+							if (!("obj" in parent)) { // вместо верхней строки, теперь db не нужно передавать сюда
+								parent.nolog = true; 
+								parent.db = that;
+							}
 							o = new MemObj( typeObj,parent,sobj);
 							if (cb!==undefined) cb(o);
 							break;						
@@ -528,8 +540,6 @@ define(
 						//allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
 				}
 				
-				//TODO добавить вызовы методов
-							
 				if (allDeltas.length>0) {
 					this.pvt.tranCounter++;
 					allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции

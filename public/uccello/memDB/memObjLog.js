@@ -14,6 +14,7 @@ define(
 				this.pvt.log = [];
 				this.pvt.versions = {};
 				this.pvt.active = false;
+				this.pvt.newlog = true;  // новый корневой лог - до первой генерации дельты
 				
 			},
 			
@@ -116,8 +117,10 @@ define(
 						// удаление объекта из иерархии
 						case "del":
 							var par = c.obj.getParent();
-							curd.parentGuid = par.getGuid();
-							curd.parentColName = c.obj.getColName();
+							if (par) {
+								curd.parentGuid = par.getGuid();
+								curd.parentColName = c.obj.getColName();
+							}
 							curd.deleted = 1;
 							break;
 					}
@@ -140,10 +143,17 @@ define(
 						o.getCol(c.parentColName)._del(db.getObj(c.guid));
 					}
 					else {
-						if ("add" in c) {					
-							var o = db.getObj(c.parentGuid);
-							var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
-							o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
+						if ("add" in c) {	
+							if (c.parentGuid) {
+								var o = db.getObj(c.parentGuid);
+								var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
+								o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
+							}
+							else { // root
+								// TODO _cbGetNewObject
+								cb = null; // ВРЕМЕННО
+								o.getDB().deserialize(c.add, { }, cb ); 
+							}
 						}
 						o2 = this.getObj().getDB().getObj(c.guid);
 						if (o2) {
@@ -156,9 +166,6 @@ define(
 					}
 				}
 				this.setActive(true);
-				/*db.newVersion();
-				db.setVersion("sent",db.getVersion());
-				db.setVersion("valid",db.getVersion());*/
 			},
 			
 
