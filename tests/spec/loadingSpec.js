@@ -258,7 +258,7 @@ describe('Unit Connect', function() {
                             new VisualContext(cm);
                             new ClientConnection(cm);
 
-                            db.deserialize(result.res, {db: db}, createComponentClient);
+                            db.deserialize(result.res, {}, createComponentClient);
 
                             // создаем контекст
                             var context = new VisualContext(myApp.cmclient, {parent: clientConnection, colName: "VisualContext",

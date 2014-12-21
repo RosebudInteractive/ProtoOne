@@ -38,7 +38,6 @@ define(
                 router.add('authenticate', function(){ return that.routerAuthenticate.apply(that, arguments); });
                 router.add('deauthenticate', function(){ return that.routerDeauthenticate.apply(that, arguments); });
                 router.add('createContext', function(){ return that.routerCreateContext.apply(that, arguments); });
-                //router.add('createRoot', function(){ return that.routerCreateRoot.apply(that, arguments); });
             },
 			
 			getController: function() {
@@ -105,22 +104,6 @@ define(
                 controller.genDeltas(this.dbsys.getGuid());
                 done(result);
             },
-
-            /**
-             * Создать рут
-             * @param data
-             * @param done
-             */
-/*            routerCreateRoot: function(data, done) {
-                var controller = this.getController();
-                var db = controller.getDB(data.dbGuid);
-                var rootGuid = this.dbcsys.guid();
-                var cm = new ControlMgr(db, rootGuid);
-				
-                db.deserialize(this.loadRes(rootGuid), { } );
-                controller.genDeltas(db.getGuid());
-                done({rootGuid:rootGuid});
-            },*/
 
             /**
              * Загрузить ресурс

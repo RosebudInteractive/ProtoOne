@@ -122,37 +122,20 @@ define(
 			getGuid: function() {
 				return guidServer;
 			},
-			/*
-			routerCreateRootS: function(data, done) {
-				var um =this.getUserMgr();
-                var controller = um.getController();
-                var db = controller.getDB(data.dbGuid);
-                var rootGuid = controller.guid();
-                var cm = new ControlMgr(db, rootGuid);
-				var r = this.loadResources([rootGuid]);
-				
 
-				db.addRoots(r.resources );
-				console.log("ADDROT");
-			
-                //db.deserialize(um.loadRes(rootGuid), {} );
-
-                //controller.genDeltas(db.getGuid());
-                done({rootGuid:rootGuid});
-            },*/
 
             /**
              * Загрузить ресурсы по их гуидам - выдает сериализованные представления, которые затему нужно десериализовать в memDataBase
 			 * @param rootGuids - массив гуидов ресурсов
-             * @returns {obj} - массив ресурсов в result.resources
+             * @returns {obj} - массив ресурсов в result.datas
              */
 			loadResources: function(rootGuids, done) {
 				var result = [];
 				for (var i=0; i<rootGuids.length; i++) 
 					result.push(this.pvt.userSessionMgr.loadRes(rootGuids[i]));
 				console.log("load resources");
-				if (done !== undefined && (typeof done == "function")) done({ resources: result });
-				return { resources: result };// временная заглушка
+				if (done !== undefined && (typeof done == "function")) done({ datas: result });
+				return { datas: result };// временная заглушка
 			},
 
             /**
@@ -161,6 +144,7 @@ define(
              * @returns {obj} - массив ресурсов в result.datas
              */			
 			queryDatas: function(rootGuids,done) {
+				console.log("queryDatas");
 				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0])] };
 				if (done !== undefined && (typeof done == "function")) done(result);
 				return result;

@@ -29,6 +29,16 @@ define(
 					//par = par.getParent(); //par.getParentClass();
 				}
 				
+				/*if (parent.rtype == "data")
+					this.pvt.rtype = "data"
+				else
+					this.pvt.rtype = "res";
+				*/
+				if ((flds.$sys.guid == "87510077-53d2-00b3-0032-f1245ab1b74d") || (flds.$sys.guid == "73596fd8-6901-2f90-12d7-d1ba12bae8f4"))
+					this.pvt.rtype = "data";
+				else
+					this.pvt.rtype = "res";
+				//if (classGuid
 				// инициализируем коллекции для метаинфо - описание полей и описание коллекций
 				new MemCol("fields",this);
 				new MemCol("cols",this);
@@ -109,6 +119,10 @@ define(
 				if (typeof col == "number") 
 					return this._super(col);
 				return null;
+			},
+			
+			getRtype: function() {
+				return this.pvt.rtype;
 			},
 			
 			// получить индекс элемента коллекции с учетом наследования

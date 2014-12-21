@@ -149,7 +149,6 @@ define(
 						that.pvt.serverContext = params.vc;
 						p.vc = params.vc;
 						p.ini = {fields:{Kind: "slave", MasterGuid: params.guid}};
-						
 					}
 					else {
 						p.ini = {fields:{Kind: "master"}};
@@ -157,10 +156,7 @@ define(
 					//p.rpc = null;
 					var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
 					that.pvt.vc = vc;
-					if (p.side == "server")
-						that.pvt.vcproxy=that.pvt.rpc._publProxy(p.vc,that.pvt.clientConnection.socket,vc.getInterface());
-					else
-						that.pvt.vcproxy=that.pvt.rpc._publ(vc, vc.getInterface());
+					that.pvt.vcproxy = vc.getProxy();
 				}
 				
 				var controller = this.getController();
@@ -168,19 +164,7 @@ define(
 					this.pvt.vc.dispose(done); //delDataBase(this.pvt.dbcontext.getGuid(), done);
 				else
 					done();			
-			},
-			
-			loadQuery: function(rootGuids,cb) { // TODO как времененный вариант добавить сабскрайб рут
-				var that = this;
-				function icb(result) {
-					that.getContext().getDB().subscribeRoots(result.rootGuid);
-				}
-				
-				if (this.pvt.vcproxy)
-					this.pvt.vcproxy.loadQuery(null,icb);
-				
 			}
-
 			
         });
         return UccelloClt;

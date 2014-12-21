@@ -129,7 +129,7 @@ define(
 				if (this.kind()=="master") {
 				
 					function icb(r) {
-							var res = that.getDB().addRoots(r.resources, params.compcb);
+							var res = that.getDB().addRoots(r.datas, params.compcb);
 							if (cb) cb({guids:rootGuids});  
 					}
 								

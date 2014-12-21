@@ -185,7 +185,7 @@ $(document).ready( function() {
              * @param guid
              */
             window.createClientContext = function(guid) {
-				this.selectContext({side: "client"});
+				this.selectContext({side: "client", guid: uccelloClt.getController().guid() });
             },
 
             /**
@@ -202,7 +202,7 @@ $(document).ready( function() {
                 $('#tabs').empty();
                 $('#container').empty();
                 uccelloClt.setContext(params, function(result) {
-					if (!result.length) //typeof result == "object")
+					if (!result.length)
 						var roots = result.guids
 					else
 						roots = result; // TODO надо будет нормализвать эту хуйню
@@ -210,7 +210,6 @@ $(document).ready( function() {
 						that.createTab(roots[i]);
 						renderControls(null, roots[i]);
 					}
-					//that.rootsGuids = roots; 
 					that.currRoot = that.rootsGuids[0];
 				});
             }
@@ -236,10 +235,18 @@ $(document).ready( function() {
 			
                 if (!that.currRoot) return;
 				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"res"},function(result){
-                    that.rootsGuids.push(result.guids[0]); //rootGuid);
+                    that.rootsGuids.push(result.guids[0]); 
 					that.createTab(result.guids[0]);
 					renderControls(null, result.guids[0]);
 				});
+            }
+
+            /**
+             * Кнопка query
+             */
+            window.loadQuery = function(){
+                if (!that.currContext) return;
+				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data"});
             }
 
             /**
@@ -251,15 +258,7 @@ $(document).ready( function() {
                 console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));
             }
 
-            /**
-             * Кнопка query
-             */
-            loadQuery = function(){
-                if (!that.currContext) return;
-                // запрашиваем данные
-				uccelloClt.loadRoot();
 
-            }
 
             // ---------------------------------------------------------------------------------------------------------
 

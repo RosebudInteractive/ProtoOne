@@ -97,20 +97,10 @@ define(['./socket', '../controls/aComponent'], function(Socket, AComponent) {
             });
         },
 		
+		// todo перенести отсюда в uccelloClt
 		createSrvContext: function(guid, callback) {
 			this.socket.send({action:"createContext", type:'method', contextGuid:guid}, callback);
-		},
-/*
-		createRoot: function(dbGuid, callback) {
-			this.socket.send({action:"createRootS", type:'method', dbGuid:dbGuid}, callback);
 		}
-*/
-/*
-		query: function(dbGuid, callback) {
-			this.socket.send({action:"query", type:'method', dbGuid:dbGuid}, callback);
-		}
-	*/	
-
 		
     });
 
