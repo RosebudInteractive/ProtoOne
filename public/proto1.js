@@ -48,7 +48,7 @@ $(document).ready( function() {
                 uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
                     renderControls();
                     that.getContexts();
-                });
+                }, function() {} );
             }
 
 
