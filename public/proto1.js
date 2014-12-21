@@ -197,14 +197,20 @@ $(document).ready( function() {
                 that.currContext = params.guid;
 				that.vc = params.vc;
                 that.tabCount = 0;
+				that.rootsContainers = {};
+				that.rootsGuids = [];
                 $('#tabs').empty();
                 $('#container').empty();
-                uccelloClt.setContext(params, function(roots) {
+                uccelloClt.setContext(params, function(result) {
+					if (!result.length) //typeof result == "object")
+						var roots = result.guids
+					else
+						roots = result; // TODO надо будет нормализвать эту хуйню
 					for (var i=0; i<roots.length; i++) {
 						that.createTab(roots[i]);
 						renderControls(null, roots[i]);
 					}
-					that.rootsGuids = roots; //uccelloClt.getContext().getDB().getRootGuids("res");
+					//that.rootsGuids = roots; 
 					that.currRoot = that.rootsGuids[0];
 				});
             }
@@ -224,15 +230,16 @@ $(document).ready( function() {
 
 
             /**
-             * Создать рут
+             * Создать рут ресурсов (не данных)
              */
             window.createRoot = function(){
+			
                 if (!that.currRoot) return;
-                uccelloClt.getClient().createRoot(that.currContext, function(result){
-                    that.rootsGuids.push(result.rootGuid);
-                    that.createTabs();
-                    that.selectContext({guid: that.currContext, vc: that.vc, side: "server"}); //that.currContext);
-                });
+				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"res"},function(result){
+                    that.rootsGuids.push(result.guids[0]); //rootGuid);
+					that.createTab(result.guids[0]);
+					renderControls(null, result.guids[0]);
+				});
             }
 
             /**
@@ -250,12 +257,8 @@ $(document).ready( function() {
             loadQuery = function(){
                 if (!that.currContext) return;
                 // запрашиваем данные
-				uccelloClt.loadQuery();
-                /*uccelloClt.getClient().query(that.masterGuid, function(result2){
-                    uccelloClt.getContextCM(that.currRoot).getDB().subscribeRoots(result2.rootGuid, function () {
-                    }, function () {
-                    });
-                });*/
+				uccelloClt.loadRoot();
+
             }
 
             // ---------------------------------------------------------------------------------------------------------

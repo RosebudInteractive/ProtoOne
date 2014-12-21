@@ -14,6 +14,7 @@ define(
 				this.pvt.log = [];
 				this.pvt.versions = {};
 				this.pvt.active = false;
+				this.pvt.actver = -1;
 				this.pvt.newlog = true;  // новый корневой лог - до первой генерации дельты
 				
 			},
@@ -23,10 +24,14 @@ define(
 			},
 			
 			setActive: function(active) {
-				if (active)
+				if (active) {
 					this.pvt.active = true;
-				else 
+					//this.pvt.actver=this.getDB().getCurrentVersion();
+				}
+				else {
+					//this.truncate();
 					this.pvt.active = false;
+				}
 			},
 			
 			getActive: function() {
@@ -71,6 +76,7 @@ define(
 				var delta = {};
 				var deltaIdx = {};
 				delta.items = [];
+				//delta.rtype = this.getObj()
 				
 				var log = this.pvt.log;
 				//if (log.length == 0) return null;
@@ -114,6 +120,10 @@ define(
 							else
 								curd.parentGuid = "";
 							break;
+						// добавление самого корневого элемента
+						case "newRoot":
+							curd.newRoot = c.adObj;
+							break;
 						// удаление объекта из иерархии
 						case "del":
 							var par = c.obj.getParent();
@@ -143,17 +153,15 @@ define(
 						o.getCol(c.parentColName)._del(db.getObj(c.guid));
 					}
 					else {
-						if ("add" in c) {	
-							if (c.parentGuid) {
-								var o = db.getObj(c.parentGuid);
-								var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
-								o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
-							}
-							else { // root
-								// TODO _cbGetNewObject
-								cb = null; // ВРЕМЕННО
-								o.getDB().deserialize(c.add, { }, cb ); 
-							}
+						if ("newRoot" in c) {
+							//db.deserialize(c.newRoot, { } , cb );
+						}
+						if ("add" in c) {							
+							var o = db.getObj(c.parentGuid);
+							var cb = db._cbGetNewObject(db.getObj(c.parentGuid).getRoot().getGuid());
+							db.deserialize(c.add, { obj: o, colName: c.parentColName }, cb );
+							//o.getDB().deserialize(c.add, { obj: o, colName: c.parentColName }, cb ); 
+							
 						}
 						o2 = this.getObj().getDB().getObj(c.guid);
 						if (o2) {
@@ -174,12 +182,8 @@ define(
 			
 				var db = this.getObj().getDB();
 				// инкрементируем версию если нужно
-				var sver = db.getVersion("sent");
-				var ver = db.getVersion();
-				if (ver==sver) {
-					db.newVersion();
-					ver = db.getVersion();
-				}
+				var ver = db.getCurrentVersion();
+
 				if (!(ver.toString() in this.pvt.versions))
 					this.pvt.versions[ver] = this.pvt.log.length; // отмечаем место в логе, соответствующее началу этой версии
 				

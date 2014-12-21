@@ -13,6 +13,7 @@ define(
 				this.pvt.dbCollection = {};
 				this.pvt.bufdeltas = {};		// буферизация входящих дельт
                 this.event = new Event();
+				this.pvt.defaultCompCallback = null; // коллбэк по умолчанию для создания компонентов
 
                 if (router) {
                     var that = this;
@@ -150,6 +151,14 @@ define(
 				db.onSubscribe(p);
 				return { dbVersion: db.getVersion() };
             },
+			
+			setDefaultCompCallback: function(cb) {
+				this.pvt.defaultCompCallback = cb;
+			},
+			
+			getDefaultCompCallback: function() {
+				return this.pvt.defaultCompCallback;
+			},
 
             /**
              * подписать базу db на рутовые элементы с гуидами rootGuids
@@ -159,13 +168,15 @@ define(
 			 * @param cb2 - вызывается по ходу создания объектов
              */
 			subscribeRoots: function(db,rootGuids, cb, cb2) {
+			
+				if (!cb2) cb2 = this.pvt.defaultCompCallback;
 					
 				var p = db.getProxyMaster();
 				if (p.kind == "local") { // мастер-база доступна локально
 					var newObjs = p.db.onSubscribeRoots(db.getGuid(),rootGuids);
 					var rootGuids = [];
 					for (var i=0; i<newObjs.length; i++) {
-						var o=db.deserialize(newObjs[i],{db:db, mode:"RW"},cb2);
+						var o=db.deserialize(newObjs[i],{ mode:"RW"},cb2);
 						rootGuids.push(o.getGuid());
 						if (cb2!==undefined)  // запомнить коллбэк
 							db._cbSetNewObject(o.getGuid(),cb2);
@@ -178,7 +189,7 @@ define(
 					callback2 = function(obj) {
 						var rootGuids = [];
 						for (var i=0; i<obj.data.length; i++) {
-							o=db.deserialize(obj.data[i],{db:db, mode:"RW"},cb2);
+							o=db.deserialize(obj.data[i],{ mode:"RW"},cb2);
 							rootGuids.push(o.getGuid());
 							if (cb2!==undefined)  // запомнить коллбэк
 								db._cbSetNewObject(o.getGuid(),cb2);						
@@ -232,6 +243,7 @@ define(
                 }
             },
 
+			/*
 			// пока только 1 дельта!!!! НО с буферизацией
             applyDeltas: function(dbGuid, srcDbGuid, delta) {
 			
@@ -261,6 +273,22 @@ define(
 				for (var i=0; i<cur[tr].length; i++) {
 					
 					var cdelta = cur[tr][i];
+					if ("last" in cdelta) {
+						if ((db.isMaster() == false) && (srcDBGuid == db.getProxyMaster().dbInfo.guid)) { // пришло с мастера
+
+							db.setVersion("valid",cdelta.dbValVersion);
+							if (cdelta.dbValVersion > db.getVersion())
+								db.setVersion("draft",cdelta.dbValVersion);
+							if (cdelta.dbValVersion > db.getVersion("sent"))
+								db.setVersion("sent",cdelta.dbValVersion);
+						}
+						else { // Master DataBase
+							db.setVersion("draft",cdelta.dbVersion);
+							db.setVersion("sent",cdelta.dbVersion);
+							db.setVersion("valid",cdelta.dbVersion);							
+						}
+						break; // последняя дельта
+					}
 					var root = db.getRoot(cdelta.rootGuid);
 					var dval = cdelta.dbVersion;
 
@@ -289,16 +317,9 @@ define(
 					}
 
 					root.obj.getLog().applyDelta(cdelta);
-					db.setVersion("draft",cdelta.dbVersion);
-					db.setVersion("sent",cdelta.dbVersion);
-					db.setVersion("valid",cdelta.dbVersion);
-
 					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
 				}
-				
-				//var deltas = [];
-				//deltas.push(delta);
-			
+
 				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]); //deltas);
 				
 				delete cur[tr];
@@ -308,6 +329,92 @@ define(
                     target: this
                 });
             },
+*/
+			// пока только 1 дельта!!!! НО с буферизацией
+            applyDeltas: function(dbGuid, srcDbGuid, delta) {
+			
+				console.log("incoming delta: ");
+				console.log(delta);
+                // находим рутовый объект к которому должна быть применена дельта
+                var db  = this.getDB(dbGuid);
+                //var root = db.getRoot(delta.rootGuid);
+				
+				var buf = this.pvt.bufdeltas;
+				
+				if (!(srcDbGuid in buf)) buf[srcDbGuid] = {};
+				if (!(dbGuid in buf[srcDbGuid])) buf[srcDbGuid][dbGuid] = {};
+				var cur = buf[srcDbGuid][dbGuid];
+				//var tr = delta.tran.toString();
+				var tr = delta.dbVersion.toString();
+				if (!(tr in cur)) cur[tr] = [];
+				cur[tr].push(delta);
+				
+				if (!("last" in delta)) return; // буферизовали и ждем последнюю, чтобы применить все сразу
+				
+				// TODO ничто не гарантирует, что транзакция закроется и что она будет выполняться в правильном порядке
+				// если мы хотим это контролировать нужно немного иначе организовать хранилище незавершенных транзакций (дельт)
+				
+				var lval = db.getVersion("valid");
+				var ldraft = db.getVersion();
+				var dver = delta.dbVersion;
+
+				if (db.isMaster()) {
+					if (lval == dver - 1) {
+						//  на сервере сразу валидируется версия при изменениях.
+					}
+					else {
+						console.log("cannot sync server -  valid version:"+lval+"delta version:"+dver);
+						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+						return;				
+					}				
+				}
+				else {
+					if (lval == dver - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
+						// если к тому времени на клиенте появилась еще драфт версия - откатываем ее чтобы не было конфликтов
+						if (ldraft>lval) db.undo(lval); 
+					}
+					else { // ошибка синхронизации - ненормальная ситуация, в будущем надо придумать как это обработать
+						console.log("cannot sync client -  valid version:"+lval+"delta version:"+dver);
+						console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+						return;
+					}
+
+					// TODO подписчикам передать если  делать тему с N базами
+
+				}
+				
+				for (var i=0; i<cur[tr].length; i++) {
+					var cdelta = cur[tr][i];
+					if ("last" in cdelta) { // последняя дельта транзакции
+						if ((db.isMaster() == false) && (srcDbGuid == db.getProxyMaster().guid)) { // пришло с мастера
+							db.setVersion("valid",cdelta.dbValVersion);
+							db.setVersion("sent",cdelta.dbVersion);
+						}
+						else { // Master DataBase
+							db.setVersion("valid",cdelta.dbVersion);	
+							db.setVersion("sent",cdelta.dbVersion);							
+						}
+						break; 
+					}
+					var root = db.getRoot(cdelta.rootGuid);
+					if (!root)
+						var rootObj=db.deserialize(cdelta.items[0].newRoot, {}, this.pvt.defaultCompCallback); //TODO добавить коллбэк!!!
+					else
+						rootObj = root.obj;
+					
+					rootObj.getLog().applyDelta(cdelta);
+					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
+				}			
+				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]); 
+				delete cur[tr];
+
+                this.event.fire({
+                    type: 'applyDeltas',
+                    target: this
+                });
+            },
+
+
 			
             /**
              * Сгенерировать и разослать "дельты" 
@@ -347,7 +454,7 @@ define(
 						if (proxy != undefined && proxy.guid != srcDbGuid) {
 							if (proxy.kind == "local") {
 								//TODO
-								db.getRoot(proxy.guid).obj.getLog().applyDelta(delta); //.content);
+								//db.getRoot(proxy.guid).obj.getLog().applyDelta(delta); 
 								// TODO валидировать версию
 								}
 							else {
@@ -358,26 +465,40 @@ define(
 								}
 						}
 					}
-										
-					var root = db.getRoot(delta.rootGuid);
 					
-					// распространить по подписчикам
-					for(var guid in root.subscribers) {
-						var subscriber = root.subscribers[guid];
-						console.log('subscriber', subscriber);
-						// удаленные
-						if (subscriber.kind == 'remote' && srcDbGuid != guid) {
-							subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});
-							console.log("sent to DB : "+subscriber.guid);
-							}
+					// распространить по подписчикам					
+					if ("last" in delta) { // закрывающую дельту транзакции посылаем всем подписчикам БД
+						var allSubs = db.getSubscribers();
+						for (var guid in allSubs) {
+							var subscriber = allSubs[guid];
+							if (subscriber.kind == 'remote' && srcDbGuid != guid) {
+								subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});
+								console.log("sent last to DB : "+subscriber.guid);
+								}							
+						}
 					}
+					else {
+						var root = db.getRoot(delta.rootGuid);
+												
+						for(guid in root.subscribers) {
+							subscriber = root.subscribers[guid];
+							console.log('subscriber', subscriber);
+							// удаленные
+							if (subscriber.kind == 'remote' && srcDbGuid != guid) {
+								subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});
+								console.log("sent to DB : "+subscriber.guid);
+								}
+						}
+					}
+					// TODO разобраться потом с локальными
+					/*
 					for(var guid in root.subscribers) {
 						var subscriber = root.subscribers[guid];
 						// локальные
 						if (subscriber.kind == 'local' && srcDbGuid != guid)
-							subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta); //.content);
+							//subscriber.db.getObj(delta.rootGuid).getLog().applyDelta(delta); //TODO допилить с учетом .last
 							// TODO валидировать версию
-					}
+					}*/
 					
 					
 				}

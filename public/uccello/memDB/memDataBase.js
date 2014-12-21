@@ -36,7 +36,8 @@ define(
 				pvt.logIdx = [];			// упорядоченный индекс логов
 				pvt.$idCnt = 0;
 				pvt.subscribers = {}; 		// все базы-подписчики
-				pvt.tranCounter = 0;		// счетчик транзакции
+				//pvt.tranCounter = 0;		// счетчик транзакции
+				pvt.inTran = false;
 				if ("guid" in params)
 					pvt.guid = params.guid;
 				else
@@ -90,7 +91,7 @@ define(
 				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
-				
+								
 				/*
 				if (obj.getLog().getActive()) { 
 						var newObj=this._obj.getDB().serialize(obj);
@@ -105,6 +106,8 @@ define(
 				});				
 				
 			},
+			
+
 			
             /**
              * зарегистрировать объект в списке по гуидам
@@ -246,16 +249,13 @@ define(
 				// TODO проверить что база подписана на базу
 				var rg = [];
 				var res = [];
-				//var g1 = false;
 				if (Array.isArray(rootGuids))				
 					rg = rootGuids;
 				else {
 					if ((rootGuids == "res") || (rootGuids == "data") || (rootGuids == "all")) 
 						rg = this.getRootGuids(rootGuids);
-					else {
-						rg.push(rootGuids);
-						//g1=true;
-					}						
+					else 
+						rg.push(rootGuids);					
 				}	
 				var obj = null;
 				
@@ -280,11 +280,7 @@ define(
 				}
 				// TODO ВАЖНО! нужно сделать рассылку только для данного корневого объекта - оптимизировать потом!!!!
 				this.pvt.controller.genDeltas(this.getGuid());	
-				return res;
-				/*if (g1)
-					return res[0];
-				else
-					return res;	*/		
+				return res;	
 			},
 
 			
@@ -323,16 +319,15 @@ define(
 			},
 
             /**
-             * ----создать подписанный корневой объект (временный вариант)
              * десериализация в объект
              * @param {object} sobj - объект который нужно десериализовать
-			 * @param {object} parent - родительский "объект" - либо parent.db для корневых либо parent.obj, parent.colName
+			 * @param {object} parent - родительский "объект" - parent.obj, parent.colName для некорневых либо {} для корня, rtype: "res"|"data"
 			 * @callback cb - вызов функции, которая выполняет доп.действия после создания объекта
              * @returns {*}
              */
 			deserialize: function(sobj,parent,cb) {
 				function ideser(that,sobj,parent) {
-					
+					if (!("obj" in parent)) parent.db = that;
 					switch (sobj.$sys.typeGuid) {
 						case metaObjFieldsGuid:
 							var o = new MemMetaObjFields(parent,sobj);
@@ -353,10 +348,12 @@ define(
 							//if ("db" in parent) parent.nolog=true;
 							if (!("obj" in parent)) { // вместо верхней строки, теперь db не нужно передавать сюда
 								parent.nolog = true; 
-								parent.db = that;
+								//parent.db = that;
 							}
 							o = new MemObj( typeObj,parent,sobj);
-							if (cb!==undefined) cb(o);
+							if (typeObj) 
+								if ((typeObj.getRtype() == "res") && (cb!=undefined)) cb(o);				
+							//if ((parent.rtype == "res") &&(cb!==undefined)) cb(o);
 							break;						
 					}
 					for (var cn in sobj.collections) {
@@ -366,11 +363,62 @@ define(
 					return o;
 				};
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	
+				
+				//this.getCurrentVersion(); // пока из-за этого не работает!
+				
 				if ("obj" in parent) parent.obj.getLog().setActive(false); // отключить лог на время десериализации
 				var res = ideser(this,sobj,parent);
-				//if ("obj" in parent) 
 				res.getLog().setActive(true);
+				// TODO - запомнить "сериализованный" объект (или еще раз запустить сериализацию?)
 				return res; 
+			},
+
+            /**
+             * добавить корневые объекты путем десериализации
+             * @param {array} sobjs - массив объектов которые нужно десериализовать
+			 * @param rtype - res | data
+			 * @callback cb - вызов функции, которая выполняет доп.действия после создания каждого объекта
+             * @returns {*}
+             */
+			// ДОЛЖНА РАБОТАТЬ ТОЛЬКО ДЛЯ МАСТЕР БАЗЫ - СЛЕЙВ НЕ МОЖЕТ ДОБАВИТЬ В СЕБЯ РУТ, МОЖЕТ ТОЛЬКО ПОДПИСАТЬСЯ НА РУТ МАСТЕРА!
+			addRoots: function(sobjs, cb) {
+				var res = [];
+				
+				this.getCurrentVersion();
+				
+				if (!cb) {
+					cb = this.getController().getDefaultCompCallback();
+				}
+				
+				for (var i = 0; i<sobjs.length; i++) {
+					var croot = this.deserialize(sobjs[i], { }, cb);
+					
+					// добавить в лог новый корневой объект, который можно вернуть в виде дельты
+					var serializedObj=this.serialize(croot); // TODO по идее можно взять sobjs[i], но при десериализации могут добавляться гуиды
+					var o = { adObj: serializedObj, obj:croot, type:"newRoot"};
+					croot.getLog().add(o);
+					
+					res.push(croot); 
+				}
+				
+				// форсированная подписка
+				var allSubs = this.getSubscribers();
+				for (var guid in allSubs) {
+					var subscriber = allSubs[guid];
+					if (subscriber.kind == 'remote') {
+						this.pvt.rcoll[croot.getGuid()].subscribers[subscriber.guid] = subscriber; //subProxy;
+					}							
+				}
+							
+				// 						
+				
+				if (!this.inTran()) { // автоматом "закрыть" транзакцию (VALID VERSION = DRAFT VERSION)				
+					this.setVersion("valid",this.getVersion());			// сразу подтверждаем изменения в мастере (вне транзакции)				
+					this.getController().genDeltas(this.getGuid());		// рассылаем дельты
+				}
+				console.log("SERVER VERSION " + this.getVersion());
+				
+				return res;
 			},
 						
             /**
@@ -403,23 +451,48 @@ define(
 					default: return this.pvt.version;
 				}				
 			},
-			
-			newVersion: function(verType,val) {
-				if (val == undefined) var vinc=1;
-				else vinc=val;
-				switch (verType) {
-					case "sent": this.pvt.sentVersion+=vinc; break;
-					case "valid": this.pvt.validVersion+=vinc; break;
-					default: this.pvt.version+=vinc; break;
-				}	
-			},
-			
+
 			setVersion: function(verType,val) {
 				switch (verType) {
-					case "sent": this.pvt.sentVersion=val; break;
-					case "valid": this.pvt.validVersion=val; break;
-					default: this.pvt.version=val; break;
+					case "sent":
+						if (/*(val>=this.pvt.validVersion) && */(val<=this.pvt.version)) this.pvt.sentVersion=val;
+						else {
+							console.log("*** sent setversion error");
+							console.log("VALID:"+this.getVersion("valid")+"draft:"+this.getVersion()+"sent:"+this.getVersion("sent"));
+						}
+					
+						break;
+					case "valid": 
+						this.pvt.validVersion=val;
+						/*if ((val<=this.pvt.sentVersion) && (val<=this.pvt.version)) this.pvt.validVersion=val; 
+						else {
+							console.log("*** valid setversion error");
+							console.log("VALID:"+this.getVersion("valid")+"draft:"+this.getVersion()+"sent:"+this.getVersion("sent"));
+						}*/
+						//if (this.pvt.sentVersion<this.pvt.validVersion) this.pvt.sentVersion = this.pvt.validVersion; - на сервере может быть <
+						if (this.pvt.version<this.pvt.validVersion) this.pvt.version = this.pvt.validVersion;
+						break;
+					default: 
+						if ((val>=this.pvt.validVersion) && (val>=this.pvt.sentVersion)) this.pvt.version=val; 
+						else {
+							console.log("*** draft setversion error");
+							console.log("VALID:"+this.getVersion("valid")+"draft:"+this.getVersion()+"sent:"+this.getVersion("sent"));
+						}
+						break;
 				}	
+			},
+
+			// вернуть "текущую" версию, которой маркируются изменения в логах
+			getCurrentVersion: function() {
+			
+				var sver = this.getVersion("sent");
+				var ver = this.getVersion();
+				if (ver==sver) this.setVersion("draft",this.getVersion()+1); //newVersion();
+				return this.getVersion();			
+			},
+			
+			inTran: function() {
+				return this.pvt.inTran;
 			},
 
             /**
@@ -485,6 +558,15 @@ define(
 				return this.pvt.counter++;
 			},
 			
+
+            /**
+             * вернуть подписчиков на БД
+             * @returns {object}
+             */			
+			getSubscribers: function() {
+				return this.pvt.subscribers;		
+			},
+			
             /**
              * полуить объект по его гуиду
              * @param {string} guid
@@ -519,8 +601,8 @@ define(
 				for (var i=0; i<this.countRoot(); i++)
 					this.getRoot(i).obj.getLog().undo(version);	
 
-				this.setVersion("draft",version);
 				if (this.getVersion("sent")>version) this.setVersion("sent",version);
+				this.setVersion("draft",version); 
 				return true;
 			},
 			
@@ -534,15 +616,16 @@ define(
 				for (var i=0; i<this.countRoot(); i++) {
 					var d=this.getRoot(i).obj.getLog().genDelta();
 					if (d!=null) {
-						d.tran = this.pvt.tranCounter;
+						//d.tran = this.pvt.tranCounter;
 						allDeltas.push(d);
 					}
 						//allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
 				}
 				
-				if (allDeltas.length>0) {
-					this.pvt.tranCounter++;
-					allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции
+				if ((allDeltas.length>0) || (this.isMaster() && this.getVersion("valid")!=this.getVersion("sent"))) {
+					//this.pvt.tranCounter++;
+					allDeltas.push( { last: 1, dbValVersion: this.getVersion("valid"),dbVersion:this.getVersion()  });
+					//allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции
 				}
 				
 				return allDeltas;

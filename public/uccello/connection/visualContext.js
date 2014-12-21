@@ -21,7 +21,8 @@ define(
 			className: "Interfvc",
 			classGuid: "ed318f95-fc97-be3f-d54c-1ad707f0996c",
 
-			loadQuery: "function"
+			loadNewRoots: "function",
+			loadRoot: "function"
 		}
 					 
         var VisualContext = AComponent.extend(/** @lends module:VisualContext.VisualContext.prototype */{
@@ -61,27 +62,28 @@ define(
 						var rootGuid = obj.getRoot().getGuid();
 						if (!(that.pvt.cmgs[rootGuid]))
 							that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid);
-						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);
-						//that.dataBase(that.getDB().getGuid());
-						//if (cb !== undefined && (typeof cb == "function")) cb();
+						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);						
+						controller.setDefaultCompCallback(createCompCallback); 
 					}
 					 
-                //var result = this.createDb(cm.getDB().getController(), {name: "Master", kind: "master"});
 				if (this.kind()=="master") { // главная (master)
 				
 					if (params.rpc) {
 						params.rpc._publ(this, Interfvc);
 						this.pvt.proxyContext = params.rpc.getProxy(this.getGuid()).proxy;
 					}
+					this.pvt.vcproxy = params.rpc._publ(this, this.getInterface());
 					var params2 = {name: "VisualContextDB", kind: "master", cbfinal:cb};
 					if (createCompCallback)
 						params2.compcb = createCompCallback;
 					this.pvt.db = this.createDb(controller,params2);
+					var roots = [controller.guid(), controller.guid()]; // TODO убрать потом
+					this.loadNewRoots(roots, { rtype: "res", compcb: params2.compcb},params2.cbfinal);
 					this.dataBase(this.pvt.db.getGuid());
-					
-					//if (cb !== undefined && (typeof cb == "function")) cb();
 				}
 				else { // подписка (slave)
+				
+					this.pvt.vcproxy = params.rpc._publProxy(params.vc, params.socket,this.getInterface());
 					
 					if (params.rpc) {
 						params.rpc._publProxy(params.vc, params.socket, Interfvc); // публикуем как прокси - гуид уникален?
@@ -107,39 +109,59 @@ define(
              */
              createDb: function(dbc, options){
                 var db = dbc.newDataBase(options);
-                var roots = [dbc.guid(), dbc.guid()]; // TODO убрать потом
+                
 				// meta
-				var cm = new ControlMgr(db, roots[0]);
+				var cm = new ControlMgr(db, null /*roots[0]*/);
 				new AComponent(cm); new AControl(cm); new AContainer(cm);
 				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
 				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm);
 				// data
 				new DataRoot(cm);	new DataContact(cm);
-				
-				this.pvt.proxyServer.loadResources(roots, function(r) {
-					var rootGuids = [];
-					//if (!r) return;
-					//if (!r.resources) return;
-					for (var i=0; i<r.resources.length; i++) {
-						var res=db.deserialize(r.resources[i], {db: db}, options.compcb); 
-						rootGuids.push(res.getGuid());
-					}
-					
-					//var roots = db.getRootGuids("res");
-					if (options.cbfinal)
-							options.cbfinal(rootGuids); 			
-				});
-
-                /*for (var i=0; i<roots.length; i++) {
-					this.pvt.proxyServer.loadResource(roots[i], function(result) { 
-						var res=db.deserialize(result.resource, {db: db}, options.compcb); 
-						if (options.rootcb)
-							options.rootcb(res.getGuid()); 
-					}); 				
-                }*/
-				
-                return db;
+				return db;		
+              
             },
+			
+			// добавляем новый ресурс - мастер-слейв варианты
+			// params.rtype = "res" | "data"
+			// params.compcb - только в случае ресурсов (может использоваться дефолтный)
+			loadNewRoots: function(rootGuids,params, cb) {
+				var that = this;
+				if (this.kind()=="master") {
+				
+					function icb(r) {
+							var res = that.getDB().addRoots(r.resources, params.compcb);
+							if (cb) cb({guids:rootGuids});  
+					}
+								
+					if (params.rtype == "res") {
+						this.pvt.proxyServer.loadResources(rootGuids, icb);	
+						return "XXX";
+					}
+					if (params.rtype == "data") {
+						this.pvt.proxyServer.queryDatas(rootGuids, icb);
+						return "XXX";
+					}
+				}
+				else { // slave
+					// вызываем загрузку нового рута у мастера
+					// TODO compb на сервере не отрабатывает..
+					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype }, function(r) { if (cb) cb(r); });
+				}
+			},
+			
+			loadRoot: function(rootGuids, cb) {				
+				function innercb(result) {
+					var db = that.getDB();
+					var rootElem = db.deserialize(result.datas[0],{ });
+					if (cb !== undefined && (typeof cb == "function")) cb({ rootGuid: rootElem.getGuid() });
+				};
+			
+				var rg = []; // TODO временно вместо 1-го параметра (rootGuids)
+				var that = this;
+				rg.push(this.getDB().getController().guid());
+				this.pvt.proxyServer.queryDatas(rg,innercb);
+				return "XXX";
+			},
 			
             createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
@@ -189,6 +211,9 @@ define(
 				return this.pvt.cmgs[guid];
 			},
 			
+			getProxy: function() {
+				return this.pvt.vcproxy;
+			},
 			
             dataBase: function (value) {
                 return this._genericSetter("DataBase", value);
@@ -204,34 +229,8 @@ define(
 			
 			getInterface: function() {
 				return Interfvc;
-			},
+			}
 			
-			loadQuery: function(rootGuids, cb) {
-				return this.createDataTrees(rootGuids, cb);
-			},
-			
-			createDataTrees: function(rootGuids,cb) {
-			/*
-							var result = {};
-                var controller = this.pvt.controller;
-                var db = controller.getDB(data.dbGuid);
-                var rootGuid = controller.guid();
-                db.deserialize(this.loadQuery(rootGuid), {db: db});
-                controller.genDeltas(db.getGuid());
-                done({rootGuid:rootGuid});
-			*/
-				function innercb(result) {
-					var db = that.getDB();
-					var rootElem = db.deserialize(result.datas[0], {db: db});
-					if (cb !== undefined && (typeof cb == "function")) cb({ rootGuid: rootElem.getGuid() });
-				};
-			
-				var rg = []; // TODO временно вместо 1-го параметра (rootGuids)
-				var that = this;
-				rg.push(this.getDB().getController().guid());
-				this.pvt.proxyServer.queryDatas(rg,innercb);
-				return "XXX";
-			},
 
         });
 

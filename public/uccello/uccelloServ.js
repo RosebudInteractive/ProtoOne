@@ -5,8 +5,8 @@ if (typeof define !== 'function') {
 
 define(
     ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './connection/router', './connection/userSessionMgr',
-	'./system/rpc'],
-    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr, Rpc) {
+	'./system/rpc','./controls/controlMgr'],
+    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr, Rpc, ControlMgr) {
 	
 		var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
 	
@@ -77,6 +77,9 @@ define(
                     var result = {res:this.getUserMgr().loadRes(this.getUserMgr().getController().guid())};
                     done(result);
                 });
+				
+				//this.getRouter().add('createRootS', function() { return that.routerCreateRootS.apply(that, arguments); });
+
 
                 // запускаем вебсокетсервер
                 this.wss = new WebSocketServer.Server({port: options.port});
@@ -119,9 +122,27 @@ define(
 			getGuid: function() {
 				return guidServer;
 			},
+			/*
+			routerCreateRootS: function(data, done) {
+				var um =this.getUserMgr();
+                var controller = um.getController();
+                var db = controller.getDB(data.dbGuid);
+                var rootGuid = controller.guid();
+                var cm = new ControlMgr(db, rootGuid);
+				var r = this.loadResources([rootGuid]);
+				
+
+				db.addRoots(r.resources );
+				console.log("ADDROT");
+			
+                //db.deserialize(um.loadRes(rootGuid), {} );
+
+                //controller.genDeltas(db.getGuid());
+                done({rootGuid:rootGuid});
+            },*/
 
             /**
-             * Загрузить ресурсы по их гуидам
+             * Загрузить ресурсы по их гуидам - выдает сериализованные представления, которые затему нужно десериализовать в memDataBase
 			 * @param rootGuids - массив гуидов ресурсов
              * @returns {obj} - массив ресурсов в result.resources
              */
