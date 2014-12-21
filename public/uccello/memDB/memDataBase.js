@@ -615,12 +615,11 @@ define(
 				var allDeltas = [];
 				for (var i=0; i<this.countRoot(); i++) {
 					var d=this.getRoot(i).obj.getLog().genDelta();
-					if (d!=null) {
-						//d.tran = this.pvt.tranCounter;
+					if (d!=null) 
 						allDeltas.push(d);
-					}
-						//allDeltas.push({ rootGuid: this.getRoot(i).obj.getGuid(), content: d, tran: tranCounter });
 				}
+				if (this.isMaster())		// TODO закрывать транзакцию?	
+					this.setVersion("valid",this.getVersion());			// сразу подтверждаем изменения в мастере (вне транзакции)				
 				
 				if ((allDeltas.length>0) || (this.isMaster() && this.getVersion("valid")!=this.getVersion("sent"))) {
 					//this.pvt.tranCounter++;
