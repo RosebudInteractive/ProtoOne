@@ -6,12 +6,12 @@ if (typeof define !== 'function') {
 define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
-        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit', '../ProtoControls/grid',
+        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit', '../ProtoControls/grid', '../ProtoControls/dataset',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext',
         './dataman/dataContact', './dataman/dataRoot','./system/rpc'
     ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
-        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit, Grid,
+        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit, Grid, Dataset,
         User, Session, Connect, VisualContext,
         DataContact, DataRoot,Rpc
         ) {
@@ -44,6 +44,7 @@ define(
                     that.pvt.typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = DbNavigator;
                     that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
                     that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = Grid;
+                    that.pvt.typeGuids["3f3341c7-2f06-8d9d-4099-1075c158aeee"] = Dataset;
 
                     that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
                     that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;

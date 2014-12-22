@@ -124,16 +124,28 @@ define(
                         "Children": [
                             {
                                 "$sys": {
+                                    "guid": "a942f6e8-a2a5-285f-ea5e-f5571b67a8ac",
+                                    "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                },
+                                "fields": {
+                                    "Id": 122,
+                                    "Name": "Dataset"
+                                },
+                                "collections": {}
+                            },
+                            {
+                                "$sys": {
                                     "guid": dbc.guid(),
                                     "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                                 },
                                 "fields": {
                                     "Id": 22,
                                     "Name": "Grid",
-                                    "Top": "107",
-                                    "Left": "230",
-                                    "Width":500,
-                                    "Height":100
+                                    "Top": "67",
+                                    "Left": "330",
+                                    "Width":700,
+                                    "Height":100,
+                                    "Dataset":"a942f6e8-a2a5-285f-ea5e-f5571b67a8ac"
                                 },
                                 "collections": {}
                             },
@@ -204,7 +216,7 @@ define(
                                     "Id": 100,
                                     "Name": "Container2",
                                     "Width":500,
-                                    "Height":100,
+                                    "Height":50,
                                     "Top": "5",
                                     "Left": "230"
                                 },

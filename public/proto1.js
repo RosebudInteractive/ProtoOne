@@ -14,8 +14,8 @@ var uccelloClt = null;
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/uccelloClt', './uccello/controls/controlMgr' ],
-        function(UccelloClt, ControlMgr){
+        ['./uccello/uccelloClt', './uccello/controls/controlMgr', './ProtoControls/dataset' ],
+        function(UccelloClt, ControlMgr, Dataset){
 
             var that = this;
 			this.tabCount = 0;
@@ -246,7 +246,14 @@ $(document).ready( function() {
              */
             window.loadQuery = function(){
                 if (!that.currContext) return;
-				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data"});
+				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data"}, function(result){
+                    var cm = uccelloClt.getContextCM(that.currRoot);
+                    var db = cm.getDB();
+                    if (result.guids.length>0) {
+                        var dataset = cm.getByGuid('a942f6e8-a2a5-285f-ea5e-f5571b67a8ac');
+                        dataset.root(result.guids[0]);
+                    }
+                });
             }
 
             /**

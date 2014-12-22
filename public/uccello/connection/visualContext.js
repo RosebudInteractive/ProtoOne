@@ -10,11 +10,11 @@ if (typeof define !== 'function') {
 define(
     ['../controls/aComponent', '../controls/aControl',
         '../../ProtoControls/container','../../ProtoControls/button','../../ProtoControls/edit',
-        '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/grid',
+        '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/grid','../../ProtoControls/dataset',
         '../dataman/dataRoot', '../dataman/dataContact',
         '../controls/controlMgr'],
     function(AComponent, AControl,
-             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, DataRoot, DataContact,
+             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, Dataset, DataRoot, DataContact,
              ControlMgr) {
 
         var Interfvc = {	
@@ -114,7 +114,7 @@ define(
 				var cm = new ControlMgr(db, null /*roots[0]*/);
 				new AComponent(cm); new AControl(cm); new AContainer(cm);
 				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
-				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm);
+				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm); new Dataset(cm);
 				// data
 				new DataRoot(cm);	new DataContact(cm);
 				return db;		
@@ -190,6 +190,10 @@ define(
 
                 // Grid
                 if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
                 }
 
                 new this.pvt.typeGuids[g](cm, params);

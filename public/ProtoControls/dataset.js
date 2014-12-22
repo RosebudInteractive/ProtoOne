@@ -6,11 +6,11 @@ if (typeof define !== 'function') {
 define(
     ['../uccello/controls/aControl'],
     function(AControl) {
-        var Grid = AControl.extend({
+        var Dataset = AControl.extend({
 
-            className: "Grid",
-            classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
-            metaFields: [ {fname: "Dataset", ftype: "string"} ],
+            className: "Dataset",
+            classGuid: "3f3341c7-2f06-8d9d-4099-1075c158aeee",
+            metaFields: [ {fname: "Root", ftype: "string"} ],
 
             /**
              * Инициализация объекта
@@ -22,11 +22,11 @@ define(
                 this.params = params;
             },
 
-            dataset: function (value) {
-                return this._genericSetter("Dataset", value);
+            root: function (value) {
+                return this._genericSetter("Root", value);
             }
 
         });
-        return Grid;
+        return Dataset;
     }
 );
