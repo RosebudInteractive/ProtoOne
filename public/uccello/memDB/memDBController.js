@@ -243,93 +243,6 @@ define(
                 }
             },
 
-			/*
-			// пока только 1 дельта!!!! НО с буферизацией
-            applyDeltas: function(dbGuid, srcDbGuid, delta) {
-			
-				console.log("incoming delta: ");
-				console.log(delta);
-                // находим рутовый объект к которому должна быть применена дельта
-                var db  = this.getDB(dbGuid);
-                //var root = db.getRoot(delta.rootGuid);
-				
-				var buf = this.pvt.bufdeltas;
-				
-				if (!(srcDbGuid in buf)) buf[srcDbGuid] = {};
-				if (!(dbGuid in buf[srcDbGuid])) buf[srcDbGuid][dbGuid] = {};
-				var cur = buf[srcDbGuid][dbGuid];
-				var tr = delta.tran.toString();
-				if (!(tr in cur)) cur[tr] = [];
-				cur[tr].push(delta);
-				
-				if (!("last" in delta)) return; // буферизовали и ждем последнюю, чтобы применить все сразу
-				
-				// TODO ничто не гарантирует, что транзакция закроется и что она будет выполняться в правильном порядке
-				// если мы хотим это контролировать нужно немного иначе организовать хранилище незавершенных транзакций (дельт)
-				
-				var lval = db.getVersion("valid");
-				var ldraft = db.getVersion();
-								
-				for (var i=0; i<cur[tr].length; i++) {
-					
-					var cdelta = cur[tr][i];
-					if ("last" in cdelta) {
-						if ((db.isMaster() == false) && (srcDBGuid == db.getProxyMaster().dbInfo.guid)) { // пришло с мастера
-
-							db.setVersion("valid",cdelta.dbValVersion);
-							if (cdelta.dbValVersion > db.getVersion())
-								db.setVersion("draft",cdelta.dbValVersion);
-							if (cdelta.dbValVersion > db.getVersion("sent"))
-								db.setVersion("sent",cdelta.dbValVersion);
-						}
-						else { // Master DataBase
-							db.setVersion("draft",cdelta.dbVersion);
-							db.setVersion("sent",cdelta.dbVersion);
-							db.setVersion("valid",cdelta.dbVersion);							
-						}
-						break; // последняя дельта
-					}
-					var root = db.getRoot(cdelta.rootGuid);
-					var dval = cdelta.dbVersion;
-
-					if (db.isMaster()) {
-						if (lval == dval - 1) {
-							//  на сервере сразу валидируется версия при изменениях.
-						}
-						else {
-							console.log("cannot sync server -  valid version:"+lval+"delta version:"+dval);
-							console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-							return;				
-						}				
-					}
-					else {
-						if (lval == dval - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
-							if (ldraft>lval) db.undo(lval);
-						}
-						else {
-							console.log("cannot sync client -  valid version:"+lval+"delta version:"+dval);
-							console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-							return;
-						}
-
-							// TODO подписчикам передать если  делать тему с N базами
-
-					}
-
-					root.obj.getLog().applyDelta(cdelta);
-					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-				}
-
-				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]); //deltas);
-				
-				delete cur[tr];
-
-                this.event.fire({
-                    type: 'applyDeltas',
-                    target: this
-                });
-            },
-*/
 			// пока только 1 дельта!!!! НО с буферизацией
             applyDeltas: function(dbGuid, srcDbGuid, delta) {
 			
@@ -387,8 +300,10 @@ define(
 					var cdelta = cur[tr][i];
 					if ("last" in cdelta) { // последняя дельта транзакции
 						if ((db.isMaster() == false) && (srcDbGuid == db.getProxyMaster().guid)) { // пришло с мастера
-							db.setVersion("valid",cdelta.dbValVersion);
-							db.setVersion("sent",cdelta.dbVersion);
+						
+							db.setVersion("valid",cdelta.dbVersion);
+							//db.setVersion("draft",cdelta.dbVersion);
+							db.setVersion("sent",cdelta.dbVersion);							
 						}
 						else { // Master DataBase
 							db.setVersion("valid",cdelta.dbVersion);	

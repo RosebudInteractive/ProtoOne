@@ -623,7 +623,7 @@ define(
 				
 				if ((allDeltas.length>0) || (this.isMaster() && this.getVersion("valid")!=this.getVersion("sent"))) {
 					//this.pvt.tranCounter++;
-					allDeltas.push( { last: 1, dbValVersion: this.getVersion("valid"),dbVersion:this.getVersion()  });
+					allDeltas.push( { last: 1, /*dbValVersion: this.getVersion("valid"),*/dbVersion:this.getVersion()  });
 					//allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции
 				}
 				
