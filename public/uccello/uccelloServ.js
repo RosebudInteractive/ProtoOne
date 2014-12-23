@@ -90,20 +90,20 @@ define(
                         side: 'server',
                         connectId: that._connectId,
                         close: function(event, connectId) { // при закрытии коннекта
-                            var connect = that.getUserMgr().getConnect(that._connectId);
+                            var connect = that.getUserMgr().getConnect(connectId);
                             if (connect)
                                 connect.closeConnect();
-                            console.log("отключился клиент: " + that._connectId);
+                            console.log("отключился клиент: " + connectId);
                         },
                         router: function(data, connectId, socket, done) {
-                            console.log('сообщение с клиента '+that._connectId+':', data);
+                            console.log('сообщение с клиента '+connectId+':', data);
 
                             // логирование входящих запросов
                             that.pvt.logger.addLog(data);
 
                             // обработчик
-                            data.connect = that.getUserMgr().getConnect(that._connectId);
-                            data.connectId = that._connectId;
+                            data.connect = that.getUserMgr().getConnect(connectId);
+                            data.connectId = connectId; //that._connectId;
                             data.socket = socket;
                             that.getRouter().exec(data, done);
                         }

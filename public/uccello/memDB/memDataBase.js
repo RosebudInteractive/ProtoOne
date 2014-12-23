@@ -204,6 +204,8 @@ define(
 			onSubscribe: function(proxy) {
 				//var g = (proxy.db) ? proxy.dataBase.getGuid() : proxy.guid;
 				this.pvt.subscribers[proxy.guid] = proxy;
+				console.log(this.getGuid());
+				this.prtSub(this.pvt);
 			},
 
             /**
@@ -266,21 +268,30 @@ define(
 
 				//if (!obj) return null;
 				
-					// добавляем подписчика
-					var subProxy = this.pvt.subscribers[dbGuid];
-					if (subProxy) {
-						var clog = obj.getLog();
-						if (!clog.getActive()) clog.setActive(true); // если лог неактивен, то активировать, чтобы записывать в него все изменения
+				// добавляем подписчика
+				var subProxy = this.pvt.subscribers[dbGuid];
+				if (subProxy) {
+					var clog = obj.getLog();
+					if (!clog.getActive()) clog.setActive(true); // если лог неактивен, то активировать, чтобы записывать в него все изменения
 
-						this.pvt.rcoll[rg[i]].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
-						res.push(this.serialize(obj));
-						}
+					this.pvt.rcoll[rg[i]].subscribers[dbGuid] = subProxy;  // TODO из списка общих подписчиков
+					res.push(this.serialize(obj));
+					//this.prtSub(this.pvt.rcoll[rg[i]]);
+					//this.prtSub(this.pvt);
+					}
 					//else 
 					//	return null;
 				}
 				// TODO ВАЖНО! нужно сделать рассылку только для данного корневого объекта - оптимизировать потом!!!!
 				this.pvt.controller.genDeltas(this.getGuid());	
 				return res;	
+			},
+			
+			prtSub: function(root) {
+				console.log("***");
+				for (var guid  in root.subscribers) {
+					console.log(guid+"  "+root.subscribers[guid].connect.name());
+				}
 			},
 
 			
@@ -383,6 +394,7 @@ define(
 			// ДОЛЖНА РАБОТАТЬ ТОЛЬКО ДЛЯ МАСТЕР БАЗЫ - СЛЕЙВ НЕ МОЖЕТ ДОБАВИТЬ В СЕБЯ РУТ, МОЖЕТ ТОЛЬКО ПОДПИСАТЬСЯ НА РУТ МАСТЕРА!
 			addRoots: function(sobjs, cb) {
 				var res = [];
+				console.log("ADD ROOTS " + this.getGuid());
 				
 				this.getCurrentVersion();
 				
@@ -407,8 +419,11 @@ define(
 					var subscriber = allSubs[guid];
 					if (subscriber.kind == 'remote') {
 						this.pvt.rcoll[croot.getGuid()].subscribers[subscriber.guid] = subscriber; //subProxy;
+
 					}							
 				}
+						//console.log("----------");
+						//this.prtSub(this.pvt.rcoll[croot.getGuid()]);
 							
 				// 						
 				
