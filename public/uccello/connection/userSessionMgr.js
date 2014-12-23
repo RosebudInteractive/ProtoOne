@@ -111,6 +111,8 @@ define(
              */
             loadRes: function (guidRoot) {
                 var dbc = this.dbcsys;
+				var datasetGuid = dbc.guid();
+				console.log("datasetGuid "+ datasetGuid);
                 var hehe = {
                     "$sys": {
                         "guid": guidRoot,
@@ -124,7 +126,7 @@ define(
                         "Children": [
                             {
                                 "$sys": {
-                                    "guid": "a942f6e8-a2a5-285f-ea5e-f5571b67a8ac",
+                                    "guid": datasetGuid,
                                     "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                                 },
                                 "fields": {
@@ -145,7 +147,7 @@ define(
                                     "Left": "330",
                                     "Width":700,
                                     "Height":100,
-                                    "Dataset":"a942f6e8-a2a5-285f-ea5e-f5571b67a8ac"
+                                    "Dataset":datasetGuid
                                 },
                                 "collections": {}
                             },

@@ -238,6 +238,7 @@ $(document).ready( function() {
                     that.rootsGuids.push(result.guids[0]); 
 					that.createTab(result.guids[0]);
 					renderControls(null, result.guids[0]);
+					
 				});
             }
 
@@ -250,8 +251,10 @@ $(document).ready( function() {
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
                     if (result.guids.length>0) {
-                        var dataset = cm.getByGuid('a942f6e8-a2a5-285f-ea5e-f5571b67a8ac');
+                        var dataset = cm.getByName("Dataset"); //'a942f6e8-a2a5-285f-ea5e-f5571b67a8ac');
                         dataset.root(result.guids[0]);
+						console.log("dataset: "+ dataset.getGuid());
+						sendDeltas(false);
                     }
                 });
             }

@@ -397,7 +397,7 @@ define(
 												
 						for(guid in root.subscribers) {
 							subscriber = root.subscribers[guid];
-							console.log('subscriber', subscriber);
+							//console.log('subscriber', subscriber);
 							// удаленные
 							if (subscriber.kind == 'remote' && srcDbGuid != guid) {
 								subscriber.connect.send({action:"sendDelta", delta:delta, dbGuid:subscriber.guid, srcDbGuid: db.getGuid()});

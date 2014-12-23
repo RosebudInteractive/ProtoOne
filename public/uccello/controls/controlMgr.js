@@ -17,6 +17,7 @@ define(
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
+				this.pvt.compByName = {};
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
 				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
@@ -48,6 +49,8 @@ define(
 			add: function(component) {
 				this.pvt.compByLid[component.getLid()] = component;
 				this.pvt.compByGuid[component.getGuid()] = component;
+				if (component.name())
+					this.pvt.compByName[component.name()] = component;
 			},
 
 
@@ -101,6 +104,10 @@ define(
 			
 			get: function(guid) {
 				return this.pvt.compByGuid[guid];
+			},
+			
+			getByName: function(name) {
+				return this.pvt.compByName[name];
 			},
 
             /**
