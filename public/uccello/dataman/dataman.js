@@ -21,7 +21,7 @@ define(
                 var controller = this.pvt.controller;
                 var db = controller.getDB(data.dbGuid);
                 var rootGuid = controller.guid();
-                db.deserialize(this.loadQuery(rootGuid, data.what), {});
+                db.deserialize(this.loadQuery(rootGuid, data.dataType), {});
                 controller.genDeltas(db.getGuid());
                 done({rootGuid:rootGuid});
             },
