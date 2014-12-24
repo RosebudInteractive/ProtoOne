@@ -4,8 +4,8 @@
 }
 
 define(
-	['../controls/controlMgr',  './dataRoot', './dataContact'],
-	function(ControlMgr, DataRoot, DataContact) {
+	['../controls/controlMgr',  './dataRoot', './dataContact', './dataCompany'],
+	function(ControlMgr, DataRoot, DataContact, DataCompany) {
 		var Dataman = Class.extend({
 
 			init: function(router, controller){
@@ -21,7 +21,7 @@ define(
                 var controller = this.pvt.controller;
                 var db = controller.getDB(data.dbGuid);
                 var rootGuid = controller.guid();
-                db.deserialize(this.loadQuery(rootGuid), {});
+                db.deserialize(this.loadQuery(rootGuid, data.what), {});
                 controller.genDeltas(db.getGuid());
                 done({rootGuid:rootGuid});
             },
@@ -31,7 +31,65 @@ define(
              * @param guidRoot
              * @returns {obj}
              */
-            loadQuery: function (guidRoot) {
+            loadQuery: function (guidRoot, dataType) {
+                if (dataType == 'company')
+                    var hehe = {
+                        "$sys": {
+                            "guid": guidRoot,
+                            "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
+                        },
+                        "fields": {
+                            "Id": 1000,
+                            "Name": "DataRoot"
+                        },
+                        "collections": {
+                            "DataElements": [
+                                {
+                                    "$sys": {
+                                        "guid": "58b8c701-6683-dcbf-a0bc-3a07c140cc86",
+                                        "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
+                                    },
+                                    "fields": {
+                                        "Id": 1003,
+                                        "Name": "Microsoft",
+                                        "country": "США",
+                                        "city": "Редмонд",
+                                        "address": "Вашингтон"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "ba6e2d2c-85a7-01df-b3c3-32682387f535",
+                                        "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
+                                    },
+                                    "fields": {
+                                        "Id": 1004,
+                                        "Name": "Google",
+                                        "country": "США",
+                                        "city": "CA",
+                                        "address": "Mountain View"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "486c0238-4fb9-32e2-23e1-0d7331731691",
+                                        "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
+                                    },
+                                    "fields": {
+                                        "Id": 1005,
+                                        "Name": "SAS",
+                                        "country": "США",
+                                        "city": "NC",
+                                        "address": "Cary"
+                                    },
+                                    "collections": {}
+                                }
+                            ]
+                        }
+                    };
+                else
                 var hehe = {
                     "$sys": {
                         "guid": guidRoot,
@@ -65,7 +123,7 @@ define(
                                     "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
                                 },
                                 "fields": {
-                                    "Id": 1001,
+                                    "Id": 1002,
                                     "firstname": "Джеффри",
                                     "lastname": "Раш",
                                     "birthdate": "06-07-1951",
@@ -81,7 +139,7 @@ define(
                                     "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
                                 },
                                 "fields": {
-                                    "Id": 1001,
+                                    "Id": 1003,
                                     "firstname": "Орландо",
                                     "lastname": "Блум",
                                     "birthdate": "13-01-1977",

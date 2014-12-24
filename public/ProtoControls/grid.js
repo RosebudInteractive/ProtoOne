@@ -10,7 +10,7 @@ define(
 
             className: "Grid",
             classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
-            metaFields: [ {fname: "Dataset", ftype: "string"} ],
+            metaFields: [ {fname: "Dataset", ftype: "string"}, {fname: "Cursor", ftype: "string"} ],
 
             /**
              * Инициализация объекта
@@ -24,6 +24,10 @@ define(
 
             dataset: function (value) {
                 return this._genericSetter("Dataset", value);
+            },
+
+            cursor: function (value) {
+                return this._genericSetter("Cursor", value);
             }
 
         });

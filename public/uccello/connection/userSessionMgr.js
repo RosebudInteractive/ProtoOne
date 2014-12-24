@@ -147,7 +147,7 @@ define(
                                     "Top": "67",
                                     "Left": "330",
                                     "Width":700,
-                                    "Height":100,
+                                    "Height":160,
                                     "Dataset":datasetGuid
                                 },
                                 "collections": {}

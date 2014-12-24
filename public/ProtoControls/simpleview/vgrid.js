@@ -36,22 +36,46 @@ define(
                 // header
                 var row = $(vGrid._templates['row']);
                 var obj = col.get(0);
+                var idIndex = null;
                 for (var i = 0, len = obj.count(); i < len; i++) {
+                    var name = obj.getFieldName(i);
+                    if (name == 'Id')
+                        idIndex = i;
                     var cell = $(vGrid._templates['header']).html(obj.getFieldName(i));
                     row.append(cell);
                 }
                 table.append(row);
 
                 // rows
-                var row = $(vGrid._templates['row']);
+                var cursor = that.cursor();
                 for (var i = 0, len = col.count(); i < len; i++) {
                     var obj = col.get(i);
+                    var id = null;
                     var row = $(vGrid._templates['row']);
+
+                    // добавляем ячейка
                     for (var j = 0, len2 = obj.count(); j < len2; j++) {
                         var text = obj.get(j);
                         var cell = $(vGrid._templates['cell']).html(text? text: '&nbsp;');
                         row.append(cell);
+                        if (idIndex == j)
+                            id = text;
                     }
+
+                    // клик на строку
+                    (function(row, id) {
+                        row.click(function(){
+                            $(this).parent().find('.row.active').removeClass('active');
+                            $(this).addClass('active');
+                            that.cursor(id);
+                            db.getController().genDeltas(db.getGuid());
+                        });
+                    })(row, id);
+
+                    // выделяем текущий курсор
+                    if (cursor == id)
+                        $(row).addClass('active');
+
                     table.append(row);
                 }
             }

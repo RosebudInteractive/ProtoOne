@@ -11,10 +11,10 @@ define(
     ['../controls/aComponent', '../controls/aControl',
         '../../ProtoControls/container','../../ProtoControls/button','../../ProtoControls/edit',
         '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/grid','../../ProtoControls/dataset',
-        '../dataman/dataRoot', '../dataman/dataContact',
+        '../dataman/dataRoot', '../dataman/dataContact','../dataman/dataCompany',
         '../controls/controlMgr'],
     function(AComponent, AControl,
-             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, Dataset, DataRoot, DataContact,
+             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, Dataset, DataRoot, DataContact, DataCompany,
              ControlMgr) {
 
         var Interfvc = {	
@@ -116,7 +116,7 @@ define(
 				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
 				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm); new Dataset(cm);
 				// data
-				new DataRoot(cm);	new DataContact(cm);
+				new DataRoot(cm);	new DataContact(cm);new DataCompany(cm);
 				return db;		
               
             },
@@ -138,14 +138,14 @@ define(
 						return "XXX";
 					}
 					if (params.rtype == "data") {
-						this.pvt.proxyServer.queryDatas(rootGuids, icb);
+						this.pvt.proxyServer.queryDatas(rootGuids, params.dataType, icb);
 						return "XXX";
 					}
 				}
 				else { // slave
 					// вызываем загрузку нового рута у мастера
 					// TODO compb на сервере не отрабатывает..
-					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype }, function(r) { if (cb) cb(r); });
+					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype, "dataType": params.dataType }, function(r) { if (cb) cb(r); });
 				}
 			},
 			
@@ -159,7 +159,8 @@ define(
 				var rg = []; // TODO временно вместо 1-го параметра (rootGuids)
 				var that = this;
 				rg.push(this.getDB().getController().guid());
-				this.pvt.proxyServer.queryDatas(rg,innercb);
+                console.log('this.pvt.proxyServer.queryDatas(rg,innercb);', result);
+				this.pvt.proxyServer.queryDatas(rg,'',innercb);
 				return "XXX";
 			},
 			

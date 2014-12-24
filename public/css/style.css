@@ -73,8 +73,9 @@ p {padding:0;margin: 4px 0;}
 .grid .row .cell:last-child {border-right:1px solid  #666666;}
 .grid:last-child .row:last-child .cell {border-bottom:0;}
 .grid .row{display:table-row;width:auto;clear:both;}
-.grid .cell{font-size:11px;display:table-cell;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:10px;float:left;overflow: hidden;}
-.grid .header{font-weight:bold;font-size:12px;display:table-caption;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:10px;border-top:1px solid  #666666;float:left;}
+.grid .row.active{background-color: #333333; color:#ffffff;}
+.grid .cell{font-size:11px;display:table-cell;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:5px;float:left;overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}
+.grid .header{font-weight:bold;font-size:12px;display:table-caption;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:5px;border-top:1px solid  #666666;float:left;}
 
 #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
 #header {padding:10px;}

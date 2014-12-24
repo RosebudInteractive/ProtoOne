@@ -245,12 +245,12 @@ $(document).ready( function() {
             /**
              * Кнопка query
              */
-            window.loadQuery = function(){
+            window.loadQuery = function(dataType){
                 if (!that.currContext) return;
-				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data"}, function(result){
+				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data", dataType:dataType}, function(result){
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
-                    if (result.guids.length>0) {
+                    if (result.guids && result.guids.length>0) {
                         var dataset = cm.getByName("Dataset"); //'a942f6e8-a2a5-285f-ea5e-f5571b67a8ac');
                         dataset.root(result.guids[0]);
 						console.log("dataset: "+ dataset.getGuid());
