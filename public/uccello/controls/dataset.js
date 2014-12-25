@@ -4,8 +4,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['./aComponent'],
-    function(AComponent) {
+    ['./aComponent', '../system/event'],
+    function(AComponent,Event) {
         var Dataset = AComponent.extend({
 
             className: "Dataset",
@@ -20,10 +20,24 @@ define(
             init: function(cm, params) {
                 this._super(cm,params);
                 this.params = params;
+				
+				this.event = new Event();
+				
             },
 
             root: function (value) {
-                return this._genericSetter("Root", value);
+			
+				var oldVal = this._genericSetter("Root");
+				var newVal = this._genericSetter("Root", value);
+				
+				if (newVal!=oldVal) {
+				this.event.fire({
+                    type: 'refreshData',
+                    target: this				
+					});	
+				}
+			
+                return newVal;
             }
 
         });

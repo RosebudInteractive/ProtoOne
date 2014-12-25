@@ -255,6 +255,7 @@ $(document).ready( function() {
                         dataset.root(result.guids[0]);
 						console.log("dataset: "+ dataset.getGuid());
 						sendDeltas(false);
+						renderControls();
                     }
                 });
             }

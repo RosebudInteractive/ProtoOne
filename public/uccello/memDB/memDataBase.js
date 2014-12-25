@@ -91,15 +91,7 @@ define(
 				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
-								
-				/*
-				if (obj.getLog().getActive()) { 
-						var newObj=this._obj.getDB().serialize(obj);
-						var o = { adObj: newObj, obj:obj, colName: this._name, type:"add"};
-						this._obj.getLog().add(o);
-				}*/
 				
-
 				this.event.fire({
                     type: 'newRoot',
                     target: obj				

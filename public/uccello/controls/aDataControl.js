@@ -14,7 +14,33 @@ define(
 				
 			init: function(cm,params){
 				this._super(cm,params);
+				
+			},
+			
+			afterInit: function() {
+				this._subsDataSet();
+			},
+			
+			processDelta: function() {
+				var dsg = this.dataset(); 
+				if (dsg) {
+					var dso = this.getControlMgr().get(dsg).getObj();
+					if (dso.isFldModified("Root")) this._isRendered(false);
+				}
+					
+			},
+			
+			_subsDataSet: function() {
+				var dsg = this.dataset(); // TODO перенести это свойство в ДатаКонтрол
+				if (dsg) {
+					this.getControlMgr().get(dsg).event.on({
+						type: 'refreshData',
+						subscriber: this,
+						callback: function(){ this._isRendered(false); }
+					});
+				}
 			}
+			
 		});
 		return ADataControl;
 	}

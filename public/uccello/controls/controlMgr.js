@@ -18,6 +18,7 @@ define(
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
 				this.pvt.compByName = {};
+				this.pvt.afterInitFlag = false;
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
 				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
@@ -40,6 +41,15 @@ define(
                         callback: this.onDeleteComponent
                     });
                 }*/
+			},
+			
+			afterInit: function() {
+				var c = this.getRoot();
+
+				for (var g in this.pvt.compByGuid)
+					this.pvt.compByGuid[g].afterInit();
+					
+				this.pvt.afterInitFlag =true;
 			},
 
             /**
@@ -109,22 +119,31 @@ define(
 			getByName: function(name) {
 				return this.pvt.compByName[name];
 			},
+			
+			
+			processDelta: function() { // ВРЕМЕННЫЙ ВАРИАНТ
+				for (var g in this.pvt.compByGuid) this.pvt.compByGuid[g].processDelta(); 
+			},
 
             /**
 			 * Рендеринг компонентов интерфейса
 			 *  @param component - корневой элемент, с которого запускается рендеринг, если undef, то с корня
              */				
 			render: function(component, options) {
+			
+				if (!this.pvt.afterInitFlag) this.afterInit();
+				
+				this.processDelta();
+			
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;
 
-                //c._render();
                 for(var i in this.pvt.viewSets)
                 if (this.pvt.viewSets[i].enable())
                     this.pvt.viewSets[i].render(c, options);
 
 					
-				for (var g in this.pvt.compByGuid) { 
+				for (var g in this.pvt.compByGuid) { //TODO нужно это делать не для всех компонентов или рендерить всегда с рута
 					this.pvt.compByGuid[g].getObj().resetModifFldLog();	// обнуляем "измененные" поля в объектах 
 					this.pvt.compByGuid[g]._isRendered(true);			// выставляем флаг рендеринга
 				}
