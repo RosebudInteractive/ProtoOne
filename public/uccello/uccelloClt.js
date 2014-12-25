@@ -6,14 +6,16 @@ if (typeof define !== 'function') {
 define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
-        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit', '../ProtoControls/grid', '../ProtoControls/dataset',
+        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
+        '../ProtoControls/dataGrid', './controls/dataset', './controls/aDataControl',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext',
-        './dataman/dataContact', './dataman/dataCompany', './dataman/dataRoot','./system/rpc'
+        './dataman/dataContact', './dataman/dataCompany', './dataman/dataRoot', './system/rpc'
     ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
-        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit, Grid, Dataset,
+        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit,
+        DataGrid, Dataset, DataControl,
         User, Session, Connect, VisualContext,
-        DataContact, DataCompany, DataRoot,Rpc
+        DataContact, DataCompany, DataRoot, Rpc
         ) {
         var UccelloClt = Class.extend({
 
@@ -43,8 +45,6 @@ define(
                     that.pvt.typeGuids["a0e02c45-1600-6258-b17a-30a56301d7f1"] = PropEditor;
                     that.pvt.typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = DbNavigator;
                     that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
-                    that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = Grid;
-                    that.pvt.typeGuids["3f3341c7-2f06-8d9d-4099-1075c158aeee"] = Dataset;
 
                     that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
                     that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;
@@ -55,6 +55,9 @@ define(
                     that.pvt.typeGuids["73596fd8-6901-2f90-12d7-d1ba12bae8f4"] = DataContact;
                     that.pvt.typeGuids["59583572-20fa-1f58-8d3f-5114af0f2c51"] = DataCompany;
                     that.pvt.typeGuids["87510077-53d2-00b3-0032-f1245ab1b74d"] = DataRoot;
+                    that.pvt.typeGuids["b2c132fd-c6bc-b3c7-d149-27a926916216"] = DataControl;
+                    that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = DataGrid;
+                    that.pvt.typeGuids["3f3341c7-2f06-8d9d-4099-1075c158aeee"] = Dataset;
                     that.createController();
                     if (options.callback)
                         options.callback();

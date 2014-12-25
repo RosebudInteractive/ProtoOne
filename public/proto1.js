@@ -14,7 +14,7 @@ var uccelloClt = null;
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/uccelloClt', './uccello/controls/controlMgr', './ProtoControls/dataset' ],
+        ['./uccello/uccelloClt', './uccello/controls/controlMgr', './uccello/controls/dataset' ],
         function(UccelloClt, ControlMgr, Dataset){
 
             var that = this;

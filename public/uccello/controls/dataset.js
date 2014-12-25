@@ -1,32 +1,32 @@
-﻿if (typeof define !== 'function') {
+if (typeof define !== 'function') {
     var define = require('amdefine')(module);
     var Class = require('class.extend');
 }
 
-
-
 define(
-	['./aComponent'],
-	function(AComponent) {
-		var Dataset = AComponent.extend({
-		
-			className: "Dataset",
-			classGuid: "f116cb6e-cdbc-50f4-91d1-4dc3b48b0b59", // todo сгенерировать новый
-            metaFields: [ {fname:"Dataobject",ftype:"string"}, {fname:"Cursor",ftype:"number"}],
-				
-			init: function(cm,params){
-				this._super(cm,params);
-			},
+    ['./aComponent'],
+    function(AComponent) {
+        var Dataset = AComponent.extend({
 
-            dataobject: function(value) {
-                return this._genericSetter("Dataobject", value);
+            className: "Dataset",
+            classGuid: "3f3341c7-2f06-8d9d-4099-1075c158aeee",
+            metaFields: [ {fname: "Root", ftype: "string"} ],
+
+            /**
+             * Инициализация объекта
+             * @param cm на контрол менеджер
+             * @param guid гуид объекта
+             */
+            init: function(cm, params) {
+                this._super(cm,params);
+                this.params = params;
             },
-			
-			cursor: function(value) {
-				return this._genericSetter("Dataobject", value);
-			}
-			
-		});
-		return AControl;
-	}
+
+            root: function (value) {
+                return this._genericSetter("Root", value);
+            }
+
+        });
+        return Dataset;
+    }
 );

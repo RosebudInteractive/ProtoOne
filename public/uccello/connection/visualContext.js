@@ -10,12 +10,12 @@ if (typeof define !== 'function') {
 define(
     ['../controls/aComponent', '../controls/aControl',
         '../../ProtoControls/container','../../ProtoControls/button','../../ProtoControls/edit',
-        '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/grid','../../ProtoControls/dataset',
+        '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/dataGrid','../controls/dataset',
         '../dataman/dataRoot', '../dataman/dataContact','../dataman/dataCompany',
-        '../controls/controlMgr'],
+        '../controls/controlMgr', '../controls/aDataControl'],
     function(AComponent, AControl,
-             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, Grid, Dataset, DataRoot, DataContact, DataCompany,
-             ControlMgr) {
+             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, DataGrid, Dataset, DataRoot, DataContact, DataCompany,
+             ControlMgr, DataControl) {
 
         var Interfvc = {	
 			className: "Interfvc",
@@ -114,9 +114,9 @@ define(
 				var cm = new ControlMgr(db, null /*roots[0]*/);
 				new AComponent(cm); new AControl(cm); new AContainer(cm);
 				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
-				new PropEditor(cm); new DBNavigator(cm);	new Grid(cm); new Dataset(cm);
+				new PropEditor(cm); new DBNavigator(cm); new DataControl(cm); new DataGrid(cm); new Dataset(cm);
 				// data
-				new DataRoot(cm);	new DataContact(cm);new DataCompany(cm);
+                new DataRoot(cm);	new DataContact(cm);new DataCompany(cm);
 				return db;		
               
             },

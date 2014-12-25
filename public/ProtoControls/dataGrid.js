@@ -4,9 +4,9 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../uccello/controls/aControl'],
-    function(AControl) {
-        var Grid = AControl.extend({
+    ['../uccello/controls/aDataControl'],
+    function(ADataControl) {
+        var DataGrid = ADataControl.extend({
 
             className: "Grid",
             classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
@@ -31,6 +31,6 @@ define(
             }
 
         });
-        return Grid;
+        return DataGrid;
     }
 );
