@@ -10,7 +10,7 @@ define(
 		
 			className: "ADataControl",
 			classGuid: "b2c132fd-c6bc-b3c7-d149-27a926916216",
-            metaFields: [],
+            metaFields: [{fname: "Dataset", ftype: "string"}],
 				
 			init: function(cm,params){
 				this._super(cm,params);
@@ -39,9 +39,14 @@ define(
 						callback: function(){ this._isRendered(false); }
 					});
 				}
-			}
-			
-		});
+			},
+
+            dataset: function (value) {
+                return this._genericSetter("Dataset", value);
+            }
+
+
+        });
 		return ADataControl;
 	}
 );
