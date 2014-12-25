@@ -8,7 +8,7 @@ define(
     function(AControl) {
         var DBNavigator = AControl.extend({
 
-            className: "DBNavigator",
+            className: "DbNavigator",
             classGuid: "38aec981-30ae-ec1d-8f8f-5004958b4cfa",
             metaFields: [
                 {fname: "DataBase", ftype: "string"},
