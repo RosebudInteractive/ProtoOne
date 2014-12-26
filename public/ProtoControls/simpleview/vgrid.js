@@ -21,12 +21,16 @@ define(
                 table.empty();
             }
 
-            var rootElem = null;
             var cm = this.getControlMgr();
             var db = cm.getDB();
+            var rootElem = null;
+            var dataset = null;
             if (this.dataset()) {
-                rootElem = cm.getByGuid(this.dataset()).root();
-                rootElem = rootElem? db.getObj(rootElem): null;
+                dataset = cm.getByGuid(this.dataset());
+                if (dataset) {
+                    rootElem = dataset.root();
+                    rootElem = rootElem? db.getObj(rootElem): null;
+                }
             }
 
             if (rootElem)
@@ -47,7 +51,7 @@ define(
                 table.append(row);
 
                 // rows
-                var cursor = that.cursor();
+                var cursor = dataset.cursor();
                 for (var i = 0, len = col.count(); i < len; i++) {
                     var obj = col.get(i);
                     var id = null;
@@ -69,7 +73,9 @@ define(
                             that.getControlMgr().userEventHandler(that, function(){
                                 rowTr.parent().find('.row.active').removeClass('active');
                                 rowTr.addClass('active');
-                                that.cursor(id);
+                                that.getControlMgr().userEventHandler(that, function(){
+                                    dataset.cursor(id);
+                                });
                             });
                         });
                     })(row, id);

@@ -10,7 +10,7 @@ define(
 
             className: "Dataset",
             classGuid: "3f3341c7-2f06-8d9d-4099-1075c158aeee",
-            metaFields: [ {fname: "Root", ftype: "string"} ],
+            metaFields: [ {fname: "Root", ftype: "string"}, {fname: "Cursor", ftype: "string"} ],
 
             /**
              * Инициализация объекта
@@ -38,6 +38,10 @@ define(
 				}
 			
                 return newVal;
+            },
+
+            cursor: function (value) {
+                return this._genericSetter("Cursor", value);
             }
 
         });

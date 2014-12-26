@@ -10,7 +10,7 @@ define(
 
             className: "Grid",
             classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
-            metaFields: [ {fname: "Cursor", ftype: "string"} ],
+            metaFields: [ ],
 
             /**
              * Инициализация объекта
@@ -20,12 +20,7 @@ define(
             init: function(cm, params) {
                 this._super(cm,params);
                 this.params = params;
-            },
-
-            cursor: function (value) {
-                return this._genericSetter("Cursor", value);
             }
-
         });
         return DataGrid;
     }
