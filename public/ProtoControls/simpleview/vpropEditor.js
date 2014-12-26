@@ -139,19 +139,19 @@ define(
             var inputs = props.find('input');
             var comp = this.getControlMgr().getByGuid(editor.find('.controls').val());
             var parents = editor.find('.parents');
-
-            // свойства
-            for (var i = 0; i < inputs.length; i++) {
-                var propName = $(inputs[i]).attr('name');
-                var value = $(inputs[i]).val();
-                comp[propName.charAt(0).toLowerCase() + propName.slice(1)](value);
-            }
-
-            // родитель
-            this.getControlMgr().move(comp.getGuid(), parents.find('select').val());
+            var that = this;
 
             // отсылка дельт и рендер
-            this.getControlMgr().userEventHandler(this);
+            this.getControlMgr().userEventHandler(this, function(){
+                // свойства
+                for (var i = 0; i < inputs.length; i++) {
+                    var propName = $(inputs[i]).attr('name');
+                    var value = $(inputs[i]).val();
+                    comp[propName.charAt(0).toLowerCase() + propName.slice(1)](value);
+                }
+                // родитель
+                that.getControlMgr().move(comp.getGuid(), parents.find('select').val());
+            });
         }
 
         return vPropEditor;
