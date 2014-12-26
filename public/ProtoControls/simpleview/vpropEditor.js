@@ -13,8 +13,6 @@ define(
                 controls = $(vPropEditor._templates['controls']);
                 controls.change(function () {
                     vPropEditor.changeControl.apply(that, [$(this).val()]);
-                    // отсылка дельт и рендер
-                    that.getControlMgr().userEventHandler(that);
                 });
                 parents = $(vPropEditor._templates['parents']);
                 props = $(vPropEditor._templates['props']);
