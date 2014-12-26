@@ -117,9 +117,10 @@ define(
          * @param guid
          */
         vPropEditor.changeControl = function (guid) {
-            // устанавливаем новое значение выбраннного контрола
-            this.control(guid);
-			vPropEditor.renderProps.apply(this);
+            var that = this;
+            that.getControlMgr().userEventHandler(that, function(){
+                that.control(guid);
+            });
         }
 
         /**
