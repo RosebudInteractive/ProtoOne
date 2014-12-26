@@ -211,6 +211,7 @@ $(document).ready( function() {
 						renderControls(null, roots[i]);
 					}
 					that.currRoot = that.rootsGuids[0];
+                    that.setAutoSendDeltas(true);
 				});
             }
 			
@@ -225,6 +226,7 @@ $(document).ready( function() {
                 $($('.tabs-page')[i]).show();
                 that.resultForm = '#result'+i;
                 that.currRoot = that.rootsGuids[i];
+                that.setAutoSendDeltas(true);
             }
 
 
@@ -334,7 +336,16 @@ $(document).ready( function() {
             }
 
 
+            this.setAutoSendDeltas = function(check) {
+                var cm = uccelloClt.getContextCM(that.currRoot);
+                if (cm) {
+                    if (check)
+                        $('#autoSendDelta').prop('checked', cm.autoSendDeltas());
+                    else
+                        cm.autoSendDeltas($('#autoSendDelta').is(':checked'));
+                }
 
+            }
 
 
             // ----------------------------------------------------------------------------------------------------
@@ -373,6 +384,10 @@ $(document).ready( function() {
                     that.createTabs();
                     that.selectContext({guid: that.currContext, side: "server"});
                 });
+            });
+
+            $('#autoSendDelta').click(function(e){
+                  that.setAutoSendDeltas(false);
             });
 
             // ----------------------------------------------------------------------------------------------------
