@@ -12,7 +12,10 @@ define(
                 editor = $(vPropEditor._templates['propEditor']).attr('id', this.getLid());
                 controls = $(vPropEditor._templates['controls']);
                 controls.change(function () {
-                    vPropEditor.changeControl.apply(that, [$(this).val()]);
+                    var val = $(this).val();
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.control(val);
+                    });
                 });
                 parents = $(vPropEditor._templates['parents']);
                 props = $(vPropEditor._templates['props']);
@@ -22,9 +25,10 @@ define(
                 });
                 delbtn = $(vPropEditor._templates['delbtn']);
                 delbtn.click(function () {
-                    vPropEditor.delControl.apply(that, arguments);
-                    // отсылка дельт и рендер
-                    that.getControlMgr().userEventHandler(that);
+                    that.getControlMgr().userEventHandler(that, function () {
+                        var editor = $('#' + this.getLid());
+                        that.getControlMgr().del(editor.find('.controls').val());
+                    });
                 });
                 editor.append(controls);
                 editor.append(parents);
@@ -109,26 +113,6 @@ define(
                 props.append(p);
             }			
 		}
-
-        /**
-         * Изменение текущего контрола
-         * @param guid
-         */
-        vPropEditor.changeControl = function (guid) {
-            var that = this;
-            that.getControlMgr().userEventHandler(that, function(){
-                that.control(guid);
-            });
-        }
-
-        /**
-         * Удаление текущего контрола
-         * @param guid
-         */
-        vPropEditor.delControl = function () {
-            var editor = $('#' + this.getLid());
-            this.getControlMgr().del(editor.find('.controls').val());
-        }
 
         /**
          * Сохранить свойства
