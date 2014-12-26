@@ -19,9 +19,9 @@ define(
                 editor.find('.dragLeft').click(function () {
                     vDBNavigator.toChild.apply(that);
                 });
-                // перейти к чайлду
+                // рефреш
                 editor.find('.refresh').click(function () {
-                    vDBNavigator.render.apply(that);
+                    that.getControlMgr().userEventHandler(that);
                 });
 
                 var dbSelector = editor.find('.dbSelector');
@@ -34,8 +34,9 @@ define(
                     var val = $(this).val();
                     for(var i=0, len=that.params.dbSelector.length; i<len; i++) {
                         if (val == that.params.dbSelector[i].guid) {
-                            that.dataBase(val);
-                            vDBNavigator.render.apply(that);
+                            that.getControlMgr().userEventHandler(that, function () {
+                                that.dataBase(val);
+                            });
                             return;
                         }
                     }
@@ -91,9 +92,10 @@ define(
                             var a = $(this);
                             left.find('a').removeClass('active');
                             a.addClass('active');
-                            vDBNavigator.changeRootElem.apply(that, [a.data('obj')]);
-                            if (that.params.change)
-                                that.params.change();
+                            that.getControlMgr().userEventHandler(that, function(args){
+                                that.rootElem(args.obj.getGuid());
+                                vDBNavigator.selectItem.apply(that, [args.obj, 0]);
+                            }, {obj:a.data('obj')});
                             return false;
                         });
                     left.append(leftTpl);
@@ -113,16 +115,15 @@ define(
             }
         };
 
-        vDBNavigator.changeRootElem = function(obj){
-            this.rootElem(obj.getGuid());
-            vDBNavigator.selectItem.apply(this, [obj, 0]);
-        }
-
         vDBNavigator.toParent = function (vcomp) {
             if (!this._activeObj) return;
-            this.rootElem(this._activeObj.getGuid());
-            this.level(this.level()+1);
             var that = this;
+
+            that.getControlMgr().userEventHandler(that, function(){
+                that.rootElem(that._activeObj.getGuid());
+                that.level(that.level()+1);
+            });
+
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
             var centerTop = editor.find('.centerTop.level0');
@@ -146,15 +147,19 @@ define(
                 });
             left.append(leftTpl);
             link.click();
-            if (that.params.change)
-                that.params.change();
+
+
         };
 
         vDBNavigator.toChild = function (vcomp) {
             if (!this._activeRoot || !this._activeRoot.getParent()) return;
-            this.rootElem(this._activeRoot.getParent().getGuid());
-            this.level(this.level()-1);
             var that = this;
+
+            that.getControlMgr().userEventHandler(that, function(){
+                that.rootElem(that._activeRoot.getParent().getGuid());
+                that.level(that.level()-1);
+            });
+
             var editor = $('#' + this.getLid());
             var left = editor.find('.left');
             var centerTop = editor.find('.centerTop');
@@ -179,8 +184,6 @@ define(
                 });
             left.append(leftTpl);
             link.click();
-            if (that.params.change)
-                that.params.change();
         };
 
         vDBNavigator.selectItem = function (obj, level) {

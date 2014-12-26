@@ -170,16 +170,26 @@ define(
                 return new ViewSet(this, ini);
             },
 
+            /**
+             * Рассылка дельт и рендер
+             * @param context Контекст в котором запускается колбек
+             * @param cb {function} Колбек
+             * @param args {object} Аргумент колбека
+             */
             userEventHandler: function(context, cb, args) {
-                if (!args) 
-					var nargs = [];
-				else nargs = [args];
+                var nargs = [];
+                if (args) nargs = [args];
                 if (cb) cb.apply(context, nargs);
                 if (this.autoSendDeltas())
                     this.getDB().getController().genDeltas(this.getDB().getGuid());
                 this.render(undefined);
             },
 
+            /**
+             * Параметр автоотсылки дельт
+             * @param value {boolean}
+             * @returns {boolean}
+             */
             autoSendDeltas: function(value) {
                 if (value !== undefined)
                     this.pvt.asd = value;

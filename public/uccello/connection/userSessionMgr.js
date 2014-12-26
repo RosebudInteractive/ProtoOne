@@ -173,7 +173,7 @@ define(
                                 },
                                 "fields": {
                                     "Id": 33,
-                                    "Name": "Grid",
+                                    "Name": "MatrixGrid",
                                     "Top": "60",
                                     "Left": "50",
                                     "HorCells": 3,

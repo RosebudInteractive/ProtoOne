@@ -171,10 +171,6 @@ define(
                 // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
                 }
 
                 // Grid
