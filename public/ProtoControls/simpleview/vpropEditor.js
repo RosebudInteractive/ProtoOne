@@ -13,8 +13,8 @@ define(
                 controls = $(vPropEditor._templates['controls']);
                 controls.change(function () {
                     vPropEditor.changeControl.apply(that, [$(this).val()]);
-                    if (that.params.change)
-                        that.params.change();
+                    // отсылка дельт и рендер
+                    that.getControlMgr().userEventHandler(that);
                 });
                 parents = $(vPropEditor._templates['parents']);
                 props = $(vPropEditor._templates['props']);
@@ -25,8 +25,8 @@ define(
                 delbtn = $(vPropEditor._templates['delbtn']);
                 delbtn.click(function () {
                     vPropEditor.delControl.apply(that, arguments);
-                    if (that.params.delete)
-                        that.params.delete();
+                    // отсылка дельт и рендер
+                    that.getControlMgr().userEventHandler(that);
                 });
                 editor.append(controls);
                 editor.append(parents);
@@ -151,8 +151,8 @@ define(
             // родитель
             this.getControlMgr().move(comp.getGuid(), parents.find('select').val());
 
-            if (this.params.change)
-                this.params.change();
+            // отсылка дельт и рендер
+            this.getControlMgr().userEventHandler(this);
         }
 
         return vPropEditor;

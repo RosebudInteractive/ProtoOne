@@ -172,9 +172,10 @@ define(
 
             userEventHandler: function(context, cb, args) {
                 if (!args) args = [];
-                cb.apply(context, args);
+                if (cb) cb.apply(context, args);
                 if (this.autoSendDeltas())
                     this.getDB().getController().genDeltas(this.getDB().getGuid());
+                this.render(undefined);
             },
 
             autoSendDeltas: function(value) {
