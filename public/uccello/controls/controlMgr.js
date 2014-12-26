@@ -22,6 +22,7 @@ define(
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
 				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
+                this.pvt.asd = true;
 				if (rootGuid) {
 					if (db.getObj(rootGuid)==undefined) {
 						db.event.on( {
@@ -167,8 +168,20 @@ define(
 
             createViewSet: function(ini) {
                 return new ViewSet(this, ini);
-            }
+            },
 
+            userEventHandler: function(context, cb, args) {
+                if (!args) args = [];
+                cb.apply(context, args);
+                if (this.autoSendDeltas())
+                    this.getDB().getController().genDeltas(this.getDB().getGuid());
+            },
+
+            autoSendDeltas: function(value) {
+                if (value !== undefined)
+                    this.pvt.asd = value;
+                return this.pvt.asd;
+            }
 
 		});
 		return ControlMgr;

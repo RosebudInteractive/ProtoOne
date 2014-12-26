@@ -65,10 +65,12 @@ define(
                     // клик на строку
                     (function(row, id) {
                         row.click(function(){
-                            $(this).parent().find('.row.active').removeClass('active');
-                            $(this).addClass('active');
-                            that.cursor(id);
-                            db.getController().genDeltas(db.getGuid());
+                            var rowTr = $(this);
+                            that.getControlMgr().userEventHandler(that, function(){
+                                rowTr.parent().find('.row.active').removeClass('active');
+                                rowTr.addClass('active');
+                                that.cursor(id);
+                            });
                         });
                     })(row, id);
 
