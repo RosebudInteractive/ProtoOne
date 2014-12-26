@@ -168,17 +168,9 @@ define(
                 var g = obj.getTypeGuid();
                 var params = {objGuid: obj.getGuid()};
 
-                // DbNavigator для системной бд
+                // DbNavigator инициализация выбора бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
-                }
-
-                // Grid
-                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
                 }
 
                 new this.pvt.typeGuids[g](cm, params);

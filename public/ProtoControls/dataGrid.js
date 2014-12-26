@@ -8,7 +8,7 @@ define(
     function(ADataControl) {
         var DataGrid = ADataControl.extend({
 
-            className: "Grid",
+            className: "DataGrid",
             classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
             metaFields: [ ],
 
