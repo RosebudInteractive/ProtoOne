@@ -25,7 +25,7 @@ define(
 				var dsg = this.dataset(); 
 				if (dsg) {
 					var dso = this.getControlMgr().get(dsg).getObj();
-					if (dso.isFldModified("Root")) this._isRendered(false);
+					if (dso.isFldModified("Root") || dso.isFldModified("Cursor")) this._isRendered(false);
 				}
 					
 			},
