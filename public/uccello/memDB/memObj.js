@@ -93,7 +93,8 @@ define(
 			countFields: function() {
 				return this.pvt.objType.pvt.fieldsArr.length;
 			}
-			
+
+			//
 			// добавить объект obj в коллекцию colName
 			/*
 			addToCol: function(colName,obj) {
