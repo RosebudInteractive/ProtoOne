@@ -11,6 +11,7 @@ define(
             classGuid: "73596fd8-6901-2f90-12d7-d1ba12bae8f4",
             metaCols: [],
             metaFields: [
+                {fname:"parent",ftype:"integer"},
                 {fname:"firstname",ftype:"string"},
                 {fname:"lastname",ftype:"string"},
                 {fname:"birthdate",ftype:"date"},
@@ -21,6 +22,10 @@ define(
 
             init: function(cm,params){
                 this._super(cm,params);
+            },
+
+            parent: function(value) {
+                return this._genericSetter("parent", value);
             },
 
             firstname: function(value) {

@@ -29,9 +29,11 @@ define(
             /**
              * Загрузить данные
              * @param guidRoot
+             * @param dataType
+             * @param expression
              * @returns {obj}
              */
-            loadQuery: function (guidRoot, dataType) {
+            loadQuery: function (guidRoot, dataType, expression) {
                 if (dataType == 'company')
                     var hehe = {
                         "$sys": {
@@ -50,7 +52,7 @@ define(
                                         "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
                                     },
                                     "fields": {
-                                        "Id": 1003,
+                                        "Id": 1101,
                                         "Name": "Microsoft",
                                         "country": "США",
                                         "city": "Редмонд",
@@ -64,7 +66,7 @@ define(
                                         "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
                                     },
                                     "fields": {
-                                        "Id": 1004,
+                                        "Id": 1102,
                                         "Name": "Google",
                                         "country": "США",
                                         "city": "CA",
@@ -78,7 +80,7 @@ define(
                                         "typeGuid": "59583572-20fa-1f58-8d3f-5114af0f2c51"
                                     },
                                     "fields": {
-                                        "Id": 1005,
+                                        "Id": 1103,
                                         "Name": "SAS",
                                         "country": "США",
                                         "city": "NC",
@@ -89,69 +91,134 @@ define(
                             ]
                         }
                     };
-                else
-                var hehe = {
-                    "$sys": {
-                        "guid": guidRoot,
-                        "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
-                    },
-                    "fields": {
-                        "Id": 1000,
-                        "Name": "DataRoot"
-                    },
-                    "collections": {
-                        "DataElements": [
-                            {
-                                "$sys": {
-                                    "guid": "bd7eed84-cfd9-3272-f526-7b76c6109e7c",
-                                    "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                else {
+                    var hehe = {
+                        "$sys": {
+                            "guid": guidRoot,
+                            "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
+                        },
+                        "fields": {
+                            "Id": 1000,
+                            "Name": "DataRoot"
+                        },
+                        "collections": {
+                            "DataElements": [
+                                {
+                                    "$sys": {
+                                        "guid": "bd7eed84-cfd9-3272-f526-7b76c6109e7c",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1001,
+                                        "parent": 1101,
+                                        "firstname": "Джонни",
+                                        "lastname": "Депп",
+                                        "birthdate": "09-06-1963",
+                                        "country": "США",
+                                        "city": "Оуэнсборо",
+                                        "address": "Кентукки"
+                                    },
+                                    "collections": {}
                                 },
-                                "fields": {
-                                    "Id": 1001,
-                                    "firstname": "Джонни",
-                                    "lastname": "Депп",
-                                    "birthdate": "09-06-1963",
-                                    "country": "США",
-                                    "city": "Оуэнсборо",
-                                    "address": "Кентукки"
+                                {
+                                    "$sys": {
+                                        "guid": "8e532a7f-7ace-b5e7-1fc4-97fc83570f57",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1002,
+                                        "parent": 1102,
+                                        "firstname": "Джеффри",
+                                        "lastname": "Раш",
+                                        "birthdate": "06-07-1951",
+                                        "country": "Австралия",
+                                        "city": "Тувумба",
+                                        "address": "Квинсленд"
+                                    },
+                                    "collections": {}
                                 },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid": "8e532a7f-7ace-b5e7-1fc4-97fc83570f57",
-                                    "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                {
+                                    "$sys": {
+                                        "guid": "56bd87fb-3b4a-22f4-fafc-073a18f569d9",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1003,
+                                        "parent": 1102,
+                                        "firstname": "Орландо",
+                                        "lastname": "Блум",
+                                        "birthdate": "13-01-1977",
+                                        "country": "Великобритания",
+                                        "city": "Тувумба",
+                                        "address": "Кент"
+                                    },
+                                    "collections": {}
                                 },
-                                "fields": {
-                                    "Id": 1002,
-                                    "firstname": "Джеффри",
-                                    "lastname": "Раш",
-                                    "birthdate": "06-07-1951",
-                                    "country": "Австралия",
-                                    "city": "Тувумба",
-                                    "address": "Квинсленд"
+                                {
+                                    "$sys": {
+                                        "guid": "8e532a7f-7ace-b5e7-1fc4-97fc83570f57",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1004,
+                                        "parent": 1103,
+                                        "firstname": "Вуди",
+                                        "lastname": "Харрельсон",
+                                        "birthdate": "23-07-1961",
+                                        "country": "Бразилия",
+                                        "city": "Мидленд",
+                                        "address": "МучиКучи"
+                                    },
+                                    "collections": {}
                                 },
-                                "collections": {}
-                            },
-                            {
-                                "$sys": {
-                                    "guid": "56bd87fb-3b4a-22f4-fafc-073a18f569d9",
-                                    "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                {
+                                    "$sys": {
+                                        "guid": "56bd87fb-3b4a-22f4-fafc-073a18f569d9",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1005,
+                                        "parent": 1103,
+                                        "firstname": "Эмили",
+                                        "lastname": "Мортимер",
+                                        "birthdate": "11-12-1980",
+                                        "country": "Рио",
+                                        "city": "Барбадос",
+                                        "address": "Пермь"
+                                    },
+                                    "collections": {}
                                 },
-                                "fields": {
-                                    "Id": 1003,
-                                    "firstname": "Орландо",
-                                    "lastname": "Блум",
-                                    "birthdate": "13-01-1977",
-                                    "country": "Великобритания",
-                                    "city": "Тувумба",
-                                    "address": "Кент"
-                                },
-                                "collections": {}
-                            }
-                        ]
+                                {
+                                    "$sys": {
+                                        "guid": "56bd87fb-3b4a-22f4-fafc-073a18f569d9",
+                                        "typeGuid": "73596fd8-6901-2f90-12d7-d1ba12bae8f4"
+                                    },
+                                    "fields": {
+                                        "Id": 1006,
+                                        "parent": 1103,
+                                        "firstname": "Кэтрин",
+                                        "lastname": "Лэйси",
+                                        "birthdate": "21-04-1986",
+                                        "country": "Россия",
+                                        "city": "Москва",
+                                        "address": "Шаболовка"
+                                    },
+                                    "collections": {}
+                                }
+                            ]
+                        }
+                    };
+
+                    // фильтрация по паренту
+                    if (expression) {
+                        var filter = [];
+                        for(var i in hehe.collections.DataElements) {
+                            if (hehe.collections.DataElements[i].fields.parent == expression)
+                                filter.push(hehe.collections.DataElements[i]);
+                        }
+                        hehe.collections.DataElements = filter;
                     }
-                };
+                }
                 return  hehe;
             }
         });

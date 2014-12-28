@@ -12,10 +12,10 @@ define(
         '../../ProtoControls/container','../../ProtoControls/button','../../ProtoControls/edit',
         '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/dataGrid','../controls/dataset',
         '../dataman/dataRoot', '../dataman/dataContact','../dataman/dataCompany',
-        '../controls/controlMgr', '../controls/aDataControl'],
+        '../controls/controlMgr', '../controls/aDataModel', '../controls/aDataControl'],
     function(AComponent, AControl,
              AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, DataGrid, Dataset, DataRoot, DataContact, DataCompany,
-             ControlMgr, DataControl) {
+             ControlMgr, DataModel, DataControl) {
 
         var Interfvc = {	
 			className: "Interfvc",
@@ -114,7 +114,7 @@ define(
 				var cm = new ControlMgr(db, null /*roots[0]*/);
 				new AComponent(cm); new AControl(cm); new AContainer(cm);
 				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
-				new PropEditor(cm); new DBNavigator(cm); new DataControl(cm); new DataGrid(cm); new Dataset(cm);
+				new PropEditor(cm); new DBNavigator(cm); new DataModel(cm); new DataControl(cm); new DataGrid(cm); new Dataset(cm);
 				// data
                 new DataRoot(cm);	new DataContact(cm);new DataCompany(cm);
 				return db;		
@@ -168,9 +168,33 @@ define(
                 var g = obj.getTypeGuid();
                 var params = {objGuid: obj.getGuid()};
 
-                // DbNavigator инициализация выбора бд
+                // метод обработки изменений для PropEditor
+                if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    }
+                    params.delete = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
+                }
+
+                // DbNavigator для системной бд
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
+                }
+
+                // Grid
+                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
+                    params.change = function(){
+                        sendDeltas();
+                        renderControls();
+                    };
                 }
 
                 new this.pvt.typeGuids[g](cm, params);

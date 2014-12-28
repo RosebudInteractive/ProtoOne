@@ -112,8 +112,9 @@ define(
              */
             loadRes: function (guidRoot) {
                 var dbc = this.dbcsys;
+				var datamodelGuid = dbc.guid();
 				var datasetGuid = dbc.guid();
-				console.log("datasetGuid "+ datasetGuid);
+				var datasetGuid2 = dbc.guid();
                 var hehe = {
                     "$sys": {
                         "guid": guidRoot,
@@ -127,14 +128,37 @@ define(
                         "Children": [
                             {
                                 "$sys": {
-                                    "guid": datasetGuid,
-                                    "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                    "guid": datamodelGuid,
+                                    "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
                                 },
                                 "fields": {
-                                    "Id": 122,
-                                    "Name": "Dataset"
+                                    "Id": 127,
+                                    "Name": "DataModel"
                                 },
-                                "collections": {}
+                                "collections": {"Datasets": [
+                                    {
+                                        "$sys": {
+                                            "guid": datasetGuid,
+                                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                        },
+                                        "fields": {
+                                            "Id": 122,
+                                            "Name": "Dataset"
+                                        },
+                                        "collections": {}
+                                    },
+                                    {
+                                        "$sys": {
+                                            "guid": datasetGuid2,
+                                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                        },
+                                        "fields": {
+                                            "Id": 123,
+                                            "Name": "Dataset2"
+                                        },
+                                        "collections": {}
+                                    }
+                                ]}
                             },
                             {
                                 "$sys": {

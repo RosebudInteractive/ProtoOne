@@ -14,8 +14,8 @@ var uccelloClt = null;
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/uccelloClt', './uccello/controls/controlMgr', './uccello/controls/dataset' ],
-        function(UccelloClt, ControlMgr, Dataset){
+        ['./uccello/uccelloClt', './uccello/controls/controlMgr'],
+        function(UccelloClt, ControlMgr){
 
             var that = this;
 			this.tabCount = 0;
@@ -253,9 +253,10 @@ $(document).ready( function() {
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
                     if (result.guids && result.guids.length>0) {
-                        var dataset = cm.getByName("Dataset"); //'a942f6e8-a2a5-285f-ea5e-f5571b67a8ac');
+                        var dataset = cm.getByName("Dataset");
+                        var dataset2 = cm.getByName("Dataset2");
                         dataset.root(result.guids[0]);
-						console.log("dataset: "+ dataset.getGuid());
+						console.log("result: ", result);
 						sendDeltas(false);
 						renderControls();
                     }

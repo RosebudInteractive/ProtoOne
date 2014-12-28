@@ -7,13 +7,13 @@ define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
         '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
-        '../ProtoControls/dataGrid', './controls/dataset', './controls/aDataControl',
+        '../ProtoControls/dataGrid', './controls/dataset', './controls/aDataControl', './controls/aDataModel',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext',
         './dataman/dataContact', './dataman/dataCompany', './dataman/dataRoot', './system/rpc'
     ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
         Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit,
-        DataGrid, Dataset, DataControl,
+        DataGrid, Dataset, DataControl, DataModel,
         User, Session, Connect, VisualContext,
         DataContact, DataCompany, DataRoot, Rpc
         ) {
@@ -57,6 +57,7 @@ define(
                     that.pvt.typeGuids["87510077-53d2-00b3-0032-f1245ab1b74d"] = DataRoot;
                     that.pvt.typeGuids["b2c132fd-c6bc-b3c7-d149-27a926916216"] = DataControl;
                     that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = DataGrid;
+                    that.pvt.typeGuids["5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"] = DataModel;
                     that.pvt.typeGuids["3f3341c7-2f06-8d9d-4099-1075c158aeee"] = Dataset;
                     that.createController();
                     if (options.callback)
