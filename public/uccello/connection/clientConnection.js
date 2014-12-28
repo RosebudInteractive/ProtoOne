@@ -3,7 +3,7 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 
-/**
+/** +
  * ClientConnection
  * @module ClientConnection
  */
