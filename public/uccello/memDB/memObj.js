@@ -3,6 +3,7 @@
     var Class = require('class.extend');
 }
 
+// memobj
 define(
 	['./memProtoObj','./memCol','../system/event'],
 	function(MemProtoObj,MemCol,Event) {
