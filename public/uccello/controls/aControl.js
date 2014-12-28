@@ -4,7 +4,7 @@
 }
 
 
-
+//
 define(
 	['./aComponent'],
 	function(AComponent) {
