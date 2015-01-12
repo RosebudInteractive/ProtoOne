@@ -21,7 +21,7 @@ define(
                 var controller = this.pvt.controller;
                 var db = controller.getDB(data.dbGuid);
                 var rootGuid = controller.guid();
-                db.deserialize(this.loadQuery(rootGuid, data.dataType), {});
+                db.deserialize(this.loadQuery(rootGuid), {});
                 controller.genDeltas(db.getGuid());
                 done({rootGuid:rootGuid});
             },
@@ -29,13 +29,13 @@ define(
             /**
              * Загрузить данные
              * @param guidRoot
-             * @param dataType
              * @param expression
              * @returns {obj}
              */
-            loadQuery: function (guidRoot, dataType, expression) {
-                if (dataType == 'company')
-                    var hehe = {
+            loadQuery: function (guidRoot, expression) {
+                var hehe = {};
+                if (guidRoot == 'ab573a02-b888-b3b4-36a7-38629a5fe6b7')
+                    hehe = {
                         "$sys": {
                             "guid": guidRoot,
                             "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
@@ -91,8 +91,8 @@ define(
                             ]
                         }
                     };
-                else {
-                    var hehe = {
+                else if (guidRoot == 'b49d39c9-b903-cccd-7d32-b84beb1b76dc')
+                    hehe = {
                         "$sys": {
                             "guid": guidRoot,
                             "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
@@ -209,16 +209,16 @@ define(
                         }
                     };
 
-                    // фильтрация по паренту
-                    if (expression) {
-                        var filter = [];
-                        for(var i in hehe.collections.DataElements) {
-                            if (hehe.collections.DataElements[i].fields.parent == expression)
-                                filter.push(hehe.collections.DataElements[i]);
-                        }
-                        hehe.collections.DataElements = filter;
+                // фильтрация по паренту
+                if (expression) {
+                    var filter = [];
+                    for(var i in hehe.collections.DataElements) {
+                        if (hehe.collections.DataElements[i].fields.parent == expression)
+                            filter.push(hehe.collections.DataElements[i]);
                     }
+                    hehe.collections.DataElements = filter;
                 }
+
                 return  hehe;
             }
         });

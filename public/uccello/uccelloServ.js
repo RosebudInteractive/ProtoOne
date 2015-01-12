@@ -141,12 +141,11 @@ define(
             /**
              * Загрузить данные по их гуидам - ???
 			 * @param rootGuids - массив гуидов данных
-			 * @param dataType - тип данных
              * @returns {obj} - массив ресурсов в result.datas
              */			
-			queryDatas: function(rootGuids, dataType, done) {
+			queryDatas: function(rootGuids, done) {
 				console.log("queryDatas");
-				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0], dataType)] };
+				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0])] };
 				if (done !== undefined && (typeof done == "function")) done(result);
 				return result;
 			}

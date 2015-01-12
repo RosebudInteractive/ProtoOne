@@ -143,7 +143,8 @@ define(
                                         },
                                         "fields": {
                                             "Id": 122,
-                                            "Name": "Dataset"
+                                            "Name": "Dataset",
+                                            "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7"
                                         },
                                         "collections": {}
                                     },
@@ -154,7 +155,8 @@ define(
                                         },
                                         "fields": {
                                             "Id": 123,
-                                            "Name": "Dataset2"
+                                            "Name": "Dataset2",
+                                            "Root": "b49d39c9-b903-cccd-7d32-b84beb1b76dc"
                                         },
                                         "collections": {}
                                     }

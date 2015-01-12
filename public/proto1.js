@@ -247,16 +247,14 @@ $(document).ready( function() {
             /**
              * Кнопка query
              */
-            window.loadQuery = function(dataType){
+            window.loadQuery = function(rootGuid){
                 if (!that.currContext) return;
-				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"data", dataType:dataType}, function(result){
+				uccelloClt.getContext().loadNewRoots([rootGuid],{rtype:"data"}, function(result){
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
                     if (result.guids && result.guids.length>0) {
                         var dataset = cm.getByName("Dataset");
-                        var dataset2 = cm.getByName("Dataset2");
                         dataset.root(result.guids[0]);
-						console.log("result: ", result);
 						sendDeltas(false);
 						renderControls();
                     }

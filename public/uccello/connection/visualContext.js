@@ -138,14 +138,14 @@ define(
 						return "XXX";
 					}
 					if (params.rtype == "data") {
-						this.pvt.proxyServer.queryDatas(rootGuids, params.dataType, icb);
+						this.pvt.proxyServer.queryDatas(rootGuids, icb);
 						return "XXX";
 					}
 				}
 				else { // slave
 					// вызываем загрузку нового рута у мастера
 					// TODO compb на сервере не отрабатывает..
-					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype, "dataType": params.dataType }, function(r) { if (cb) cb(r); });
+					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype }, function(r) { if (cb) cb(r); });
 				}
 			},
 
