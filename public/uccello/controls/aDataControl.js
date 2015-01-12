@@ -16,8 +16,9 @@ define(
 				this._super(cm,params);
 
 			},
+			
 
-			afterInit: function() {
+			subsInit: function() {
 				this._subsDataSet();
 			},
 

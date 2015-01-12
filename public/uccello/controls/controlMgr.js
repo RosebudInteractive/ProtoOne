@@ -17,8 +17,9 @@ define(
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
-				this.pvt.compByName = {};
-				this.pvt.afterInitFlag = false;
+				this.pvt.compByName = {};				
+				this.pvt.subsInitFlag = false;
+				this.pvt.dataInitFlag = false;
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
 				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
@@ -44,13 +45,23 @@ define(
                 }*/
 			},
 			
-			afterInit: function() {
+			subsInit: function() {
 				var c = this.getRoot();
 
 				for (var g in this.pvt.compByGuid)
-					this.pvt.compByGuid[g].afterInit();
+					this.pvt.compByGuid[g].subsInit();
 					
-				this.pvt.afterInitFlag =true;
+				this.pvt.subsInitFlag =true;
+			},
+
+			
+			dataInit: function() {
+				var c = this.getRoot();
+
+				for (var g in this.pvt.compByGuid)
+					this.pvt.compByGuid[g].dataInit();
+					
+				this.pvt.dataInitFlag =true;
 			},
 
             /**
@@ -132,7 +143,8 @@ define(
              */				
 			render: function(component, options) {
 			
-				if (!this.pvt.afterInitFlag) this.afterInit(); // если не выполнена постинициализация, то запустить
+				if (!this.pvt.subsInitFlag) this.subsInit();  // если не выполнена постинициализация, то запустить
+				if (!this.pvt.dataInitFlag) this.dataInit();
 				
 				this.processDelta();
 			
