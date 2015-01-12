@@ -24,6 +24,9 @@ define(
 				this.event = new Event();
 				
             },
+			
+			dataInit: function() {
+			},
 
             root: function (value) {
 			
