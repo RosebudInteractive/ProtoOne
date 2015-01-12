@@ -31,7 +31,7 @@ define(
 			},
 
 			_subsDataSet: function() {
-				var dsg = this.dataset(); 
+				var dsg = this.dataset();
 				if (dsg) {
 					this.getControlMgr().get(dsg).event.on({
 						type: 'refreshData',

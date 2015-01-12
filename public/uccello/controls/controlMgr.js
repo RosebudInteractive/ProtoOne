@@ -132,7 +132,7 @@ define(
              */				
 			render: function(component, options) {
 			
-				if (!this.pvt.afterInitFlag) this.afterInit();
+				if (!this.pvt.afterInitFlag) this.afterInit(); // если не выполнена постинициализация, то запустить
 				
 				this.processDelta();
 			

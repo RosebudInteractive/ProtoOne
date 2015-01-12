@@ -21,8 +21,8 @@ define(
 			className: "Interfvc",
 			classGuid: "ed318f95-fc97-be3f-d54c-1ad707f0996c",
 
-			loadNewRoots: "function",
-			loadRoot: "function"
+			loadNewRoots: "function"
+			//loadRoot: "function"
 		}
 					 
         var VisualContext = AComponent.extend(/** @lends module:VisualContext.VisualContext.prototype */{
@@ -148,7 +148,8 @@ define(
 					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype, "dataType": params.dataType }, function(r) { if (cb) cb(r); });
 				}
 			},
-			
+
+			/*
 			loadRoot: function(rootGuids, cb) {				
 				function innercb(result) {
 					var db = that.getDB();
@@ -162,7 +163,7 @@ define(
                 console.log('this.pvt.proxyServer.queryDatas(rg,innercb);', result);
 				this.pvt.proxyServer.queryDatas(rg,'',innercb);
 				return "XXX";
-			},
+			},*/
 			
             createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
