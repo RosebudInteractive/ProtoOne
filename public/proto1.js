@@ -26,13 +26,19 @@ $(document).ready( function() {
             this.rootsContainers={};
             this.resultForm = '#result0';
 
-            uccelloClt = new UccelloClt({host:"ws://"+url('hostname')+":8081", sessionId:$.url('#sid'), container:'#result0', callback: function(){
-                if (uccelloClt.getLoggedUser()) {
-                    $('#login').hide(); $('#logout').show();
-                } else {
-                    $('#logout').hide(); $('#login').show();
-                }
-            }});
+            uccelloClt = new UccelloClt({
+                host:"ws://"+url('hostname')+":8081",
+                sessionId:$.url('#sid'),
+                container:'#result0',
+                callback: function(){
+                    if (uccelloClt.getLoggedUser()) {
+                        $('#login').hide(); $('#logout').show();
+                    } else {
+                        $('#logout').hide(); $('#login').show();
+                    }
+                },
+                controlsPath:'./ProtoControls/'
+            });
 
 
             // --------------------------------------------------------------------------------------------------------

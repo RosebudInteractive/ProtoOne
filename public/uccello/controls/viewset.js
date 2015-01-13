@@ -43,20 +43,12 @@ define(
                 if (!component)
                     component = this.cm.getRoot();
 
-                function renderComponent(c, opts) {
-                    // 'path/to/controls/vcontrol'
-					console.log("EXT render element "+c.className);
-                    require([that.ini.path+'v'+c.className.charAt(0).toLowerCase() + c.className.slice(1)], function(vComponent){
-						console.log("render element "+c.className);
-                        vComponent.render.apply(c, [opts]);
-                    }, function (err) { // рендермодуль не найден, рендер по умолчанию
-                        require([that.ini.path+'default'], function(vDefault){
-                            vDefault.render.apply(c, [opts]);
-                        });
-                    });
+				if (!component._isRendered()) {
+                    var viewsets = this.cm.getContext().getComponent(component.className).viewsets;
+                    if (viewsets && viewsets[this.ini.name])
+                        viewsets[this.ini.name].render.apply(component, [options]);
                 }
 
-				if (!component._isRendered()) renderComponent(component, options);
                 var col=component.pvt.obj.getCol("Children");
                 if (col == undefined) return;
                 for (var i=0; i<col.count(); i++) {

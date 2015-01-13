@@ -167,7 +167,7 @@ define(
                     if (config.controls[i].viewsets)
                         for (var j = 0; j < config.controls[i].viewsets.length; j++) {
                             var c = config.controls[i].className;
-                            scripts.push('./ProtoControls/'+config.controls[i].viewsets[j]+'/v'+c.charAt(0).toLowerCase() + c.slice(1));
+                            scripts.push(this.options.controlsPath+config.controls[i].viewsets[j]+'/v'+c.charAt(0).toLowerCase() + c.slice(1));
                         }
                 }
 

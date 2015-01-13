@@ -172,8 +172,12 @@ define(
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
                 }
 
-				new this.pvt.components[className].module(cm, params);
+				new (this.getComponent(className).module)(cm, params);
             },
+
+			getComponent: function(className){
+				return this.pvt.components[className];
+			},
 			
 			dispose: function(cb) {			
 				if (this.kind()=="slave") {

@@ -24,7 +24,7 @@ define(
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
 				this.pvt.vc = vc;
-				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
+				this.pvt.viewSets = [this.createViewSet({name:'simpleview'})];
                 this.pvt.asd = true;
 				if (rootGuid) {
 					if (db.getObj(rootGuid)==undefined) {
