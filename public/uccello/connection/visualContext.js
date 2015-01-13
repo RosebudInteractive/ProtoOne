@@ -169,33 +169,9 @@ define(
                 var g = obj.getTypeGuid();
                 var params = {objGuid: obj.getGuid()};
 
-                // метод обработки изменений для PropEditor
-                if (g == "a0e02c45-1600-6258-b17a-30a56301d7f1") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    }
-                    params.delete = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
-                }
-
-                // DbNavigator для системной бд
+                // DbNavigator выбор базы
                 if (g == "38aec981-30ae-ec1d-8f8f-5004958b4cfa") {
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
-                }
-
-                // Grid
-                if (g == "ff7830e2-7add-e65e-7ddf-caba8992d6d8") {
-                    params.change = function(){
-                        sendDeltas();
-                        renderControls();
-                    };
                 }
 
                 new this.pvt.typeGuids[g](cm, params);
