@@ -56,7 +56,7 @@ define(
 					createCompCallback = function (obj) {
 						var rootGuid = obj.getRoot().getGuid();
 						if (!(that.pvt.cmgs[rootGuid]))
-							that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid);
+							that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid,that);
 						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);						
 						controller.setDefaultCompCallback(createCompCallback); 
 					}
@@ -118,7 +118,7 @@ define(
 				return db;
             },
 			
-			// добавляем новый ресурс - мастер-слейв варианты
+			// добавляем новый набор данных - мастер-слейв варианты
 			// params.rtype = "res" | "data"
 			// params.compcb - только в случае ресурсов (может использоваться дефолтный)
 			loadNewRoots: function(rootGuids,params, cb) {

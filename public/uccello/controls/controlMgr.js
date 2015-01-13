@@ -12,8 +12,9 @@ define(
              * @constructs
              * @param db {MemDataBase} - база данных
 			 * @param rootGuid - гуид рутового элемента
+			 * @param vc - контекст менеджера
              */
-			init: function(db, rootGuid){
+			init: function(db, rootGuid, vc){
 				this.pvt = {};
 				this.pvt.compByLid = {};
 				this.pvt.compByGuid = {};
@@ -22,6 +23,7 @@ define(
 				this.pvt.dataInitFlag = false;
 				this.pvt.db = db;
 				this.pvt.rootGuid = rootGuid;
+				this.pvt.vc = vc;
 				this.pvt.viewSets = [this.createViewSet({path:'./ProtoControls/simpleview/'})];
                 this.pvt.asd = true;
 				if (rootGuid) {
@@ -108,7 +110,14 @@ define(
 			},
 
             /**
-			 * Вернуть корневой объект, с которым связан менеджер контролов
+			 * Вернуть контекст, в котором создан менеджер контролов
+             */					
+			getContext: function() {
+				return this.pvt.vc;
+			},
+
+            /**
+			 * Вернуть корневой объект бд, с которым связан менеджер контролов
              */				
 			getRoot: function() {
 				if (this.pvt.rootGuid==undefined)
@@ -146,7 +155,9 @@ define(
 				if (!this.pvt.subsInitFlag) this.subsInit();  // если не выполнена постинициализация, то запустить
 				if (!this.pvt.dataInitFlag) this.dataInit();
 				
+				console.log("render before processDelta");
 				this.processDelta();
+				console.log("render after processDelta");
 			
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;

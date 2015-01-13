@@ -45,7 +45,9 @@ define(
 
                 function renderComponent(c, opts) {
                     // 'path/to/controls/vcontrol'
+					console.log("EXT render element "+c.className);
                     require([that.ini.path+'v'+c.className.charAt(0).toLowerCase() + c.className.slice(1)], function(vComponent){
+						console.log("render element "+c.className);
                         vComponent.render.apply(c, [opts]);
                     }, function (err) { // рендермодуль не найден, рендер по умолчанию
                         require([that.ini.path+'default'], function(vDefault){
