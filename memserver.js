@@ -32,7 +32,8 @@ app.get("/update/:what", function(req, res){
             res.write('$ jsdoc public -r -d public/docs<br>');
             res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
             res.write('$ forever restart memserver.js<br>');
-            res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
+            //res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
+            fakeFunctionForRestart();// node restarted
             break;
         case 'mobimed':
             res.writeHead(200,{"Content-Type" : "text/html"});

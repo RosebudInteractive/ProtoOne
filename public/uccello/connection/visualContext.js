@@ -8,14 +8,8 @@ if (typeof define !== 'function') {
  * @module VisualContext
  */
 define(
-    ['../controls/aComponent', '../controls/aControl',
-        '../../ProtoControls/container','../../ProtoControls/button','../../ProtoControls/edit',
-        '../../ProtoControls/matrixGrid','../../ProtoControls/propEditor','../../ProtoControls/dbNavigator','../../ProtoControls/dataGrid','../controls/dataset',
-        '../dataman/dataRoot', '../dataman/dataContact','../dataman/dataCompany',
-        '../controls/controlMgr', '../controls/aDataModel', '../controls/aDataControl'],
-    function(AComponent, AControl,
-             AContainer, AButton, AEdit, AMatrixGrid, PropEditor, DBNavigator, DataGrid, Dataset, DataRoot, DataContact, DataCompany,
-             ControlMgr, DataModel, DataControl) {
+    ['../controls/aComponent', '../controls/aControl', '../controls/controlMgr', '../../config/config'],
+    function(AComponent, AControl, ControlMgr, Config) {
 
         var Interfvc = {	
 			className: "Interfvc",
@@ -47,14 +41,15 @@ define(
 				
 				this.pvt.cmgs = {};
 				this.pvt.db = null;
-				
+
                 if (params == undefined) return;
 				
 				this.pvt.typeGuids = params.typeGuids;
 				var controller = cm.getDB().getController();
 				this.pvt.rpc = params.rpc;
 				this.pvt.proxyServer = params.proxyServer;
-				
+				this.pvt.components = params.components;
+
 				var that = this;	
 				var createCompCallback = null;
 				if (cb)
@@ -112,13 +107,15 @@ define(
                 
 				// meta
 				var cm = new ControlMgr(db, null /*roots[0]*/);
-				new AComponent(cm); new AControl(cm); new AContainer(cm);
-				new AButton(cm); new AEdit(cm); new AMatrixGrid(cm);
-				new PropEditor(cm); new DBNavigator(cm); new DataModel(cm); new DataControl(cm); new DataGrid(cm); new Dataset(cm);
-				// data
-                new DataRoot(cm);	new DataContact(cm);new DataCompany(cm);
-				return db;		
-              
+				new AComponent(cm); new AControl(cm);
+
+				// другие компоненты
+				for (var i = 0; i < Config.controls.length; i++) {
+					var comp = require('../../../public/'+Config.controls[i].component);
+					new comp(cm);
+				}
+
+				return db;
             },
 			
 			// добавляем новый ресурс - мастер-слейв варианты
@@ -167,6 +164,7 @@ define(
 			
             createComponent: function(obj, cm) {
                 var g = obj.getTypeGuid();
+				var className = cm.getDB().getObj(g).get("typeName");
                 var params = {objGuid: obj.getGuid()};
 
                 // DbNavigator выбор базы
@@ -174,7 +172,7 @@ define(
                     params.dbSelector = [{'guid':this.getDB().getGuid(), 'name':'Пользовательская БД'}, {'guid':uccelloClt.getSysDB().getGuid(), 'name':'Системная БД'}];
                 }
 
-                new this.pvt.typeGuids[g](cm, params);
+				new this.pvt.components[className].module(cm, params);
             },
 			
 			dispose: function(cb) {			

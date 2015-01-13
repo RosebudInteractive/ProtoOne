@@ -6,16 +6,12 @@ if (typeof define !== 'function') {
 define(
     ['./connection/clientConnection' ,
         './memDB/memDBController','./memDB/memDataBase','./controls/controlMgr', './controls/aComponent',
-        '../ProtoControls/button', '../ProtoControls/matrixGrid','../ProtoControls/container', '../ProtoControls/propEditor', '../ProtoControls/dbNavigator', '../ProtoControls/edit',
-        '../ProtoControls/dataGrid', './controls/dataset', './controls/aDataControl', './controls/aDataModel',
         './connection/user', './connection/session', './connection/connect', './connection/visualContext',
-        './dataman/dataContact', './dataman/dataCompany', './dataman/dataRoot', './system/rpc'
+        './system/rpc'
     ],
     function(ClientConnection, MemDBController, MemDataBase, ControlMgr, AComponent,
-        Button, MatrixGrid, Container, PropEditor, DbNavigator, Edit,
-        DataGrid, Dataset, DataControl, DataModel,
         User, Session, Connect, VisualContext,
-        DataContact, DataCompany, DataRoot, Rpc
+        Rpc
         ) {
         var UccelloClt = Class.extend({
 
@@ -33,45 +29,29 @@ define(
 				this.pvt.vc = null; // VisualContext
                 this.options = options;
 
-                this.getClient().connect(options.host, options.sessionId,  function(result){
-                    that.pvt.sessionId = result.sessionId;
-                    that.pvt.user = result.user;
-                    document.location.hash = '#sid='+options.sessionId;
+                this.loadControls(function(){
+                    that.getClient().connect(options.host, options.sessionId,  function(result){
+                        that.pvt.sessionId = result.sessionId;
+                        that.pvt.user = result.user;
+                        document.location.hash = '#sid='+options.sessionId;
+                        that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
+                        that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;
+                        that.pvt.typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = Connect;
+                        that.pvt.typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = VisualContext;
+                        that.pvt.typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
+                        that.createController();
+                        if (options.callback)
+                            options.callback();
 
-                    // TODO: загружать динамически
-                    that.pvt.typeGuids["af419748-7b25-1633-b0a9-d539cada8e0d"] = Button;
-                    that.pvt.typeGuids["827a5cb3-e934-e28c-ec11-689be18dae97"] = MatrixGrid;
-                    that.pvt.typeGuids["1d95ab61-df00-aec8-eff5-0f90187891cf"] = Container;
-                    that.pvt.typeGuids["a0e02c45-1600-6258-b17a-30a56301d7f1"] = PropEditor;
-                    that.pvt.typeGuids["38aec981-30ae-ec1d-8f8f-5004958b4cfa"] = DbNavigator;
-                    that.pvt.typeGuids["f79d78eb-4315-5fac-06e0-d58d07572482"] = Edit;
-
-                    that.pvt.typeGuids["dccac4fc-c50b-ed17-6da7-1f6230b5b055"] = User;
-                    that.pvt.typeGuids["70c9ac53-6fe5-18d1-7d64-45cfff65dbbb"] = Session;
-                    that.pvt.typeGuids["66105954-4149-1491-1425-eac17fbe5a72"] = Connect;
-                    that.pvt.typeGuids["d5fbf382-8deb-36f0-8882-d69338c28b56"] = VisualContext;
-                    that.pvt.typeGuids["5f27198a-0dd2-81b1-3eeb-2834b93fb514"] = ClientConnection;
-
-                    that.pvt.typeGuids["73596fd8-6901-2f90-12d7-d1ba12bae8f4"] = DataContact;
-                    that.pvt.typeGuids["59583572-20fa-1f58-8d3f-5114af0f2c51"] = DataCompany;
-                    that.pvt.typeGuids["87510077-53d2-00b3-0032-f1245ab1b74d"] = DataRoot;
-                    that.pvt.typeGuids["b2c132fd-c6bc-b3c7-d149-27a926916216"] = DataControl;
-                    that.pvt.typeGuids["ff7830e2-7add-e65e-7ddf-caba8992d6d8"] = DataGrid;
-                    that.pvt.typeGuids["5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"] = DataModel;
-                    that.pvt.typeGuids["3f3341c7-2f06-8d9d-4099-1075c158aeee"] = Dataset;
-                    that.createController();
-                    if (options.callback)
-                        options.callback();
-						
-					that.pvt.clientConnection.socket.send({action:"testIntf", type:'method'}, function(result){
-						console.log("POPO: "+result.intf);
-						var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
-						that.pvt.servInterface = result.intf;
-						that.pvt.proxyServer = rpc._publProxy(guidServer, clt.socket, result.intf); // публикуем прокси серверного интерфейса
-					//result.func
-					});
-
-				});
+                        that.pvt.clientConnection.socket.send({action:"testIntf", type:'method'}, function(result){
+                            console.log("POPO: "+result.intf);
+                            var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
+                            that.pvt.servInterface = result.intf;
+                            that.pvt.proxyServer = rpc._publProxy(guidServer, clt.socket, result.intf); // публикуем прокси серверного интерфейса
+                        //result.func
+                        });
+                    });
+                });
 
             },
 
@@ -149,7 +129,7 @@ define(
                 var that = this;
 				function done() {
 					var s = that.pvt.clientConnection.socket;
-					var p = { typeGuids: that.pvt.typeGuids, socket: s, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
+					var p = {socket: s, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
 					p.side = params.side;
 					if (p.side == "server") {
 						that.pvt.serverContext = params.vc;
@@ -160,7 +140,8 @@ define(
 						p.ini = {fields:{Kind: "master"}};
 					}
 					//p.rpc = null;
-					var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
+                    p.components = that.pvt.components; //  ссылка на хранилище конструкторов
+                        var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
 					that.pvt.vc = vc;
 					that.pvt.vcproxy = vc.getProxy();
 				}
@@ -170,8 +151,47 @@ define(
 					this.pvt.vc.dispose(done); //delDataBase(this.pvt.dbcontext.getGuid(), done);
 				else
 					done();			
-			}
-			
+			},
+
+            /**
+             * Загрузить контролы
+             * @param callback
+             */
+            loadControls: function(callback){
+                var that = this;
+                var scripts = [];
+
+                // собираем все нужные скрипты в кучу
+                for (var i = 0; i < config.controls.length; i++) {
+                    scripts.push('../../public/'+config.controls[i].component);
+                    if (config.controls[i].viewsets)
+                        for (var j = 0; j < config.controls[i].viewsets.length; j++) {
+                            var c = config.controls[i].className;
+                            scripts.push('./ProtoControls/'+config.controls[i].viewsets[j]+'/v'+c.charAt(0).toLowerCase() + c.slice(1));
+                        }
+                }
+
+                // загружаем скрипты и выполняем колбэк
+                that.pvt.components = {};
+                require(scripts, function(){
+                    var argIndex = 0;
+                    for(var i=0; i<config.controls.length; i++) {
+                        var className = config.controls[i].className;
+                        that.pvt.components[className] = {module:arguments[argIndex], viewsets:{}};
+                        var viewsets = config.controls[i].viewsets;
+                        argIndex++;
+                        if (viewsets) {
+                            for (j=0; j < viewsets.length; j++) {
+                                that.pvt.components[config.controls[i].className].viewsets[config.controls[i].viewsets[j]] = arguments[argIndex];
+                                argIndex++;
+                            }
+                        }
+                    }
+                    callback();
+                });
+            }
+
+
         });
         return UccelloClt;
     }
