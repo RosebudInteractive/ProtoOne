@@ -169,15 +169,31 @@ define(
                                 },
                                 "fields": {
                                     "Id": 22,
-                                    "Name": "Grid",
+                                    "Name": "DataGridMaster",
                                     "Top": "67",
-                                    "Left": "330",
-                                    "Width":700,
+                                    "Left": "10",
+                                    "Width":500,
                                     "Height":160,
                                     "Dataset":datasetGuid
                                 },
                                 "collections": {}
                             },
+                            {
+                                "$sys": {
+                                    "guid": dbc.guid(),
+                                    "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                                },
+                                "fields": {
+                                    "Id": 24,
+                                    "Name": "DataGridDetail",
+                                    "Top": "67",
+                                    "Left": "510",
+                                    "Width":700,
+                                    "Height":160,
+                                    "Dataset":datasetGuid2
+                                },
+                                "collections": {}
+                            }/*,
                             {
                                 "$sys": {
                                     "guid": dbc.guid(),
@@ -206,7 +222,7 @@ define(
                                     "VerCells": 4
                                 },
                                 "collections": {}
-                            },
+                            }*/,
                             {
                                 "$sys": {
                                     "guid":  dbc.guid(),
