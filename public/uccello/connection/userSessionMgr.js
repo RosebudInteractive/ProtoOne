@@ -144,7 +144,8 @@ define(
                                         "fields": {
                                             "Id": 122,
                                             "Name": "Dataset",
-                                            "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7"
+                                            "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
+                                            "Active": true
                                         },
                                         "collections": {}
                                     },
@@ -156,7 +157,9 @@ define(
                                         "fields": {
                                             "Id": 123,
                                             "Name": "Dataset2",
-                                            "Root": "b49d39c9-b903-cccd-7d32-b84beb1b76dc"
+                                            "Root": "b49d39c9-b903-cccd-7d32-b84beb1b76dc",
+                                            "Active": true,
+                                            "Master": datasetGuid
                                         },
                                         "collections": {}
                                     }

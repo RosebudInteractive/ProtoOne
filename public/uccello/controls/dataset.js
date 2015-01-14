@@ -13,7 +13,8 @@ define(
             metaFields: [
                 {fname: "Root", ftype: "string"},
                 {fname: "Cursor", ftype: "string"},
-                {fname: "Active", ftype: "boolean"}
+                {fname: "Active", ftype: "boolean"},
+                {fname: "Master", ftype: "string"}
             ],
 
             /**
@@ -71,6 +72,14 @@ define(
 
             cursor: function (value) {
                 return this._genericSetter("Cursor", value);
+            },
+
+            active: function (value) {
+                return this._genericSetter("Active", value);
+            },
+
+            master: function (value) {
+                return this._genericSetter("Master", value);
             }
 
         });
