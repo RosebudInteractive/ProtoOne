@@ -4,7 +4,6 @@ define(
         var vDataGrid = {};
         vDataGrid._templates = template.parseTemplate(tpl);
         vDataGrid.render = function(options) {
-			console.log("render grid");
             var that = this;
             var grid = $('#' + this.getLid());
             var table = grid.find('.table');

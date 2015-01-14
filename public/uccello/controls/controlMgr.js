@@ -155,9 +155,7 @@ define(
 				if (!this.pvt.subsInitFlag) this.subsInit();  // если не выполнена постинициализация, то запустить
 				if (!this.pvt.dataInitFlag) this.dataInit();
 				
-				//console.log("render before processDelta");
 				this.processDelta();
-				console.log("render after processDelta");
 			
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;
