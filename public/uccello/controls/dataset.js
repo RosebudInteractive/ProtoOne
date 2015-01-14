@@ -28,28 +28,28 @@ define(
 				this.event = new Event();
 				
             },
-/*
-            window.loadQuery = function(rootGuid){
-                if (!that.currContext) return;
-				uccelloClt.getContext().loadNewRoots([rootGuid],{rtype:"data"}, function(result){
-                    var cm = uccelloClt.getContextCM(that.currRoot);
-                    var db = cm.getDB();
-                    if (result.guids && result.guids.length>0) {
-                        var dataset = cm.getByName("Dataset");
-                        dataset.root(result.guids[0]);
-						sendDeltas(false);
-						renderControls();
-                    }
-                });
-            }
-*/			
+			
 			dataInit: function() {
+			
+				function icb() {
+				
+					function refrcb() {
+						this.event.fire({
+							type: 'refreshData',
+							target: this				
+						});	
+					}
+				
+					//console.log("render dataset FALSE");
+					that.getControlMgr().userEventHandler(that, refrcb );
+				}
+			
 				var rg = this.root();
 				if (rg) {
 					var dataRoot = this.getControlMgr().getDB().getRoot(rg);
 					if (!dataRoot) {
 						var that = this;
-						this.getControlMgr().getContext().loadNewRoots([rg],{rtype:"data"}, function() { /*that.pvt.isRendered=false;*/} );
+						this.getControlMgr().getContext().loadNewRoots([rg],{rtype:"data"}, icb);
 					}
 				}
 			},

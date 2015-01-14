@@ -44,11 +44,9 @@ define(
                             options.callback();
 
                         that.pvt.clientConnection.socket.send({action:"testIntf", type:'method'}, function(result){
-                            console.log("POPO: "+result.intf);
                             var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
                             that.pvt.servInterface = result.intf;
                             that.pvt.proxyServer = rpc._publProxy(guidServer, clt.socket, result.intf); // публикуем прокси серверного интерфейса
-                        //result.func
                         });
                     });
                 });
@@ -63,7 +61,7 @@ define(
 
                     // создаем  контроллер и бд
                     that.pvt.controller = new MemDBController();
-					console.log(that.pvt.controller.guid());
+
                     that.pvt.controller.event.on({
                         type: 'applyDeltas',
                         subscriber: this,

@@ -45,8 +45,10 @@ define(
 
 				if (!component._isRendered()) {
                     var viewsets = this.cm.getContext().getComponent(component.className).viewsets;
-                    if (viewsets && viewsets[this.ini.name])
+                    if (viewsets && viewsets[this.ini.name]) {
+						console.log("Render component "+component.className);
                         viewsets[this.ini.name].render.apply(component, [options]);
+					}
                 }
 
                 var col=component.pvt.obj.getCol("Children");
