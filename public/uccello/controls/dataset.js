@@ -24,36 +24,80 @@ define(
              */
             init: function(cm, params) {
                 this._super(cm,params);
-                this.params = params;
+                this.pvt.params = params;
+				this.pvt.dataObj = null;
+				
 				
 				this.event = new Event();
 				
             },
 			
-			dataInit: function() {
+			subsInit: function() {
+				var m = this.master(); // подписаться на обновление данных мастер датасета
+				if (m) {
+					this.getControlMgr().get(m).event.on({
+						type: 'refreshData',
+						subscriber: this,
+						callback: function(){ this._dataInit(false); }
+					});
+				}
+			},
 			
-				function icb() {
-				
+			dataInit: function() {
+				this._dataInit(true)
+			},
+			
+			_dataInit: function(onlyMaster) {
+			
+				function icb() {				
 					function refrcb() {
+						this._initCursor();
 						this.event.fire({
 							type: 'refreshData',
 							target: this				
 						});	
-					}
-				
-					//console.log("render dataset FALSE");
+						
+					}			
 					that.getControlMgr().userEventHandler(that, refrcb );
 				}
 			
+				
 				var rg = this.root();
 				if (rg) {
 					var dataRoot = this.getControlMgr().getDB().getRoot(rg);
 					if (!dataRoot) {
+						if (onlyMaster && (this.master())) return; // если НЕ мастер, а детейл, то пропустить
 						var that = this;
-						this.getControlMgr().getContext().loadNewRoots([rg],{rtype:"data"}, icb);
+						var params = {rtype:"data"};
+						if (this.master()) { // если детейл, то экспрешн
+							params.expr = this.getControlMgr().get(this.master()).getField("Id");
+						}
+						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
+					}
+					else this._initCursor();
+				}
+			},	
+
+			_initCursor: function() {
+				var rg = this.root();
+				if (rg) {
+					var dataRoot = this.getControlMgr().getDB().getObj(rg);
+					if (dataRoot) {
+						var col = dataRoot.getCol("DataElements");
+						if (col.count()>0) this.cursor(col.get(0).get("Id")); 
 					}
 				}
 			},
+
+			getField: function(name) {
+				if (this.pvt.dataObj)
+					return this.pvt.dataObj.get(name);
+				else
+					return undefined;
+				
+			},
+
+			// Properties
 
             root: function (value) {
 			
@@ -71,7 +115,11 @@ define(
             },
 
             cursor: function (value) {
-                return this._genericSetter("Cursor", value);
+                var r=this._genericSetter("Cursor", value);
+				console.log("SET CuRSOR");
+				if (value) 
+				 this.pvt.dataObj =  this.getControlMgr().getDB().getObj(this.root()).getCol("DataElements").getObjById(value); // TODO поменять потом
+				return r;
             },
 
             active: function (value) {

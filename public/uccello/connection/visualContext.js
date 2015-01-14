@@ -121,6 +121,7 @@ define(
 			// добавляем новый набор данных - мастер-слейв варианты
 			// params.rtype = "res" | "data"
 			// params.compcb - только в случае ресурсов (может использоваться дефолтный)
+			// params.expr - выражение для данных
 			loadNewRoots: function(rootGuids,params, cb) {
 				var that = this;
 				if (this.kind()=="master") {
@@ -135,14 +136,14 @@ define(
 						return "XXX";
 					}
 					if (params.rtype == "data") {
-						this.pvt.proxyServer.queryDatas(rootGuids, icb);
+						this.pvt.proxyServer.queryDatas(rootGuids, params.expr, icb);
 						return "XXX";
 					}
 				}
 				else { // slave
 					// вызываем загрузку нового рута у мастера
 					// TODO compb на сервере не отрабатывает..
-					this.pvt.vcproxy.loadNewRoots(rootGuids, { "rtype": params.rtype }, function(r) { if (cb) cb(r); });
+					this.pvt.vcproxy.loadNewRoots(rootGuids, params /*{ "rtype": params.rtype }*/, function(r) { if (cb) cb(r); });
 				}
 			},
 

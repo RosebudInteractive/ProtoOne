@@ -143,9 +143,9 @@ define(
 			 * @param rootGuids - массив гуидов данных
              * @returns {obj} - массив ресурсов в result.datas
              */			
-			queryDatas: function(rootGuids, done) {
+			queryDatas: function(rootGuids, expr, done) {
 				console.log("queryDatas");
-				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0])] };
+				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0],expr)] };
 				if (done !== undefined && (typeof done == "function")) done(result);
 				return result;
 			}

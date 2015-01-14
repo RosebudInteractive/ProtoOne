@@ -65,6 +65,13 @@ define(
 				return this._name;
 			},
 			
+			// TODO ВРЕМЕННАЯ ИМПЛЕМЕНТАЦИЯ - УБРАТЬ ПОСЛЕ ТОГО КАК БУДУТ СДЕЛАНЫ ИНДЕКСЫ
+			getObjById: function(id) {
+				for (var i=0; i<this.count(); i++) {
+					if (this.get(i).get("Id")==id) return this.get(i);
+				}
+			},
+			
 			// вернуть количество элементов коллекции
 			count: function() {
 				return this._elems.length;
