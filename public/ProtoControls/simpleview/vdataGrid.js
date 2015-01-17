@@ -73,9 +73,7 @@ define(
                             that.getControlMgr().userEventHandler(that, function(){
                                 rowTr.parent().find('.row.active').removeClass('active');
                                 rowTr.addClass('active');
-                                that.getControlMgr().userEventHandler(that, function(){
-                                    dataset.cursor(id);
-                                });
+                                dataset.cursor(id);
                             });
                         });
                     })(row, id);
