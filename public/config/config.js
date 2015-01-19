@@ -3,6 +3,7 @@ config.controls = [
     {className:'DataControl', component:'uccello/controls/aDataControl', guid:'2c132fd-c6bc-b3c7-d149-27a926916216'},
     {className:'DataRoot', component:'uccello/dataman/dataRoot', guid:'87510077-53d2-00b3-0032-f1245ab1b74d'},
     {className:'DataContact', component:'uccello/dataman/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
+    {className:'DataContract', component:'uccello/dataman/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
     {className:'DataCompany', component:'uccello/dataman/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c514'},
     {className:'DataAddress', component:'uccello/dataman/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
     {className:'ADataModel', component:'uccello/controls/aDataModel', guid:'5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47'},

@@ -158,6 +158,7 @@ define(
             loadControls: function(callback){
                 var that = this;
                 var scripts = [];
+                var config = that.options.config;
 
                 // собираем все нужные скрипты в кучу
                 for (var i = 0; i < config.controls.length; i++) {

@@ -36,6 +36,13 @@ define(
                 this.pvt.config = options.config;
 
                 this.getRouter().add('getGuids', function(data, done) {
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
+                    console.log(that.getUserMgr().getController().guid());
                     var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
                     var result = {

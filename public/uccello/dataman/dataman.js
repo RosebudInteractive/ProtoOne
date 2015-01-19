@@ -321,6 +321,99 @@ define(
                             ]
                         }
                     };
+                else if (guidRoot == '8583ee1d-6936-19da-5ef0-9025fb7d1d8d')
+                    hehe = {
+                        "$sys": {
+                            "guid": guidRoot,
+                            "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
+                        },
+                        "fields": {
+                            "Id": 1000,
+                            "Name": "DataRoot"
+                        },
+                        "collections": {
+                            "DataElements": [
+                                {
+                                    "$sys": {
+                                        "guid": "c0c75a46-9a74-ce36-1c76-2d7613ad9440",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1001,
+                                        "parent": 1101,
+                                        "number": "1001-1101",
+                                        "total": "345432"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "d121bbfe-3207-43ef-b0d4-6572a649d146",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1002,
+                                        "parent": 1101,
+                                        "number": "1002-1101",
+                                        "total": "1000"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "0033e3ec-b741-dcf5-b3db-a099132333e2",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1003,
+                                        "parent": 1101,
+                                        "number": "1003-1101",
+                                        "total": "234000"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "4a22b2bf-3632-516a-5bd5-4a56cc592a13",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1004,
+                                        "parent": 1102,
+                                        "number": "1004-1102",
+                                        "total": "1000"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "f245ac20-058a-3611-70b3-aafd17603ffb",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1005,
+                                        "parent": 1102,
+                                        "number": "1005-1102",
+                                        "total": "1000"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "e1a2e816-41dd-2e9c-946b-8e91fd585130",
+                                        "typeGuid": "08a0fad1-d788-3604-9a16-3544a6f97721"
+                                    },
+                                    "fields": {
+                                        "Id": 1006,
+                                        "parent": 1103,
+                                        "number": "1006-1103",
+                                        "total": "1000"
+                                    },
+                                    "collections": {}
+                                }
+                            ]
+                        }
+                    };
 
                 // фильтрация по паренту
                 if (expression) {

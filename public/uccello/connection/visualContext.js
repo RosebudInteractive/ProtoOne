@@ -115,7 +115,7 @@ define(
 
 				// другие компоненты
 				for (var i in this.pvt.config.controls) {
-					var comp = require('../../../public/'+this.pvt.config.controls[i].component);
+					var comp = require('../../'+this.pvt.config.controls[i].component);
 					new comp(cm);
 				}
 

@@ -115,10 +115,13 @@ define(
 				var datamodelGuid = dbc.guid();
 				var datasetGuid = dbc.guid();
 				var datasetGuid2 = dbc.guid();
+				var datasetGuid21 = dbc.guid();
 				var datasetGuid3 = dbc.guid();
 
                 // добавить второй датагрид Detail
-                var addDetail2 = true;
+                var addDetail2 = false;
+                // добавить датагрид контрактов
+                var addDetailContract = true;
                 // добавить датагрид третий уровень
                 var addDetailDetail = true;
 
@@ -163,8 +166,22 @@ define(
                                         },
                                         "fields": {
                                             "Id": 123,
-                                            "Name": "Dataset2",
+                                            "Name": "DatasetContact",
                                             "Root": "b49d39c9-b903-cccd-7d32-b84beb1b76dc",
+                                            "Active": true,
+                                            "Master": datasetGuid
+                                        },
+                                        "collections": {}
+                                    },
+                                    {
+                                        "$sys": {
+                                            "guid": datasetGuid21,
+                                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                        },
+                                        "fields": {
+                                            "Id": 125,
+                                            "Name": "DatasetContract",
+                                            "Root": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
                                             "Active": true,
                                             "Master": datasetGuid
                                         },
@@ -392,7 +409,27 @@ define(
                             "collections": {}
                         }
                     );
+                }
 
+                if (addDetailContract) {
+                    hehe.collections.Children.push(
+                        {
+                            "$sys": {
+                                "guid": dbc.guid(),
+                                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                            },
+                            "fields": {
+                                "Id": 24,
+                                "Name": "DataGridDetailContract",
+                                "Top": "189",
+                                "Left": "380",
+                                "Width":640,
+                                "Height":120,
+                                "Dataset":datasetGuid21
+                            },
+                            "collections": {}
+                        }
+                    );
                 }
 
                 if (addDetailDetail) {
@@ -400,17 +437,17 @@ define(
                         {
                             "$sys": {
                             "guid": dbc.guid(),
-                                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
-                        },
+                            "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                            },
                             "fields": {
                             "Id": 24,
-                                "Name": "DataGridDetailDetail",
+                                "Name": "DataGridDetailContract",
                                 "Top": "67",
                                 "Left": "1022",
                                 "Width":450,
                                 "Height":120,
                                 "Dataset":datasetGuid3
-                        },
+                            },
                             "collections": {}
                         }
                     );
