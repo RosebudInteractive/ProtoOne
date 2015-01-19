@@ -222,6 +222,41 @@ define(
                             {
                                 "$sys": {
                                     "guid": dbc.guid(),
+                                    "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                                },
+                                "fields": {
+                                    "Id": 320,
+                                    "Name": "DataEdit1",
+                                    "Top": "200",
+                                    "Left": "10",
+                                    "Width": 100,
+                                    "Height": 20,
+                                    "Dataset": datasetGuid,
+                                    "DataField": "0"
+                                },
+                                "collections": {}
+                            },
+                            {
+                                "$sys": {
+                                    "guid": dbc.guid(),
+                                    "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                                },
+                                "fields": {
+                                    "Id": 320,
+                                    "Name": "DataEdit2",
+                                    "Top": "230",
+                                    "Left": "10",
+                                    "Width": 100,
+                                    "Height": 20,
+                                    "Dataset": datasetGuid,
+                                    "DataField": "1"
+                                },
+                                "collections": {}
+                            },
+
+                            {
+                                "$sys": {
+                                    "guid": dbc.guid(),
                                     "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                                 },
                                 "fields": {
@@ -285,7 +320,7 @@ define(
                                 "fields": {
                                     "Id": 55,
                                     "Name": "DbNavigator",
-                                    "Top": "314",
+                                    "Top": "520",
                                     "Left": "20",
                                     "Nlevels": 3,
                                     "RootElem": "fc13e2b8-3600-b537-f9e5-654b7418c156",
@@ -400,7 +435,7 @@ define(
                             "fields": {
                             "Id": 24,
                                 "Name": "DataGridDetail2",
-                                "Top": "189",
+                                "Top": "311",
                                 "Left": "380",
                                 "Width":640,
                                 "Height":120,

@@ -14,6 +14,10 @@ define(
 
             init: function(cm,params){
                 this._super(cm,params);
+            },
+
+            dataField: function (value) {
+                return this._genericSetter("DataField", value);
             }
         });
         return ADataFieldControl;

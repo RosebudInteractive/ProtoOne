@@ -10,7 +10,7 @@ define(
 
             className: "DataEdit",
             classGuid: "affff8b1-10b0-20a6-5bb5-a9d88334b48e",
-            metaFields: [ ],
+            metaFields: [],
 
             /**
              * Инициализация объекта
