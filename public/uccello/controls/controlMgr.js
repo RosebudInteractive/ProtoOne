@@ -192,19 +192,27 @@ define(
             },
 
             /**
-             * Рассылка дельт и рендер
+             * Функция-оболочка в которой завернуты системные действия. Должна вызываться компонентами
+			 * в ответ на действия пользователя, содержательные методы передаются в cb
              * @param context Контекст в котором запускается колбек
              * @param cb {function} Колбек
              * @param args {object} Аргумент колбека
              */
             userEventHandler: function(context, cb, args) {
                 var nargs = [];
+				var db = this.getDB();
+				var vc = this.getContext();
                 if (args) nargs = [args];
+				//  стартовать транзакцию
+				if (vc) vc.tranStart();
                 if (cb) cb.apply(context, nargs);
                 if (this.autoSendDeltas())
-                    this.getDB().getController().genDeltas(this.getDB().getGuid());
+                    db.getController().genDeltas(db.getGuid());
                 this.render(undefined);
+				//  закрыть транзакцию
+				if (vc) vc.tranCommit();
             },
+
 
             /**
              * Параметр автоотсылки дельт

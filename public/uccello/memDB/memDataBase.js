@@ -81,6 +81,25 @@ define(
              * @private
              */
 			_addRoot: function(obj,opt) {
+				var root = this.getRoot(obj.getGuid());
+				if (root) {
+					// TODO проверить, что root.obj==null?
+					root.obj = obj;				
+				}
+				else {
+					root = {};
+					root.obj = obj;
+					root.mode = opt.mode;
+					root.type = opt.type;
+					root.subscribers = {};	// подписчики корневого объекта
+					root.master = null;		// мастер
+					root.callbackNewObject = undefined;
+					root.event = new Event();
+					this.pvt.robjs.push(root);
+					this.pvt.rcoll[obj.getGuid()] = root;
+				}
+				
+				/*
 				var root = {};
 				root.obj = obj;
 				root.mode = opt.mode;
@@ -91,7 +110,7 @@ define(
 				root.event = new Event();
 				this.pvt.robjs.push(root);
 				this.pvt.rcoll[obj.getGuid()] = root;
-				
+				*/
 				this.event.fire({
                     type: 'newRoot',
                     target: obj				
@@ -99,7 +118,12 @@ define(
 				
 			},
 			
-
+			/*
+			_delRoot: function(obj) {
+				if (obj.getDB()!=this) return;
+				if (obj.getParent()) return
+				
+			},*/
 			
             /**
              * зарегистрировать объект в списке по гуидам
@@ -386,7 +410,7 @@ define(
 			// ДОЛЖНА РАБОТАТЬ ТОЛЬКО ДЛЯ МАСТЕР БАЗЫ - СЛЕЙВ НЕ МОЖЕТ ДОБАВИТЬ В СЕБЯ РУТ, МОЖЕТ ТОЛЬКО ПОДПИСАТЬСЯ НА РУТ МАСТЕРА!
 			addRoots: function(sobjs, cb) {
 				var res = [];
-				console.log("ADD ROOTS " + this.getGuid());
+				//console.log("ADD ROOTS " + this.getGuid());
 				
 				this.getCurrentVersion();
 				
@@ -628,9 +652,10 @@ define(
 				if (this.isMaster())		// TODO закрывать транзакцию?	
 					this.setVersion("valid",this.getVersion());			// сразу подтверждаем изменения в мастере (вне транзакции)				
 				
+				// вторая часть условия - чтобы разослать на клиенты "правильную" версию
 				if ((allDeltas.length>0) || (this.isMaster() && this.getVersion("valid")!=this.getVersion("sent"))) {
 					//this.pvt.tranCounter++;
-					allDeltas.push( { last: 1, /*dbValVersion: this.getVersion("valid"),*/dbVersion:this.getVersion()  });
+					allDeltas.push( { last: 1, dbVersion:this.getVersion()  });
 					//allDeltas[allDeltas.length-1].last = 1; // признак конца транзакции
 				}
 				

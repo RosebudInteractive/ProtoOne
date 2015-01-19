@@ -71,7 +71,7 @@ define(
                         row.click(function(){
                             var rowTr = $(this);
                             that.getControlMgr().userEventHandler(that, function(){
-                                rowTr.parent().find('.row.active').removeClass('active');
+                                rowTr.parent().find('.row.active').removeClass('active'); // TODO Зачем 2 раза  userEventHandler ?
                                 rowTr.addClass('active');
                                 dataset.cursor(id);
                             });

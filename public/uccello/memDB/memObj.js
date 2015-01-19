@@ -20,8 +20,7 @@ define(
 						if ((flds!=undefined) && ("fields" in flds) && (f in flds.fields))
 						  this.pvt.fields[i] = flds.fields[f]; // TODO проверять типы?	
 						else
-						  this.pvt.fields[i] = undefined;
-					
+						  this.pvt.fields[i] = undefined;				
 				}
 				
 				// создать пустые коллекции по типу
@@ -69,9 +68,10 @@ define(
 					o.flds[field] = {old:oldValue,new:value};
 					this.getLog().add(o);
 				}
-				
-				if (!this.isFldModified(field)) { // запоминаем измененные свойства
-					this.pvt.fldLog[field] = oldValue;
+				else { // запоминаем свойства только если ЛОГ выключен - это соответствует режиму применения дельты
+					if (!this.isFldModified(field)) { // запоминаем измененные свойства
+						this.pvt.fldLog[field] = oldValue;
+					}
 				}
 				
 				this.event.fire({

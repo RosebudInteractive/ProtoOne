@@ -33,12 +33,20 @@ define(
             },
 			
 			subsInit: function() {
-				var m = this.master(); // подписаться на обновление данных мастер датасета
-				if (m) {
-					this.getControlMgr().get(m).event.on({
+				var master = this.master(); // подписаться на обновление данных мастер датасета
+				// DEBUG
+				//master = undefined;
+				//END DEBUG
+				if (master) {
+					this.getControlMgr().get(master).event.on({
 						type: 'refreshData',
 						subscriber: this,
-						callback: function(){ this._dataInit(false); }
+						callback: function(){ this._dataInit(true); } // false вернуть
+					});
+					this.getControlMgr().get(master).event.on({
+						type: 'moveCursor',
+						subscriber: this,
+						callback: function(){ this._dataInit(false); } // false вернуть
 					});
 				}
 			},
@@ -47,11 +55,22 @@ define(
 				this._dataInit(true)
 			},
 			
-			_dataInit: function(onlyMaster) {
+			processDelta: function() {
+				
+				var obj = this.getObj();
+				if (obj.isFldModified("Cursor")) {
+					console.log("processDelta "+this.getGuid());
+					this._setDataObj(this.cursor());
+				}
+	
+			},
 			
+			_dataInit: function(onlyMaster) {
+				console.log("dataInit "+this.getGuid());
 				function icb() {				
 					function refrcb() {
 						this._initCursor();
+						console.log("refreshData in cb of datainit "+this.getGuid());
 						this.event.fire({
 							type: 'refreshData',
 							target: this				
@@ -63,14 +82,18 @@ define(
 			
 				
 				var rg = this.root();
+				var master = this.master();
+				// DEBUG
+				//master = undefined;
+				//END DEBUG
 				if (rg) {
 					var dataRoot = this.getControlMgr().getDB().getRoot(rg);
-					if (!dataRoot) {
-						if (onlyMaster && (this.master())) return; // если НЕ мастер, а детейл, то пропустить
+					if (!dataRoot || !onlyMaster) {
+						if (onlyMaster && master) return; // если НЕ мастер, а детейл, то пропустить
 						var that = this;
 						var params = {rtype:"data"};
-						if (this.master()) { // если детейл, то экспрешн
-							params.expr = this.getControlMgr().get(this.master()).getField("Id");
+						if (master) { // если детейл, то экспрешн
+							params.expr = this.getControlMgr().get(master).getField("Id");
 						}
 						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
 					}
@@ -79,6 +102,7 @@ define(
 			},	
 
 			_initCursor: function() {
+				console.log("initCursor "+this.getGuid());
 				var rg = this.root();
 				if (rg) {
 					var dataRoot = this.getControlMgr().getDB().getObj(rg);
@@ -105,22 +129,37 @@ define(
 				var newVal = this._genericSetter("Root", value);
 				
 				if (newVal!=oldVal) {
-				this.event.fire({
-                    type: 'refreshData',
-                    target: this				
-					});	
+					console.log("refreshData in root() "+this.getGuid());
+					this.event.fire({
+						type: 'refreshData',
+						target: this				
+						});	
 				}
 			
                 return newVal;
             },
 
             cursor: function (value) {
-                var r=this._genericSetter("Cursor", value);
-				console.log("SET CuRSOR");
-				if (value) 
-				 this.pvt.dataObj =  this.getControlMgr().getDB().getObj(this.root()).getCol("DataElements").getObjById(value); // TODO поменять потом
-				return r;
+				//console.log("Cursor "+this.getGuid()+"  set to "+value);
+				var oldVal = this._genericSetter("Cursor");
+                var newVal=this._genericSetter("Cursor", value);
+				if (newVal!=oldVal) {
+					this._setDataObj(value);
+					console.log("move cursor "+this.getGuid());
+					this.event.fire({
+						type: 'moveCursor',
+						target: this				
+					});	
+				}
+
+				return newVal;
             },
+			
+			// установить "курсор" на внутренний объект dataobj
+			_setDataObj: function(value) {
+				console.log("SET CuRSOR "+value);
+				this.pvt.dataObj =  this.getControlMgr().getDB().getObj(this.root()).getCol("DataElements").getObjById(value); // TODO поменять потом
+			},
 
             active: function (value) {
                 return this._genericSetter("Active", value);
