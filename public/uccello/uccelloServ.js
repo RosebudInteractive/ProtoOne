@@ -31,8 +31,9 @@ define(
 				this.pvt.proxyServer = rpc._publ(this, interface1); //
 
 
-                this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate, rpc:this.pvt.rpc, proxyServer: this.pvt.proxyServer});
+                this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate, rpc:this.pvt.rpc, proxyServer: this.pvt.proxyServer, config:options.config});
                 this.pvt.dataman = new Dataman(this.getRouter(), that.getUserMgr().getController());
+                this.pvt.config = options.config;
 
                 this.getRouter().add('getGuids', function(data, done) {
                     var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
@@ -121,6 +122,10 @@ define(
 			
 			getGuid: function() {
 				return guidServer;
+			},
+
+            getConfig: function() {
+				return this.pvt.config;
 			},
 
 

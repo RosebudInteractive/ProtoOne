@@ -5,6 +5,7 @@ var UccelloServ = require('./public/uccello/uccelloServ');
 var http = require('http');
 var express = require('express');
 var app = express();
+var config = require('./public/config/config');
 
 // Обработчики express
 // ----------------------------------------------------------------------------------------------------------------------
@@ -84,7 +85,7 @@ function fakeAuthenticate(user, pass, done) {
 }
 
 // запускаем вебсокетсервер
-var ucelloApp = new UccelloServ({port:8081, authenticate:fakeAuthenticate});
+var ucelloApp = new UccelloServ({port:8081, authenticate:fakeAuthenticate, config:config});
 
 // запускаем http сервер
 http.createServer(app).listen(1325);

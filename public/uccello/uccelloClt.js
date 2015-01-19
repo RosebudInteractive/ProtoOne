@@ -173,6 +173,8 @@ define(
                 that.pvt.components = {};
                 require(scripts, function(){
                     var argIndex = 0;
+                    var config = that.options.config;
+                    console.log(config);
                     for(var i=0; i<config.controls.length; i++) {
                         var className = config.controls[i].className;
                         that.pvt.components[className] = {module:arguments[argIndex], viewsets:{}};

@@ -37,7 +37,8 @@ $(document).ready( function() {
                         $('#logout').hide(); $('#login').show();
                     }
                 },
-                controlsPath:'./ProtoControls/'
+                controlsPath:'./ProtoControls/',
+                config:config
             });
 
 

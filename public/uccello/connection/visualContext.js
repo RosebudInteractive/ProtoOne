@@ -8,8 +8,8 @@ if (typeof define !== 'function') {
  * @module VisualContext
  */
 define(
-    ['../controls/aComponent', '../controls/aControl', '../controls/controlMgr', '../../config/config'],
-    function(AComponent, AControl, ControlMgr, Config) {
+    ['../controls/aComponent', '../controls/aControl', '../controls/controlMgr'],
+    function(AComponent, AControl, ControlMgr) {
 
         var Interfvc = {	
 			className: "Interfvc",
@@ -51,6 +51,7 @@ define(
 				this.pvt.rpc = params.rpc;
 				this.pvt.proxyServer = params.proxyServer;
 				this.pvt.components = params.components;
+				this.pvt.config = params.config;
 
 				var that = this;	
 				var createCompCallback = null;
@@ -113,8 +114,8 @@ define(
 				new AComponent(cm); new AControl(cm);
 
 				// другие компоненты
-				for (var i = 0; i < Config.controls.length; i++) {
-					var comp = require('../../../public/'+Config.controls[i].component);
+				for (var i in this.pvt.config.controls) {
+					var comp = require('../../../public/'+this.pvt.config.controls[i].component);
 					new comp(cm);
 				}
 
