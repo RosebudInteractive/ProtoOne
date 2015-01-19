@@ -39,6 +39,11 @@ define(
 						subscriber: this,
 						callback: function(){ this._isRendered(false); }
 					});
+					this.getControlMgr().get(dsg).event.on({
+						type: 'moveCursor',
+						subscriber: this,
+						callback: function(){ this._isRendered(false); }
+					});
 				}
 			},
 
