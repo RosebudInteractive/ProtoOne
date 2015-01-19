@@ -115,6 +115,13 @@ define(
 				var datamodelGuid = dbc.guid();
 				var datasetGuid = dbc.guid();
 				var datasetGuid2 = dbc.guid();
+				var datasetGuid3 = dbc.guid();
+
+                // добавить второй датагрид Detail
+                var addDetail2 = true;
+                // добавить датагрид третий уровень
+                var addDetailDetail = true;
+
                 var hehe = {
                     "$sys": {
                         "guid": guidRoot,
@@ -162,6 +169,20 @@ define(
                                             "Master": datasetGuid
                                         },
                                         "collections": {}
+                                    },
+                                    {
+                                        "$sys": {
+                                            "guid": datasetGuid3,
+                                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                                        },
+                                        "fields": {
+                                            "Id": 123,
+                                            "Name": "Dataset3",
+                                            "Root": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
+                                            "Active": true,
+                                            "Master": datasetGuid2
+                                        },
+                                        "collections": {}
                                     }
                                 ]}
                             },
@@ -175,8 +196,8 @@ define(
                                     "Name": "DataGridMaster",
                                     "Top": "67",
                                     "Left": "10",
-                                    "Width":500,
-                                    "Height":160,
+                                    "Width":370,
+                                    "Height":120,
                                     "Dataset":datasetGuid
                                 },
                                 "collections": {}
@@ -190,9 +211,9 @@ define(
                                     "Id": 24,
                                     "Name": "DataGridDetail",
                                     "Top": "67",
-                                    "Left": "510",
-                                    "Width":700,
-                                    "Height":160,
+                                    "Left": "380",
+                                    "Width":640,
+                                    "Height":120,
                                     "Dataset":datasetGuid2
                                 },
                                 "collections": {}
@@ -247,7 +268,7 @@ define(
                                 "fields": {
                                     "Id": 55,
                                     "Name": "DbNavigator",
-                                    "Top": "240",
+                                    "Top": "314",
                                     "Left": "20",
                                     "Nlevels": 3,
                                     "RootElem": "fc13e2b8-3600-b537-f9e5-654b7418c156",
@@ -350,6 +371,52 @@ define(
                         ]
                     }
                 };
+
+
+                if (addDetail2) {
+                    hehe.collections.Children.push(
+                        {
+                            "$sys": {
+                            "guid": dbc.guid(),
+                                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                        },
+                            "fields": {
+                            "Id": 24,
+                                "Name": "DataGridDetail2",
+                                "Top": "189",
+                                "Left": "380",
+                                "Width":640,
+                                "Height":120,
+                                "Dataset":datasetGuid2
+                        },
+                            "collections": {}
+                        }
+                    );
+
+                }
+
+                if (addDetailDetail) {
+                    hehe.collections.Children.push(
+                        {
+                            "$sys": {
+                            "guid": dbc.guid(),
+                                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                        },
+                            "fields": {
+                            "Id": 24,
+                                "Name": "DataGridDetailDetail",
+                                "Top": "67",
+                                "Left": "1022",
+                                "Width":450,
+                                "Height":120,
+                                "Dataset":datasetGuid3
+                        },
+                            "collections": {}
+                        }
+                    );
+                }
+
+
                 return hehe;
             },
 

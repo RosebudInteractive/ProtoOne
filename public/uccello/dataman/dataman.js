@@ -208,6 +208,119 @@ define(
                             ]
                         }
                     };
+                else if (guidRoot == 'edca46bc-3389-99a2-32c0-a59665fcb6a7')
+                    hehe = {
+                        "$sys": {
+                            "guid": guidRoot,
+                            "typeGuid": "87510077-53d2-00b3-0032-f1245ab1b74d"
+                        },
+                        "fields": {
+                            "Id": 1000,
+                            "Name": "DataRoot"
+                        },
+                        "collections": {
+                            "DataElements": [
+                                {
+                                    "$sys": {
+                                        "guid": "76c01d4f-3d12-53da-0ca0-40045cbeb9b0",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2001,
+                                        "parent": 1001,
+                                        "country": "Россия",
+                                        "city": "Москва",
+                                        "address": "ул. Чичерина, 1"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "562068e7-f61b-327e-585e-bb1b12e209cf",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2002,
+                                        "parent": 1002,
+                                        "country": "Украина",
+                                        "city": "Киев",
+                                        "address": "ул. Шевченко, 34"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "0d8ffa3e-0745-29eb-1112-8182250446a0",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2003,
+                                        "parent": 1003,
+                                        "country": "Беларусь",
+                                        "city": "Минск",
+                                        "address": "ул. Могилевская, 4"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "3316d111-8a3f-9b56-269a-e110cc4c3742",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2004,
+                                        "parent": 1004,
+                                        "country": "Казахстан",
+                                        "city": "Астана",
+                                        "address": "ул. Казанмангал, 3"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "58d0ef37-c0b1-31b3-32a4-729f0dfd5071",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2005,
+                                        "parent": 1005,
+                                        "country": "Италия",
+                                        "city": "Рим",
+                                        "address": "ул. Итальянская, 34"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "43076a4f-dff1-26fb-11cc-753022edbe41",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2006,
+                                        "parent": 1006,
+                                        "country": "Франция",
+                                        "city": "Париж",
+                                        "address": "ул. Оланда, 123"
+                                    },
+                                    "collections": {}
+                                },
+                                {
+                                    "$sys": {
+                                        "guid": "18623cf4-dd1b-d0f2-bbac-430c9e097633",
+                                        "typeGuid": "16ec0891-1144-4577-f437-f98699464948"
+                                    },
+                                    "fields": {
+                                        "Id": 2007,
+                                        "parent": 1002,
+                                        "country": "Турция",
+                                        "city": "Кемер",
+                                        "address": "ул. Хлоповко, 11"
+                                    },
+                                    "collections": {}
+                                }
+                            ]
+                        }
+                    };
 
                 // фильтрация по паренту
                 if (expression) {
