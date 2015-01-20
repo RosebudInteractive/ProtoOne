@@ -20,10 +20,12 @@ define(
             }
 
             // сохранять при потере фокуса
-            item.blur(function(event) {
+            item.blur(function () {
                 if (that.dataset() && that.dataField()) {
-                    var dataset = that.getControlMgr().getByGuid(that.dataset());
-                    dataset.setField(that.dataField(), $(this).val());
+                    that.getControlMgr().userEventHandler(that, function () {
+                        var dataset = that.getControlMgr().getByGuid(that.dataset());
+                        dataset.setField(that.dataField(), item.val());
+                    });
                 }
             });
         }
