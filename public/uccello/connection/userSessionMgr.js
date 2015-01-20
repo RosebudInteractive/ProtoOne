@@ -232,7 +232,7 @@ define(
                                     "Width": 100,
                                     "Height": 20,
                                     "Dataset": datasetGuid,
-                                    "DataField": "0"
+                                    "DataField": "Name"
                                 },
                                 "collections": {}
                             },
@@ -249,7 +249,7 @@ define(
                                     "Width": 100,
                                     "Height": 20,
                                     "Dataset": datasetGuid,
-                                    "DataField": "1"
+                                    "DataField": "city"
                                 },
                                 "collections": {}
                             },

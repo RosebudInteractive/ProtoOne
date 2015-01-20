@@ -4,6 +4,7 @@ define(
         var vDataEdit = {};
         vDataEdit._templates = template.parseTemplate(tpl);
         vDataEdit.render = function(options) {
+            var that = this;
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vDataEdit._templates['edit']).attr('id', this.getLid());
@@ -13,19 +14,18 @@ define(
             item.css({top: this.top() + 'px', left: this.left() + 'px'});
 
             // получаем значение
-            if (this.dataset()) {
-                var cm = this.getControlMgr();
-                var dataset = cm.getByGuid(this.dataset());
-                if (dataset) {
-                    var rootElem = dataset.root()? cm.getDB().getObj(dataset.root()): null;
-                    if (rootElem) {
-                        var col = rootElem.getCol('DataElements');
-                        var datafield = col.get(this.dataField());
-                        var cursor = dataset.cursor();
-                        // TODO добавить вывод значения 
-                    }
-                }
+            if (this.dataset() && this.dataField()) {
+                var dataset = that.getControlMgr().getByGuid(that.dataset());
+                item.val(dataset? dataset.getField(this.dataField()): '');
             }
+
+            // сохранять при потере фокуса
+            item.blur(function(event) {
+                if (that.dataset() && that.dataField()) {
+                    var dataset = that.getControlMgr().getByGuid(that.dataset());
+                    dataset.setField(that.dataField(), $(this).val());
+                }
+            });
         }
         return vDataEdit;
     }

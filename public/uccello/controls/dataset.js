@@ -123,6 +123,13 @@ define(
 				
 			},
 
+			setField: function(name, value) {
+				if (this.pvt.dataObj)
+					return this.pvt.dataObj.set(name, value);
+				else
+					return undefined;
+			},
+
 			// Properties
 
             root: function (value) {

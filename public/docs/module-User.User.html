@@ -41,7 +41,7 @@
     
         
 <dt>
-    <h4 class="name" id="User"><span class="type-signature"></span>new User<span class="signature">(name)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="User"><span class="type-signature"></span>new User<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -57,54 +57,6 @@
 
     
 
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Имя пользователя</td>
-        </tr>
-
-    
-    </tbody>
-</table>
     
 
     
@@ -130,7 +82,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.js.html">user.js</a>, <a href="user.js.html#line18">line 18</a>
+        <a href="user.js.html">uccello/connection/user.js</a>, <a href="user.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -180,7 +132,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="getName"><span class="type-signature"></span>getName<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+    <h4 class="name" id="addSession"><span class="type-signature"></span>addSession<span class="signature">(session)</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -188,7 +140,7 @@
 
     
     <div class="description">
-        Получить имя пользователя
+        Добавить сессию пользователя
     </div>
     
 
@@ -196,6 +148,49 @@
 
     
 
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>session</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
     
 
     
@@ -221,7 +216,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.js.html">user.js</a>, <a href="user.js.html#line25">line 25</a>
+        <a href="user.js.html">uccello/connection/user.js</a>, <a href="user.js.html#line43">line 43</a>
     </li></ul></dd>
     
 
@@ -244,24 +239,120 @@
     
 
     
-    <h5>Returns:</h5>
+
     
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeSession"><span class="type-signature"></span>removeSession<span class="signature">(id)</span><span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Удалить сессию по ID
+    </div>
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
             
 
+            <td class="type">
+            
+            </td>
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
+            
 
+            
 
-    </dd>
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="user.js.html">uccello/connection/user.js</a>, <a href="user.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
 </dl>
 
-        
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
@@ -282,13 +373,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-Connect.html">Connect</a></li><li><a href="module-Logger.html">Logger</a></li><li><a href="module-Session.html">Session</a></li><li><a href="module-Socket.html">Socket</a></li><li><a href="module-User.html">User</a></li></ul><h3>Classes</h3><ul><li><a href="module-Connect.Connect.html">Connect</a></li><li><a href="module-Logger.Logger.html">Logger</a></li><li><a href="module-Session.Session.html">Session</a></li><li><a href="module-Socket.Socket.html">Socket</a></li><li><a href="module-User.User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getNewLid">getNewLid</a></li><li><a href="global.html#runCommand">runCommand</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-ClientConnection.html">ClientConnection</a></li><li><a href="module-Connect.html">Connect</a></li><li><a href="module-Event.html">Event</a></li><li><a href="module-Logger.html">Logger</a></li><li><a href="module-MemDataBase.html">MemDataBase</a></li><li><a href="module-Router.html">Router</a></li><li><a href="module-Session.html">Session</a></li><li><a href="module-Socket.html">Socket</a></li><li><a href="module-User.html">User</a></li><li><a href="module-VisualContext.html">VisualContext</a></li></ul><h3>Classes</h3><ul><li><a href="_.html"></a></li><li><a href="_.html">_</a></li><li><a href="module-ClientConnection.ClientConnection.html">ClientConnection</a></li><li><a href="module-Connect.Connect.html">Connect</a></li><li><a href="module-Logger.Logger.html">Logger</a></li><li><a href="module-MemDataBase.MemDataBase.html">MemDataBase</a></li><li><a href="module-Router.Router.html">Router</a></li><li><a href="module-Session.Session.html">Session</a></li><li><a href="module-Socket.Socket.html">Socket</a></li><li><a href="module-User.User.html">User</a></li><li><a href="module-VisualContext.VisualContext.html">VisualContext</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_buildMetaInfo">_buildMetaInfo</a></li><li><a href="global.html#_genericSetter">_genericSetter</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#addConstr">addConstr</a></li><li><a href="global.html#authenticate">authenticate</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#countConnect">countConnect</a></li><li><a href="global.html#countSession">countSession</a></li><li><a href="global.html#countUser">countUser</a></li><li><a href="global.html#deauthenticate">deauthenticate</a></li><li><a href="global.html#del">del</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#enable">enable</a></li><li><a href="global.html#genDeltas">genDeltas</a></li><li><a href="global.html#getByGuid">getByGuid</a></li><li><a href="global.html#getDB">getDB</a></li><li><a href="global.html#getLid">getLid</a></li><li><a href="global.html#getParent">getParent</a></li><li><a href="global.html#getRoot">getRoot</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadRes">loadRes</a></li><li><a href="global.html#move">move</a></li><li><a href="global.html#onDisconnect">onDisconnect</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#routerAuthenticate">routerAuthenticate</a></li><li><a href="global.html#routerConnect">routerConnect</a></li><li><a href="global.html#routerCreateContext">routerCreateContext</a></li><li><a href="global.html#routerCreateRoot">routerCreateRoot</a></li><li><a href="global.html#routerDeauthenticate">routerDeauthenticate</a></li><li><a href="global.html#subscribeRoot">subscribeRoot</a></li><li><a href="global.html#undo">undo</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Thu Sep 18 2014 10:38:19 GMT+0300 (Калининградское время (зима))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha9</a> on Sat Nov 29 2014 11:43:13 GMT+0300 (Беларусь (зима))
 </footer>
 
 <script> prettyPrint(); </script>
