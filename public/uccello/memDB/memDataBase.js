@@ -495,6 +495,7 @@ define(
 						break;
 					case "valid": 
 						this.pvt.validVersion=val;
+						console.log("*** valid setversion "+val);
 						/*if ((val<=this.pvt.sentVersion) && (val<=this.pvt.version)) this.pvt.validVersion=val; 
 						else {
 							console.log("*** valid setversion error");
@@ -627,6 +628,7 @@ define(
 			 * @param {number} version - номер версии, до которого нужно откатить
              */			
 			undo: function(version) {	
+				console.log("****************************************  UNDO MODIFICATIONS!!!!!!!!!!");
 				if (version<this.getVersion("valid"))
 					return false;
 				for (var i=0; i<this.countRoot(); i++)

@@ -119,7 +119,7 @@ define(
 				var datasetGuid3 = dbc.guid();
 
                 // добавить второй датагрид Detail
-                var addDetail2 = false;
+                var addDetail2 = true;
                 // добавить датагрид контрактов
                 var addDetailContract = true;
                 // добавить датагрид третий уровень
@@ -159,7 +159,7 @@ define(
                                         },
                                         "collections": {}
                                     },
-                                    {
+                                    { // деталь 2-го уровня - контактные лица
                                         "$sys": {
                                             "guid": datasetGuid2,
                                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
@@ -173,7 +173,7 @@ define(
                                         },
                                         "collections": {}
                                     },
-                                    {
+                                    { // деталь 2-го уровня - контракты
                                         "$sys": {
                                             "guid": datasetGuid21,
                                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
@@ -182,18 +182,18 @@ define(
                                             "Id": 125,
                                             "Name": "DatasetContract",
                                             "Root": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
-                                            "Active": true,
+                                            "Active": false,
                                             "Master": datasetGuid
                                         },
                                         "collections": {}
                                     },
-                                    {
+                                    { // деталь 3-го уровня - адреса контактов
                                         "$sys": {
                                             "guid": datasetGuid3,
                                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                                         },
                                         "fields": {
-                                            "Id": 123,
+                                            "Id": 226,
                                             "Name": "Dataset3",
                                             "Root": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
                                             "Active": true,
@@ -242,7 +242,7 @@ define(
                                     "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                                 },
                                 "fields": {
-                                    "Id": 320,
+                                    "Id": 321,
                                     "Name": "DataEdit2",
                                     "Top": "230",
                                     "Left": "10",
@@ -433,7 +433,7 @@ define(
                                 "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                         },
                             "fields": {
-                            "Id": 24,
+                            "Id": 224,
                                 "Name": "DataGridDetail2",
                                 "Top": "311",
                                 "Left": "380",
@@ -454,7 +454,7 @@ define(
                                 "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                             },
                             "fields": {
-                                "Id": 24,
+                                "Id": 225,
                                 "Name": "DataGridDetailContract",
                                 "Top": "189",
                                 "Left": "380",
@@ -475,7 +475,7 @@ define(
                             "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                             },
                             "fields": {
-                            "Id": 24,
+                            "Id": 226,
                                 "Name": "DataGridDetailContract",
                                 "Top": "67",
                                 "Left": "1022",

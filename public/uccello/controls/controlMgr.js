@@ -191,24 +191,25 @@ define(
                 return new ViewSet(this, ini);
             },
 
+			
             /**
              * Функция-оболочка в которой завернуты системные действия. Должна вызываться компонентами
-			 * в ответ на действия пользователя, содержательные методы передаются в cb
-             * @param context Контекст в котором запускается колбек
-             * @param cb {function} Колбек
-             * @param args {object} Аргумент колбека
+			 * в ответ на действия пользователя, содержательные методы передаются в функцию f
+             * @param context Контекст в котором запускается прикладная функция
+             * @param f {function} функция
+             * @param args {object} Аргументы функции
              */
-            userEventHandler: function(context, cb, args) {
+            userEventHandler: function(context, f, args) {
                 var nargs = [];
 				var db = this.getDB();
 				var vc = this.getContext();
                 if (args) nargs = [args];
 				//  стартовать транзакцию
 				if (vc) vc.tranStart();
-                if (cb) cb.apply(context, nargs);
+                if (f) f.apply(context, nargs);
                 if (this.autoSendDeltas())
                     db.getController().genDeltas(db.getGuid());
-                this.render(undefined);
+                this.render(undefined); // TODO - на сервере это не вызывать
 				//  закрыть транзакцию
 				if (vc) vc.tranCommit();
             },

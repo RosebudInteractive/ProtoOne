@@ -37,7 +37,7 @@ define(
 				// DEBUG
 				//master = undefined;
 				//END DEBUG
-				if (master) {
+				if (master && this.active()) {
 					this.getControlMgr().get(master).event.on({
 						type: 'refreshData',
 						subscriber: this,
@@ -52,20 +52,22 @@ define(
 			},
 			
 			dataInit: function() {
-				this._dataInit(true)
+				if (this.active()) this._dataInit(true);
 			},
 			
 			processDelta: function() {
 				
 				var obj = this.getObj();
 				if (obj.isFldModified("Cursor")) {
-					console.log("processDelta "+this.getGuid());
+					console.log("processDelta "+this.id());
 					this._setDataObj(this.cursor());
 				}
 	
 			},
 			
 			_dataInit: function(onlyMaster) {
+				
+				if (!this.active()) return;
 				console.log("dataInit "+this.getGuid());
 				function icb() {				
 					function refrcb() {
@@ -129,7 +131,7 @@ define(
 				var newVal = this._genericSetter("Root", value);
 				
 				if (newVal!=oldVal) {
-					console.log("refreshData in root() "+this.getGuid());
+					console.log("refreshData in root() "+this.id());
 					this.event.fire({
 						type: 'refreshData',
 						target: this				
@@ -145,7 +147,7 @@ define(
                 var newVal=this._genericSetter("Cursor", value);
 				if (newVal!=oldVal) {
 					this._setDataObj(value);
-					console.log("move cursor "+this.getGuid());
+					console.log("move cursor "+this.id());
 					this.event.fire({
 						type: 'moveCursor',
 						target: this				
@@ -157,6 +159,9 @@ define(
 			
 			// установить "курсор" на внутренний объект dataobj
 			_setDataObj: function(value) {
+				if (value == undefined) {
+					console.log("SET CURSOR TO UNDEF");
+				}
 				console.log("SET CuRSOR "+value);
 				this.pvt.dataObj =  this.getControlMgr().getDB().getObj(this.root()).getCol("DataElements").getObjById(value); // TODO поменять потом
 			},

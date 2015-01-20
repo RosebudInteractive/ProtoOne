@@ -69,6 +69,9 @@ define(
 					this.getLog().add(o);
 				}
 				else { // запоминаем свойства только если ЛОГ выключен - это соответствует режиму применения дельты
+					if (field == "Cursor") {
+						console.log("MEMCURSOR " +value);
+					}
 					if (!this.isFldModified(field)) { // запоминаем измененные свойства
 						this.pvt.fldLog[field] = oldValue;
 					}

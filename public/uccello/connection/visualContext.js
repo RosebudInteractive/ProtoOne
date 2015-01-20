@@ -122,10 +122,10 @@ define(
 				return db;
             },
 			
-			//
+			// "транзакции" для буферизации вызовов методов
 			tranStart: function() {
 				if (this.pvt.inTran) return;
-				console.log("START TRAN");
+				//console.log("START TRAN");
 				this.pvt.inTran = true;
 				this.pvt.tranQueue = [];
 			},
@@ -151,9 +151,6 @@ define(
 					this.pvt.tranQueue.push({context:context, method:method, args: args});
 				else method.apply(context,args);
 			},
-			
-			
-			//
 			
 			// добавляем новый набор данных - мастер-слейв варианты
 			// params.rtype = "res" | "data"

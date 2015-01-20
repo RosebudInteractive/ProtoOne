@@ -353,7 +353,7 @@ define(
 					if (db.getVersion("valid")<result.data.dbVersion) 
 						db.setVersion("valid", result.data.dbVersion); 
 						
-					if (db.getVersion("valid")>result.data.dbVersion) {
+					if (db.getVersion("valid")>result.data.dbVersion) { // TODO? - по идее откатить нужно все версии, не только валидные
 						// откатить до версии сервера
 						db.undo(result.data.dbVersion);
 					}
