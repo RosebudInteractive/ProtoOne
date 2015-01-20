@@ -98,8 +98,8 @@ define(['./socket', '../controls/aComponent'], function(Socket, AComponent) {
         },
 		
 		// todo перенести отсюда в uccelloClt
-		createSrvContext: function(guid, callback) {
-			this.socket.send({action:"createContext", type:'method', contextGuid:guid}, callback);
+		createSrvContext: function(guid, formGuid, callback) {
+			this.socket.send({action:"createContext", type:'method', contextGuid:guid, formGuid: formGuid}, callback);
 		}
 		
     });

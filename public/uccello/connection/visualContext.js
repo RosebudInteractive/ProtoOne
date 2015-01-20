@@ -76,7 +76,7 @@ define(
 						params2.compcb = createCompCallback;
 					this.pvt.db = this.createDb(controller,params2);
 					//var roots = [controller.guid(), controller.guid()]; // TODO убрать потом
-					var roots = [controller.guid()];
+					var roots = [params.formGuid];
 					this.loadNewRoots(roots, { rtype: "res", compcb: params2.compcb},params2.cbfinal);
 					this.dataBase(this.pvt.db.getGuid());
 				}

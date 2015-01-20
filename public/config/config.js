@@ -16,7 +16,8 @@ config.controls = [
     {className:'DbNavigator', component:'ProtoControls/dbNavigator', viewsets:['simpleview'], guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
     {className:'Edit', component:'ProtoControls/edit', viewsets:['simpleview'], guid:'f79d78eb-4315-5fac-06e0-d58d07572482'},
     {className:'MatrixGrid', component:'ProtoControls/matrixGrid', viewsets:['simpleview'], guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
-    {className:'PropEditor', component:'ProtoControls/propEditor', viewsets:['simpleview'], guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'}
+    {className:'PropEditor', component:'ProtoControls/propEditor', viewsets:['simpleview'], guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
+    {className:'Label', component:'ProtoControls/label', viewsets:['simpleview'], guid:'32932036-3c90-eb8b-dd8d-4f19253fabed'}
 ];
 
 // для клиентской обработки

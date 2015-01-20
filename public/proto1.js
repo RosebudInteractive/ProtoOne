@@ -173,10 +173,9 @@ $(document).ready( function() {
              * Создать серверный контекст
              * @param guid - гуид ресурса, который загружается в контекст
              */
-            window.createContext = function(guid) {
+            window.createContext = function(guid, formGuid) {
                 $(that.resultForm).empty();
-				uccelloClt.getClient().createSrvContext(guid, function(result){
-                    console.log(result)
+				uccelloClt.getClient().createSrvContext(guid, formGuid, function(result){
                     that.masterGuid = result.masterGuid;
 					that.vc = result.vc;
                     that.rootsGuids = result.roots;
@@ -250,6 +249,7 @@ $(document).ready( function() {
 					
 				});
             }
+
 
             /**
              * Кнопка query

@@ -5,8 +5,8 @@ if (typeof define !== 'function') {
 
 define(
     ['./connection/socket', './system/logger', './dataman/dataman', 'ws', './connection/router', './connection/userSessionMgr',
-	'./system/rpc','./controls/controlMgr'],
-    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr, Rpc, ControlMgr) {
+	'./system/rpc','./controls/controlMgr', './resman/resman'],
+    function(Socket, Logger, Dataman, WebSocketServer, Router, UserSessionMgr, Rpc, ControlMgr, Resman) {
 	
 		var guidServer = "d3d7191b-3b4c-92cc-43d4-a84221eb35f5";
 	
@@ -33,16 +33,10 @@ define(
 
                 this.pvt.userSessionMgr = new UserSessionMgr(this.getRouter(), {authenticate:options.authenticate, rpc:this.pvt.rpc, proxyServer: this.pvt.proxyServer, config:options.config});
                 this.pvt.dataman = new Dataman(this.getRouter(), that.getUserMgr().getController());
+                this.pvt.resman = new Resman(that.getUserMgr().getController());
                 this.pvt.config = options.config;
 
                 this.getRouter().add('getGuids', function(data, done) {
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
-                    console.log(that.getUserMgr().getController().guid());
                     var user = that.getUserMgr().getConnect(data.connectId).getSession().getUser();
                     var userData = user.getData();
                     var result = {
@@ -144,7 +138,7 @@ define(
 			loadResources: function(rootGuids, done) {
 				var result = [];
 				for (var i=0; i<rootGuids.length; i++) 
-					result.push(this.pvt.userSessionMgr.loadRes(rootGuids[i]));
+					result.push(this.pvt.resman.loadRes(rootGuids[i]));
 				console.log("load resources");
 				if (done !== undefined && (typeof done == "function")) done({ datas: result });
 				return { datas: result };// временная заглушка
