@@ -21,6 +21,7 @@ define(
             init: function(cm, params){
 				this.pvt = {};
 				this.pvt.controlMgr = cm;
+				this.pvt.isProcessed = true; // признак обработки входящей дельты
 				this.pvt.isRendered = false;
 				this._buildMetaInfo(cm.getDB());
 
@@ -172,6 +173,16 @@ define(
 				else
 				  this.pvt.isRendered = false;
 				return this.pvt.isRendered;
+			},
+			
+			_isProcessed: function(value) {
+				if (value === undefined)
+					return this.pvt.isProcessed;
+				if (value)
+				  this.pvt.isProcessed = true;
+				else
+				  this.pvt.isProcessed = false;
+				return this.pvt.isProcessed;
 			},
 			
             /**

@@ -143,19 +143,27 @@ define(
 			
 			
 			processDelta: function() { // ВРЕМЕННЫЙ ВАРИАНТ
-				for (var g in this.pvt.compByGuid) this.pvt.compByGuid[g].processDelta(); 
+				// TODO оптимизировать: пробегать только те контролы, в которых имплементирован processDelta
+				for (var g in this.pvt.compByGuid) {
+					var c = this.pvt.compByGuid[g];
+					if (!c._isProcessed()) c.processDelta(); 
+				}
+				
+				// сбросить признак isProcessed
+				for (var g in this.pvt.compByGuid) this.pvt.compByGuid[g]._isProcessed(false);
+				
 			},
 
             /**
 			 * Рендеринг компонентов интерфейса
 			 *  @param component - корневой элемент, с которого запускается рендеринг, если undef, то с корня
              */				
-			render: function(component, options) {
+			render: function(component, options, pd) {
 			
 				if (!this.pvt.subsInitFlag) this.subsInit();  // если не выполнена постинициализация, то запустить
 				if (!this.pvt.dataInitFlag) this.dataInit();
 				
-				this.processDelta();
+				if (pd) this.processDelta();
 			
 				var c = (component === undefined) ? this.getRoot()  : component;
 				if (c.getRoot() != this.getRoot()) return;

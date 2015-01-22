@@ -25,9 +25,15 @@ define(
 			processDelta: function() {
 				var dsg = this.dataset();
 				if (dsg) { // TODO лучше сделать через методы компонента чем лезть в ОД
-					var dso = this.getControlMgr().get(dsg).getObj();
-					if (dso.isFldModified("Root") || dso.isFldModified("Cursor")) this._isRendered(false);
+					var dsc = this.getControlMgr().get(dsg);
+					var dso = dsc.getObj();
+					if (!dsc._isProcessed()) dsc.processDelta(); // если у датасета processDelta еще не вызван, то вызвать его
+					if (dsc.root() && this.getControlMgr().getDB().getObj(dsc.root()))
+					  var dsmod = this.getControlMgr().getDB().getObj(dsc.root()).isDataModified();
+					else dsmod = false;
+					if (dso.isFldModified("Root") || dso.isFldModified("Cursor") || dsmod) this._isRendered(false);
 				}
+				this._isProcessed(true);
 
 			},
 

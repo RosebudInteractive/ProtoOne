@@ -21,6 +21,7 @@ define(
 				pvt.state = 0;
 				pvt.fldLog = {};
 				pvt.colLog = {};				// лог изменений в дочерних коллекциях
+				pvt.isModified = false;
 				
 				if (!parent.obj) {	// корневой объект
 					pvt.col = null;
@@ -167,6 +168,11 @@ define(
 					
 			},
 			
+			_setModified: function(field,oldValue) {
+				this.pvt.fldLog[field] = oldValue;
+				this.pvt.isModified = true;
+			},
+			
 			getOldFldVal: function(fldName) {
 				if (fldName in this.pvt.fldLog) 
 					return this.pvt.fldLog[fldName];
@@ -180,7 +186,10 @@ define(
 				for (var col in this.pvt.colLog) {
 					this.pvt.colLog[col].del = {};
 					this.pvt.colLog[col].add = {};
+					this.pvt.colLog[col].mod = {};
 				}
+				
+				this.pvt.isModified = false;
 				
 			},
 			
@@ -189,12 +198,20 @@ define(
 					this.pvt.colLog[colName] = {};
 					this.pvt.colLog[colName].del = {};
 					this.pvt.colLog[colName].add = {};
+					this.pvt.colLog[colName].mod = {};
 				}
 				this.pvt.colLog[colName][op][obj.getGuid()] = obj;
+				this.pvt.isModified = true;
 			},
 			
 			getLogCol: function(colName) {
 				return this.pvt.colLog[colName];
+			},
+			
+			// возвращает true, если данные были изменены
+			isDataModified: function() {
+				return this.pvt.isModified;
+				
 			}
 			
 			

@@ -68,17 +68,20 @@ define(
 					o.flds[field] = {old:oldValue,new:value};
 					this.getLog().add(o);
 				}
-				else { // запоминаем свойства только если ЛОГ выключен - это соответствует режиму применения дельты
-					if (field == "Cursor") {
+				//else { // запоминаем свойства только если ЛОГ выключен - это соответствует режиму применения дельты
+					/*if (field == "Cursor") {
 						console.log("MEMCURSOR " +value);
-					}
+					}*/
 					if (!this.isFldModified(field)) { // запоминаем измененные свойства
-						this.pvt.fldLog[field] = oldValue;
+						this._setModified(field,oldValue);
+						//this.pvt.fldLog[field] = oldValue;
 					}
-				}
+					if (this.getParent()) this.getParent().logColModif("mod",this.getColName(),this);
+					
+				//}
 				
 				this.event.fire({
-                    type: 'mod',
+                    type: "mod",
                     target: this,
 					field: field
 				});	

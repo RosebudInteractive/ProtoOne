@@ -97,13 +97,13 @@ define (
                     var handlers = this._eventHandlers[eventArgs.type];
                     for (var i=0, len=handlers.length; i < len; i++){
                         var handler = handlers[i];
-                        try {
+                        //try {
                             handler.callback.call(handler.subscriber, eventArgs);
-                        }
+                        /*}
                         catch (e) {
                             console.error(["ERROR executing fire:", handler, e]);
                             throw e;
-                        }
+                        }*/
                     }
                 }
             },

@@ -71,7 +71,7 @@ $(document).ready( function() {
                 if (roots)
                 for(var i=0, len=roots.length; i<len; i++) {
                     cm = uccelloClt.getContextCM(roots[i]);
-                    cm.render(undefined, {rootContainer: '#result'+that.rootsContainers[roots[i]]});
+                    cm.render(undefined, {rootContainer: '#result'+that.rootsContainers[roots[i]]},true);
                 }
 
                 // редактирование ячеек грида
