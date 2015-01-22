@@ -10,24 +10,26 @@ define(
                 item = $(vDataEdit._templates['edit']).attr('id', this.getLid());
                 var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
                 $(parent).append(item);
+
+                // сохранять при потере фокуса
+                item.blur(function () {
+                    if (that.dataset() && that.dataField()) {
+                        that.getControlMgr().userEventHandler(that, function () {
+                            var dataset = that.getControlMgr().getByGuid(that.dataset());
+                            dataset.setField(that.dataField(), item.val());
+                        });
+                    }
+                });
             }
+
+            // координаты контрола
             item.css({top: this.top() + 'px', left: this.left() + 'px'});
 
-            // получаем значение
+            // устанавливаем значение
             if (this.dataset() && this.dataField()) {
                 var dataset = that.getControlMgr().getByGuid(that.dataset());
                 item.val(dataset? dataset.getField(this.dataField()): '');
             }
-
-            // сохранять при потере фокуса
-            item.blur(function () {
-                if (that.dataset() && that.dataField()) {
-                    that.getControlMgr().userEventHandler(that, function () {
-                        var dataset = that.getControlMgr().getByGuid(that.dataset());
-                        dataset.setField(that.dataField(), item.val());
-                    });
-                }
-            });
         }
         return vDataEdit;
     }
