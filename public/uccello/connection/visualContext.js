@@ -93,7 +93,7 @@ define(
 
 					this.pvt.db = controller.newDataBase({name:"Slave"+guid, proxyMaster : { connect: params.socket, guid: guid}}, function(){
                             // подписываемся на все руты
-                            that.getDB().subscribeRoots("res", cb, createCompCallback);
+                            that.getDB().subscribeRoots("all", cb, createCompCallback);
 							that.dataBase(that.getDB().getGuid());
 						});
 				}
