@@ -31,10 +31,13 @@ $(document).ready( function() {
                 sessionId:$.url('#sid'),
                 container:'#result0',
                 callback: function(){
-                    if (uccelloClt.getLoggedUser()) {
+                    var user = uccelloClt.getLoggedUser();
+                    if (user) {
                         $('#login').hide(); $('#logout').show();
+                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.pvt.sessionId);
                     } else {
                         $('#logout').hide(); $('#login').show();
+                        $('#userInfo').html('');
                     }
                 },
                 controlsPath:'./ProtoControls/',
@@ -142,10 +145,11 @@ $(document).ready( function() {
                         $('#login').hide(); $('#logout').show();
                         $('#loginForm').hide();
                         $('#loginError').hide();
-
+                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.pvt.sessionId);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#loginError').html('Неправильный логин или пароль').show();
+                        $('#userInfo').html('');
                     }
                 });
             }
@@ -156,6 +160,7 @@ $(document).ready( function() {
             window.logout = function(){
                 uccelloClt.getClient().deauthenticate(function(){
                     $('#login').show(); $('#logout').hide();
+                    $('#userInfo').html('');
                 });
                 return false;
             }

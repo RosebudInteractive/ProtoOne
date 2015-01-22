@@ -106,13 +106,32 @@
       },
       {
         "$sys":{
-          "guid":"265802e9-d5d5-953c-2712-1f4d8fa0e948",
+          "guid":"6a7cea85-dd15-d958-fffc-1f15e155fcdf",
           "typeGuid":"affff8b1-10b0-20a6-5bb5-a9d88334b48e"
         },
         "fields":{
           "Id":320,
-          "Name":"DataEdit1",
+          "Name":"DataEditId",
           "Top":"200",
+          "Left":"10",
+          "Width":100,
+          "Height":20,
+          "Dataset":"061b1347-18a2-a829-fcce-ba59058b4bdf",
+          "DataField":"Id"
+        },
+        "collections":{
+
+        }
+      },
+      {
+        "$sys":{
+          "guid":"265802e9-d5d5-953c-2712-1f4d8fa0e948",
+          "typeGuid":"affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+        },
+        "fields":{
+          "Id":321,
+          "Name":"DataEdit1",
+          "Top":"230",
           "Left":"10",
           "Width":100,
           "Height":20,
@@ -125,18 +144,56 @@
       },
       {
         "$sys":{
+          "guid":"dd28f133-8a15-1212-eb7b-1ebd8dfaaa4d",
+          "typeGuid":"affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+        },
+        "fields":{
+          "Id":322,
+          "Name":"DataEditCountry",
+          "Top":"260",
+          "Left":"10",
+          "Width":100,
+          "Height":20,
+          "Dataset":"061b1347-18a2-a829-fcce-ba59058b4bdf",
+          "DataField":"country"
+        },
+        "collections":{
+
+        }
+      },
+      {
+        "$sys":{
           "guid":"a0a48c6f-0b42-ad7e-2008-799292f85595",
           "typeGuid":"affff8b1-10b0-20a6-5bb5-a9d88334b48e"
         },
         "fields":{
-          "Id":321,
-          "Name":"DataEdit2",
-          "Top":"230",
+          "Id":322,
+          "Name":"DataEditCity",
+          "Top":"290",
           "Left":"10",
           "Width":100,
           "Height":20,
           "Dataset":"061b1347-18a2-a829-fcce-ba59058b4bdf",
           "DataField":"city"
+        },
+        "collections":{
+
+        }
+      },
+      {
+        "$sys":{
+          "guid":"95384974-2a8f-ddaa-2f47-d8b55cc3774f",
+          "typeGuid":"affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+        },
+        "fields":{
+          "Id":322,
+          "Name":"DataEditAddress",
+          "Top":"320",
+          "Left":"10",
+          "Width":100,
+          "Height":20,
+          "Dataset":"061b1347-18a2-a829-fcce-ba59058b4bdf",
+          "DataField":"address"
         },
         "collections":{
 
