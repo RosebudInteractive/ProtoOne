@@ -40,16 +40,22 @@ define(
 			_subsDataSet: function() {
 				var dsg = this.dataset();
 				if (dsg) {
-					this.getControlMgr().get(dsg).event.on({
+					var ds = this.getControlMgr().get(dsg);
+					ds.event.on({
 						type: 'refreshData',
 						subscriber: this,
 						callback: function(){ this._isRendered(false); }
 					});
-					this.getControlMgr().get(dsg).event.on({
+					ds.event.on({
 						type: 'moveCursor',
 						subscriber: this,
 						callback: function(){ this._isRendered(false); }
 					});
+					ds.event.on({
+						type: 'modFld',
+						subscriber: this,
+						callback: function(){ this._isRendered(false); }
+					});					
 				}
 			},
 

@@ -133,8 +133,14 @@ define(
 			},
 
 			setField: function(name, value) {
-				if (this.pvt.dataObj)
-					return this.pvt.dataObj.set(name, value);
+				if (this.pvt.dataObj) {
+					r = this.pvt.dataObj.set(name, value);
+					this.event.fire({
+						type: 'modFld',
+						target: this				
+					});						
+					return r;
+				}
 				else
 					return undefined;
 			},
