@@ -20,6 +20,15 @@ config.controls = [
     {className:'Label', component:'ProtoControls/label', viewsets:['simpleview'], guid:'32932036-3c90-eb8b-dd8d-4f19253fabed'}
 ];
 
+config.dataSource = {
+    mysql: {
+        host:     'localhost',
+        user:     'root',
+        password: '111111',
+        database: 'uccello'
+    }
+};
+
 // для клиентской обработки
 if (module == undefined) var module = {};
 module.exports = config;

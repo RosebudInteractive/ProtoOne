@@ -151,9 +151,10 @@ define(
              */			
 			queryDatas: function(rootGuids, expr, done) {
 				console.log("queryDatas");
-				var result = { datas: [this.pvt.dataman.loadQuery(rootGuids[0],expr)] };
-				if (done !== undefined && (typeof done == "function")) done(result);
-				return result;
+				if (done !== undefined && (typeof done == "function"))
+                    this.pvt.dataman.loadQuery(rootGuids[0],expr, function(result){
+                        done({ datas: [result] });
+                    });
 			}
 			
 			

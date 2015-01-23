@@ -96,7 +96,7 @@
           "Name":"DataGridMaster",
           "Top":"67",
           "Left":"10",
-          "Width":370,
+          "Width":380,
           "Height":120,
           "Dataset":"061b1347-18a2-a829-fcce-ba59058b4bdf"
         },
@@ -208,8 +208,8 @@
           "Id":24,
           "Name":"DataGridDetail",
           "Top":"67",
-          "Left":"380",
-          "Width":640,
+          "Left":"390",
+          "Width":660,
           "Height":120,
           "Dataset":"eefbcccf-743a-66a4-c3a2-4751d2a334f5"
         },
@@ -359,8 +359,8 @@
           "Id":224,
           "Name":"DataGridDetail2",
           "Top":"311",
-          "Left":"380",
-          "Width":640,
+          "Left":"390",
+          "Width":660,
           "Height":120,
           "Dataset":"eefbcccf-743a-66a4-c3a2-4751d2a334f5"
         },
@@ -377,8 +377,8 @@
           "Id":225,
           "Name":"DataGridDetailContract",
           "Top":"189",
-          "Left":"380",
-          "Width":640,
+          "Left":"390",
+          "Width":660,
           "Height":120,
           "Dataset":"e559320d-d80d-48f7-ed4e-0ac63587e606"
         },
@@ -395,7 +395,7 @@
           "Id":226,
           "Name":"DataGridDetailContract",
           "Top":"67",
-          "Left":"1022",
+          "Left":"1052",
           "Width":450,
           "Height":120,
           "Dataset":"92720532-a58f-68bb-6e5a-02b28239e312"

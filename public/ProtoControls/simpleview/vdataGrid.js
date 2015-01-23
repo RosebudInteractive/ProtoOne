@@ -42,14 +42,16 @@ define(
                 var row = $(vDataGrid._templates['row']);
                 var obj = col.get(0);
                 var idIndex = null;
-                for (var i = 0, len = obj.count(); i < len; i++) {
-                    var name = obj.getFieldName(i);
-                    if (name == 'Id')
-                        idIndex = i;
-                    var cell = $(vDataGrid._templates['header']).html(obj.getFieldName(i));
-                    row.append(cell);
+                if (obj) {
+                    for (var i = 0, len = obj.count(); i < len; i++) {
+                        var name = obj.getFieldName(i);
+                        if (name == 'Id')
+                            idIndex = i;
+                        var cell = $(vDataGrid._templates['header']).html(obj.getFieldName(i));
+                        row.append(cell);
+                    }
+                    table.append(row);
                 }
-                table.append(row);
 
                 // rows
                 var cursor = dataset.cursor();
