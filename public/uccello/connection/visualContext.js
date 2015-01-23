@@ -26,7 +26,8 @@ define(
             metaFields: [
                 {fname: "DataBase", ftype: "string"}, // runtime
 				{fname: "Kind", ftype: "string"}, // , fdefault: "master" enum (master,slave
-				{fname: "MasterGuid", ftype: "string"}
+				{fname: "MasterGuid", ftype: "string"},
+				{fname: "ContextGuid", ftype: "string"}
             ],
             metaCols: [],
 
@@ -97,7 +98,8 @@ define(
 							that.dataBase(that.getDB().getGuid());
 						});
 				}
-                
+
+				this.contextGuid(this.getGuid());
             },
 
             /**
@@ -232,7 +234,11 @@ define(
 			masterGuid: function (value) {
                 return this._genericSetter("MasterGuid", value);
             },
-			
+
+			contextGuid: function (value) {
+                return this._genericSetter("ContextGuid", value);
+            },
+
 			getInterface: function() {
 				return Interfvc;
 			}

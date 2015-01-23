@@ -337,6 +337,7 @@ $(document).ready( function() {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
                                 var option = $('<option/>');
+                                option.data('ContextGuid', item.get('ContextGuid'));
                                 option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
@@ -390,11 +391,12 @@ $(document).ready( function() {
 
             $('#userContext').change(function(){
                 that.currContext = $(this).val();
+                that.vc = $(this).find('option[value="'+that.currContext+'"]').data('ContextGuid');
                 // запросить гуиды рутов
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:that.currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
                     that.createTabs();
-                    that.selectContext({guid: that.currContext, side: "server"});
+                    that.selectContext({guid: that.currContext, vc:that.vc,  side: "server"});
                 });
             });
 
