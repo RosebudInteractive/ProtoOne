@@ -20,8 +20,8 @@ define(
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
                         host:     'localhost',
-                        user:     'root',
-                        password: '111111',
+                        user:     'rudenko',
+                        password: 'vrWSvr05',
                         database: 'uccello'
                     });
                 }
