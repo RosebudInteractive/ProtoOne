@@ -679,7 +679,14 @@ define(
              */
             getGuid: function() {
                 return this.pvt.guid;
-            }
+            },
+			
+			
+			resetModifLog: function() {
+				for (var g in this.pvt.objs) 
+					this.getObj(g).resetModifFldLog();	
+			}
+			
         });
 		return MemDataBase;
 	}
