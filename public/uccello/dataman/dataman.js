@@ -16,7 +16,7 @@ define(
 				var that = this;
                 router.add('query', function(){ return that.query.apply(that, arguments); });
 
-                if (this.pvt.dataSource == 'local') {
+                if (this.pvt.dataSource == 'mysql') {
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
                         host:     'localhost',
