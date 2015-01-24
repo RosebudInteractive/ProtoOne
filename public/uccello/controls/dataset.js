@@ -77,11 +77,9 @@ define(
 			_dataInit: function(onlyMaster) {
 				
 				if (!this.active()) return;
-				console.log("dataInit "+this.getGuid());
 				function icb() {				
 					function refrcb() {
 						this._initCursor();
-						console.log("refreshData in cb of datainit "+this.getGuid());
 						this.event.fire({
 							type: 'refreshData',
 							target: this				
@@ -106,14 +104,20 @@ define(
 						if (master) { // если детейл, то экспрешн
 							params.expr = this.getControlMgr().get(master).getField("Id");
 						}
+<<<<<<< HEAD
 						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
+=======
+						this.getControlMgr().getContext().loadNewRoots([rg],params, function(){
+							icb(arguments);
+						});
+>>>>>>> origin/master
 					}
 					else this._initCursor();
 				}
 			},	
 
 			_initCursor: function() {
-				console.log("initCursor "+this.getGuid());
+				//console.log("initCursor "+this.getGuid());
 				var rg = this.root();
 				if (rg) {
 					var dataRoot = this.getControlMgr().getDB().getObj(rg);
