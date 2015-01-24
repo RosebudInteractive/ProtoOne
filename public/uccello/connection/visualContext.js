@@ -164,7 +164,7 @@ define(
 				
 					function icb(r) {
 							var res = that.getDB().addRoots(r.datas, params.compcb);
-							if (cb) cb({guids:rootGuids});  
+							if (cb) cb({guids:rootGuids});
 					}
 								
 					if (params.rtype == "res") {

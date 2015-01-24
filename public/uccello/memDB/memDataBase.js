@@ -386,7 +386,7 @@ define(
 					for (var cn in sobj.collections) {
 						for (var co in sobj.collections[cn]) 
 							ideser(that,sobj.collections[cn][co],{obj:o, colName:cn});
-					}	
+					}
 					return o;
 				};
 				// TODO пока предполагаем что такого объекта нет, но если он есть что делаем?	

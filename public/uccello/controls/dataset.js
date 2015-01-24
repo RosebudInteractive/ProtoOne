@@ -85,9 +85,9 @@ define(
 						this.event.fire({
 							type: 'refreshData',
 							target: this				
-						});	
-						
-					}			
+						});
+
+					}
 					that.getControlMgr().userEventHandler(that, refrcb );
 				}
 			
@@ -106,11 +106,7 @@ define(
 						if (master) { // если детейл, то экспрешн
 							params.expr = this.getControlMgr().get(master).getField("Id");
 						}
-						console.time('loadQuery '+rg);
-						this.getControlMgr().getContext().loadNewRoots([rg],params, function(){
-							console.timeEnd('loadQuery '+rg);
-							icb(arguments);
-						});
+						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
 					}
 					else this._initCursor();
 				}

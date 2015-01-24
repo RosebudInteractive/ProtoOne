@@ -320,8 +320,8 @@ define(
 					
 					rootObj.getLog().applyDelta(cdelta);
 					console.log("VALID:"+db.getVersion("valid")+"draft:"+db.getVersion()+"sent:"+db.getVersion("sent"));
-				}			
-				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]); 
+				}
+				this.propagateDeltas(dbGuid,srcDbGuid,cur[tr]);
 				delete cur[tr];
 
                 this.event.fire({
