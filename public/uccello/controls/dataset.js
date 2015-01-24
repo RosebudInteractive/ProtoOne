@@ -104,13 +104,7 @@ define(
 						if (master) { // если детейл, то экспрешн
 							params.expr = this.getControlMgr().get(master).getField("Id");
 						}
-<<<<<<< HEAD
 						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
-=======
-						this.getControlMgr().getContext().loadNewRoots([rg],params, function(){
-							icb(arguments);
-						});
->>>>>>> origin/master
 					}
 					else this._initCursor();
 				}
