@@ -20,8 +20,8 @@ define(
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
                         host:     'localhost',
-                        user:     'rudenko',
-                        password: 'vrWSvr05',
+                        user:     'rudenko',//'root',//'rudenko',
+                        password: 'vrWSvr05',//'111111', //'vrWSvr05',
                         database: 'uccello'
                     });
                 }
@@ -113,6 +113,7 @@ define(
             },
 
             getCompany: function(guidRoot, num, done) {
+                console.time('TIME getCompany');
                 var source = this.getDataSource();
                 var that = this;
                 if (source == 'mysql') {
@@ -121,6 +122,7 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "59583572-20fa-1f58-8d3f-5114af0f2c51", rows)
                         done(result);
+                        console.timeEnd('TIME getCompany');
                     });
                 } else {
                     var result = {
@@ -184,6 +186,7 @@ define(
             },
 
             getContact: function(guidRoot, expression, done){
+                console.time('TIME getContact');
                 var source = this.getDataSource();
                 var that = this;
                 if (source == 'mysql') {
@@ -192,6 +195,7 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "73596fd8-6901-2f90-12d7-d1ba12bae8f4", rows)
                         done(result);
+                        console.timeEnd('TIME getContact');
                     });
                 } else {
                     var result = {
@@ -316,6 +320,7 @@ define(
             },
 
             getContract: function(guidRoot, expression, done){
+                console.time('TIME getContract');
                 var source = this.getDataSource();
                 var that = this;
                 if (source == 'mysql') {
@@ -324,6 +329,7 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "08a0fad1-d788-3604-9a16-3544a6f97721", rows)
                         done(result);
+                        console.timeEnd('TIME getContract');
                     });
                 } else {
                     var result = {
@@ -424,6 +430,7 @@ define(
             },
 
             getAddress: function(guidRoot, expression, done){
+                console.time('TIME getAddress');
                 var source = this.getDataSource();
                 var that = this;
                 if (source == 'mysql') {
@@ -432,6 +439,7 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "16ec0891-1144-4577-f437-f98699464948", rows)
                         done(result);
+                        console.timeEnd('TIME getAddress');
                     });
                 } else {
                     var result = {
