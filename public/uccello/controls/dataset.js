@@ -106,7 +106,11 @@ define(
 						if (master) { // если детейл, то экспрешн
 							params.expr = this.getControlMgr().get(master).getField("Id");
 						}
-						this.getControlMgr().getContext().loadNewRoots([rg],params, icb);
+						console.time('loadQuery '+rg);
+						this.getControlMgr().getContext().loadNewRoots([rg],params, function(){
+							console.timeEnd('loadQuery '+rg);
+							icb(arguments);
+						});
 					}
 					else this._initCursor();
 				}
