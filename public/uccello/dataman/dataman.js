@@ -48,7 +48,7 @@ define(
                 var hehe = {};
                 switch (guidRoot) {
                     case 'ab573a02-b888-b3b4-36a7-38629a5fe6b7':
-                        this.getCompany(guidRoot, 100, done);
+                        this.getCompany(guidRoot, 10000, done);
                         break;
                     case 'b49d39c9-b903-cccd-7d32-b84beb1b76dc':
                         this.getContact(guidRoot, expression, done);
