@@ -390,8 +390,15 @@ $(document).ready( function() {
             $('#loginForm').click(function(e){e.stopPropagation();});
 
             $('#userContext').change(function(){
+
                 that.currContext = $(this).val();
                 that.vc = $(this).find('option[value="'+that.currContext+'"]').data('ContextGuid');
+
+                // создавать при выборе контекста
+                var createForm = $('#createForm').is(':checked');
+                // гуид выбранной формы
+                var formGuid = $('#selForm').val();
+
                 // запросить гуиды рутов
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:that.currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;

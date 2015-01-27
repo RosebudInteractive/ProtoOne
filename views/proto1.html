@@ -35,11 +35,15 @@
     <input type="button" value="subscribe user" onclick="subscribeRootSys();">
     <input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
     <select id="userContext"></select>
-    <select id="selForm">
-        <option value="88b9280f-7cce-7739-1e65-a883371cd498">test</option>
-        <option value="02fad346-dc0b-7d02-b395-729186589611">company</option>
-        <option value="0fab9989-3047-26b6-326c-19b78d66e4d1">contact</option>
-    </select>
+    <table style="display: inline-block;vertical-align: bottom;;">
+        <tr><td><input id="createForm" type="checkbox"><label for="createForm">создавать при выборе контекста</label> </td></tr>
+        <tr><td><select id="selForm">
+            <option value="88b9280f-7cce-7739-1e65-a883371cd498">test</option>
+            <option value="02fad346-dc0b-7d02-b395-729186589611">company</option>
+            <option value="0fab9989-3047-26b6-326c-19b78d66e4d1">contact</option>
+        </select></td></tr>
+    </table>
+
     <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext(++contextGuid, $('#selForm').val());">
     <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext(++contextGuid);">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
