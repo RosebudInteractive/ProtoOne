@@ -7,7 +7,7 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vForm._templates['form']).attr('id', this.getLid());
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootForm);
+                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
                 $(parent).append(item);
             }
             item.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
