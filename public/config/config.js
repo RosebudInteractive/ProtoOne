@@ -10,6 +10,8 @@ config.controls = [
     {className:'ADataModel', component:'uccello/controls/aDataModel', guid:'5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47'},
     {className:'Dataset', component:'uccello/controls/dataset', guid:'3f3341c7-2f06-8d9d-4099-1075c158aeee'},
     {className:'Container', component:'ProtoControls/container', viewsets:['simpleview'], guid:'1d95ab61-df00-aec8-eff5-0f90187891cf'},
+    {className:'FormParam', component:'uccello/controls/formParam', guid:'4943ce3e-a6cb-65f7-8805-ec339555a981'},
+    {className:'Form', component:'uccello/controls/form', viewsets:['simpleview'], guid:'7f93991a-4da9-4892-79c2-35fe44e69083'},
     {className:'Button', component:'ProtoControls/button', viewsets:['simpleview'], guid:'af419748-7b25-1633-b0a9-d539cada8e0d'},
     {className:'DataGrid', component:'ProtoControls/dataGrid', viewsets:['simpleview'], guid:'ff7830e2-7add-e65e-7ddf-caba8992d6d8'},
     {className:'DataEdit', component:'ProtoControls/dataEdit', viewsets:['simpleview'], guid:'affff8b1-10b0-20a6-5bb5-a9d88334b48e'},
