@@ -135,12 +135,6 @@ define(
                     conn.query('SELECT * FROM company LIMIT ?', [num?num:0], function(err, rows) {
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "59583572-20fa-1f58-8d3f-5114af0f2c51", rows);
-
-                        /*var fs = require('fs');
-                        fs.writeFile(__dirname + '/tables/company.json', JSON.stringify(result), function(err) {
-                            if(err) throw err;
-                        });*/
-
                         done(result);
                     });
                 } else
@@ -178,7 +172,6 @@ define(
             },
 
             getAddress: function(guidRoot, expression, done){
-                console.time('TIME getAddress');
                 var source = this.getDataSource();
                 var that = this;
                 if (source == 'mysql') {
@@ -187,7 +180,6 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "16ec0891-1144-4577-f437-f98699464948", rows);
                         done(result);
-                        console.timeEnd('TIME getAddress');
                     });
                 } else
                     this.readTableFile('address-'+expression+'.json', guidRoot, "16ec0891-1144-4577-f437-f98699464948", expression, done);
