@@ -248,7 +248,8 @@ $(document).ready( function() {
             window.createRoot = function(){
 			
                 if (!that.currRoot) return;
-				uccelloClt.getContext().loadNewRoots([uccelloClt.getController().guid()],{rtype:"res"},function(result){
+				var formGuid = $('#selForm').val();
+				uccelloClt.getContext().loadNewRoots([formGuid] /*uccelloClt.getController().guid()]*/,{rtype:"res"},function(result){
                     that.rootsGuids.push(result.guids[0]); 
 					that.createTab(result.guids[0]);
 					renderControls(null, result.guids[0]);
