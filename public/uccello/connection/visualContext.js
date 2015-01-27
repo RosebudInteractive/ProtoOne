@@ -64,7 +64,17 @@ define(
 						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);						
 						controller.setDefaultCompCallback(createCompCallback); 
 					}
-					 
+				else // пока что считаем, что если нет финального колбэка - мы на сервере
+					createCompCallback = function (obj) { 
+						if (obj.getTypeGuid() == "4943ce3e-a6cb-65f7-8805-ec339555a981") { // Form Param
+							obj.event.on({ 
+								type: "mod", // TODO не забыть про отписку
+								subscriber: that,
+								callback: that._onModifParam
+							});
+						}
+					}
+					
 				if (this.kind()=="master") { // главная (master)
 				
 					if (params.rpc) {
@@ -101,6 +111,13 @@ define(
 
 				this.contextGuid(this.getGuid());
             },
+			
+            /**
+             * Обработчик изменения параметра
+             */			
+			_onModifParam: function(ev) {
+				console.log("CHANGE PARAMS"+ev.field);
+			},
 
             /**
              * Создать базу данных - ВРЕМЕННАЯ ЗАГЛУШКА!
