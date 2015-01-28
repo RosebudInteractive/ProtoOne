@@ -284,6 +284,16 @@ $(document).ready( function() {
                 console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));
             }
 
+            /**
+             * присваивается значение параметру формы
+             * @param value
+             */
+            window.setParam = function(value) {
+                var cm = uccelloClt.getContextCM(that.currRoot);
+                var formParamOut = cm.getByName("FormParamOut");
+                formParamOut.value(value);
+            },
+
 
 
             // ---------------------------------------------------------------------------------------------------------

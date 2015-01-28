@@ -18,6 +18,18 @@ define(
 
             init: function(cm,params){
                 this._super(cm,params);
+            },
+
+            type: function (value) {
+                return this._genericSetter("Type", value);
+            },
+
+            kind: function (value) {
+                return this._genericSetter("Kind", value);
+            },
+
+            value: function (value) {
+                return this._genericSetter("Value", value);
             }
         });
         return FormParam;
