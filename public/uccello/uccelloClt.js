@@ -63,7 +63,7 @@ define(
                     that.pvt.controller = new MemDBController();
 
                     that.pvt.controller.event.on({
-                        type: 'applyDeltas',
+                        type: 'endApplyDeltas',
                         subscriber: this,
                         callback: function(args){
                             renderControls();

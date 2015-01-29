@@ -325,8 +325,9 @@ define(
 				delete cur[tr];
 
                 this.event.fire({
-                    type: 'applyDeltas',
-                    target: this
+                    type: 'endApplyDeltas',
+                    target: this,
+					db: db
                 });
             },
 

@@ -53,6 +53,8 @@ define(
 				this.pvt.proxyServer = params.proxyServer;
 				this.pvt.components = params.components;
 				this.pvt.config = params.config;
+				this.pvt.formParams = {};
+				this.pvt.memParams = [];
 
 				var that = this;	
 				var createCompCallback = null;
@@ -72,7 +74,18 @@ define(
 								subscriber: that,
 								callback: that._onModifParam
 							});
+							
+							if (!that.pvt.formParams[obj.get("Name")])  // добавить в список параметров
+								that.pvt.formParams[obj.get("Name")] = [];
+							that.pvt.formParams[obj.get("Name")].push(obj);
+						
 						}
+						// подписаться на событие завершения applyDelta в контроллере, чтобы переприсвоить параметры 
+						controller.event.on({
+							type: 'endApplyDeltas',
+							subscriber: that,
+							callback: that._setFormParams
+						});					
 					}
 					
 				if (this.kind()=="master") { // главная (master)
@@ -117,6 +130,28 @@ define(
              */			
 			_onModifParam: function(ev) {
 				console.log("CHANGE PARAMS"+ev.field);
+				//var pname = target.get("Name");
+				this.pvt.memParams.push(ev.target);
+				/*if (!this.pvt.formParam[pname]) return;
+				for (var i=0; i<this.pvt.formParam[pname].length; i++) {
+					var obj = this.pvt.formParam[pname][i];
+					if (obj.get("Kind")=="in")
+						this.pvt.memParams.push(obj);
+				}*/
+			},
+			
+			// отрабатывает только на сервере
+			_setFormParams: function(ev) {
+				for (var i=0; i<this.pvt.memParams.length; i++) {
+					var obj = this.pvt.memParams[i];
+					var pn = obj.get("Name");
+					for (var j=0; j<this.pvt.formParams[pn].length; j++) {
+						var obj2 = this.pvt.formParams[pn][j];
+						if (obj2.get("Kind")=="in") obj2.set("Value",obj.get("Value"));						
+					}
+				}
+				this.pvt.memParams = [];
+				this.getDB().getController().genDeltas(this.getDB().getGuid());
 			},
 
             /**
