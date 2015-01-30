@@ -27,8 +27,8 @@ define(
                     var rowTr = $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         e.stopPropagation();
-                        vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                         that.getControlMgr().userEventHandler(that, function(){
+                            vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                             that.getControlMgr().getByGuid(that.dataset()).cursor(rowTr.attr('data-id'));
                         });
                     }
