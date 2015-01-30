@@ -27,10 +27,9 @@ define(
                     var rowTr = $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         e.stopPropagation();
+                        vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                         that.getControlMgr().userEventHandler(that, function(){
-                            rowTr.parent().find('.row.active').removeClass('active');
-                            rowTr.addClass('active');
-                            dataset.cursor(rowTr.attr('data-id'));
+                            that.getControlMgr().getByGuid(that.dataset()).cursor(rowTr.attr('data-id'));
                         });
                     }
                 });
@@ -98,6 +97,21 @@ define(
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
             console.timeEnd('renderGrid '+this.name());
+        }
+
+        vDataGrid.renderCursor = function(id) {
+            var that = this;
+            var table = $('#' + this.getLid()).find('.table');
+            var rowTr = table.find('.row.data[data-id='+id+']');
+            table.find('.row.active').removeClass('active');
+            rowTr.addClass('active');
+        }
+
+        vDataGrid.renderCell = function(id, index, value) {
+            var that = this;
+            var table = $('#' + this.getLid()).find('.table');
+            var rowTr = table.find('.row.data[data-id='+id+']');
+            $(rowTr.children()[index]).html(value);
         }
         return vDataGrid;
     }
