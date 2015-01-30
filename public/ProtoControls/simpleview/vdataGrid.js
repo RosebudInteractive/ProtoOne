@@ -9,6 +9,10 @@ define(
             var that = this;
             var grid = $('#' + this.getLid());
             var table = grid.find('.table');
+            var dataset = null;
+            var ids = [];
+
+            // если не создан грид
             if (grid.length == 0) {
                 grid = $(vDataGrid._templates['grid']).attr('id', this.getLid());
                 table = grid.find('.table');
@@ -19,6 +23,19 @@ define(
                     vDataGrid.render.apply(that);
                 });
 
+                // клик на таблицу
+                table.click(function(e){
+                    var rowTr = $(e.target).parent();
+                    if (rowTr.hasClass('data')){
+                        e.stopPropagation();
+                        that.getControlMgr().userEventHandler(that, function(){
+                            rowTr.parent().find('.row.active').removeClass('active');
+                            rowTr.addClass('active');
+                            dataset.cursor(rowTr.data('Id'));
+                        });
+                    }
+                });
+
             } else {
                 table.empty();
             }
@@ -26,7 +43,7 @@ define(
             var cm = this.getControlMgr();
             var db = cm.getDB();
             var rootElem = null;
-            var dataset = null;
+
             if (this.dataset()) {
                 dataset = cm.getByGuid(this.dataset());
                 if (dataset) {
@@ -55,39 +72,37 @@ define(
                 }
 
                 // rows
-                var cursor = dataset.cursor();
+                var cursor = dataset.cursor(), rows = '', cursorIndex=-1;
                 for (var i = 0, len = col.count(); i < len; i++) {
                     var obj = col.get(i);
                     var id = null;
-                    var row = $(vDataGrid._templates['row']);
+                    rows += '<div class="row data">';
 
                     // добавляем ячейка
                     for (var j = 0, len2 = obj.count(); j < len2; j++) {
                         var text = obj.get(j);
-                        var cell = $(vDataGrid._templates['cell']).html(text? text: '&nbsp;');
-                        row.append(cell);
+                        rows += '<div class="cell">'+(text? text: '&nbsp;')+'</div>';
                         if (idIndex == j)
                             id = text;
                     }
+                    rows += '</div>';
+                    ids.push(id);
 
-                    // клик на строку
-                    (function(row, id) {
-                        row.click(function(){
-                            var rowTr = $(this);
-                            that.getControlMgr().userEventHandler(that, function(){
-                                rowTr.parent().find('.row.active').removeClass('active'); // TODO Зачем 2 раза  userEventHandler ?
-                                rowTr.addClass('active');
-                                dataset.cursor(id);
-                            });
-                        });
-                    })(row, id);
-
-                    // выделяем текущий курсор
+                    // запоминаем текущий курсор
                     if (cursor == id)
-                        $(row).addClass('active');
-
-                    table.append(row);
+                        cursorIndex = i;
                 }
+                table.append(rows);
+
+                // проставляем Id
+                rows = table.find('.row.data');
+                for(var i= 0, len=rows.length; i<len; i++) {
+                    $(rows[i]).data('Id', ids[i]);
+                }
+
+                // устанавливаем курсор
+                if (cursorIndex != -1)
+                    table.find('.row.data:eq('+cursorIndex+')').addClass('active');
             }
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
