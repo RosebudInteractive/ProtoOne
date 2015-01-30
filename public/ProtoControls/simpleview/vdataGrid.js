@@ -10,7 +10,6 @@ define(
             var grid = $('#' + this.getLid());
             var table = grid.find('.table');
             var dataset = null;
-            var ids = [];
 
             // если не создан грид
             if (grid.length == 0) {
@@ -31,7 +30,7 @@ define(
                         that.getControlMgr().userEventHandler(that, function(){
                             rowTr.parent().find('.row.active').removeClass('active');
                             rowTr.addClass('active');
-                            dataset.cursor(rowTr.data('Id'));
+                            dataset.cursor(rowTr.attr('data-id'));
                         });
                     }
                 });
@@ -75,30 +74,22 @@ define(
                 var cursor = dataset.cursor(), rows = '', cursorIndex=-1;
                 for (var i = 0, len = col.count(); i < len; i++) {
                     var obj = col.get(i);
-                    var id = null;
-                    rows += '<div class="row data">';
+                    var id = null, cells = '';
 
                     // добавляем ячейка
                     for (var j = 0, len2 = obj.count(); j < len2; j++) {
                         var text = obj.get(j);
-                        rows += '<div class="cell">'+(text? text: '&nbsp;')+'</div>';
+                        cells += '<div class="cell">'+(text? text: '&nbsp;')+'</div>';
                         if (idIndex == j)
                             id = text;
                     }
-                    rows += '</div>';
-                    ids.push(id);
+                    rows += '<div class="row data" data-id="'+id+'">'+cells+'</div>';
 
                     // запоминаем текущий курсор
                     if (cursor == id)
                         cursorIndex = i;
                 }
                 table.append(rows);
-
-                // проставляем Id
-                rows = table.find('.row.data');
-                for(var i= 0, len=rows.length; i<len; i++) {
-                    $(rows[i]).data('Id', ids[i]);
-                }
 
                 // устанавливаем курсор
                 if (cursorIndex != -1)
