@@ -70,14 +70,17 @@ $(document).ready( function() {
             window.renderControls = function(cm, renderRoot) {
                 var roots = [];
                 roots = cm? [that.currRoot] : (renderRoot?[renderRoot]:that.rootsGuids);
-
-                if (roots)
-                for(var i=0, len=roots.length; i<len; i++) {
-                    cm = uccelloClt.getContextCM(roots[i]);
+				var options = [];
+                for(var i=0, len=roots.length; i<len; i++) 
+					options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
+               
+                if (roots) 
+					uccelloClt.getContext().renderForms(roots, options,true);
+   /*                 cm = uccelloClt.getContextCM(roots[i]);
 					if (cm)
 						cm.render(undefined, {rootContainer: '#result'+that.rootsContainers[roots[i]]},true);
                 }
-
+*/
                 // редактирование ячеек грида
                 $(".divCell").editable(function(value, settings) {
                     return(value);
@@ -290,8 +293,9 @@ $(document).ready( function() {
              */
             window.setParam = function(value) {
                 var cm = uccelloClt.getContextCM(that.currRoot);
-                var formParamOut = cm.getByName("FormParamOut");
-                formParamOut.value(value);
+                var formParam1 = cm.getByName("FormParam1");
+                formParam1.value(value);
+				sendDeltas(true);
             },
 
 

@@ -172,7 +172,7 @@ define(
                 if (this.pvt.viewSets[i].enable())
                     this.pvt.viewSets[i].render(c, options);
 
-				this.getDB().resetModifLog();
+				//this.getDB().resetModifLog();
 				for (var g in this.pvt.compByGuid) { //TODO нужно это делать не для всех компонентов или рендерить всегда с рута
 					//this.pvt.compByGuid[g].getObj().resetModifFldLog();	// обнуляем "измененные" поля в объектах 
 					this.pvt.compByGuid[g]._isRendered(true);			// выставляем флаг рендеринга
@@ -217,7 +217,8 @@ define(
                 if (f) f.apply(context, nargs);
                 if (this.autoSendDeltas())
                     db.getController().genDeltas(db.getGuid());
-                this.render(undefined); // TODO - на сервере это не вызывать
+                //this.render(undefined); // TODO - на сервере это не вызывать
+				if (vc) vc.renderAll();
 				//  закрыть транзакцию
 				if (vc) vc.tranCommit();
             },

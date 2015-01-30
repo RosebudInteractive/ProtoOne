@@ -64,7 +64,7 @@ define(
 						if (!(that.pvt.cmgs[rootGuid]))
 							that.pvt.cmgs[rootGuid] = new ControlMgr(that.getDB(),rootGuid,that);
 						that.createComponent.apply(that, [obj, that.pvt.cmgs[rootGuid]]);						
-						controller.setDefaultCompCallback(createCompCallback); 
+						 
 					}
 				else // пока что считаем, что если нет финального колбэка - мы на сервере
 					createCompCallback = function (obj) { 
@@ -82,11 +82,12 @@ define(
 						}
 						// подписаться на событие завершения applyDelta в контроллере, чтобы переприсвоить параметры 
 						controller.event.on({
-							type: 'endApplyDeltas',
+							type: 'end2ApplyDeltas',
 							subscriber: that,
 							callback: that._setFormParams
 						});					
 					}
+				controller.setDefaultCompCallback(createCompCallback);
 					
 				if (this.kind()=="master") { // главная (master)
 				
@@ -129,15 +130,7 @@ define(
              * Обработчик изменения параметра
              */			
 			_onModifParam: function(ev) {
-				console.log("CHANGE PARAMS"+ev.field);
-				//var pname = target.get("Name");
 				this.pvt.memParams.push(ev.target);
-				/*if (!this.pvt.formParam[pname]) return;
-				for (var i=0; i<this.pvt.formParam[pname].length; i++) {
-					var obj = this.pvt.formParam[pname][i];
-					if (obj.get("Kind")=="in")
-						this.pvt.memParams.push(obj);
-				}*/
 			},
 			
 			// отрабатывает только на сервере
@@ -253,6 +246,20 @@ define(
 
 			getComponent: function(className){
 				return this.pvt.components[className];
+			},
+			
+			renderAll: function() {
+				for (var g in this.pvt.cmgs) {
+					this.pvt.cmgs[g].render();			
+				}
+				this.getDB().resetModifLog();
+			},
+			
+			renderForms: function(roots,options,pd) {
+				for (var i=0; i<roots.length; i++) {
+					this.pvt.cmgs[roots[i]].render(undefined,options[i],pd);
+				}
+				this.getDB().resetModifLog();
 			},
 			
 			dispose: function(cb) {			

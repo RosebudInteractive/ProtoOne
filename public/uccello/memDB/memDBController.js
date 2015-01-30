@@ -82,6 +82,13 @@ define(
                 console.timeEnd('applyDeltas');
 				console.log("VALID:"+this.getDB(data.dbGuid).getVersion("valid")+"draft:"+this.getDB(data.dbGuid).getVersion()+"sent:"+this.getDB(data.dbGuid).getVersion("sent"));
                 done({data: {dbVersion: this.getDB(data.dbGuid).getVersion() }});
+				
+				this.event.fire({
+                    type: 'end2ApplyDeltas',
+                    target: this,
+					db: this.getDB(data.dbGuid)
+                });
+				
             },
 			
 			// сгенерировать guid
@@ -281,7 +288,7 @@ define(
 						return;				
 					}				
 				}
-				else {
+				else { 
 					if (lval == dver - 1) { // нормальная ситуация, на клиент пришла дельта с подтвержденной версией +1
 						// если к тому времени на клиенте появилась еще драфт версия - откатываем ее чтобы не было конфликтов
 						if (ldraft>lval) db.undo(lval); 
@@ -329,6 +336,7 @@ define(
                     target: this,
 					db: db
                 });
+
             },
 
 
