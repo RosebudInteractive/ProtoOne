@@ -12,14 +12,14 @@ define(
 				this.pvt = {};
 				this.pvt.router = router;
 				this.pvt.controller = controller;
-				this.pvt.dataSource = 'local'; // 'local' or 'mysql'
+				this.pvt.dataSource = 'mysql'; // 'local' or 'mysql'
 				var that = this;
                 router.add('query', function(){ return that.query.apply(that, arguments); });
 
                 if (this.pvt.dataSource == 'mysql') {
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
-                        host:     'localhost',
+                        host:     '54.93.99.65',
                         user:     'rudenko',//'root',//'rudenko',
                         password: 'vrWSvr05',//'111111', //'vrWSvr05',
                         database: 'uccello'
