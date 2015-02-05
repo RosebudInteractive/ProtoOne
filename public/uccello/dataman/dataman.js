@@ -19,9 +19,9 @@ define(
                 if (this.pvt.dataSource == 'mysql') {
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
-                        host:     '54.93.99.65',
-                        user:     'rudenko',//'root',//'rudenko',
-                        password: 'vrWSvr05',//'111111', //'vrWSvr05',
+                        host:     '54.93.99.65', // 'localhost'
+                        user:     'root',//'root',//'rudenko',
+                        password: 'gjcnvjlt',//'111111', //'vrWSvr05',
                         database: 'uccello'
                     });
                 }
