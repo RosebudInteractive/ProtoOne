@@ -20,8 +20,8 @@ define(
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
                         host:     '54.93.99.65', // 'localhost'
-                        user:     'root',//'root',//'rudenko',
-                        password: 'gjcnvjlt',//'111111', //'vrWSvr05',
+                        user:     'rudenko',//'root',//'rudenko',
+                        password: 'vrWSvr05',//'111111', //'vrWSvr05',
                         database: 'uccello'
                     });
                 }
@@ -150,7 +150,6 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "73596fd8-6901-2f90-12d7-d1ba12bae8f4", rows);
                         done(result);
-                        console.timeEnd('TIME getContact');
                     });
                 } else
                     this.readTableFile('contact-'+expression+'.json', guidRoot, "73596fd8-6901-2f90-12d7-d1ba12bae8f4", expression, done);
@@ -165,7 +164,6 @@ define(
                         if (err) throw err;
                         var result = that.createResult(guidRoot, "08a0fad1-d788-3604-9a16-3544a6f97721", rows);
                         done(result);
-                        console.timeEnd('TIME getContract');
                     });
                 } else
                     this.readTableFile('contract-'+expression+'.json', guidRoot, "08a0fad1-d788-3604-9a16-3544a6f97721", expression, done);
