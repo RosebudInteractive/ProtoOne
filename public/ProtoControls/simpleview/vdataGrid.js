@@ -11,6 +11,13 @@ define(
             var table = grid.find('.table');
             var dataset = null;
 
+
+            // если надо лишь передвинуть курсор
+            if (vDataGrid.isOnlyCursor.apply(this) && this.dataset()) {
+                vDataGrid.renderCursor.apply(this, [this.getControlMgr().getByGuid(this.dataset()).cursor()]);
+                return;
+            }
+
             // если не создан грид
             if (grid.length == 0) {
                 grid = $(vDataGrid._templates['grid']).attr('id', this.getLid());
@@ -105,6 +112,10 @@ define(
             var rowTr = table.find('.row.data[data-id='+id+']');
             table.find('.row.active').removeClass('active');
             rowTr.addClass('active');
+        }
+
+        vDataGrid.isOnlyCursor = function() {
+            return false;
         }
 
         vDataGrid.renderCell = function(id, index, value) {
