@@ -123,6 +123,25 @@ define(
                 return this.pvt.user;
             },
 
+            /**
+             * Добавить контекст
+			 * если side = server, то создается новый серверный контекст, на который подписывается клиент
+			 * если side = client, то создается клиентский контекст
+             * @param side - master|slave
+			 * @param formGuid - гуид ресурса формы, который загружается в контекст
+			 * @param cbfinal - конечный коллбэк
+             */			
+			createContext(side,formGuid, cbfinal) {
+				if (side == "server") {
+					that=this;
+					this.createSrvContext(formGuid, function(result){
+						that.setContext(result,cbfinal);
+					});
+				}
+				else { // side == "client"
+				}
+			},
+
 			setContext: function(params, cbfinal) {
                 var that = this;
 				function done() {
