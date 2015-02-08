@@ -116,7 +116,7 @@
               },
               "fields": {
                 "Id": 22,
-                "Name": "DataGridMaster",
+                "Name": "DataGridCompany",
                 "Top": "67",
                 "Left": "10",
                 "Width": 380,
@@ -223,7 +223,7 @@
               },
               "fields": {
                 "Id": 24,
-                "Name": "DataGridDetail",
+                "Name": "DataGridContact",
                 "Top": "67",
                 "Left": "390",
                 "Width": 660,
@@ -367,7 +367,7 @@
               },
               "fields": {
                 "Id": 224,
-                "Name": "DataGridDetail2",
+                "Name": "DataGridContact2",
                 "Top": "311",
                 "Left": "390",
                 "Width": 660,
@@ -384,7 +384,7 @@
               },
               "fields": {
                 "Id": 225,
-                "Name": "DataGridDetailContact",
+                "Name": "DataGridContact",
                 "Top": "189",
                 "Left": "390",
                 "Width": 660,
@@ -401,7 +401,7 @@
               },
               "fields": {
                 "Id": 226,
-                "Name": "DataGridDetailAddress",
+                "Name": "DataGridAddress",
                 "Top": "67",
                 "Left": "1052",
                 "Width": 450,
