@@ -74,7 +74,7 @@ $(document).ready( function() {
                 for(var i=0, len=roots.length; i<len; i++) 
 					options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
                
-                if (roots) 
+                if (roots.length > 0)
 					uccelloClt.getContext().renderForms(roots, options,true);
    /*                 cm = uccelloClt.getContextCM(roots[i]);
 					if (cm)
