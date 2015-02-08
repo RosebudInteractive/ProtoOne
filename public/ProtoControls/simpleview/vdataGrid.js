@@ -103,11 +103,20 @@ define(
             }
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
+			
+			// TODO? возможно надо перенести в datagrid или dataControl
+			if (dataset) {
+				this.pvt.renderDataVer = dataset.getDataVer();
+				
+			}
+			
+			
+			
+			
             console.timeEnd('renderGrid '+this.name());
         }
 
         vDataGrid.renderCursor = function(id) {
-            var that = this;
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');
             table.find('.row.active').removeClass('active');
@@ -115,11 +124,17 @@ define(
         }
 
         vDataGrid.isOnlyCursor = function() {
-            return false;
+			if (this.dataset()) {
+				var dataset = this.getControlMgr().getByGuid(this.dataset());
+				if (this.pvt.renderDataVer == dataset.getDataVer())
+					return true;
+				else
+					return false;
+			}
+			else return false;
         }
 
         vDataGrid.renderCell = function(id, index, value) {
-            var that = this;
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');
             $(rowTr.children()[index]).html(value);

@@ -26,7 +26,7 @@ define(
                 this._super(cm,params);
                 this.pvt.params = params;
 				this.pvt.dataObj = null;
-				
+				this.pvt.dataVer = 0; // версия данных (локально)		
 				
 				this.event = new Event();
 				
@@ -79,6 +79,7 @@ define(
 				if (!this.active()) return;
 				function icb() {				
 					function refrcb() {
+						this.pvt.dataVer++;
 						this._initCursor();
 						this.event.fire({
 							type: 'refreshData',
@@ -141,6 +142,10 @@ define(
 				}
 				else
 					return undefined;
+			},
+			
+			getDataVer: function() {
+				return this.pvt.dataVer;
 			},
 
 			// Properties
