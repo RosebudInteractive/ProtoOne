@@ -54,7 +54,7 @@
                     },
                     "fields": {
                       "Id": 122,
-                      "Name": "DatasetMaster",
+                      "Name": "DatasetCompany",
                       "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
                       "Active": true
                     },
@@ -98,7 +98,7 @@
                     },
                     "fields": {
                       "Id": 226,
-                      "Name": "Dataset3",
+                      "Name": "DatasetAddress",
                       "Root": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
                       "Active": true,
                       "Master": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
@@ -401,7 +401,7 @@
               },
               "fields": {
                 "Id": 226,
-                "Name": "DataGridDetailContract",
+                "Name": "DataGridDetailAddress",
                 "Top": "67",
                 "Left": "1052",
                 "Width": 450,
