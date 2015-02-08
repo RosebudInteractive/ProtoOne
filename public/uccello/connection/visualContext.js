@@ -257,7 +257,8 @@ define(
 			
 			renderForms: function(roots,options,pd) {
 				for (var i=0; i<roots.length; i++) {
-					this.pvt.cmgs[roots[i]].render(undefined,options[i],pd);
+					if (this.pvt.cmgs[roots[i]])
+						this.pvt.cmgs[roots[i]].render(undefined,options[i],pd);
 				}
 				this.getDB().resetModifLog();
 			},
