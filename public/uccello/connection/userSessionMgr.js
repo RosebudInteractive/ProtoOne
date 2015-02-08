@@ -10,6 +10,8 @@ define(
         var UserSessionMgr = Class.extend({
 
             init: function(router, options){
+				this.pvt = {};
+				this.pvt.contextCounter = 1;
                 this.sessions = {};
                 this.connects = {};
                 this.users = {};
@@ -43,7 +45,11 @@ define(
 			getController: function() {
 				return this.dbcsys;
 			},
-
+			
+			getNewContextId: function() {
+				return this.pvt.contextCounter++;
+			},
+			
             /**
              * Подключение с клиента
              * @param data
@@ -99,8 +105,9 @@ define(
                 var user = this.getConnect(data.connectId).getSession().getUser();
 				//console.log("connectID "+data.connectId);
                 var controller = this.getController();
+				var contextId = this.getNewContextId();
                 var context = new VisualContext(this.cmsys, {parent: user, colName: "VisualContext", socket: this.getConnect(data.connectId).getConnection(), rpc: this.rpc, proxyServer: this.proxyServer,
-                    ini: {fields: {Id: data.contextGuid, Name: 'context'+data.contextGuid, Kind: "master"}}, config:this.options.config, formGuid:data.formGuid});
+                    ini: {fields: {Id: data.contextId, Name: 'context'+contextId, Kind: "master"}}, config:this.options.config, formGuid:data.formGuid});
                 var result = {masterGuid: context.dataBase(), roots: controller.getDB(context.dataBase()).getRootGuids(), vc: context.getGuid()};
                 controller.genDeltas(this.dbsys.getGuid());
                 done(result);

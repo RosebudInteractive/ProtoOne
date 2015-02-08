@@ -180,11 +180,11 @@ $(document).ready( function() {
 
             /**
              * Создать серверный контекст
-             * @param guid - гуид ресурса, который загружается в контекст
+             * @param formGuid - гуид ресурса, который загружается в контекст
              */
-            window.createContext = function(guid, formGuid) {
+            window.createContext = function(formGuid) {
                 $(that.resultForm).empty();
-				uccelloClt.getClient().createSrvContext(guid, formGuid, function(result){
+				uccelloClt.createSrvContext(formGuid, function(result){
                     that.masterGuid = result.masterGuid;
 					that.vc = result.vc;
                     that.rootsGuids = result.roots;

@@ -139,7 +139,7 @@ define(
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
-                        var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
+                    var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
 					that.pvt.vc = vc;
 					that.pvt.vcproxy = vc.getProxy();
 				}
@@ -149,6 +149,15 @@ define(
 					this.pvt.vc.dispose(done); //delDataBase(this.pvt.dbcontext.getGuid(), done);
 				else
 					done();			
+			},
+			
+            /**
+             * Создать серверный контекст
+			 * @param formGuid
+			 * @param callback
+             */
+			createSrvContext: function(formGuid, callback) {
+				this.getClient().socket.send({action:"createContext", type:'method', formGuid: formGuid}, callback);
 			},
 
             /**

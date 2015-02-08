@@ -26,6 +26,7 @@ define(
 				this.pvt = {};
                 this.pvt.logger = new Logger();
                 this.pvt.router = new Router();
+
 				var rpc = this.pvt.rpc = new Rpc( { router: this.pvt.router } );
 				
 				this.pvt.proxyServer = rpc._publ(this, interface1); //
@@ -127,9 +128,8 @@ define(
 
             getConfig: function() {
 				return this.pvt.config;
-			},
-
-
+			},		
+			
             /**
              * Загрузить ресурсы по их гуидам - выдает сериализованные представления, которые затему нужно десериализовать в memDataBase
 			 * @param rootGuids - массив гуидов ресурсов
