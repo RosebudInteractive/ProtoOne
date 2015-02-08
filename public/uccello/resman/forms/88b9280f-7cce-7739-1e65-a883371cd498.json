@@ -241,8 +241,8 @@
               "fields": {
                 "Id": 44,
                 "Name": "PropEditor",
-                "Top": "10",
-                "Left": "900"
+                "Top": "193",
+                "Left": "1055"
               },
               "collections": {
               }
@@ -384,7 +384,7 @@
               },
               "fields": {
                 "Id": 225,
-                "Name": "DataGridDetailContract",
+                "Name": "DataGridDetailContact",
                 "Top": "189",
                 "Left": "390",
                 "Width": 660,
