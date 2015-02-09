@@ -348,7 +348,7 @@ $(document).ready( function() {
                                 option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
-                            sel.val(uccelloClt.getContext().masterGuid());
+                            sel.val(uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null);
                             return;
                         }
                     }
