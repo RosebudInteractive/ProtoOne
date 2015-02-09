@@ -247,10 +247,14 @@ define(
 			getComponent: function(className){
 				return this.pvt.components[className];
 			},
-			
-			renderAll: function() {
+
+            /**
+             * 
+             * @param pd - true|false - processDelta - должна быть true если хотим отпроцессить изменения с сервера
+             */			
+			renderAll: function(pd) {
 				for (var g in this.pvt.cmgs) {
-					this.pvt.cmgs[g].render();			
+					this.pvt.cmgs[g].render(undefined,undefined,pd);			
 				}
 				this.getDB().resetModifLog();
 			},

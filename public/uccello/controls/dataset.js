@@ -63,10 +63,11 @@ define(
 					this._setDataObj(this.cursor());
 				}
 				
-				var r=this.getObj().getDB().getObj(this.root());
+				var r=this.getDB().getObj(this.root());
 				if (r) {
 					if (r.isDataModified()) {
 						// данные поменялись
+						this.pvt.dataVer++;
 					}
 				}
 				

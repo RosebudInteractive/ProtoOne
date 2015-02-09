@@ -120,6 +120,17 @@ define(
 			getObj: function() {
 				return this.pvt.obj;
 			},
+			
+			getDB: function() {
+				return this.pvt.obj.getDB();
+			},
+
+            /**
+             * Возвращает компонент того же контролМенеджера по его гуиду
+             */				
+			getComp: function(guid) {
+				return this.pvt.controlMgr.get(guid);
+			},
 
             /**
              * Возвращает корневой компонент для данного
