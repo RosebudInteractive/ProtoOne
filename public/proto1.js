@@ -21,7 +21,6 @@ $(document).ready( function() {
 			this.tabCount = 0;
             this.currContext=null;
             this.currRoot=null;
-            this.masterGuid=null;
             this.rootsGuids=[];
             this.rootsContainers={};
             this.resultForm = '#result0';
@@ -184,13 +183,18 @@ $(document).ready( function() {
              */
             window.createContext = function(formGuid) {
                 $(that.resultForm).empty();
-				uccelloClt.createSrvContext(formGuid, function(result){
-                    that.masterGuid = result.masterGuid;
-					that.vc = result.vc;
-                    that.rootsGuids = result.roots;
-                    that.tabCount = that.rootsGuids.length;
-                    that.selectContext({guid: that.masterGuid, vc: that.vc, side: "server"});
+                uccelloClt.createContext('server', formGuid, function(result){
+                    that.clearTabs();
+                    result.guids = result.length? result: result.guids;
+                    for (var i=0; i<result.guids.length; i++) {
+                        that.createTab(result.guids[i]);
+                        //renderControls(null, result.guids[i]);
+                    }
+                    that.currContext = result.vc;
+                    that.currRoot = that.rootsGuids[0];
+                    that.setAutoSendDeltas(true);
                     that.getContexts();
+                    return that.rootsContainers;
                 });
             }
 
@@ -200,30 +204,32 @@ $(document).ready( function() {
              * @param guid
              */
             window.createClientContext = function(guid) {
-				this.selectContext({side: "client", guid: uccelloClt.getController().guid() });
+                uccelloClt.createContext('client', uccelloClt.getController().guid(), function(){
+                });
             },
+
+
+            this.clearTabs = function() {
+                $(that.resultForm).empty();
+                that.tabCount = 0;
+                that.rootsContainers = {};
+                that.rootsGuids = [];
+                $('#tabs').empty();
+                $('#container').empty();
+            }
 
             /**
              * Выбрать контекст
              * @param guid
              */
             this.selectContext = function(params) {
-                $(that.resultForm).empty();
                 that.currContext = params.guid;
-				that.vc = params.vc;
-                that.tabCount = 0;
-				that.rootsContainers = {};
-				that.rootsGuids = [];
-                $('#tabs').empty();
-                $('#container').empty();
+                that.clearTabs();
                 uccelloClt.setContext(params, function(result) {
-					if (!result.length)
-						var roots = result.guids
-					else
-						roots = result; // TODO надо будет нормализвать эту хуйню
-					for (var i=0; i<roots.length; i++) {
-						that.createTab(roots[i]);
-						renderControls(null, roots[i]);
+                    result.guids = result.length? result: result.guids;
+					for (var i=0; i<result.guids.length; i++) {
+						that.createTab(result.guids[i]);
+						renderControls(null, result.guids[i]);
 					}
 					that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
@@ -407,7 +413,7 @@ $(document).ready( function() {
             $('#userContext').change(function(){
 
                 that.currContext = $(this).val();
-                that.vc = $(this).find('option[value="'+that.currContext+'"]').data('ContextGuid');
+                var vc = $(this).find('option[value="'+that.currContext+'"]').data('ContextGuid');
 
                 // создавать при выборе контекста
                 var createForm = $('#createForm').is(':checked');
@@ -418,7 +424,7 @@ $(document).ready( function() {
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:that.currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
                     that.createTabs();
-                    that.selectContext({guid: that.currContext, vc:that.vc,  side: "server"});
+                    that.selectContext({masterGuid: that.currContext, vc:vc,  side: "server"});
                 });
             });
 

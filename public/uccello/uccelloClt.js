@@ -131,14 +131,28 @@ define(
 			 * @param formGuid - гуид ресурса формы, который загружается в контекст
 			 * @param cbfinal - конечный коллбэк
              */			
-			createContext(side,formGuid, cbfinal) {
+			createContext: function(side, formGuid, cbfinal) {
 				if (side == "server") {
-					that=this;
+					var that=this;
 					this.createSrvContext(formGuid, function(result){
-						that.setContext(result,cbfinal);
+                        result.side = 'server';
+						that.setContext(result, function(result2){
+
+                            // вызываем колбек
+                            result.guids = result2;
+                            var rootsContainers = cbfinal(result);
+
+                            // рендерим
+                            var options = [];
+                            for(var i=0, len=result2.length; i<len; i++)
+                                options.push( {rootContainer: '#result'+rootsContainers[result2[i]]});
+                            that.getContext().renderForms(result2, options, true);
+
+                        });
 					});
 				}
 				else { // side == "client"
+                    this.setContext({side: "client", masterGuid: formGuid}, cbfinal);
 				}
 			},
 
@@ -151,7 +165,7 @@ define(
 					if (p.side == "server") {
 						that.pvt.serverContext = params.vc;
 						p.vc = params.vc;
-						p.ini = {fields:{Kind: "slave", MasterGuid: params.guid}};
+						p.ini = {fields:{Kind: "slave", MasterGuid: params.masterGuid}};
 					}
 					else {
 						p.ini = {fields:{Kind: "master"}};
