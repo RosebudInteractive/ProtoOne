@@ -137,17 +137,7 @@ define(
 					this.createSrvContext(formGuid, function(result){
                         result.side = 'server';
 						that.setContext(result, function(result2){
-
-                            // вызываем колбек
-                            result.guids = result2;
-                            var rootsContainers = cbfinal(result);
-
-                            // рендерим
-                            var options = [];
-                            for(var i=0, len=result2.length; i<len; i++)
-                                options.push( {rootContainer: '#result'+rootsContainers[result2[i]]});
-                            that.getContext().renderForms(result2, options, true);
-
+                            that.getContext().renderForms(result2, cbfinal(result2), true);
                         });
 					});
 				}

@@ -19,7 +19,6 @@ $(document).ready( function() {
 
             var that = this;
 			this.tabCount = 0;
-            this.currContext=null;
             this.currRoot=null;
             this.rootsGuids=[];
             this.rootsContainers={};
@@ -185,16 +184,15 @@ $(document).ready( function() {
                 $(that.resultForm).empty();
                 uccelloClt.createContext('server', formGuid, function(result){
                     that.clearTabs();
-                    result.guids = result.length? result: result.guids;
-                    for (var i=0; i<result.guids.length; i++) {
-                        that.createTab(result.guids[i]);
-                        //renderControls(null, result.guids[i]);
+                    var options = [];
+                    for (var i=0; i<result.length; i++) {
+                        that.createTab(result[i]);
+                        options.push( {rootContainer: '#result'+that.rootsContainers[result[i]]});
                     }
-                    that.currContext = result.vc;
                     that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
                     that.getContexts();
-                    return that.rootsContainers;
+                    return options;
                 });
             }
 
@@ -223,7 +221,6 @@ $(document).ready( function() {
              * @param guid
              */
             this.selectContext = function(params) {
-                that.currContext = params.guid;
                 that.clearTabs();
                 uccelloClt.setContext(params, function(result) {
                     result.guids = result.length? result: result.guids;
@@ -271,8 +268,9 @@ $(document).ready( function() {
              * Кнопка query
              */
             window.loadQuery = function(rootGuid){
-                if (!that.currContext) return;
-				uccelloClt.getContext().loadNewRoots([rootGuid],{rtype:"data"}, function(result){
+                var context = uccelloClt.getContext();
+                if (!context) return;
+                context.loadNewRoots([rootGuid],{rtype:"data"}, function(result){
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
                     if (result.guids && result.guids.length>0) {
@@ -288,7 +286,7 @@ $(document).ready( function() {
              * Сериализовать форму и вывести в консоль
              */
             window.serializeForm = function(){
-                if (!that.currContext) return;
+                if (!uccelloClt.getContext()) return;
                 var root = uccelloClt.getContextCM(that.currRoot).getDB().getObj(that.currRoot);
                 console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));
             }
@@ -362,7 +360,7 @@ $(document).ready( function() {
                                 option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
-                            sel.val(that.currContext);
+                            sel.val(uccelloClt.getContext().getGuid());
                             return;
                         }
                     }
@@ -412,8 +410,8 @@ $(document).ready( function() {
 
             $('#userContext').change(function(){
 
-                that.currContext = $(this).val();
-                var vc = $(this).find('option[value="'+that.currContext+'"]').data('ContextGuid');
+                var currContext = $(this).val();
+                var vc = $(this).find('option[value="'+currContext+'"]').data('ContextGuid');
 
                 // создавать при выборе контекста
                 var createForm = $('#createForm').is(':checked');
@@ -421,10 +419,10 @@ $(document).ready( function() {
                 var formGuid = $('#selForm').val();
 
                 // запросить гуиды рутов
-                uccelloClt.getClient().socket.send({action:"getRootGuids", db:that.currContext, rootKind:'res', type:'method'}, function(result) {
+                uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
                     that.createTabs();
-                    that.selectContext({masterGuid: that.currContext, vc:vc,  side: "server"});
+                    that.selectContext({masterGuid: currContext, vc:vc,  side: "server"});
                 });
             });
 
