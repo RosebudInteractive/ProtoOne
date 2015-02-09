@@ -66,8 +66,7 @@ define(
                         type: 'endApplyDeltas',
                         subscriber: this,
                         callback: function(args){
-                            renderControls();
-                            getContexts();
+                            that.getContext().renderAll();
                         }
                     });
 
