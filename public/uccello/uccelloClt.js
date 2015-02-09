@@ -191,7 +191,10 @@ define(
              * @param callback
              */
             createRoot: function(formGuid, callback) {
-
+                var that = this;
+                this.getContext().loadNewRoots([formGuid], {rtype:"res"}, function(result){
+                    that.getContext().renderForms(result.guids, callback(result.guids), true);
+                });
             },
 
             /**
