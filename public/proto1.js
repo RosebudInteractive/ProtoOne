@@ -54,7 +54,6 @@ $(document).ready( function() {
                 // подписываемся на корневой объект контейнера
 				// TODO переделать uccelloClt.pvt.guids.
                 uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
-                    renderControls();
                     that.getContexts();
                 }, function() {} );
             }
@@ -65,7 +64,7 @@ $(document).ready( function() {
              * @param cm
              * @param renderRoot
              */
-            window.renderControls = function(cm, renderRoot) {
+            /*window.renderControls = function(cm, renderRoot) {
                 var roots = [];
                 roots = cm? [that.currRoot] : (renderRoot?[renderRoot]:that.rootsGuids);
 				var options = [];
@@ -74,22 +73,7 @@ $(document).ready( function() {
                
                 if (roots.length > 0)
 					uccelloClt.getContext().renderForms(roots, options,true);
-   /*                 cm = uccelloClt.getContextCM(roots[i]);
-					if (cm)
-						cm.render(undefined, {rootContainer: '#result'+that.rootsContainers[roots[i]]},true);
-                }
-*/
-                // редактирование ячеек грида
-                $(".divCell").editable(function(value, settings) {
-                    return(value);
-                }, {
-                    type    : 'textarea',
-                    submit  : 'OK',
-                    placeholder: '',
-                    width      : '100px',
-                    height     : '20px'
-                });
-            }
+            }*/
 
             var addControlId = 1000;
             window.addControl = function(guid, ini, cm) {
@@ -184,15 +168,13 @@ $(document).ready( function() {
                 $(that.resultForm).empty();
                 uccelloClt.createContext('server', formGuid, function(result){
                     that.clearTabs();
-                    var options = [];
                     for (var i=0; i<result.length; i++) {
                         that.createTab(result[i]);
-                        options.push( {rootContainer: '#result'+that.rootsContainers[result[i]]});
                     }
                     that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
                     that.getContexts();
-                    return options;
+                    return that.getOptions(result);
                 });
             }
 
@@ -216,6 +198,13 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
+            this.getOptions = function(roots) {
+                var options = [];
+                for (var i=0; i<roots.length; i++)
+                    options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
+                return options;
+            }
+
             /**
              * Выбрать контекст
              * @param guid
@@ -223,13 +212,13 @@ $(document).ready( function() {
             this.selectContext = function(params) {
                 that.clearTabs();
                 uccelloClt.setContext(params, function(result) {
-                    result.guids = result.length? result: result.guids;
-					for (var i=0; i<result.guids.length; i++) {
-						that.createTab(result.guids[i]);
-						renderControls(null, result.guids[i]);
+                    result = result.length? result: result.guids;
+					for (var i=0; i<result.length; i++) {
+						that.createTab(result[i]);
 					}
 					that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
+                    return that.getOptions(result);
 				});
             }
 			
@@ -259,7 +248,6 @@ $(document).ready( function() {
                     that.rootsGuids.push(result.guids[0]); 
 					that.createTab(result.guids[0]);
 					renderControls(null, result.guids[0]);
-					
 				});
             }
 
@@ -360,7 +348,7 @@ $(document).ready( function() {
                                 option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
-                            sel.val(uccelloClt.getContext().getGuid());
+                            sel.val(uccelloClt.getContext().masterGuid());
                             return;
                         }
                     }

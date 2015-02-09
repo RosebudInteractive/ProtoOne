@@ -136,9 +136,7 @@ define(
 					var that=this;
 					this.createSrvContext(formGuid, function(result){
                         result.side = 'server';
-						that.setContext(result, function(result2){
-                            that.getContext().renderForms(result2, cbfinal(result2), true);
-                        });
+						that.setContext(result, cbfinal);
 					});
 				}
 				else { // side == "client"
@@ -148,6 +146,11 @@ define(
 
 			setContext: function(params, cbfinal) {
                 var that = this;
+
+                function cbfinal2(result2){
+                    that.getContext().renderForms(result2, cbfinal(result2), true);
+                }
+
 				function done() {
 					var s = that.pvt.clientConnection.socket;
 					var p = {socket: s, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
@@ -162,7 +165,7 @@ define(
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
-                    var vc = new VisualContext(that.pvt.cmclient, p, cbfinal);
+                    var vc = new VisualContext(that.pvt.cmclient, p, cbfinal2);
 					that.pvt.vc = vc;
 					that.pvt.vcproxy = vc.getProxy();
 				}
@@ -182,6 +185,15 @@ define(
 			createSrvContext: function(formGuid, callback) {
 				this.getClient().socket.send({action:"createContext", type:'method', formGuid: formGuid}, callback);
 			},
+
+            /**
+             * Создать рут
+             * @param formGuid
+             * @param callback
+             */
+            createRoot: function(formGuid, callback) {
+
+            },
 
             /**
              * Загрузить контролы
