@@ -41,10 +41,10 @@ app.get("/update/:what", function(req, res){
             res.write('$ cd /var/www/sites/mobimed/docs/MobiDoc/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/mobimed/docs/MobiDoc/; git pull').output+'<br><br>');
             break;
-        case 'genetix':
+            case 'genetix':
             res.writeHead(200,{"Content-Type" : "text/html"});
             res.write('$ cd /var/www/sites/genetix/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/genetix/; git pull').output+'<br><br>');
+            res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
             break;
     }
 
