@@ -139,7 +139,7 @@ define(
 					});
 				}
 				else { // side == "client"
-                    this.setContext({side: "client", masterGuid: formGuid}, cbfinal);
+                    this.setContext({side: "client", formGuid: formGuid}, cbfinal);
 				}
 			},
 
@@ -161,7 +161,8 @@ define(
 						p.ini = {fields:{Kind: "slave", MasterGuid: params.masterGuid}};
 					}
 					else {
-						p.ini = {fields:{Kind: "master", MasterGuid: params.masterGuid}};
+						p.ini = {fields:{Kind: "master"}};
+                        p.formGuid = params.formGuid;
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
