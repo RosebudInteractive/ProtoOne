@@ -140,11 +140,11 @@ $(document).ready( function() {
 
             /**
              * Создать серверный контекст
-             * @param formGuid - гуид ресурса, который загружается в контекст
+             * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
-            window.createContext = function(formGuid) {
+            window.createContext = function(formGuids) {
                 $(that.resultForm).empty();
-                uccelloClt.createContext('server', formGuid, function(result){
+                uccelloClt.createContext('server', formGuids, function(result){
                     that.clearTabs();
                     for (var i=0; i<result.length; i++) {
                         that.createTab(result[i]);
@@ -161,8 +161,8 @@ $(document).ready( function() {
              * Создать клиентский контекст
              * @param guid
              */
-            window.createClientContext = function(formGuid) {
-                uccelloClt.createContext('client', formGuid, function(result){
+            window.createClientContext = function(formGuids) {
+                uccelloClt.createContext('client', formGuids, function(result){
                     that.clearTabs();
                     for (var i=0; i<result.length; i++) {
                         that.createTab(result[i]);
@@ -228,10 +228,11 @@ $(document).ready( function() {
              */
             window.createRoot = function(){
                 if (!that.currRoot) return;
-				var formGuid = $('#selForm').val();
-                uccelloClt.createRoot(formGuid, "res", function(result){
-                    that.rootsGuids.push(result[0]);
-                    that.createTab(result[0]);
+				var formGuids = $('#selForm').val();
+                uccelloClt.createRoot(formGuids, "res", function(result){
+                    for (var i=0; i<result.length; i++) {
+                        that.createTab(result[i]);
+                    }
                     return that.getOptions(result);
                 });
             }
@@ -387,8 +388,6 @@ $(document).ready( function() {
 
                 // создавать при выборе контекста
                 var createForm = $('#createForm').is(':checked');
-                // гуид выбранной формы
-                var formGuid = $('#selForm').val();
 
                 // запросить гуиды рутов
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {

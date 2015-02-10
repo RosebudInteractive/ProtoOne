@@ -100,9 +100,7 @@ define(
 					if (createCompCallback)
 						params2.compcb = createCompCallback;
 					this.pvt.db = this.createDb(controller,params2);
-					//var roots = [controller.guid(), controller.guid()]; // TODO убрать потом
-					var roots = [params.formGuid];
-					this.loadNewRoots(roots, { rtype: "res", compcb: params2.compcb},params2.cbfinal);
+					this.loadNewRoots(params.formGuids, { rtype: "res", compcb: params2.compcb},params2.cbfinal);
 					this.dataBase(this.pvt.db.getGuid());
 				}
 				else { // подписка (slave)

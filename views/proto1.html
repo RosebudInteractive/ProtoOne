@@ -23,7 +23,7 @@
     <a href="#" id="login" style="display: none;">Войти</a>
     <a href="#" id="logout" style="display: none;" onclick="return logout();">Выйти</a>
     <input type="button" title="трассировка" value="debug" onclick="getSessions();">
-    <input type="button" value="renderControls" onclick="uccelloClt.getContext().renderAll(true);">
+    <!--<input type="button" value="renderControls" onclick="uccelloClt.getContext().renderAll(true);">-->
    <!-- <select id="selControl">
         <option value="f79d78eb-4315-5fac-06e0-d58d07572482">Edit</option>
         <option value="af419748-7b25-1633-b0a9-d539cada8e0d">Button</option>
@@ -37,7 +37,7 @@
     <select id="userContext"></select>
     <table style="display: inline-block;vertical-align: bottom;;">
         <tr><td><input id="createForm" type="checkbox"><label for="createForm">создавать при выборе контекста</label> </td></tr>
-        <tr><td><select id="selForm">
+        <tr><td><select id="selForm" multiple size="3">
             <option value="88b9280f-7cce-7739-1e65-a883371cd498">test</option>
             <option value="02fad346-dc0b-7d02-b395-729186589611">company</option>
             <option value="0fab9989-3047-26b6-326c-19b78d66e4d1">contact</option>
@@ -48,10 +48,10 @@
     <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext($('#selForm').val());">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
     <input type="button" value="+ root" title="добавить рут" onclick="createRoot();">
-    <input type="button" value="Company" title="загрузить данные dataCompany" onclick="loadQuery('b49d39c9-b903-cccd-7d32-b84beb1b76dc');">
+    <!--<input type="button" value="Company" title="загрузить данные dataCompany" onclick="loadQuery('b49d39c9-b903-cccd-7d32-b84beb1b76dc');">
     <input type="button" value="Contact" title="загрузить данные dataContact" onclick="loadQuery('ab573a02-b888-b3b4-36a7-38629a5fe6b7');">
     <input type="button" value="Contract" title="загрузить данные dataContract" onclick="loadQuery('8583ee1d-6936-19da-5ef0-9025fb7d1d8d');">
-    <input type="button" value="Address" title="загрузить данные dataAddress" onclick="loadQuery('edca46bc-3389-99a2-32c0-a59665fcb6a7');">
+    <input type="button" value="Address" title="загрузить данные dataAddress" onclick="loadQuery('edca46bc-3389-99a2-32c0-a59665fcb6a7');">-->
     <input type="button" value="set Param" title="присваивается параметру формы значение 1" onclick="setParam('1');">
     <br><br>
 

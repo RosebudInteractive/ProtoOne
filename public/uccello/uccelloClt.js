@@ -127,19 +127,19 @@ define(
 			 * если side = server, то создается новый серверный контекст, на который подписывается клиент
 			 * если side = client, то создается клиентский контекст
              * @param side - master|slave
-			 * @param formGuid - гуид ресурса формы, который загружается в контекст
+			 * @param formGuids - массив гуидов ресурса формы, который загружается в контекст
 			 * @param cbfinal - конечный коллбэк
              */			
-			createContext: function(side, formGuid, cbfinal) {
+			createContext: function(side, formGuids, cbfinal) {
 				if (side == "server") {
 					var that=this;
-					this.createSrvContext(formGuid, function(result){
+					this.createSrvContext(formGuids, function(result){
                         result.side = 'server';
 						that.setContext(result, cbfinal);
 					});
 				}
 				else { // side == "client"
-                    this.setContext({side: "client", formGuid: formGuid}, cbfinal);
+                    this.setContext({side: "client", formGuids: formGuids}, cbfinal);
 				}
 			},
 
@@ -163,7 +163,7 @@ define(
 					}
 					else {
 						p.ini = {fields:{Kind: "master"}};
-                        p.formGuid = params.formGuid;
+                        p.formGuids = params.formGuids;
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
@@ -181,21 +181,22 @@ define(
 			
             /**
              * Создать серверный контекст
-			 * @param formGuid
+			 * @param formGuids
 			 * @param callback
              */
-			createSrvContext: function(formGuid, callback) {
-				this.getClient().socket.send({action:"createContext", type:'method', formGuid: formGuid}, callback);
+			createSrvContext: function(formGuids, callback) {
+				this.getClient().socket.send({action:"createContext", type:'method', formGuids: formGuids}, callback);
 			},
 
             /**
              * Создать рут
-             * @param formGuid
+             * @param formGuids массив гуидов
+             * @param rtype тип данных "res", "data"
              * @param callback
              */
-            createRoot: function(formGuid, rtype, callback) {
+            createRoot: function(formGuids, rtype, callback) {
                 var that = this;
-                this.getContext().loadNewRoots([formGuid], {rtype:rtype}, function(result){
+                this.getContext().loadNewRoots(formGuids, {rtype:rtype}, function(result){
                     that.getContext().renderForms(result.guids, callback(result.guids), true);
                 });
             },
