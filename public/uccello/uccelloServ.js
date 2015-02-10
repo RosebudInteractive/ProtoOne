@@ -155,6 +155,7 @@ define(
                     this.pvt.dataman.loadQuery(rootGuids[0],expr, function(result){
                         done({ datas: [result] });
                     });
+				return "XXX";
 			}
 			
 			
