@@ -161,8 +161,8 @@ $(document).ready( function() {
              * Создать клиентский контекст
              * @param guid
              */
-            window.createClientContext = function(guid) {
-                uccelloClt.createContext('client', uccelloClt.getController().guid(), function(result){
+            window.createClientContext = function(formGuid) {
+                uccelloClt.createContext('client', formGuid, function(result){
                     return that.getOptions(result);
                 });
             }

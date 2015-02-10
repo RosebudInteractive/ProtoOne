@@ -154,6 +154,7 @@ define(
 					var s = that.pvt.clientConnection.socket;
 					var p = {socket: s, rpc: that.pvt.rpc, proxyServer: that.pvt.proxyServer}
 					p.side = params.side;
+					p.config = that.options.config;
 					if (p.side == "server") {
 						that.pvt.serverContext = params.vc;
 						p.vc = params.vc;
