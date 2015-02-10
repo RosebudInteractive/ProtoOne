@@ -80,5 +80,5 @@ p {padding:0;margin: 4px 0;}
 .grid .header{font-weight:bold;font-size:12px;display:table-caption;width:60px;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:5px;border-top:1px solid  #666666;float:left;}
 
 #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
-#header {padding:10px;height: 12px;}
+#header {position:absolute;}
 #loginError {color: #ff0000;}
