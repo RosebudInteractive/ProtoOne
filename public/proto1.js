@@ -163,6 +163,13 @@ $(document).ready( function() {
              */
             window.createClientContext = function(formGuid) {
                 uccelloClt.createContext('client', formGuid, function(result){
+                    that.clearTabs();
+                    for (var i=0; i<result.length; i++) {
+                        that.createTab(result[i]);
+                    }
+                    that.currRoot = that.rootsGuids[0];
+                    that.setAutoSendDeltas(true);
+                    that.getContexts();
                     return that.getOptions(result);
                 });
             }
