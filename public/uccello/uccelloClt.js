@@ -190,9 +190,9 @@ define(
              * @param formGuid
              * @param callback
              */
-            createRoot: function(formGuid, callback) {
+            createRoot: function(formGuid, rtype, callback) {
                 var that = this;
-                this.getContext().loadNewRoots([formGuid], {rtype:"res"}, function(result){
+                this.getContext().loadNewRoots([formGuid], {rtype:rtype}, function(result){
                     that.getContext().renderForms(result.guids, callback(result.guids), true);
                 });
             },

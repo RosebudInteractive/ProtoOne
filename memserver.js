@@ -43,7 +43,7 @@ app.get("/update/:what", function(req, res){
             break;
             case 'genetix':
             res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/genetix/; git pull<br>');
+            res.write('$ cd /var/www/sites/genetix/Genetix/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
             break;
     }

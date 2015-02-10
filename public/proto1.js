@@ -8,7 +8,6 @@ requirejs.config({
     }
 });
 
-var contextGuid = 0;
 var uccelloClt = null;
 
 // когда документ загружен
@@ -52,32 +51,13 @@ $(document).ready( function() {
              */
             window.subscribeRootSys = function() {
                 // подписываемся на корневой объект контейнера
-				// TODO переделать uccelloClt.pvt.guids.
                 uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
                     that.getContexts();
                 }, function() {} );
             }
 
-
-            /**
-             * Рендер контролов
-             * @param cm
-             * @param renderRoot
-             */
-            /*window.renderControls = function(cm, renderRoot) {
-                var roots = [];
-                roots = cm? [that.currRoot] : (renderRoot?[renderRoot]:that.rootsGuids);
-				var options = [];
-                for(var i=0, len=roots.length; i<len; i++) 
-					options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
-               
-                if (roots.length > 0)
-					uccelloClt.getContext().renderForms(roots, options,true);
-            }*/
-
             var addControlId = 1000;
             window.addControl = function(guid, ini, cm) {
-
                 if (!cm) cm = uccelloClt.getContextCM(that.currRoot);
                 if (!ini) {
                     ini = {fields: {"Id": addControlId, "Name": 'Component'+addControlId, "Left":"300", "Top":"150"}};
@@ -91,9 +71,8 @@ $(document).ready( function() {
 
 				var constr = uccelloClt.getConstr(guid);
                 var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:that.resultForm});
-				//uccelloClt.getController().genDeltas(cm.getDB().getGuid());
 				sendDeltas(false);
-                renderControls(cm);
+                uccelloClt.getContext().renderAll(true);
             }
 
             /**
@@ -105,7 +84,7 @@ $(document).ready( function() {
                 if (!cm) cm = uccelloClt.getContextCM(that.currRoot);
                 cm.del(guid);
 				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
-                renderControls(cm);
+                uccelloClt.getContext().renderAll(true);
             }
 
             /**
@@ -116,7 +95,6 @@ $(document).ready( function() {
             window.getSessions = function() {
                 uccelloClt.getClient().socket.send({action:"getSessions", type:'method'}, function(result){
                     console.log(result);
-                    $('#result').append('<p>' + JSON.stringify(result.sessions) + ' </p>');
                 });
             }
 
@@ -184,9 +162,10 @@ $(document).ready( function() {
              * @param guid
              */
             window.createClientContext = function(guid) {
-                uccelloClt.createContext('client', uccelloClt.getController().guid(), function(){
+                uccelloClt.createContext('client', uccelloClt.getController().guid(), function(result){
+                    return that.getOptions(result);
                 });
-            },
+            }
 
 
             this.clearTabs = function() {
@@ -243,7 +222,7 @@ $(document).ready( function() {
             window.createRoot = function(){
                 if (!that.currRoot) return;
 				var formGuid = $('#selForm').val();
-                uccelloClt.createRoot(formGuid, function(result){
+                uccelloClt.createRoot(formGuid, "res", function(result){
                     that.rootsGuids.push(result[0]);
                     that.createTab(result[0]);
                     return that.getOptions(result);
@@ -256,15 +235,15 @@ $(document).ready( function() {
             window.loadQuery = function(rootGuid){
                 var context = uccelloClt.getContext();
                 if (!context) return;
-                context.loadNewRoots([rootGuid],{rtype:"data"}, function(result){
+                uccelloClt.createRoot(rootGuid, "data", function(result){
                     var cm = uccelloClt.getContextCM(that.currRoot);
                     var db = cm.getDB();
-                    if (result.guids && result.guids.length>0) {
-                        var dataset = cm.getByName("Dataset");
-                        dataset.root(result.guids[0]);
-						sendDeltas(false);
-						renderControls();
+                    if (result[0]) {
+                        var dataset = cm.getByName("DatasetCompany");
+                        dataset.root(result[0]);
+                        sendDeltas(false);
                     }
+                    return that.getOptions([that.currRoot]);
                 });
             }
 
