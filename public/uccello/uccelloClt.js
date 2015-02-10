@@ -161,7 +161,7 @@ define(
 						p.ini = {fields:{Kind: "slave", MasterGuid: params.masterGuid}};
 					}
 					else {
-						p.ini = {fields:{Kind: "master"}};
+						p.ini = {fields:{Kind: "master", MasterGuid: params.masterGuid}};
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
@@ -209,7 +209,7 @@ define(
 
                 // собираем все нужные скрипты в кучу
                 for (var i = 0; i < config.controls.length; i++) {
-                    scripts.push('../../public/'+config.controls[i].component);
+                    scripts.push(config.controlsPath+config.controls[i].component);
                     if (config.controls[i].viewsets)
                         for (var j = 0; j < config.controls[i].viewsets.length; j++) {
                             var c = config.controls[i].className;

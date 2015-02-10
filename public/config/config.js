@@ -32,5 +32,11 @@ config.dataSource = {
 };
 
 // для клиентской обработки
-if (module == undefined) var module = {};
+if (module == undefined) {
+    var module = {};
+    config.controlsPath = '../../public/';
+}
+else {
+    config.controlsPath = '../../';
+}
 module.exports = config;
