@@ -147,6 +147,7 @@ define(
                 var that = this;
 
                 function cbfinal2(result2){
+                    result2 = result2.guids ? result2.guids : result2;
                     that.getContext().renderForms(result2, cbfinal(result2), true);
                 }
 
