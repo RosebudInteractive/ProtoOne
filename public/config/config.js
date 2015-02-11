@@ -7,6 +7,8 @@ config.controls = [
     {className:'DataContract', component:'uccello/dataman/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
     {className:'DataCompany', component:'uccello/dataman/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c514'},
     {className:'DataAddress', component:'uccello/dataman/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
+    {className:'DataLead', component:'uccello/dataman/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
+    {className:'DataIncomeplan', component:'uccello/dataman/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
     {className:'ADataModel', component:'uccello/controls/aDataModel', guid:'5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47'},
     {className:'Dataset', component:'uccello/controls/dataset', guid:'3f3341c7-2f06-8d9d-4099-1075c158aeee'},
     {className:'Container', component:'ProtoControls/container', viewsets:['simpleview'], guid:'1d95ab61-df00-aec8-eff5-0f90187891cf'},

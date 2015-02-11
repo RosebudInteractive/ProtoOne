@@ -19,10 +19,14 @@ define(
                 if (this.pvt.dataSource == 'mysql') {
                     var mysql = require('mysql');
                     this.pvt.mysqlConnection = mysql.createConnection({
-                        host:     '54.93.99.65', // 'localhost'
+                        host:     'localhost', // 'localhost'
                         user:     'rudenko',//'root',//'rudenko',
                         password: 'vrWSvr05',//'111111', //'vrWSvr05',
                         database: 'uccello'
+                        /*host:     '54.93.99.65', // 'localhost'
+                        user:     'rudenko',//'root',//'rudenko',
+                        password: 'vrWSvr05',//'111111', //'vrWSvr05',
+                        database: 'uccello'*/
                     });
                 }
 			},
@@ -58,6 +62,12 @@ define(
                         break;
                     case 'edca46bc-3389-99a2-32c0-a59665fcb6a7':
                         this.getAddress(guidRoot, expression, done);
+                        break;
+                    case 'c170c217-e519-7c23-2811-ff75cd4bfe81':
+                        this.getList(guidRoot, '86c611ee-ed58-10be-66f0-dfbb60ab8907', 'lead', done);
+                        break;
+                    case '8770f400-fd42-217c-90f5-507ca52943c2':
+                        this.getList(guidRoot, '56cc264c-5489-d367-1783-2673fde2edaf', 'incomeplan', done, 'leadId=?', [expression]);
                         break;
                 }
             },
@@ -125,6 +135,35 @@ define(
                         done(that.createResult(guidRoot, classGuid, {}));
                     }
                 });
+            },
+
+            getList: function(guidRoot, typeGuid, table, done, where, whereParams, num) {
+                var source = this.getDataSource();
+                var that = this;
+                if (source == 'mysql') {
+                    var conn = this.getMysqlConnection();
+
+                    where = where? ('WHERE '+where): '';
+                    whereParams = whereParams? whereParams: [];
+                    num = num? parseInt(num): 100000;
+
+                    conn.query('SELECT * FROM '+table+' '+where+' LIMIT '+num, whereParams, function(err, rows) {
+                        if (err) throw err;
+                        var result = that.createResult(guidRoot, typeGuid, rows);
+
+                        /*var fs = require('fs');
+                        fs.writeFile("./public/uccello/dataman/tables/incomeplan-1.json", JSON.stringify(result), function(err) {
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                console.log("The file was saved!");
+                            }
+                        });*/
+                        done(result);
+                    });
+                } else
+                    this.readTableFile(table+(whereParams?'-'+whereParams[0]:'')+'.json', guidRoot, typeGuid, false, done);
+                return "XXX";
             },
 
             getCompany: function(guidRoot, num, done) {

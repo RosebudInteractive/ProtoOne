@@ -35,7 +35,14 @@ define(
 					this.pvt.rtype = "res";
 				*/
 				// TODO ПЕРЕДЕЛАТЬ!!!
-				if ((flds.$sys.guid == "87510077-53d2-00b3-0032-f1245ab1b74d") || (flds.$sys.guid == "73596fd8-6901-2f90-12d7-d1ba12bae8f4") || (flds.$sys.guid == "59583572-20fa-1f58-8d3f-5114af0f2c51") || (flds.$sys.guid == "16ec0891-1144-4577-f437-f98699464948") || (flds.$sys.guid == "08a0fad1-d788-3604-9a16-3544a6f97721"))
+				if ((flds.$sys.guid == "87510077-53d2-00b3-0032-f1245ab1b74d") ||
+					(flds.$sys.guid == "73596fd8-6901-2f90-12d7-d1ba12bae8f4") ||
+					(flds.$sys.guid == "59583572-20fa-1f58-8d3f-5114af0f2c51") ||
+					(flds.$sys.guid == "16ec0891-1144-4577-f437-f98699464948") ||
+					(flds.$sys.guid == "08a0fad1-d788-3604-9a16-3544a6f97721") ||
+					(flds.$sys.guid == "86c611ee-ed58-10be-66f0-dfbb60ab8907") ||
+					(flds.$sys.guid == "56cc264c-5489-d367-1783-2673fde2edaf")
+				)
 					this.pvt.rtype = "data";
 				else
 					this.pvt.rtype = "res";

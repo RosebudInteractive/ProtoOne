@@ -143,6 +143,7 @@ $(document).ready( function() {
              * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
             window.createContext = function(formGuids) {
+                if (!formGuids) return;
                 $(that.resultForm).empty();
                 uccelloClt.createContext('server', formGuids, function(result){
                     that.clearTabs();
@@ -162,6 +163,7 @@ $(document).ready( function() {
              * @param guid
              */
             window.createClientContext = function(formGuids) {
+                if (!formGuids) return;
                 uccelloClt.createContext('client', formGuids, function(result){
                     that.clearTabs();
                     for (var i=0; i<result.length; i++) {
