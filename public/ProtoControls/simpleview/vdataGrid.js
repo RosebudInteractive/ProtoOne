@@ -126,7 +126,8 @@ define(
         vDataGrid.isOnlyCursor = function() {
 			if (this.dataset()) {
 				var dataset = this.getControlMgr().getByGuid(this.dataset());
-				if (this.pvt.renderDataVer == dataset.getDataVer())
+
+				if ((this.pvt.renderDataVer == dataset.getDataVer()) && (!dataset.isDataModified()))
 					return true;
 				else
 					return false;

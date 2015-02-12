@@ -148,6 +148,19 @@ define(
 			getDataVer: function() {
 				return this.pvt.dataVer;
 			},
+			
+			// были ли изменены данные датасета
+			isDataModified: function() {
+				var r = this.root();
+				if (r) {
+					var rootObj = this.getDB().getObj(r);
+					if (rootObj)
+						return rootObj.isDataModified();
+					else
+						return true;
+				}
+				else return true; // TODO можно оптимизировать - если хотим не перерисовывать пустой грид
+			},
 
 			// Properties
 
