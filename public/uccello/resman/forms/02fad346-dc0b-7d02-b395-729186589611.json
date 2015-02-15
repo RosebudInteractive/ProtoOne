@@ -19,7 +19,8 @@
           "Name": "FormParam1",
           "Type": "param",
           "Kind": "in",
-          "Value": ""
+          "Value": "",
+          "OnModify": " { console.log('NEW PARAMETER '+newVal); return; }"
         },
         "collections": {}
       }
