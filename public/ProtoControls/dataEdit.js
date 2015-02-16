@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../uccello/controls/aDataFieldControl'],
+    [UCCELLO_CONFIG.uccelloPath+'controls/aDataFieldControl'],
     function(ADataFieldControl) {
         var DataEdit = ADataFieldControl.extend({
 

@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../uccello/controls/aControl'],
+    [UCCELLO_CONFIG.uccelloPath+'controls/aControl'],
     function(AControl) {
         var Label = AControl.extend({
 

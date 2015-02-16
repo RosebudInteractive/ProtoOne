@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../../ProtoControls/container'],
+    [UCCELLO_CONFIG.controlsPath+'container'],
     function(Container) {
         var Form = Container.extend({
 

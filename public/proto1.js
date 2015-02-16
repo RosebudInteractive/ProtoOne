@@ -13,8 +13,8 @@ var uccelloClt = null;
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/uccelloClt', './uccello/controls/controlMgr'],
-        function(UccelloClt, ControlMgr){
+        ['./uccello/uccelloClt'],
+        function(UccelloClt){
 
             var that = this;
 			this.tabCount = 0;
@@ -111,6 +111,23 @@ $(document).ready( function() {
 
             }
 
+            var config = {
+                controls: [
+                    {className:'Container', component:'container', viewsets:['simpleview'], guid:'1d95ab61-df00-aec8-eff5-0f90187891cf'},
+                    {className:'Form', component:'form', viewsets:['simpleview'], guid:'7f93991a-4da9-4892-79c2-35fe44e69083'},
+                    {className:'Button', component:'button', viewsets:['simpleview'], guid:'af419748-7b25-1633-b0a9-d539cada8e0d'},
+                    {className:'DataGrid', component:'dataGrid', viewsets:['simpleview'], guid:'ff7830e2-7add-e65e-7ddf-caba8992d6d8'},
+                    {className:'DataEdit', component:'dataEdit', viewsets:['simpleview'], guid:'affff8b1-10b0-20a6-5bb5-a9d88334b48e'},
+                    {className:'DbNavigator', component:'dbNavigator', viewsets:['simpleview'], guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
+                    {className:'Edit', component:'edit', viewsets:['simpleview'], guid:'f79d78eb-4315-5fac-06e0-d58d07572482'},
+                    {className:'MatrixGrid', component:'matrixGrid', viewsets:['simpleview'], guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
+                    {className:'PropEditor', component:'propEditor', viewsets:['simpleview'], guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
+                    {className:'Label', component:'label', viewsets:['simpleview'], guid:'32932036-3c90-eb8b-dd8d-4f19253fabed'}
+                ],
+                controlsPath: 'ProtoControls/',
+                uccelloPath: 'Uccello/'
+            };
+
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 sessionId:$.url('#sid'),
@@ -126,7 +143,6 @@ $(document).ready( function() {
                     }
                 },
                 renderRoot: that.renderRoot,
-                controlsPath:'./ProtoControls/',
                 config:config
             });
 

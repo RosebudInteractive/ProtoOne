@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 }
 
 define(
-    ['../uccello/controls/aDataControl'],
+    [UCCELLO_CONFIG.uccelloPath+'controls/aDataControl'],
     function(ADataControl) {
         var DataGrid = ADataControl.extend({
 
