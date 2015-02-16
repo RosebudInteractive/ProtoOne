@@ -33,11 +33,6 @@ define(
 				var obj = this.getObj();
 				if (obj.isFldModified("Value") && ( "onModify" in this)) {
 					this.onModify(this.value());
-					//apply(
-					/*this.event.fire({
-						type: 'modParam',
-						target: this				
-					});*/
 				}
 			},
 

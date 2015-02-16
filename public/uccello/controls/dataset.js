@@ -14,7 +14,8 @@ define(
                 {fname: "Root", ftype: "string"},
                 {fname: "Cursor", ftype: "string"},
                 {fname: "Active", ftype: "boolean"},
-                {fname: "Master", ftype: "string"}
+                {fname: "Master", ftype: "string"},
+				{fname: "OnMoveCursor", ftype: "event"}
             ],
 
             /**
@@ -30,6 +31,13 @@ define(
 				
 				this.event = new Event();
 				
+				// 
+				if (this.getObj()) {
+					if (this.getObj().get("OnMoveCursor")) {
+						this.onMoveCursor = new Function("newVal",this.getObj().get("OnMoveCursor"));
+					}
+				}				
+
             },
 			
 			subsInit: function() {
@@ -186,7 +194,9 @@ define(
                 var newVal=this._genericSetter("Cursor", value);
 				if (newVal!=oldVal) {
 					this._setDataObj(value);
-					console.log("move cursor "+this.id());
+					//
+					if ("onMoveCursor" in this) this.onMoveCursor(newVal);
+					
 					this.event.fire({
 						type: 'moveCursor',
 						target: this				
