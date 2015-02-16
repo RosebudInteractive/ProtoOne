@@ -20,7 +20,7 @@
           "Type": "param",
           "Kind": "in",
           "Value": "",
-          "OnModify": " { console.log('NEW PARAMETER '+newVal); return; }"
+          "OnModify": " { console.log('NEW PARAMETER '+newVal); this.getControlMgr().getByName('Dataset').cursor(newVal); return; }"
         },
         "collections": {}
       }
