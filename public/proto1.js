@@ -32,13 +32,6 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.getOptions = function(roots) {
-                var options = [];
-                for (var i=0; i<roots.length; i++)
-                    options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
-                return options;
-            }
-
             /**
              * Выбрать контекст
              * @param guid
@@ -51,36 +44,28 @@ $(document).ready( function() {
             }
 
             /**
-             * Создать переключать рута
-             * @returns {string}
+             * Рендер переключателя рута
+             * @param rootGuid {string}
+             * @returns {object}
              */
-            this.createTab = function(rootGuid) {
+            this.renderRoot = function(rootGuid){
+
                 if (that.rootsContainers[rootGuid] !== undefined) {
-                    return "#result"+that.rootsContainers[rootGuid];
+                    return {rootContainer: "#result"+that.rootsContainers[rootGuid]};
                 }
 
-                var i = this.tabCount;
+                var i = that.tabCount;
                 $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
                 $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
-				that.rootsGuids[i]=rootGuid;
+                that.rootsGuids[i]=rootGuid;
                 that.rootsContainers[that.rootsGuids[i]] = i;
                 fixHeight();
-                this.tabCount++;
+                that.tabCount++;
 
                 if (i==0)
                     that.currRoot = that.rootsGuids[0];
 
-                return "#result"+i;
-            }
-
-            /**
-             * Рендер переключателя рута
-             * @param rootGuid {string}
-             * @returns {string}
-             */
-            this.renderTab = function(rootGuid){
-                that.createTab(rootGuid);
-                return that.getOptions([rootGuid])[0];
+                return {rootContainer: "#result"+i};
             }
 
             /**
@@ -140,7 +125,7 @@ $(document).ready( function() {
                         $('#userInfo').html('');
                     }
                 },
-                renderTab: that.renderTab,
+                renderRoot: that.renderRoot,
                 controlsPath:'./ProtoControls/',
                 config:config
             });
@@ -310,7 +295,6 @@ $(document).ready( function() {
                         dataset.root(result[0]);
                         sendDeltas(false);
                     }
-                    return that.getOptions([that.currRoot]);
                 });
             }
 

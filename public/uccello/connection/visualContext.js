@@ -53,7 +53,7 @@ define(
 				this.pvt.proxyServer = params.proxyServer;
 				this.pvt.components = params.components;
 				this.pvt.config = params.config;
-				this.pvt.renderTab = params.renderTab;
+				this.pvt.renderRoot = params.renderRoot;
 				this.pvt.formParams = {};
 				this.pvt.memParams = [];
 
@@ -253,14 +253,14 @@ define(
              */			
 			renderAll: function(pd) {
 				for (var g in this.pvt.cmgs)
-					this.pvt.cmgs[g].render(undefined, this.pvt.renderTab(g), pd);
+					this.pvt.cmgs[g].render(undefined, this.pvt.renderRoot(g), pd);
 				this.getDB().resetModifLog();
 			},
 			
 			renderForms: function(roots, pd) {
 				for (var i=0; i<roots.length; i++)
 					if (this.pvt.cmgs[roots[i]])
-						this.pvt.cmgs[roots[i]].render(undefined, this.pvt.renderTab(roots[i]),pd);
+						this.pvt.cmgs[roots[i]].render(undefined, this.pvt.renderRoot(roots[i]),pd);
 				this.getDB().resetModifLog();
 			},
 			

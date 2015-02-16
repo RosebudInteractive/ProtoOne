@@ -27,6 +27,7 @@ define(
 				this.pvt.dbcontext = null;
                 this.pvt.controlMgr = {};
 				this.pvt.vc = null; // VisualContext
+                this.pvt.renderRoot = options.renderRoot;
                 this.options = options;
 
                 this.loadControls(function(){
@@ -169,7 +170,7 @@ define(
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
-                    p.renderTab = that.options.renderTab;
+                    p.renderRoot = that.pvt.renderRoot;
                     var vc = new VisualContext(that.pvt.cmclient, p, cbfinal2);
 					that.pvt.vc = vc;
 					that.pvt.vcproxy = vc.getProxy();
