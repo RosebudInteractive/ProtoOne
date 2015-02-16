@@ -23,6 +23,109 @@ $(document).ready( function() {
             this.rootsContainers={};
             this.resultForm = '#result0';
 
+            this.clearTabs = function() {
+                $(that.resultForm).empty();
+                that.tabCount = 0;
+                that.rootsContainers = {};
+                that.rootsGuids = [];
+                $('#tabs').empty();
+                $('#container').empty();
+            }
+
+            this.getOptions = function(roots) {
+                var options = [];
+                for (var i=0; i<roots.length; i++)
+                    options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
+                return options;
+            }
+
+            /**
+             * Выбрать контекст
+             * @param guid
+             */
+            this.selectContext = function(params) {
+                that.clearTabs();
+                uccelloClt.setContext(params, function(result) {
+                    that.setAutoSendDeltas(true);
+				});
+            }
+
+            /**
+             * Создать переключать рута
+             * @returns {string}
+             */
+            this.createTab = function(rootGuid) {
+                if (that.rootsContainers[rootGuid] !== undefined) {
+                    return "#result"+that.rootsContainers[rootGuid];
+                }
+
+                var i = this.tabCount;
+                $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
+                $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
+				that.rootsGuids[i]=rootGuid;
+                that.rootsContainers[that.rootsGuids[i]] = i;
+                fixHeight();
+                this.tabCount++;
+
+                if (i==0)
+                    that.currRoot = that.rootsGuids[0];
+
+                return "#result"+i;
+            }
+
+            /**
+             * Рендер переключателя рута
+             * @param rootGuid {string}
+             * @returns {string}
+             */
+            this.renderTab = function(rootGuid){
+                that.createTab(rootGuid);
+                return that.getOptions([rootGuid])[0];
+            }
+
+            /**
+             * Получить контексты и отобразить в комбо
+             */
+            this.getContexts = function() {
+                var sel = $('#userContext');
+                sel.empty();
+
+                for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
+                    var root = uccelloClt.getSysDB().getRoot(i);
+                    var obj = root.obj;
+                    for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
+                        var col = obj.getCol(j);
+                        var name = col.getName();
+                        if (name == "VisualContext") {
+                            for (var k = 0, len3 = col.count(); k < len3; k++) {
+                                var item = col.get(k);
+                                var option = $('<option/>');
+                                option.data('ContextGuid', item.get('ContextGuid'));
+                                option.val(item.get('DataBase')).html(item.get('Name'));
+                                sel.append(option);
+                            }
+                            sel.val(uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            /**
+             * автодельта
+             * @param check
+             */
+            this.setAutoSendDeltas = function(check) {
+                var cm = uccelloClt.getContextCM(that.currRoot);
+                if (cm) {
+                    if (check)
+                        $('#autoSendDelta').prop('checked', cm.autoSendDeltas());
+                    else
+                        cm.autoSendDeltas($('#autoSendDelta').is(':checked'));
+                }
+
+            }
+
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 sessionId:$.url('#sid'),
@@ -37,6 +140,7 @@ $(document).ready( function() {
                         $('#userInfo').html('');
                     }
                 },
+                renderTab: that.renderTab,
                 controlsPath:'./ProtoControls/',
                 config:config
             });
@@ -69,9 +173,9 @@ $(document).ready( function() {
                 for (var f in gl)
                     if (gl[f].getClassName() == "Container") { rootCont=gl[f]; break; }
 
-				var constr = uccelloClt.getConstr(guid);
+                var constr = uccelloClt.getConstr(guid);
                 var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:that.resultForm});
-				sendDeltas(false);
+                sendDeltas(false);
                 uccelloClt.getContext().renderAll(true);
             }
 
@@ -83,7 +187,7 @@ $(document).ready( function() {
             window.delControl = function(guid, cm) {
                 if (!cm) cm = uccelloClt.getContextCM(that.currRoot);
                 cm.del(guid);
-				uccelloClt.getController().genDeltas(cm.getDB().getGuid());
+                uccelloClt.getController().genDeltas(cm.getDB().getGuid());
                 uccelloClt.getContext().renderAll(true);
             }
 
@@ -135,7 +239,7 @@ $(document).ready( function() {
              */
             window.sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
-					uccelloClt.getController().genDeltas(uccelloClt.getContextCM(that.currRoot).getDB().getGuid());
+                    uccelloClt.getController().genDeltas(uccelloClt.getContextCM(that.currRoot).getDB().getGuid());
             }
 
             /**
@@ -145,71 +249,29 @@ $(document).ready( function() {
             window.createContext = function(formGuids) {
                 if (!formGuids) return;
                 $(that.resultForm).empty();
+                that.clearTabs();
                 uccelloClt.createContext('server', formGuids, function(result){
-                    that.clearTabs();
-                    for (var i=0; i<result.length; i++) {
-                        that.createTab(result[i]);
-                    }
-                    that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
                     that.getContexts();
-                    return that.getOptions(result);
                 });
             }
 
-			
+
             /**
              * Создать клиентский контекст
              * @param guid
              */
             window.createClientContext = function(formGuids) {
                 if (!formGuids) return;
+                that.clearTabs();
                 uccelloClt.createContext('client', formGuids, function(result){
-                    that.clearTabs();
-                    for (var i=0; i<result.length; i++) {
-                        that.createTab(result[i]);
-                    }
-                    that.currRoot = that.rootsGuids[0];
                     that.setAutoSendDeltas(true);
                     that.getContexts();
-                    return that.getOptions(result);
                 });
             }
 
 
-            this.clearTabs = function() {
-                $(that.resultForm).empty();
-                that.tabCount = 0;
-                that.rootsContainers = {};
-                that.rootsGuids = [];
-                $('#tabs').empty();
-                $('#container').empty();
-            }
 
-            this.getOptions = function(roots) {
-                var options = [];
-                for (var i=0; i<roots.length; i++)
-                    options.push( {rootContainer: '#result'+that.rootsContainers[roots[i]]});
-                return options;
-            }
-
-            /**
-             * Выбрать контекст
-             * @param guid
-             */
-            this.selectContext = function(params) {
-                that.clearTabs();
-                uccelloClt.setContext(params, function(result) {
-                    result = result.length? result: result.guids;
-					for (var i=0; i<result.length; i++) {
-						that.createTab(result[i]);
-					}
-					that.currRoot = that.rootsGuids[0];
-                    that.setAutoSendDeltas(true);
-                    return that.getOptions(result);
-				});
-            }
-			
             /**
              * Выбрать рут
              * @param i
@@ -230,13 +292,8 @@ $(document).ready( function() {
              */
             window.createRoot = function(){
                 if (!that.currRoot) return;
-				var formGuids = $('#selForm').val();
-                uccelloClt.createRoot(formGuids, "res", function(result){
-                    for (var i=0; i<result.length; i++) {
-                        that.createTab(result[i]);
-                    }
-                    return that.getOptions(result);
-                });
+                var formGuids = $('#selForm').val();
+                uccelloClt.createRoot(formGuids, "res");
             }
 
             /**
@@ -274,88 +331,11 @@ $(document).ready( function() {
                 var cm = uccelloClt.getContextCM(that.currRoot);
                 var formParam1 = cm.getByName("FormParam1");
                 formParam1.value(value);
-				sendDeltas(true);
-            },
-
-
-
-            // ---------------------------------------------------------------------------------------------------------
-
-            /**
-             * Создать переключатели рутов
-             */
-            this.createTabs = function() {
-                $('#tabs').empty();
-                $('#container').empty();
-                this.rootsContainers={};
-                for(var i=0; i<that.rootsGuids.length; i++) {
-                    $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
-                    $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
-                    that.rootsContainers[that.rootsGuids[i]] = i;
-                }
-                fixHeight();
-            }
-
-            /**
-             * Создать переключать рута
-             * @returns {string}
-             */
-            this.createTab = function(rootGuid) {
-                var i = this.tabCount;
-                $('#tabs').append('<input type="button" class="tabs '+(i==0?'active':'')+'" value="Root '+i+'" onclick="selectTab('+i+');"> ');
-                $('#container').append('<div id="result'+i+'" class="tabs-page" style="'+(i!=0?'display: none;':'')+'"/>');
-				that.rootsGuids[i]=rootGuid;
-                that.rootsContainers[that.rootsGuids[i]] = i;
-                fixHeight();
-                this.tabCount++;
-                return "#result"+i;
+                sendDeltas(true);
             }
 
 
-
-
-            /**
-             * Получить контексты и отобразить в комбо
-             */
-            this.getContexts = function() {
-                var sel = $('#userContext');
-                sel.empty();
-
-                for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
-                    var root = uccelloClt.getSysDB().getRoot(i);
-                    var obj = root.obj;
-                    for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
-                        var col = obj.getCol(j);
-                        var name = col.getName();
-                        if (name == "VisualContext") {
-                            for (var k = 0, len3 = col.count(); k < len3; k++) {
-                                var item = col.get(k);
-                                var option = $('<option/>');
-                                option.data('ContextGuid', item.get('ContextGuid'));
-                                option.val(item.get('DataBase')).html(item.get('Name'));
-                                sel.append(option);
-                            }
-                            sel.val(uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null);
-                            return;
-                        }
-                    }
-                }
-            }
-
-
-            this.setAutoSendDeltas = function(check) {
-                var cm = uccelloClt.getContextCM(that.currRoot);
-                if (cm) {
-                    if (check)
-                        $('#autoSendDelta').prop('checked', cm.autoSendDeltas());
-                    else
-                        cm.autoSendDeltas($('#autoSendDelta').is(':checked'));
-                }
-
-            }
-
-
-            // ----------------------------------------------------------------------------------------------------
+                // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
             // высота окошка результатов
@@ -394,7 +374,6 @@ $(document).ready( function() {
                 // запросить гуиды рутов
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
-                    that.createTabs();
                     that.selectContext({masterGuid: currContext, vc:vc,  side: "server"});
                 });
             });

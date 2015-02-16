@@ -148,7 +148,9 @@ define(
 
                 function cbfinal2(result2){
                     result2 = result2.guids ? result2.guids : result2;
-                    that.getContext().renderForms(result2, cbfinal(result2), true);
+                    that.getContext().renderForms(result2, true);
+                    if (cbfinal)
+                        cbfinal(result2);
                 }
 
 				function done() {
@@ -167,6 +169,7 @@ define(
 					}
 					//p.rpc = null;
                     p.components = that.pvt.components; //  ссылка на хранилище конструкторов
+                    p.renderTab = that.options.renderTab;
                     var vc = new VisualContext(that.pvt.cmclient, p, cbfinal2);
 					that.pvt.vc = vc;
 					that.pvt.vcproxy = vc.getProxy();
@@ -197,7 +200,7 @@ define(
             createRoot: function(formGuids, rtype, callback) {
                 var that = this;
                 this.getContext().loadNewRoots(formGuids, {rtype:rtype}, function(result){
-                    that.getContext().renderForms(result.guids, callback(result.guids), true);
+                    that.getContext().renderForms(result.guids, true);
                 });
             },
 
