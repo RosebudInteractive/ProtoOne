@@ -3,20 +3,18 @@ define(
     function(template, tpl) {
         var vDataGrid = {};
         vDataGrid._templates = template.parseTemplate(tpl);
+
+        /**
+         * Рендер DOM грида
+         * @param options
+         */
         vDataGrid.render = function(options) {
             console.time('renderGrid '+this.name());
-			//console.log("RENDER DATAGRID");
+
             var that = this;
             var grid = $('#' + this.getLid());
             var table = grid.find('.table');
             var dataset = null;
-
-
-            // если надо лишь передвинуть курсор
-            if (vDataGrid.isOnlyCursor.apply(this) && this.dataset()) {
-                vDataGrid.renderCursor.apply(this, [this.getControlMgr().getByGuid(this.dataset()).cursor()]);
-                return;
-            }
 
             // если не создан грид
             if (grid.length == 0) {
@@ -103,19 +101,13 @@ define(
             }
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
-			
-			// TODO? возможно надо перенести в datagrid или dataControl
-			if (dataset) {
-				this.pvt.renderDataVer = dataset.getDataVer();
-				
-			}
-			
-			
-			
-			
             console.timeEnd('renderGrid '+this.name());
         }
 
+        /**
+         * Рендер курсора
+         * @param id
+         */
         vDataGrid.renderCursor = function(id) {
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');
@@ -123,18 +115,12 @@ define(
             rowTr.addClass('active');
         }
 
-        vDataGrid.isOnlyCursor = function() {
-			if (this.dataset()) {
-				var dataset = this.getControlMgr().getByGuid(this.dataset());
-
-				if ((this.pvt.renderDataVer == dataset.getDataVer()) && (!dataset.isDataModified()))
-					return true;
-				else
-					return false;
-			}
-			else return false;
-        }
-
+        /**
+         * Рендер ячейки грида
+         * @param id
+         * @param index
+         * @param value
+         */
         vDataGrid.renderCell = function(id, index, value) {
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');

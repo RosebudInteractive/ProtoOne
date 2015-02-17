@@ -20,8 +20,47 @@ define(
             init: function(cm, params) {
                 this._super(cm,params);
                 this.params = params;
+            },
+
+            /**
+             * Рендер контрола
+             * @param viewset
+             * @param options
+             */
+            irender: function(viewset, options) {
+
+                // если надо лишь передвинуть курсор
+                if (this.isOnlyCursor()) {
+                    viewset.renderCursor.apply(this, [this.getControlMgr().getByGuid(this.dataset()).cursor()]);
+                    return;
+                }
+
+                // рендерим DOM
+                viewset.render.apply(this, [options]);
+
+                // доп. действия
+                if (this.dataset()) {
+                    this.pvt.renderDataVer = this.getControlMgr().getByGuid(this.dataset()).getDataVer();
+                }
+            },
+
+            /**
+             * Нужно перерендерить только курсор
+             * @returns {boolean}
+             */
+            isOnlyCursor: function() {
+                if (this.dataset()) {
+                    var dataset = this.getControlMgr().getByGuid(this.dataset());
+
+                    if ((this.pvt.renderDataVer == dataset.getDataVer()) && (!dataset.isDataModified()))
+                        return true;
+                    else
+                        return false;
+                }
+                else return false;
             }
-        });
+
+    });
         return DataGrid;
     }
 );
