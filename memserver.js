@@ -52,7 +52,7 @@ app.get("/update/:what", function(req, res){
 
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
-app.use("/public/uccello", express.static(__dirname + '/../uccello'));
+app.use("/public/uccello", express.static(__dirname + '/../Uccello'));
 app.use("/tests", express.static(__dirname + '/tests'));
 
 // ----------------------------------------------------------------------------------------------------------------------
