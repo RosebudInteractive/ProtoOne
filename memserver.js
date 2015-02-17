@@ -1,5 +1,5 @@
 // модуль сервера
-var UccelloServ = require('../uccello/uccelloServ');
+var UccelloServ = require('../Uccello/uccelloServ');
 
 // Модули nodejs
 var http = require('http');
