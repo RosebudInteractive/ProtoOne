@@ -104,6 +104,7 @@ var config = {
         {className:'Label', component:'label', viewsets:['simpleview'], guid:'32932036-3c90-eb8b-dd8d-4f19253fabed'}
     ],
     controlsPath: __dirname+'/../ProtoOne/public/ProtoControls/',
+    dataPath: __dirname+'/../ProtoOne/data/',
     uccelloPath: __dirname+'/../Uccello/'
 };
 var uccelloServ = new UccelloServ({port:8081, authenticate:fakeAuthenticate, config:config});
