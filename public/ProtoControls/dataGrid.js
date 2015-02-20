@@ -11,6 +11,7 @@ define(
             className: "DataGrid",
             classGuid: "ff7830e2-7add-e65e-7ddf-caba8992d6d8",
             metaFields: [ ],
+            metaCols: [ {"cname": "Columns", "ctype": "DataColumn"}],
 
             /**
              * Инициализация объекта
