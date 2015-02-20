@@ -214,6 +214,7 @@ $(document).ready( function() {
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
                         uccelloClt.setSession(result.user.session);
+                        uccelloClt.pvt.guids.sysRootGuid = result.user.guid;
                         $('#login').hide(); $('#logout').show();
                         $('#loginForm').hide();
                         $('#loginError').hide();
