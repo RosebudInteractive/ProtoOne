@@ -116,6 +116,7 @@ $(document).ready( function() {
                     {className:'Container', component:'container', viewsets:['simpleview'], guid:'1d95ab61-df00-aec8-eff5-0f90187891cf'},
                     {className:'Form', component:'form', viewsets:['simpleview'], guid:'7f93991a-4da9-4892-79c2-35fe44e69083'},
                     {className:'Button', component:'button', viewsets:['simpleview'], guid:'af419748-7b25-1633-b0a9-d539cada8e0d'},
+                    {className:'DataColumn', component:'dataColumn', guid:'100f774a-bd84-8c46-c55d-ba5981c09db5'},
                     {className:'DataGrid', component:'dataGrid', viewsets:['simpleview'], guid:'ff7830e2-7add-e65e-7ddf-caba8992d6d8'},
                     {className:'DataEdit', component:'dataEdit', viewsets:['simpleview'], guid:'affff8b1-10b0-20a6-5bb5-a9d88334b48e'},
                     {className:'DbNavigator', component:'dbNavigator', viewsets:['simpleview'], guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
@@ -130,13 +131,13 @@ $(document).ready( function() {
 
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
-                sessionId:$.url('#sid'),
+                session:{id:$.url('#sid')},
                 container:'#result0',
                 callback: function(){
                     var user = uccelloClt.getLoggedUser();
                     if (user) {
                         $('#login').hide(); $('#logout').show();
-                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.pvt.sessionId);
+                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.getSession().id);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -209,12 +210,14 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
-                uccelloClt.getClient().authenticate(name, pass, function(result){
+                var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
+                uccelloClt.getClient().authenticate(name, pass, session, function(result){
                     if (result.user) {
+                        $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
                         $('#login').hide(); $('#logout').show();
                         $('#loginForm').hide();
                         $('#loginError').hide();
-                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.pvt.sessionId);
+                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#loginError').html('Неправильный логин или пароль').show();
