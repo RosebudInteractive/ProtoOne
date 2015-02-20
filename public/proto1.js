@@ -131,13 +131,12 @@ $(document).ready( function() {
 
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
-                session:{id:$.url('#sid')},
                 container:'#result0',
                 callback: function(){
                     var user = uccelloClt.getLoggedUser();
                     if (user) {
                         $('#login').hide(); $('#logout').show();
-                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.getSession().id);
+                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -214,10 +213,11 @@ $(document).ready( function() {
                 uccelloClt.getClient().authenticate(name, pass, session, function(result){
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
+                        uccelloClt.setSession(result.user.session);
                         $('#login').hide(); $('#logout').show();
                         $('#loginForm').hide();
                         $('#loginError').hide();
-                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id);
+                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#loginError').html('Неправильный логин или пароль').show();
