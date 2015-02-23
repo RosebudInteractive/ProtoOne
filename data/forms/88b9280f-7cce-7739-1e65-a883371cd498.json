@@ -60,6 +60,58 @@
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "3e9600e8-e4e8-cbef-39ab-c195fbe382cb",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7001,
+                            "Name": "Name"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "fa866d8f-725e-f688-3de6-c0a782c95d5e",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f65ff081-e135-84f0-fd15-a19844f06b95",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7003,
+                            "Name": "country"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0afd044f-76f8-efbf-5ecc-c59df18abba9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7004,
+                            "Name": "city"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1b117aef-3424-614a-1824-523cc46c0507",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7005,
+                            "Name": "address"
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -125,6 +177,34 @@
                 "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf"
               },
               "collections": {
+                "Columns": [
+                  {
+                    "$sys": {
+                      "guid": "248c23d2-da4a-11a6-3562-c0f782d190e4",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
+                      "Name": "DataColumnId",
+                      "Label": "ID",
+                      "Width": 10,
+                      "Field": "fa866d8f-725e-f688-3de6-c0a782c95d5e"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
+                      "Name": "DataColumnName",
+                      "Label": "NAME",
+                      "Width": 90,
+                      "Field": "3e9600e8-e4e8-cbef-39ab-c195fbe382cb"
+                    }
+                  }
+                ]
               }
             },
             {

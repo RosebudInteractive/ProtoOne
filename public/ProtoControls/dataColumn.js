@@ -5,8 +5,8 @@ if (typeof define !== 'function') {
 
 define(
     [UCCELLO_CONFIG.uccelloPath+'controls/aComponent'],
-    function(AControl) {
-        var DataColumn = AControl.extend({
+    function(AComponent) {
+        var DataColumn = AComponent.extend({
 
             className: "DataColumn",
             classGuid: "100f774a-bd84-8c46-c55d-ba5981c09db5",

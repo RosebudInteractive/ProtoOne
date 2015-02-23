@@ -58,46 +58,101 @@ define(
             if (rootElem)
             {
                 var col = rootElem.getCol('DataElements');
-
-                // header
-                var row = $(vDataGrid._templates['row']);
-                var obj = col.get(0);
-                var idIndex = null;
-                if (obj) {
-                    for (var i = 0, len = obj.count(); i < len; i++) {
-                        var name = obj.getFieldName(i);
-                        if (name == 'Id')
-                            idIndex = i;
-                        var cell = $(vDataGrid._templates['header']).html(obj.getFieldName(i));
-                        row.append(cell);
+                var columns = this.getObj().getCol('Columns');
+                console.log('columns:', columns.count());
+                if (columns.count() != 0) {
+                    // header
+                    var row = $(vDataGrid._templates['row']), columnsArr=[];
+                    for (var i = 0, len = columns.count(); i < len; i++) {
+                        var column = columns.get(i);
+                        var header = $(vDataGrid._templates['header']).html(column.get('Label'));
+                        header.css('width', column.get('Width')+'%');
+                        row.append(header);
+                        columnsArr.push({field:column.get('Field'), width:column.get('Width')});
                     }
                     table.append(row);
-                }
 
-                // rows
-                var cursor = dataset.cursor(), rows = '', cursorIndex=-1;
-                for (var i = 0, len = col.count(); i < len; i++) {
-                    var obj = col.get(i);
-                    var id = null, cells = '';
-
-                    // добавляем ячейка
-                    for (var j = 0, len2 = obj.count(); j < len2; j++) {
-                        var text = obj.get(j);
-                        cells += '<div class="cell">'+(text? text: '&nbsp;')+'</div>';
-                        if (idIndex == j)
-                            id = text;
+                    var idIndex = null;
+                    var fields = dataset.getObj().getCol('Fields');
+                    var fieldsArr = {};
+                    for (var i = 0, len = fields.count(); i < len; i++) {
+                        var field = fields.get(i);
+                        fieldsArr[field.getGuid()] = field.get('Name');
+                        if (field.get('Name') == 'Id')
+                            idIndex = field.getGuid();
                     }
-                    rows += '<div class="row data" data-id="'+id+'">'+cells+'</div>';
 
-                    // запоминаем текущий курсор
-                    if (cursor == id)
-                        cursorIndex = i;
+                    // rows
+                    var cursor = dataset.cursor(), rows = '', cursorIndex = -1, columnsArrLen=columnsArr.length;
+                    for (var i = 0, len = col.count(); i < len; i++) {
+                        var obj = col.get(i);
+                        var id = null, cells = '';
+
+                        // добавляем ячейка
+                        for (var j = 0, len2 = columnsArrLen; j < len2; j++) {
+                            var text = obj.get(fieldsArr[columnsArr[j].field]);
+                            var width = columnsArr[j].width;
+                            cells += '<div class="cell" style="width:'+(width?width:'10%')+'%;">' + (text ? text : '&nbsp;') + '</div>';
+                            if (idIndex == columnsArr[j].field)
+                                id = text;
+                        }
+                        rows += '<div class="row data" data-id="' + id + '">' + cells + '</div>';
+
+                        // запоминаем текущий курсор
+                        if (cursor == id)
+                            cursorIndex = i;
+                    }
+                    table.append(rows);
+
+                    // устанавливаем курсор
+                    if (cursorIndex != -1)
+                        table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
+
+
                 }
-                table.append(rows);
+                else {
 
-                // устанавливаем курсор
-                if (cursorIndex != -1)
-                    table.find('.row.data:eq('+cursorIndex+')').addClass('active');
+                    // header
+                    var row = $(vDataGrid._templates['row']);
+                    var obj = col.get(0);
+                    var idIndex = null;
+                    if (obj) {
+                        for (var i = 0, len = obj.count(); i < len; i++) {
+                            var name = obj.getFieldName(i);
+                            if (name == 'Id')
+                                idIndex = i;
+                            var cell = $(vDataGrid._templates['header']).html(obj.getFieldName(i)).addClass('w60');
+                            row.append(cell);
+                        }
+                        table.append(row);
+                    }
+
+                    // rows
+                    var cursor = dataset.cursor(), rows = '', cursorIndex = -1;
+                    for (var i = 0, len = col.count(); i < len; i++) {
+                        var obj = col.get(i);
+                        var id = null, cells = '';
+
+                        // добавляем ячейка
+                        for (var j = 0, len2 = obj.count(); j < len2; j++) {
+                            var text = obj.get(j);
+                            cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
+                            if (idIndex == j)
+                                id = text;
+                        }
+                        rows += '<div class="row data" data-id="' + id + '">' + cells + '</div>';
+
+                        // запоминаем текущий курсор
+                        if (cursor == id)
+                            cursorIndex = i;
+                    }
+                    table.append(rows);
+
+                    // устанавливаем курсор
+                    if (cursorIndex != -1)
+                        table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
+                }
+
             }
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
