@@ -131,7 +131,6 @@ $(document).ready( function() {
 
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
-                container:'#result0',
                 callback: function(){
                     var user = uccelloClt.getLoggedUser();
                     if (user) {
