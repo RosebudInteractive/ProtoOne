@@ -215,6 +215,14 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
                 uccelloClt.getClient().authenticate(name, pass, session, function(result){
                     window.subscribeRootSys();

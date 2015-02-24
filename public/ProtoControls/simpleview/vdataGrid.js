@@ -59,7 +59,16 @@ define(
             {
                 var col = rootElem.getCol('DataElements');
                 var columns = this.getObj().getCol('Columns');
-                console.log('columns:', columns.count());
+                var fields = dataset.getObj().getCol('Fields');
+                var idIndex = null, cursor = dataset.cursor(), rows = '', cursorIndex = -1;
+                var fieldsArr = {};
+                for (var i = 0, len = fields.count(); i < len; i++) {
+                    var field = fields.get(i);
+                    fieldsArr[field.getGuid()] = field.get('Name');
+                    if (field.get('Name') == 'Id')
+                        idIndex = field.getGuid();
+                }
+
                 if (columns.count() != 0) {
                     // header
                     var row = $(vDataGrid._templates['row']), columnsArr=[];
@@ -72,18 +81,8 @@ define(
                     }
                     table.append(row);
 
-                    var idIndex = null;
-                    var fields = dataset.getObj().getCol('Fields');
-                    var fieldsArr = {};
-                    for (var i = 0, len = fields.count(); i < len; i++) {
-                        var field = fields.get(i);
-                        fieldsArr[field.getGuid()] = field.get('Name');
-                        if (field.get('Name') == 'Id')
-                            idIndex = field.getGuid();
-                    }
-
                     // rows
-                    var cursor = dataset.cursor(), rows = '', cursorIndex = -1, columnsArrLen=columnsArr.length;
+                    var columnsArrLen=columnsArr.length;
                     for (var i = 0, len = col.count(); i < len; i++) {
                         var obj = col.get(i);
                         var id = null, cells = '';
@@ -102,40 +101,25 @@ define(
                         if (cursor == id)
                             cursorIndex = i;
                     }
-                    table.append(rows);
-
-                    // устанавливаем курсор
-                    if (cursorIndex != -1)
-                        table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
-
-
                 }
                 else {
 
                     // header
                     var row = $(vDataGrid._templates['row']);
-                    var obj = col.get(0);
-                    var idIndex = null;
-                    if (obj) {
-                        for (var i = 0, len = obj.count(); i < len; i++) {
-                            var name = obj.getFieldName(i);
-                            if (name == 'Id')
-                                idIndex = i;
-                            var cell = $(vDataGrid._templates['header']).html(obj.getFieldName(i)).addClass('w60');
-                            row.append(cell);
-                        }
-                        table.append(row);
+                    for (var i = 0, len = fields.count(); i < len; i++) {
+                        var cell = $(vDataGrid._templates['header']).html(fields.get(i).get('Name')).addClass('w60');
+                        row.append(cell);
                     }
+                    table.append(row);
 
                     // rows
-                    var cursor = dataset.cursor(), rows = '', cursorIndex = -1;
                     for (var i = 0, len = col.count(); i < len; i++) {
                         var obj = col.get(i);
                         var id = null, cells = '';
 
                         // добавляем ячейка
-                        for (var j = 0, len2 = obj.count(); j < len2; j++) {
-                            var text = obj.get(j);
+                        for (var j in fieldsArr) {
+                            var text = obj.get(fieldsArr[j]);
                             cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
                             if (idIndex == j)
                                 id = text;
@@ -146,13 +130,13 @@ define(
                         if (cursor == id)
                             cursorIndex = i;
                     }
-                    table.append(rows);
-
-                    // устанавливаем курсор
-                    if (cursorIndex != -1)
-                        table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
                 }
 
+                table.append(rows);
+
+                // устанавливаем курсор
+                if (cursorIndex != -1)
+                    table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
             }
 
             grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
@@ -176,10 +160,21 @@ define(
          * @param index
          * @param value
          */
-        vDataGrid.renderCell = function(id, index, value) {
-            var table = $('#' + this.getLid()).find('.table');
-            var rowTr = table.find('.row.data[data-id='+id+']');
-            $(rowTr.children()[index]).html(value);
+        vDataGrid.renderCell = function(id, datafield, value) {
+            var index=null, columns = this.getObj().getCol('Columns');
+            if (columns) {
+                for (var i = 0, len = columns.count(); i < len; i++) {
+                    if (columns.get(i).get('Field') == datafield) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index) {
+                    var table = $('#' + this.getLid()).find('.table');
+                    var rowTr = table.find('.row.data[data-id='+id+']');
+                    $(rowTr.children()[index]).html(value);
+                }
+            }
         }
         return vDataGrid;
     }

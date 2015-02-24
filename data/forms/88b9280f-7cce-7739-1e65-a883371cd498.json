@@ -127,6 +127,98 @@
                       "Master": "061b1347-18a2-a829-fcce-ba59058b4bdf"
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "439b8b9e-447d-c21f-f629-3105b1df754e",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "80ab10ed-373c-2870-0f52-0c5c7bbf6978",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8001,
+                            "Name": "Name"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "ec732baf-e03f-a116-7925-583712f681f9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8003,
+                            "Name": "parent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f4359087-4731-24d1-0b64-471965e019cf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8004,
+                            "Name": "firstname"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "ccf93017-2c46-374f-6a20-68f7c15426f8",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8005,
+                            "Name": "lastname"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c3c0a738-5fea-608d-24f9-138e4530e001",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8006,
+                            "Name": "birthdate"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "99767254-4250-7dd4-1b56-659298414ddf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8007,
+                            "Name": "country"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "99b59f32-3dc5-9472-05fa-1643e46f87d1",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8008,
+                            "Name": "city"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c0a650b1-470e-7237-312e-d530c827e568",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8009,
+                            "Name": "address"
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -142,6 +234,58 @@
                       "Master": "061b1347-18a2-a829-fcce-ba59058b4bdf"
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "2e2949ac-bc9b-80de-4747-2df61750f105",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 9002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "39c08f9d-b359-8dc0-99d7-0b619401e18f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 9001,
+                            "Name": "Name"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f48f71c0-a3c8-2f3b-9a69-1c1ce683e605",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 9003,
+                            "Name": "parent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "73904728-a2fb-bd6d-5fac-58054a78e7c7",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 9004,
+                            "Name": "number"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "15fe26e8-2dbd-5fea-3f21-409175aca9ab",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 9005,
+                            "Name": "total"
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -157,6 +301,68 @@
                       "Master": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "182024da-784f-5615-dc1f-2700fe8f862c",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1146ab82-429c-7637-e7f5-c9cb770a19d0",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "Name"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f4f00409-7541-290a-7e8e-404e1855c437",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5003,
+                            "Name": "parent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "60534ba5-b966-a2a3-a70b-f5787784b640",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5004,
+                            "Name": "country"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f06101d1-2ff0-39a0-8ff0-88fa5f0557d5",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5005,
+                            "Name": "city"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "15aae336-6b29-8020-eb3b-5899287578a6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5006,
+                            "Name": "address"
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
