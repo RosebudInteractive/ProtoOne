@@ -44,6 +44,8 @@ app.get("/update/:what", function(req, res){
             res.writeHead(200,{"Content-Type" : "text/html"});
             res.write('$ cd /var/www/sites/genetix/Genetix/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
+            res.write('$ cd /var/www/sites/genetix/Uccello/; git pull<br>');
+            res.write(shell.exec('cd /var/www/sites/genetix/Uccello/; git pull').output+'<br><br>');
             break;
     }
 

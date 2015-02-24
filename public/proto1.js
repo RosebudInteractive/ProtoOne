@@ -132,6 +132,7 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
+                    window.subscribeRootSys();
                     var user = uccelloClt.getLoggedUser();
                     if (user) {
                         $('#login').hide(); $('#logout').show();
@@ -210,15 +211,7 @@ $(document).ready( function() {
             window.login = function(name, pass){
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
                 uccelloClt.getClient().authenticate(name, pass, session, function(result){
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
-                    console.log(uccelloClt.getController().guid());
+                    window.subscribeRootSys();
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
                         uccelloClt.setSession(result.user.session);
