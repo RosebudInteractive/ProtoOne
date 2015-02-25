@@ -47,6 +47,7 @@ define(
             var db = cm.getDB();
             var rootElem = null;
 
+
             if (this.dataset()) {
                 dataset = cm.getByGuid(this.dataset());
                 if (dataset) {
@@ -157,7 +158,7 @@ define(
         /**
          * Рендер ячейки грида
          * @param id
-         * @param index
+         * @param datafield
          * @param value
          */
         vDataGrid.renderCell = function(id, datafield, value) {
