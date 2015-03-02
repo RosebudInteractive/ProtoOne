@@ -163,7 +163,9 @@ $(document).ready( function() {
                 // подписываемся на корневой объект контейнера
                 uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
                     that.getContexts();
-                }, function() {} );
+                }, function() {
+
+                } );
             }
 
             var addControlId = 1000;
@@ -215,7 +217,7 @@ $(document).ready( function() {
              */
             window.login = function(name, pass){
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
-                uccelloClt.getClient().authenticate(name, pass, session, function(result){
+                uccelloClt.getClient().authenticate({user:name, pass:pass, session:session, subscribeUserInfo:true}, function(result){
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
                         uccelloClt.setSession(result.user.session);
@@ -237,7 +239,11 @@ $(document).ready( function() {
              * Выход
              */
             window.logout = function(){
-                uccelloClt.getClient().deauthenticate(function(){
+                uccelloClt.getClient().deauthenticate(function(result){
+                    //$.cookie('session_'+uccelloClt.getLoggedUser().user, null);
+                    uccelloClt.setSession(result.user.session);
+                    uccelloClt.pvt.guids.sysRootGuid = result.user.guid;
+                    window.subscribeRootSys();
                     $('#login').show(); $('#logout').hide();
                     $('#userInfo').html('');
                 });
