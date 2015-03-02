@@ -217,16 +217,21 @@ $(document).ready( function() {
              */
             window.login = function(name, pass){
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
-                uccelloClt.getClient().authenticate({user:name, pass:pass, session:session, subscribeUserInfo:true}, function(result){
+                uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
-                        uccelloClt.setSession(result.user.session);
-                        uccelloClt.pvt.guids.sysRootGuid = result.user.guid;
-                        window.subscribeRootSys();
-                        $('#login').hide(); $('#logout').show();
-                        $('#loginForm').hide();
-                        $('#loginError').hide();
-                        $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
+                        uccelloClt.subscribeUser(function(result2){
+                            if (!result2) {
+                                $('#logout').hide(); $('#login').show();
+                                $('#loginError').html('Ошибка подписки').show();
+                                $('#userInfo').html('');
+                            } else {
+                                $('#login').hide(); $('#logout').show();
+                                $('#loginForm').hide();
+                                $('#loginError').hide();
+                                $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
+                            }
+                        });
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#loginError').html('Неправильный логин или пароль').show();
