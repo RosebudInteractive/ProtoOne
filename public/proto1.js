@@ -138,10 +138,10 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
-                    var user = uccelloClt.getLoggedUser();
+                    var user = uccelloClt.getUser();
                     if (user) {
                         $('#login').hide(); $('#logout').show();
-                        $('#userInfo').html('User: '+user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
+                        $('#userInfo').html('User: '+user.name()+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -245,7 +245,7 @@ $(document).ready( function() {
              */
             window.logout = function(){
                 uccelloClt.getClient().deauthenticate(function(result){
-                    //$.cookie('session_'+uccelloClt.getLoggedUser().user, null);
+                    //$.cookie('session_'+uccelloClt.getUser().name(), null);
                     uccelloClt.setSession(result.user.session);
                     uccelloClt.pvt.guids.sysRootGuid = result.user.guid;
                     window.subscribeRootSys();
