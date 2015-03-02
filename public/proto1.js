@@ -141,7 +141,7 @@ $(document).ready( function() {
                     var user = uccelloClt.getUser();
                     if (user) {
                         $('#login').hide(); $('#logout').show();
-                        $('#userInfo').html('User: '+user.name()+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
+                        $('#userInfo').html('User: '+user.name()+' | Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -216,7 +216,7 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
-                var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {id:uccelloClt.getSession().id, deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
+                var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
                 uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
@@ -229,7 +229,7 @@ $(document).ready( function() {
                                 $('#login').hide(); $('#logout').show();
                                 $('#loginForm').hide();
                                 $('#loginError').hide();
-                                $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSession().id+' <br>DeviceName:'+uccelloClt.getSession().deviceName);
+                                $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
                             }
                         });
                     } else {
@@ -244,15 +244,10 @@ $(document).ready( function() {
              * Выход
              */
             window.logout = function(){
-                uccelloClt.getClient().deauthenticate(function(result){
-                    //$.cookie('session_'+uccelloClt.getUser().name(), null);
-                    uccelloClt.setSession(result.user.session);
-                    uccelloClt.pvt.guids.sysRootGuid = result.user.guid;
-                    window.subscribeRootSys();
+                uccelloClt.deauthenticate(function(result){
                     $('#login').show(); $('#logout').hide();
                     $('#userInfo').html('');
                 });
-                return false;
             }
 
             /**
