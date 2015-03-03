@@ -33,15 +33,32 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
+            this.setContextUrl = function(database, context) {
+                document.location = url('protocol')+'://'+url('hostname')+(url('port')?':'+url('port'):'')+url('path')+'#database='+database+'&context='+context;
+            }
+
             /**
              * Выбрать контекст
              * @param guid
              */
             this.selectContext = function(params) {
                 that.clearTabs();
-                uccelloClt.setContext(params, function(result) {
-                    that.setAutoSendDeltas(true);
-				});
+                
+                // выборочная подписка
+                var selSub = $('#selSub').is(':checked');
+                var formGuids = 'all';
+                if (selSub) {
+                    formGuids = $('#selForm').val();
+                }
+
+                // запросить гуиды рутов
+                uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
+                    that.rootsGuids = result.roots;
+                    uccelloClt.setContext(params, function(result) {
+                        that.setContextUrl(params.masterGuid, params.vc);
+                        that.setAutoSendDeltas(true);
+                    });
+                });
             }
 
             /**
@@ -90,7 +107,12 @@ $(document).ready( function() {
                                 option.val(item.get('DataBase')).html(item.get('Name'));
                                 sel.append(option);
                             }
-                            sel.val(uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null);
+
+                            var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null;
+                            if (masterGuid) {
+                                that.setContextUrl(masterGuid, $(sel.find('option[value='+masterGuid+']')).data('ContextGuid'));
+                            }
+                            sel.val(masterGuid);
                             return;
                         }
                     }
@@ -144,6 +166,12 @@ $(document).ready( function() {
                         that.getContexts();
                         $('#login').hide(); $('#logout').show();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
+
+                        var masterGuid = url('#database');
+                        var vc = url('#context');
+                        if(masterGuid && vc)
+                            $('#userContext').val(masterGuid).change();
+
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -383,27 +411,21 @@ $(document).ready( function() {
             $('#loginForm').click(function(e){e.stopPropagation();});
 
             $('#userContext').change(function(){
-
-                var currContext = $(this).val();
-                var vc = $(this).find('option[value="'+currContext+'"]').data('ContextGuid');
-
-                // выборочная подписка
-                var selSub = $('#selSub').is(':checked');
-                var formGuids = 'all';
-                if (selSub) {
-                    formGuids = $('#selForm').val();
-                }
-
-                // запросить гуиды рутов
-                uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {
-                    that.rootsGuids = result.roots;
-                    that.selectContext({masterGuid: currContext, vc:vc,  side: "server", formGuids:formGuids});
-                });
-
+                var masterGuid = $(this).val();
+                var vc = $(this).find('option[value="'+masterGuid+'"]').data('ContextGuid');
+                if(masterGuid && vc)
+                    that.selectContext({masterGuid: masterGuid, vc:vc,  side: "server"});
             });
 
             $('#autoSendDelta').click(function(e){
                   that.setAutoSendDeltas(false);
+            });
+
+            $(window).on('hashchange', function() {
+                var masterGuid = url('#database');
+                var vc = url('#context');
+                if(masterGuid && vc)
+                    $('#userContext').val(masterGuid).change();
             });
 
             // ----------------------------------------------------------------------------------------------------
