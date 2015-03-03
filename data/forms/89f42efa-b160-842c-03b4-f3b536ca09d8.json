@@ -56,7 +56,8 @@
                       "Id": 2004,
                       "Name": "DatasetLead",
                       "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
-                      "Active": true
+                      "Active": true,
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },
                     "collections": {
                       "Fields": [

@@ -218,16 +218,6 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
-                console.log(uccelloClt.getController().guid());
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
                 uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
@@ -238,6 +228,7 @@ $(document).ready( function() {
                                 $('#loginError').html('Ошибка подписки').show();
                                 $('#userInfo').html('');
                             } else {
+                                that.getContexts();
                                 $('#login').hide(); $('#logout').show();
                                 $('#loginForm').hide();
                                 $('#loginError').hide();
