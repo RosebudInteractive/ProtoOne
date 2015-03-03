@@ -384,14 +384,19 @@ $(document).ready( function() {
                 var currContext = $(this).val();
                 var vc = $(this).find('option[value="'+currContext+'"]').data('ContextGuid');
 
-                // создавать при выборе контекста
-                var createForm = $('#createForm').is(':checked');
+                // выборочная подписка
+                var selSub = $('#selSub').is(':checked');
+                var formGuids = 'all';
+                if (selSub) {
+                    formGuids = $('#selForm').val();
+                }
 
                 // запросить гуиды рутов
                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:currContext, rootKind:'res', type:'method'}, function(result) {
                     that.rootsGuids = result.roots;
-                    that.selectContext({masterGuid: currContext, vc:vc,  side: "server"});
+                    that.selectContext({masterGuid: currContext, vc:vc,  side: "server", formGuids:formGuids});
                 });
+
             });
 
             $('#autoSendDelta').click(function(e){
