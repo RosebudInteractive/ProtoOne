@@ -28,6 +28,7 @@ $(document).ready( function() {
                 that.tabCount = 0;
                 that.rootsContainers = {};
                 that.rootsGuids = [];
+                that.resultForm = '#result0';
                 $('#tabs').empty();
                 $('#container').empty();
             }
@@ -140,8 +141,9 @@ $(document).ready( function() {
                 callback: function(){
                     var user = uccelloClt.getUser();
                     if (user) {
+                        that.getContexts();
                         $('#login').hide(); $('#logout').show();
-                        $('#userInfo').html('User: '+user.name()+' | Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
+                        $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
@@ -216,6 +218,16 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
+                console.log(uccelloClt.getController().guid());
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
                 uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
@@ -229,7 +241,7 @@ $(document).ready( function() {
                                 $('#login').hide(); $('#logout').show();
                                 $('#loginForm').hide();
                                 $('#loginError').hide();
-                                $('#userInfo').html('User: '+result.user.user+' | Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
+                                $('#userInfo').html('User: '+result.user.user+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
                             }
                         });
                     } else {

@@ -59,6 +59,118 @@
                       "Active": true
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "eb6fa823-11cf-6f34-053e-533c2d391b64",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "296988a7-6d26-6fec-bd6f-de7cb565cc9b",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "state"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5003,
+                            "Name": "client"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e046710-cb8b-9414-5097-139ffe7ed389",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5004,
+                            "Name": "companyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "a0e1e0e0-0c82-29ba-cd5d-b770aa9ffcc9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5005,
+                            "Name": "contact"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c34e850f-7c2d-cdf1-85b7-b74a2295cc73",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5006,
+                            "Name": "phone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "54ed8415-9663-d4e0-e19f-a6e2bf2ee7ad",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5007,
+                            "Name": "email"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0eeebe01-ee89-2923-80aa-d05d195b006d",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5008,
+                            "Name": "contactId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "03d0837e-f530-9ecc-471c-61b860a05fa2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5009,
+                            "Name": "proba"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e31b95d-36ad-ff55-0390-2e1f4c4de3c6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5010,
+                            "Name": "amount"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "18113bf8-9b2f-98b1-2cbf-9e1470e7d8bf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5011,
+                            "Name": "user"
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
