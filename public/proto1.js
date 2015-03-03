@@ -33,8 +33,12 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.setContextUrl = function(database, context) {
-                document.location = url('protocol')+'://'+url('hostname')+(url('port')?':'+url('port'):'')+url('path')+'#database='+database+'&context='+context;
+            this.setContextUrl = function(database, context, formGuids) {
+                document.location = that.getContextUrl(database, context, formGuids);
+            }
+
+            this.getContextUrl = function(database, context, formGuids) {
+                return url('protocol')+'://'+url('hostname')+(url('port')?':'+url('port'):'')+url('path')+'#database='+database+'&context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
             }
 
             /**
@@ -43,22 +47,35 @@ $(document).ready( function() {
              */
             this.selectContext = function(params) {
                 that.clearTabs();
-                
-                // выборочная подписка
-                var selSub = $('#selSub').is(':checked');
+
                 var formGuids = 'all';
-                if (selSub) {
-                    formGuids = $('#selForm').val();
+                if (url('#formGuids')) {
+                    formGuids = url('#formGuids').split(',');
+                }  else {
+                    // выборочная подписка
+                    var selSub = $('#selSub').is(':checked');
+                    if (selSub) {
+                        formGuids = $('#selForm').val();
+                    }
                 }
 
-                // запросить гуиды рутов
-                uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
-                    that.rootsGuids = result.roots;
+                if (formGuids == 'all') {
+                    // запросить гуиды рутов
+                    uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
+                        that.rootsGuids = result.roots;
+                        uccelloClt.setContext(params, function(result) {
+                            that.setContextUrl(params.masterGuid, params.vc, formGuids);
+                            that.setAutoSendDeltas(true);
+                        });
+                    });
+                } else {
+                    that.rootsGuids = formGuids;
+                    params.formGuids = formGuids;
                     uccelloClt.setContext(params, function(result) {
-                        that.setContextUrl(params.masterGuid, params.vc);
+                        that.setContextUrl(params.masterGuid, params.vc, formGuids);
                         that.setAutoSendDeltas(true);
                     });
-                });
+                }
             }
 
             /**
@@ -110,7 +127,7 @@ $(document).ready( function() {
 
                             var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null;
                             if (masterGuid) {
-                                that.setContextUrl(masterGuid, $(sel.find('option[value='+masterGuid+']')).data('ContextGuid'));
+                                that.setContextUrl(masterGuid, $(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), !url('#formGuids') || url('#formGuids')=='all'?'all':url('#formGuids').split(','));
                             }
                             sel.val(masterGuid);
                             return;
@@ -246,7 +263,7 @@ $(document).ready( function() {
              * @param pass
              */
             window.login = function(name, pass){
-                var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#ff0000'};
+                var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#6ca9f0'};
                 uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
                         $.cookie('session_'+name, JSON.stringify(session), { expires: 30 });
@@ -382,6 +399,17 @@ $(document).ready( function() {
             }
 
 
+            window.openTab = function() {
+                // выборочная подписка
+                var selSub = $('#selSub').is(':checked');
+                var formGuids = 'all';
+                if (selSub) {
+                    formGuids = $('#selForm').val();
+                }
+                window.open(that.getContextUrl(url('#database'), url('#context'), formGuids));
+            }
+
+
                 // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
@@ -415,6 +443,8 @@ $(document).ready( function() {
                 var vc = $(this).find('option[value="'+masterGuid+'"]').data('ContextGuid');
                 if(masterGuid && vc)
                     that.selectContext({masterGuid: masterGuid, vc:vc,  side: "server"});
+                else
+                    that.clearTabs();
             });
 
             $('#autoSendDelta').click(function(e){
@@ -425,7 +455,7 @@ $(document).ready( function() {
                 var masterGuid = url('#database');
                 var vc = url('#context');
                 if(masterGuid && vc)
-                    $('#userContext').val(masterGuid).change();
+                    $('#userContext').val(masterGuid);
             });
 
             // ----------------------------------------------------------------------------------------------------
