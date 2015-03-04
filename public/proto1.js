@@ -33,12 +33,14 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.setContextUrl = function(database, context, formGuids) {
-                document.location = that.getContextUrl(database, context, formGuids);
+            this.setContextUrl = function(context, database, formGuids) {
+                document.location = that.getContextUrl(context, database, formGuids);
             }
 
-            this.getContextUrl = function(database, context, formGuids) {
-                return url('protocol')+'://'+url('hostname')+(url('port')?':'+url('port'):'')+url('path')+'#database='+database+'&context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
+            this.getContextUrl = function(context, database, formGuids) {
+                var location = document.location.href;
+                location = location.replace(/#.*/, '');
+                return location+'#database='+database+'&context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
             }
 
             /**
@@ -64,7 +66,7 @@ $(document).ready( function() {
                     uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                         that.rootsGuids = result.roots;
                         uccelloClt.setContext(params, function(result) {
-                            that.setContextUrl(params.masterGuid, params.vc, formGuids);
+                            that.setContextUrl(params.vc, params.masterGuid, formGuids);
                             that.setAutoSendDeltas(true);
                         });
                     });
@@ -72,7 +74,7 @@ $(document).ready( function() {
                     that.rootsGuids = formGuids;
                     params.formGuids = formGuids;
                     uccelloClt.setContext(params, function(result) {
-                        that.setContextUrl(params.masterGuid, params.vc, formGuids);
+                        that.setContextUrl(params.vc, params.masterGuid, formGuids);
                         that.setAutoSendDeltas(true);
                     });
                 }
@@ -127,7 +129,7 @@ $(document).ready( function() {
 
                             var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null;
                             if (masterGuid) {
-                                that.setContextUrl(masterGuid, $(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), !url('#formGuids') || url('#formGuids')=='all'?'all':url('#formGuids').split(','));
+                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), masterGuid, !url('#formGuids') || url('#formGuids')=='all'?'all':url('#formGuids').split(','));
                             }
                             sel.val(masterGuid);
                             return;
@@ -398,6 +400,9 @@ $(document).ready( function() {
                 sendDeltas(true);
             }
 
+            window.newTab = function(contextGuid, dbGuid, resGuids) {
+                window.open(that.getContextUrl(contextGuid, dbGuid, resGuids));
+            }
 
             window.openTab = function() {
                 // выборочная подписка
@@ -406,7 +411,7 @@ $(document).ready( function() {
                 if (selSub) {
                     formGuids = $('#selForm').val();
                 }
-                window.open(that.getContextUrl(url('#database'), url('#context'), formGuids));
+                uccelloClt.getClient().newTab(url('#context'), url('#database'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
 
@@ -455,7 +460,7 @@ $(document).ready( function() {
                 var masterGuid = url('#database');
                 var vc = url('#context');
                 if(masterGuid && vc)
-                    $('#userContext').val(masterGuid);
+                    $('#userContext').val(masterGuid).change();
             });
 
             // ----------------------------------------------------------------------------------------------------
