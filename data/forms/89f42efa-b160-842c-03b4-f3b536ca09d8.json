@@ -24,6 +24,19 @@
         "collections": {}
       }
     ],
+    "SubForms": [
+      {
+        "$sys": {
+          "guid": "ce777eb3-9bb7-157d-948d-687fc9704adf",
+          "typeGuid": "d7785c24-0b96-76ee-46a7-b0103cda4aa0"
+        },
+        "fields": {
+          "Id": 2006,
+          "Name": "CrmEditForm",
+          "FormGuid": "4a4abdb4-3e3b-85a7-09b9-5f15b4b187f9"
+        }
+      }
+    ],
     "Children": [
       {
         "$sys": {

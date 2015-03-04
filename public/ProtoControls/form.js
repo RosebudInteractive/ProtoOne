@@ -11,7 +11,7 @@ define(
             className: "Form",
             classGuid: "7f93991a-4da9-4892-79c2-35fe44e69083",
             metaFields: [],
-            metaCols: [ {"cname": "Params", "ctype": "control"},{"cname": "Children", "ctype": "control"} ],
+            metaCols: [ {"cname": "Params", "ctype": "control"},{"cname": "Children", "ctype": "control"},{"cname": "SubForms", "ctype": "control"} ],
 
             init: function(cm,params){
                 this._super(cm,params);

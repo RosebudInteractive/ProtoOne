@@ -24,6 +24,19 @@
         "collections": {}
       }
     ],
+    "SubForms": [
+      {
+        "$sys": {
+          "guid": "9db40561-0111-1cc9-54a9-9e89ac2814cd",
+          "typeGuid": "d7785c24-0b96-76ee-46a7-b0103cda4aa0"
+        },
+        "fields": {
+          "Id": 1458,
+          "Name": "CompanyForm",
+          "FormGuid": "02fad346-dc0b-7d02-b395-729186589611"
+        }
+      }
+    ],
     "Children": [
       {
         "$sys": {
