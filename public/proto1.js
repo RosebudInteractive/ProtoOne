@@ -153,6 +153,11 @@ $(document).ready( function() {
 
             }
 
+            this.newTab = function(data) {
+                window.open(that.getContextUrl(data.contextGuid, data.dbGuid, data.resGuids));
+            }
+
+
             var config = {
                 controls: [
                     {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
@@ -197,7 +202,8 @@ $(document).ready( function() {
                     }
                 },
                 renderRoot: that.renderRoot,
-                config:config
+                config:config,
+                newTabCallback: that.newTab
             });
 
 
@@ -400,10 +406,6 @@ $(document).ready( function() {
                 sendDeltas(true);
             }
 
-            window.newTab = function(contextGuid, dbGuid, resGuids) {
-                window.open(that.getContextUrl(contextGuid, dbGuid, resGuids));
-            }
-
             window.openTab = function() {
                 // выборочная подписка
                 var selSub = $('#selSub').is(':checked');
@@ -414,8 +416,7 @@ $(document).ready( function() {
                 uccelloClt.getClient().newTab(url('#context'), url('#database'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
-
-                // ----------------------------------------------------------------------------------------------------
+            // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
             // высота окошка результатов
