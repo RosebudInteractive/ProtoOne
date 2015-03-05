@@ -84,7 +84,17 @@ function mysqlAuthenticate(user, pass, done) {
 function fakeAuthenticate(user, pass, done) {
     var err = null, row = null;
     if (user.substring(0, 1)=='u' && pass.substring(0, 1)=='p')
-        row = {user_id:1, email:'user@user.com'};
+        row = {user:user, user_id:1, email:user+'@gmail.com'};
+    else {
+        var users = {
+            'Ivan':'123',
+            'olivier':'123',
+            'plato':'123'
+        };
+        if (users[user] && users[user]==pass) {
+            row = {user:user, user_id:1, email:user+'@gmail.com'};
+        }
+    }
     done(err, row);
 }
 
