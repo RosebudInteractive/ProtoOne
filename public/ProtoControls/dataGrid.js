@@ -30,11 +30,27 @@ define(
              */
             irender: function(viewset, options) {
 
+                // проверяем ширины столбцов
+                var columns = this.getObj().getCol('Columns');
+                if (columns) {
+                    var modified = false;
+                    for (var i = 0, len = columns.count(); i < len; i++) {
+                        var column = columns.get(i);
+                        if (column.isFldModified("width")) {
+                            modified = true;
+                            viewset.renderWidth.apply(this, [i, column.get('Width')]);
+                        }
+                    }
+                    if (modified)
+                        return;
+                }
+
                 // если надо лишь передвинуть курсор
                 if (this.isOnlyCursor()) {
                     viewset.renderCursor.apply(this, [this.getControlMgr().getByGuid(this.dataset()).cursor()]);
                     return;
                 }
+
 
                 // рендерим DOM
                 viewset.render.apply(this, [options]);
