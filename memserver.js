@@ -88,8 +88,8 @@ function fakeAuthenticate(user, pass, done) {
     else {
         var users = {
             'Ivan':'123',
-            'olivier':'123',
-            'plato':'123'
+            'Olivier':'123',
+            'Plato':'123'
         };
         if (users[user] && users[user]==pass) {
             row = {user:user, user_id:1, email:user+'@gmail.com'};
