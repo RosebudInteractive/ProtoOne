@@ -1,6 +1,3 @@
-// модуль сервера
-var UccelloServ = require('../Uccello/uccelloServ');
-
 // Модули nodejs
 var http = require('http');
 var express = require('express');
@@ -116,7 +113,14 @@ var config = {
     dataPath: __dirname+'/../ProtoOne/data/',
     uccelloPath: __dirname+'/../Uccello/'
 };
-var uccelloServ = new UccelloServ({port:8081, authenticate:fakeAuthenticate, config:config});
+
+// модуль настроек
+var UccelloConfig = require('../Uccello/config/config');
+UCCELLO_CONFIG = new UccelloConfig(config);
+
+// модуль сервера
+var UccelloServ = require('../Uccello/uccelloServ');
+var uccelloServ = new UccelloServ({port:8081, authenticate:fakeAuthenticate});
 
 // запускаем http сервер
 http.createServer(app).listen(1325);
