@@ -177,6 +177,32 @@ define(
                 }
             }
         }
+
+        /**
+         * Рендер ширины столбца
+         * @param datafield
+         */
+        vDataGrid.renderWidth = function(datafield, width) {
+            var table = $('#' + this.getLid()).find('.table');
+            var index=null, columns = this.getObj().getCol('Columns');
+            if (columns) {
+                for (var i = 0, len = columns.count(); i < len; i++) {
+                    if (columns.get(i).get('Field') == datafield) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index) {
+                    var table = $('#' + this.getLid()).find('.table');
+                    var header = table.find('.header');
+                    $(header.children()[index]).css('width', width+'%');
+                    var rowsTr = table.find('.row');
+                    for(var i = 0, len = rowsTr.length; i<len; i++)
+                        $($(rowsTr[i]).children()[index]).html(value);
+                }
+            }
+        }
+
         return vDataGrid;
     }
 );
