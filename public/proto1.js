@@ -78,18 +78,20 @@ $(document).ready( function() {
                 that.clearTabs();
 
                 var formGuids = 'all';
-                if (url('#formGuids')) {
-                    formGuids = url('#formGuids').split(',');
-                }  else {
-                    // выборочная подписка
-                    var selSub = $('#selSub').is(':checked');
-                    formGuids = [];
-                    if (selSub) {
-                        formGuids = $('#selForm').val();
-                    }
+                var urlGuids = url('#formGuids');
+                if (urlGuids != null) {
+                    formGuids = urlGuids.split(',');
                 }
 
-                if (formGuids == 'all') {
+                // выборочная подписка
+                var selSub = $('#selSub').is(':checked');
+                if (selSub) {
+                    formGuids = $('#selForm').val();
+                    formGuids = formGuids!=null? formGuids: [];
+                }
+
+
+                if (formGuids == null || formGuids == 'all') {
                     // запросить гуиды рутов
                     uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                         that.rootsGuids = result.roots;
@@ -157,7 +159,9 @@ $(document).ready( function() {
 
                             var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null;
                             if (masterGuid) {
-                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), masterGuid, !url('#formGuids') || url('#formGuids')=='all'?'all':url('#formGuids').split(','));
+                                var urlGuids = url('#formGuids');
+                                urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
+                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), masterGuid, urlGuids);
                             }
                             sel.val(masterGuid);
                             return;
