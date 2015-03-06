@@ -378,7 +378,10 @@ $(document).ready( function() {
                     console.log('выберите формы для создания рута');
                     return;
                 }
-                uccelloClt.createRoot(formGuids, "res");
+                uccelloClt.createRoot(formGuids, "res", function(result){
+                    if (result.guids)
+                        that.setContextUrl(url('#context'), url('#database'), result.guids);
+                });
             }
 
             /**
