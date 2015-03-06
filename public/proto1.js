@@ -49,6 +49,7 @@ $(document).ready( function() {
             this.rootsGuids=[];
             this.rootsContainers={};
             this.resultForm = '#result0';
+            this.hashchange = true;
 
             this.clearTabs = function() {
                 $(that.resultForm).empty();
@@ -61,7 +62,9 @@ $(document).ready( function() {
             }
 
             this.setContextUrl = function(context, database, formGuids) {
+                that.hashchange = false;
                 document.location = that.getContextUrl(context, database, formGuids);
+
             }
 
             this.getContextUrl = function(context, database, formGuids) {
@@ -473,10 +476,13 @@ $(document).ready( function() {
             });
 
             $(window).on('hashchange', function() {
-                var masterGuid = url('#database');
-                var vc = url('#context');
-                if(masterGuid && vc)
-                    $('#userContext').val(masterGuid).change();
+                if (that.hashchange) {
+                    var masterGuid = url('#database');
+                    var vc = url('#context');
+                    if(masterGuid && vc)
+                        $('#userContext').val(masterGuid).change();
+                }
+                that.hashchange = true;
             });
 
             // ----------------------------------------------------------------------------------------------------
