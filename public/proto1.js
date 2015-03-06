@@ -72,7 +72,7 @@ $(document).ready( function() {
 
             /**
              * Выбрать контекст
-             * @param guid
+             * @param guidcd
              */
             this.selectContext = function(params) {
                 that.clearTabs();
@@ -83,6 +83,7 @@ $(document).ready( function() {
                 }  else {
                     // выборочная подписка
                     var selSub = $('#selSub').is(':checked');
+                    formGuids = [];
                     if (selSub) {
                         formGuids = $('#selForm').val();
                     }
@@ -324,7 +325,7 @@ $(document).ready( function() {
              * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
             window.createContext = function(formGuids) {
-                if (!formGuids) return;
+                if (!formGuids) formGuids = [];
                 $(that.resultForm).empty();
                 that.clearTabs();
                 uccelloClt.createContext('server', formGuids, function(result){
