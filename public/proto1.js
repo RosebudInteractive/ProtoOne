@@ -373,8 +373,11 @@ $(document).ready( function() {
              * Создать рут ресурсов (не данных)
              */
             window.createRoot = function(){
-                if (!that.currRoot) return;
                 var formGuids = $('#selForm').val();
+                if (!formGuids) {
+                    console.log('выберите формы для создания рута');
+                    return;
+                }
                 uccelloClt.createRoot(formGuids, "res");
             }
 
