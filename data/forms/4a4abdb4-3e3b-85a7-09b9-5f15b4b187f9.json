@@ -187,6 +187,58 @@
                       "Master": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a"
                     },
                     "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "b78d2606-9c24-416c-8dc7-e8a1aa3b7b80",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8001,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "cc1e3e82-0577-4b3f-8713-022bfb2df995",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8002,
+                            "Name": "leadId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6bf3081f-5337-4e7c-beea-a15340285f7b",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8003,
+                            "Name": "date"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f1f4533f-4d03-45e4-97be-803b713eb368",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8004,
+                            "Name": "amount"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "e1f2eb84-516d-4971-966c-6f411f4b2310",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8005,
+                            "Name": "comment"
+                          }
+                        }
+                      ]
                     }
                   }
                 ]
