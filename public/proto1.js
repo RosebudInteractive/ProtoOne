@@ -206,8 +206,15 @@ $(document).ready( function() {
 
                         var masterGuid = url('#database');
                         var vc = url('#context');
-                        if(masterGuid && vc)
+                        if(masterGuid && vc) {
                             $('#userContext').val(masterGuid).change();
+                            var formGuids = 'all';
+                            var urlGuids = url('#formGuids');
+                            if (urlGuids != null) {
+                                formGuids = urlGuids.split(',');
+                            }
+                            uccelloClt.createRoot(formGuids, "res");
+                        }
 
                     } else {
                         $('#logout').hide(); $('#login').show();
