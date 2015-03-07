@@ -213,7 +213,22 @@ $(document).ready( function() {
                             if (urlGuids != null) {
                                 formGuids = urlGuids.split(',');
                             }
-                            uccelloClt.createRoot(formGuids, "res");
+                            if (formGuids != 'all') {
+                                uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
+                                    var newFormGuids = [];
+                                    for(var i in formGuids) {
+                                        var found = false;
+                                        for(var j in result.roots) {
+                                            if (result.roots[j] == formGuids[i])
+                                                found = true;
+                                        }
+                                        if (!found)
+                                            newFormGuids.push(formGuids[i]);
+                                    }
+                                    if (newFormGuids.length > 0)
+                                        uccelloClt.createRoot(newFormGuids, "res");
+                                });
+                            }
                         }
 
                     } else {
