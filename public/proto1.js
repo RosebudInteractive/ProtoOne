@@ -107,6 +107,20 @@ $(document).ready( function() {
                     that.rootsGuids = formGuids;
                     params.formGuids = formGuids;
                     uccelloClt.setContext(params, function(result) {
+                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
+                            var newFormGuids = [];
+                            for(var i in formGuids) {
+                                var found = false;
+                                for(var j in result2.roots) {
+                                    if (result2.roots[j] == formGuids[i])
+                                        found = true;
+                                }
+                                if (!found)
+                                    newFormGuids.push(formGuids[i]);
+                            }
+                            if (newFormGuids.length > 0)
+                                uccelloClt.createRoot(newFormGuids, "res");
+                        });
                         that.setContextUrl(params.vc, params.masterGuid, formGuids);
                         that.setAutoSendDeltas(true);
                     });
@@ -206,30 +220,8 @@ $(document).ready( function() {
 
                         var masterGuid = url('#database');
                         var vc = url('#context');
-                        if(masterGuid && vc) {
+                        if(masterGuid && vc)
                             $('#userContext').val(masterGuid).change();
-                            var formGuids = 'all';
-                            var urlGuids = url('#formGuids');
-                            if (urlGuids != null) {
-                                formGuids = urlGuids.split(',');
-                            }
-                            if (formGuids != 'all') {
-                                uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
-                                    var newFormGuids = [];
-                                    for(var i in formGuids) {
-                                        var found = false;
-                                        for(var j in result.roots) {
-                                            if (result.roots[j] == formGuids[i])
-                                                found = true;
-                                        }
-                                        if (!found)
-                                            newFormGuids.push(formGuids[i]);
-                                    }
-                                    if (newFormGuids.length > 0)
-                                        uccelloClt.createRoot(newFormGuids, "res");
-                                });
-                            }
-                        }
 
                     } else {
                         $('#logout').hide(); $('#login').show();
