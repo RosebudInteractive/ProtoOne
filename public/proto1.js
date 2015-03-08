@@ -216,6 +216,8 @@ $(document).ready( function() {
                             if (formGuids != 'all') {
                                 uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                                     var newFormGuids = [];
+									console.log("FormGuids : ");
+									console.log(formGuids);									
                                     for(var i in formGuids) {
                                         var found = false;
                                         for(var j in result.roots) {
@@ -225,6 +227,8 @@ $(document).ready( function() {
                                         if (!found)
                                             newFormGuids.push(formGuids[i]);
                                     }
+									console.log("newFormGuids : ");
+									console.log(newFormGuids);
                                     if (newFormGuids.length > 0)
                                         uccelloClt.createRoot(newFormGuids, "res");
                                 });
