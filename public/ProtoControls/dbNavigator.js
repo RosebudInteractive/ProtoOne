@@ -9,7 +9,7 @@ define(
         var DBNavigator = AControl.extend({
 
             className: "DbNavigator",
-            classGuid: "38aec981-30ae-ec1d-8f8f-5004958b4cfa",
+            classGuid: UCCELLO_CONFIG.classGuids.DbNavigator,
             metaFields: [
                 {fname: "DataBase", ftype: "string"},
                 {fname: "Level", ftype: "int"},

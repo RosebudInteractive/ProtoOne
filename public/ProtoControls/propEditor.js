@@ -9,7 +9,7 @@ define(
         var PropEditor = AControl.extend({
 
             className: "PropEditor",
-            classGuid: "a0e02c45-1600-6258-b17a-30a56301d7f1",
+            classGuid: UCCELLO_CONFIG.classGuids.PropEditor,
             metaFields: [
                 {fname: "Control", ftype: "string"}
             ],

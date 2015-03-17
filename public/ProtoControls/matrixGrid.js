@@ -9,7 +9,7 @@ define(
         var MatrixGrid = AControl.extend({
 
             className: "MatrixGrid",
-            classGuid: "827a5cb3-e934-e28c-ec11-689be18dae97",
+            classGuid: UCCELLO_CONFIG.classGuids.MatrixGrid,
             metaFields: [ {fname:"HorCells", ftype:"int"}, {fname:"VerCells", ftype:"int"} ],
 
             /**
