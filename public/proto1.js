@@ -33,7 +33,7 @@ $(document).ready( function() {
                 {className:'Label', viewset:true}
             ],
             controlsPath: 'ProtoControls/',
-            uccelloPath: 'Uccello/',
+            uccelloPath: 'uccello/',
             viewSet: {name: 'simpleview', path:'ProtoControls/simpleview/'}
         };
         UCCELLO_CONFIG = new Config(config);

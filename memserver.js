@@ -1,3 +1,7 @@
+// дирректория где лежит Uccello
+var uccelloDir = process.argv[2]?process.argv[2]:'Uccello';
+console.log('Using folder: '+uccelloDir);
+
 // Модули nodejs
 var http = require('http');
 var express = require('express');
@@ -51,7 +55,7 @@ app.get("/update/:what", function(req, res){
 
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
-app.use("/public/uccello", express.static(__dirname + '/../Uccello'));
+app.use("/public/uccello", express.static(__dirname + '/../'+uccelloDir));
 app.use("/tests", express.static(__dirname + '/tests'));
 
 // ----------------------------------------------------------------------------------------------------------------------
@@ -113,15 +117,15 @@ var config = {
     ],
     controlsPath: __dirname+'/../ProtoOne/public/ProtoControls/',
     dataPath: __dirname+'/../ProtoOne/data/',
-    uccelloPath: __dirname+'/../Uccello/'
+    uccelloPath: __dirname+'/../'+uccelloDir+'/'
 };
 
 // модуль настроек
-var UccelloConfig = require('../Uccello/config/config');
+var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
 
 // модуль сервера
-var UccelloServ = require('../Uccello/uccelloServ');
+var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var uccelloServ = new UccelloServ({port:8081, authenticate:fakeAuthenticate});
 
 // запускаем http сервер
