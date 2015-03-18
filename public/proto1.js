@@ -447,6 +447,17 @@ $(document).ready( function() {
                 uccelloClt.getClient().newTab(url('#context'), url('#database'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
+            window.createVc = function() {
+                uccelloClt.createSrvContext([], function(result){
+                    console.log(result);
+                    $('#vcGuid').val(result.vc);
+                });
+            }
+
+            window.vcOn = function() {
+                uccelloClt.getContext2().on();
+            }
+
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
