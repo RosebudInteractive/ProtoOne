@@ -447,15 +447,19 @@ $(document).ready( function() {
                 uccelloClt.getClient().newTab(url('#context'), url('#database'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
+            that.createVcResult = null;
             window.createVc = function() {
-                uccelloClt.createSrvContext([], function(result){
-                    console.log(result);
-                    $('#vcGuid').val(result.vc);
+                var formGuids = $('#selForm').val();
+                uccelloClt.createSrvContext(formGuids, function(result){
+                    that.createVcResult = result;
                 });
             }
 
             window.vcOn = function() {
-                uccelloClt.getContext2().on();
+                that.createVcResult.side = 'server';
+                uccelloClt.setContextVc2(that.createVcResult, function(){
+                    that.getContexts();
+                });
             }
 
             // ----------------------------------------------------------------------------------------------------
