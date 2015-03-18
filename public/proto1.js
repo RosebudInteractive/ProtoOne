@@ -450,7 +450,7 @@ $(document).ready( function() {
             that.createVcResult = null;
             window.createVc = function() {
                 var formGuids = $('#selForm').val();
-                uccelloClt.createSrvContext(formGuids, function(result){
+                uccelloClt.createSrvContext(formGuids?formGuids:[], function(result){
                     that.createVcResult = result;
                 });
             }
