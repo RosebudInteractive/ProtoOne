@@ -450,6 +450,8 @@ $(document).ready( function() {
             that.createVcResult = null;
             window.createVc = function() {
                 var formGuids = $('#selForm').val();
+                if (!formGuids) // выбираем test если не выбраны другие формы
+                    formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
                 uccelloClt.createSrvContext(formGuids?formGuids:[], function(result){
                     that.createVcResult = result;
                 });
