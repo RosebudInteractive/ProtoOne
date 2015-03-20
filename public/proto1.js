@@ -454,6 +454,7 @@ $(document).ready( function() {
                     formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
                 uccelloClt.createSrvContext(formGuids?formGuids:[], function(result){
                     that.createVcResult = result;
+                    that.getContexts();
                 });
             }
 
