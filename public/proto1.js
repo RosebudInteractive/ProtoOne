@@ -97,7 +97,7 @@ $(document).ready( function() {
                     // запросить гуиды рутов
                     uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                         that.rootsGuids = result.roots;
-                        uccelloClt.setContext(params, function(result) {
+                        uccelloClt.setContextVc2(params, function(result) {
                             that.setContextUrl(params.vc, params.masterGuid, formGuids);
                             that.setAutoSendDeltas(true);
                         });
@@ -105,7 +105,7 @@ $(document).ready( function() {
                 } else {
                     that.rootsGuids = formGuids;
                     params.formGuids = formGuids;
-                    uccelloClt.setContext(params, function(result) {
+                    uccelloClt.setContextVc2(params, function(result) {
                         uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
                             var newFormGuids = [];
                             for(var i in formGuids) {
@@ -463,6 +463,10 @@ $(document).ready( function() {
                 uccelloClt.setContextVc2(that.createVcResult, function(){
                     that.getContexts();
                 });
+            }
+
+            window.refreshContexts = function() {
+                that.getContexts();
             }
 
             // ----------------------------------------------------------------------------------------------------
