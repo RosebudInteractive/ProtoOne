@@ -175,7 +175,7 @@ $(document).ready( function() {
                                 sel.append(option);
                             }
 
-                            var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().masterGuid(): null;
+                            var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().dataBase(): null;
                             if (masterGuid) {
                                 var urlGuids = url('#formGuids');
                                 urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
