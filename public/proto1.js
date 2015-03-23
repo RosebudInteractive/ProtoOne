@@ -120,7 +120,7 @@ $(document).ready( function() {
                             }
                             if (newFormGuids.length > 0)
                                 uccelloClt.createRoot(newFormGuids, "res");
-                        });
+                        }, that.renderRoot);
                         that.setContextUrl(params.vc, params.masterGuid, formGuids);
                         that.setAutoSendDeltas(true);
                         that.getContexts();
