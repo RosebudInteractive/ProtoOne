@@ -101,7 +101,7 @@ $(document).ready( function() {
                             that.setContextUrl(params.vc, params.masterGuid, formGuids);
                             that.setAutoSendDeltas(true);
                             that.getContexts();
-                        });
+                        }, that.renderRoot);
                     });
                 } else {
                     that.rootsGuids = formGuids;
@@ -124,7 +124,7 @@ $(document).ready( function() {
                         that.setContextUrl(params.vc, params.masterGuid, formGuids);
                         that.setAutoSendDeltas(true);
                         that.getContexts();
-                    });
+                    }, that.renderRoot);
                 }
             }
 
@@ -229,7 +229,7 @@ $(document).ready( function() {
                         $('#userInfo').html('');
                     }
                 },
-                renderRoot: that.renderRoot,
+                //renderRoot: that.renderRoot,
                 newTabCallback: that.newTab
             });
 
