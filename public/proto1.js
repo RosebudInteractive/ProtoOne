@@ -347,7 +347,7 @@ $(document).ready( function() {
              * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
             window.createContext = function(formGuids) {
-                if (!formGuids) formGuids = [];
+                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
                 $(that.resultForm).empty();
                 that.clearTabs();
                 uccelloClt.createContext('server', formGuids, function(result){
