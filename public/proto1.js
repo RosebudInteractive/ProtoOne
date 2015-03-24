@@ -60,16 +60,18 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.setContextUrl = function(context, database, formGuids) {
+            this.setContextUrl = function(context, formGuids) {
                 that.hashchange = false;
-                document.location = that.getContextUrl(context, database, formGuids);
+                document.location = that.getContextUrl(context, formGuids);
 
             }
 
-            this.getContextUrl = function(context, database, formGuids) {
+            this.getContextUrl = function(context, formGuids) {
                 var location = document.location.href;
                 location = location.replace(/#.*/, '');
-                return location+'#database='+database+'&context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
+                formGuids = !formGuids || formGuids=='all'?'all':formGuids;
+                if (formGuids !='all' && typeof formGuids == "string") formGuids = [formGuids];
+                return location+'#context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
             }
 
             /**
@@ -98,7 +100,7 @@ $(document).ready( function() {
                     uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                         that.rootsGuids = result.roots;
                         uccelloClt.setContext(params, function(result) {
-                            that.setContextUrl(params.vc, params.masterGuid, formGuids);
+                            that.setContextUrl(params.vc, formGuids);
                             that.setAutoSendDeltas(true);
                             that.getContexts();
                         }, that.renderRoot);
@@ -121,7 +123,7 @@ $(document).ready( function() {
                             if (newFormGuids.length > 0)
                                 uccelloClt.createRoot(newFormGuids, "res");
                         });
-                        that.setContextUrl(params.vc, params.masterGuid, formGuids);
+                        that.setContextUrl(params.vc, formGuids);
                         that.setAutoSendDeltas(true);
                         that.getContexts();
                     }, that.renderRoot);
@@ -179,7 +181,7 @@ $(document).ready( function() {
                             if (masterGuid) {
                                 var urlGuids = url('#formGuids');
                                 urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
-                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), masterGuid, urlGuids);
+                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), urlGuids);
                             }
                             sel.val(masterGuid);
                             return;
@@ -204,7 +206,7 @@ $(document).ready( function() {
             }
 
             this.newTab = function(data) {
-                window.open(that.getContextUrl(data.contextGuid, data.dbGuid, data.resGuids));
+                window.open(that.getContextUrl(data.contextGuid, data.resGuids));
             }
 
 
@@ -219,10 +221,10 @@ $(document).ready( function() {
                         $('#login').hide(); $('#logout').show();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
 
-                        var masterGuid = url('#database');
                         var vc = url('#context');
-                        if(masterGuid && vc)
-                            $('#userContext').val(masterGuid).change();
+                        var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                        if(vcObj && vc)
+                            $('#userContext').val(vcObj.dataBase()).change();
 
                     } else {
                         $('#logout').hide(); $('#login').show();
@@ -397,7 +399,7 @@ $(document).ready( function() {
                 }
                 uccelloClt.createRoot(formGuids, "res", function(result){
                     if (result.guids)
-                        that.setContextUrl(url('#context'), url('#database'), result.guids);
+                        that.setContextUrl(url('#context'), result.guids);
                 });
             }
 
@@ -445,7 +447,7 @@ $(document).ready( function() {
                 if (selSub) {
                     formGuids = $('#selForm').val();
                 }
-                uccelloClt.getClient().newTab(url('#context'), url('#database'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
+                uccelloClt.getClient().newTab(url('#context'), uccelloClt.getSysCM().getByGuid(url('#context')).dataBase(), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
             window.refreshContexts = function() {
@@ -495,10 +497,10 @@ $(document).ready( function() {
 
             $(window).on('hashchange', function() {
                 if (that.hashchange) {
-                    var masterGuid = url('#database');
                     var vc = url('#context');
-                    if(masterGuid && vc)
-                        $('#userContext').val(masterGuid).change();
+                    var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                    if(vcObj && vc)
+                        $('#userContext').val(vcObj.dataBase()).change();
                 }
                 that.hashchange = true;
             });
