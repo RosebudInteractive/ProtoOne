@@ -160,7 +160,10 @@ $(document).ready( function() {
              */
             this.getContexts = function() {
                 var sel = $('#userContext');
+                var selOn = $('#userContextOn');
                 sel.empty();
+                selOn.empty();
+                selOn.append('<option value=""></option>');
 
                 for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
                     var root = uccelloClt.getSysDB().getRoot(i);
@@ -172,9 +175,16 @@ $(document).ready( function() {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
                                 var option = $('<option/>');
+                                var isOn = uccelloClt.getSysCM().getByGuid(item.getGuid()).isOn();
                                 option.data('ContextGuid', item.get('ContextGuid'));
-                                option.val(item.get('DataBase')).html(item.get('Name'));
+                                option.val(item.get('DataBase')).html(item.get('Name')+(isOn?' isOn ':''));
                                 sel.append(option);
+                                if (isOn) {
+                                    var option = $('<option/>');
+                                    option.data('ContextGuid', item.get('ContextGuid'));
+                                    option.val(item.get('DataBase')).html(item.get('Name'));
+                                    selOn.append(option);
+                                }
                             }
 
                             var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().dataBase(): null;
@@ -489,6 +499,17 @@ $(document).ready( function() {
                     that.selectContext({masterGuid: masterGuid, vc:vc,  side: "server"});
                 else
                     that.clearTabs();
+            });
+
+            $('#userContextOn').change(function(){
+                var masterGuid = $(this).val();
+                var vc = $(this).find('option[value="'+masterGuid+'"]').data('ContextGuid');
+                if(masterGuid && vc) {
+                    var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                    vcObj.off(function(){
+                        that.getContexts();
+                    });
+                }
             });
 
             $('#autoSendDelta').click(function(e){
