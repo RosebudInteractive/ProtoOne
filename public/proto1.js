@@ -48,7 +48,7 @@ $(document).ready( function() {
             this.rootsGuids=[];
             this.rootsContainers={};
             this.resultForm = '#result0';
-            this.hashchange = true;
+            window.isHashchange = true;
 
             this.clearTabs = function() {
                 $(that.resultForm).empty();
@@ -61,7 +61,7 @@ $(document).ready( function() {
             }
 
             this.setContextUrl = function(context, formGuids) {
-                that.hashchange = false;
+                window.isHashchange = false;
                 document.location = that.getContextUrl(context, formGuids);
 
             }
@@ -94,39 +94,45 @@ $(document).ready( function() {
                     formGuids = formGuids!=null? formGuids: [];
                 }
 
-
-                if (formGuids == null || formGuids == 'all') {
-                    // запросить гуиды рутов
-                    uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
-                        that.rootsGuids = result.roots;
+                if (params.side == 'client') {
+                    uccelloClt.setContext(params, function(result) {
+                        that.setContextUrl(params.vc, formGuids);
+                        that.getContexts();
+                    }, that.renderRoot);
+                } else {
+                    if (formGuids == null || formGuids == 'all') {
+                        // запросить гуиды рутов
+                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
+                            that.rootsGuids = result.roots;
+                            uccelloClt.setContext(params, function(result) {
+                                that.setContextUrl(params.vc, formGuids);
+                                that.setAutoSendDeltas(true);
+                                that.getContexts();
+                            }, that.renderRoot);
+                        });
+                    } else {
+                        that.rootsGuids = formGuids;
+                        params.formGuids = formGuids;
                         uccelloClt.setContext(params, function(result) {
+                            uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
+                                var newFormGuids = [];
+                                for(var i in formGuids) {
+                                    var found = false;
+                                    for(var j in result2.roots) {
+                                        if (result2.roots[j] == formGuids[i])
+                                            found = true;
+                                    }
+                                    if (!found)
+                                        newFormGuids.push(formGuids[i]);
+                                }
+                                if (newFormGuids.length > 0)
+                                    uccelloClt.createRoot(newFormGuids, "res");
+                            });
                             that.setContextUrl(params.vc, formGuids);
                             that.setAutoSendDeltas(true);
                             that.getContexts();
                         }, that.renderRoot);
-                    });
-                } else {
-                    that.rootsGuids = formGuids;
-                    params.formGuids = formGuids;
-                    uccelloClt.setContext(params, function(result) {
-                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
-                            var newFormGuids = [];
-                            for(var i in formGuids) {
-                                var found = false;
-                                for(var j in result2.roots) {
-                                    if (result2.roots[j] == formGuids[i])
-                                        found = true;
-                                }
-                                if (!found)
-                                    newFormGuids.push(formGuids[i]);
-                            }
-                            if (newFormGuids.length > 0)
-                                uccelloClt.createRoot(newFormGuids, "res");
-                        });
-                        that.setContextUrl(params.vc, formGuids);
-                        that.setAutoSendDeltas(true);
-                        that.getContexts();
-                    }, that.renderRoot);
+                    }
                 }
             }
 
@@ -165,35 +171,46 @@ $(document).ready( function() {
                 selOn.empty();
                 selOn.append('<option value=""></option>');
 
-                for (var i = 0, len = uccelloClt.getSysDB().countRoot(); i < len; i++) {
-                    var root = uccelloClt.getSysDB().getRoot(i);
+                this.addColItems(uccelloClt.getSysCM(), "VisualContext", "server");
+                this.addColItems(uccelloClt.getClientCM(), "VisualContext", "client");
+
+                // выбрать контекст
+                var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().dataBase(): null;
+                if (masterGuid) {
+                    var urlGuids = url('#formGuids');
+                    urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
+                    that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), urlGuids);
+                }
+                sel.val(masterGuid);
+            }
+
+            this.addColItems = function(cm, colName, side) {
+                var sel = $('#userContext');
+                var selOn = $('#userContextOn');
+                var db = cm.getDB();
+                for (var i = 0, len = db.countRoot(); i < len; i++) {
+                    var root = db.getRoot(i);
                     var obj = root.obj;
                     for (var j = 0, len2 = obj.countCol(); j < len2; j++) {
                         var col = obj.getCol(j);
                         var name = col.getName();
-                        if (name == "VisualContext") {
+                        if (name == colName) {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
                                 var option = $('<option/>');
-                                var isOn = uccelloClt.getSysCM().getByGuid(item.getGuid()).isOn();
+                                var isOn = cm.getByGuid(item.getGuid()).isOn();
+                                option.data('Side', side);
                                 option.data('ContextGuid', item.get('ContextGuid'));
-                                option.val(item.get('DataBase')).html(item.get('Name')+(isOn?' isOn ':''));
+                                option.val(item.get('DataBase')).html(item.get('Name')+(isOn?' isOn ':'')+' '+side);
                                 sel.append(option);
                                 if (isOn) {
                                     var option = $('<option/>');
                                     option.data('ContextGuid', item.get('ContextGuid'));
-                                    option.val(item.get('DataBase')).html(item.get('Name'));
+                                    option.data('Side', side);
+                                    option.val(item.get('DataBase')).html(item.get('Name')+' '+side);
                                     selOn.append(option);
                                 }
                             }
-
-                            var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().dataBase(): null;
-                            if (masterGuid) {
-                                var urlGuids = url('#formGuids');
-                                urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
-                                that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), urlGuids);
-                            }
-                            sel.val(masterGuid);
                             return;
                         }
                     }
@@ -373,12 +390,20 @@ $(document).ready( function() {
              * @param guid
              */
             window.createClientContext = function(formGuids) {
-                if (!formGuids) return;
+                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
+                $(that.resultForm).empty();
                 that.clearTabs();
                 uccelloClt.createContext('client', formGuids, function(result){
-                    that.setAutoSendDeltas(true);
-                    that.getContexts();
+                    that.selectContext(result);
                 });
+
+                /*uccelloClt.createContext('client', formGuids, function(result){
+                    result.formGuids = formGuids;
+                    uccelloClt.setContext(result, function(result2) {
+                        that.setContextUrl(result.vc, formGuids);
+                        that.getContexts();
+                    }, that.renderRoot);
+                });*/
             }
 
 
@@ -480,6 +505,12 @@ $(document).ready( function() {
             // форма логина
             $('#login').click(function(e){
                 e.stopPropagation();
+
+                // автологин
+                login($('#loginName').val(), $('#loginPass').val());
+                return;
+
+                // старый логин
                 if ($('#loginForm').is(':visible')) {
                     $('#loginForm').hide();
                 } else {
@@ -494,9 +525,11 @@ $(document).ready( function() {
 
             $('#userContext').change(function(){
                 var masterGuid = $(this).val();
-                var vc = $(this).find('option[value="'+masterGuid+'"]').data('ContextGuid');
+                var vc = $(this).find('option[value="'+masterGuid+'"]');
+                var vcGuid = vc.data('ContextGuid');
+                var vcSide = vc.data('Side');
                 if(masterGuid && vc)
-                    that.selectContext({masterGuid: masterGuid, vc:vc,  side: "server"});
+                    that.selectContext({masterGuid: masterGuid, vc:vcGuid,  side: vcSide});
                 else
                     that.clearTabs();
             });
@@ -517,14 +550,15 @@ $(document).ready( function() {
             });
 
             $(window).on('hashchange', function() {
-                if (that.hashchange) {
+                if (window.isHashchange) {
                     var vc = url('#context');
                     var vcObj = uccelloClt.getSysCM().getByGuid(vc);
                     if(vcObj && vc)
                         $('#userContext').val(vcObj.dataBase()).change();
                 }
-                that.hashchange = true;
+                window.isHashchange = true;
             });
+
 
             // ----------------------------------------------------------------------------------------------------
 
