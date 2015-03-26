@@ -56,6 +56,10 @@ app.get("/update/:what", function(req, res){
     res.end();
 });
 
+// компрессия статики
+var compress = require('compression');
+app.use(compress());
+
 // статические данные и модули для подгрузки на клиент
 app.use("/public", express.static(__dirname + '/public'));
 app.use("/public/uccello", express.static(__dirname + '/../'+uccelloDir));
