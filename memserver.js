@@ -17,6 +17,9 @@ app.engine('html', require('ejs').renderFile);
 app.get('/test', function(req, res){
     res.render('proto1.html');
 });
+app.get('/build', function(req, res){
+    res.render('proto1build.html');
+});
 
 // апдейт
 app.get("/update/:what", function(req, res){
