@@ -129,7 +129,7 @@ UCCELLO_CONFIG = new UccelloConfig(config);
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
-var uccelloServ = new UccelloServ({port:8081, authenticate:fakeAuthenticate});
+var uccelloServ = new UccelloServ({authenticate:fakeAuthenticate});
 
 // запускаем http сервер
 http.createServer(app).listen(1325);
