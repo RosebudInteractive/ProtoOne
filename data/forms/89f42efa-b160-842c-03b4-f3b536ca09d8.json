@@ -5,7 +5,8 @@
   },
   "fields":{
     "Id":2000,
-    "Name":"MainForm"
+    "Name":"MainForm",
+    "Title": "vc4"
   },
   "collections": {
     "Params": [

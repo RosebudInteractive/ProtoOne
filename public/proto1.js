@@ -60,8 +60,9 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.setContextUrl = function(context, formGuids) {
-                window.isHashchange = false;
+            this.setContextUrl = function(context, formGuids, change) {
+                if (!change)
+                    window.isHashchange = false;
                 document.location = that.getContextUrl(context, formGuids);
 
             }
@@ -71,7 +72,8 @@ $(document).ready( function() {
                 location = location.replace(/#.*/, '');
                 formGuids = !formGuids || formGuids=='all'?'all':formGuids;
                 if (formGuids !='all' && typeof formGuids == "string") formGuids = [formGuids];
-                return location+'#context='+context+'&formGuids='+(!formGuids || formGuids=='all'?'all':formGuids.join(','))
+                formGuids = !formGuids || formGuids=='all'?'all':formGuids.join(',');
+                return location+'#context='+context+(formGuids=='all'?'':'&formGuids='+formGuids)
             }
 
             /**
@@ -81,10 +83,14 @@ $(document).ready( function() {
             this.selectContext = function(params) {
                 that.clearTabs();
 
-                var formGuids = 'all';
-                var urlGuids = url('#formGuids');
-                if (urlGuids != null) {
-                    formGuids = urlGuids.split(',');
+                if (params.formGuids || params.formGuids==null) {
+                    var formGuids = params.formGuids;
+                } else {
+                    var formGuids = 'all';
+                    var urlGuids = url('#formGuids');
+                    if (urlGuids != null) {
+                        formGuids = urlGuids.split(',');
+                    }
                 }
 
                 // выборочная подписка
@@ -93,6 +99,9 @@ $(document).ready( function() {
                     formGuids = $('#selForm').val();
                     formGuids = formGuids!=null? formGuids: [];
                 }
+
+                // бд контекста
+                params.masterGuid = uccelloClt.getSysCM().getByGuid(params.vc).dataBase()
 
                 if (params.side == 'client') {
                     uccelloClt.setContext(params, function(result) {
@@ -175,13 +184,13 @@ $(document).ready( function() {
                 this.addColItems(uccelloClt.getClientCM(), "VisualContext", "client");
 
                 // выбрать контекст
-                var masterGuid = uccelloClt.getContext()? uccelloClt.getContext().dataBase(): null;
-                if (masterGuid) {
+                var contextGuid = uccelloClt.getContext()? uccelloClt.getContext().contextGuid(): null;
+                if (contextGuid) {
                     var urlGuids = url('#formGuids');
                     urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
-                    that.setContextUrl($(sel.find('option[value='+masterGuid+']')).data('ContextGuid'), urlGuids);
+                    that.setContextUrl(contextGuid, urlGuids);
                 }
-                sel.val(masterGuid);
+                sel.val(contextGuid+(urlGuids && urlGuids.length==1?','+urlGuids[0]:''));
             }
 
             this.addColItems = function(cm, colName, side) {
@@ -200,15 +209,24 @@ $(document).ready( function() {
                                 var option = $('<option/>');
                                 var isOn = cm.getByGuid(item.getGuid()).isOn();
                                 option.data('Side', side);
-                                option.data('ContextGuid', item.get('ContextGuid'));
-                                option.val(item.get('DataBase')).html(item.get('Name')+(isOn?' isOn ':'')+' '+side);
+                                option.val(item.get('ContextGuid')).html(item.get('Name')+(isOn?' isOn ':'')+' '+side);
                                 sel.append(option);
                                 if (isOn) {
                                     var option = $('<option/>');
-                                    option.data('ContextGuid', item.get('ContextGuid'));
                                     option.data('Side', side);
-                                    option.val(item.get('DataBase')).html(item.get('Name')+' '+side);
+                                    option.val(item.get('ContextGuid')).html(item.get('Name')+' '+side);
                                     selOn.append(option);
+                                }
+
+                                var colRes = item.getCol('Resources');
+                                for (var n = 0, len4 = colRes.count(); n < len4; n++) {
+                                    var res = colRes.get(n);
+                                    var option = $('<option/>');
+                                    option.data('DataBase', item.get('DataBase'));
+                                    option.data('ResGuid', res.get('ResGuid'));
+                                    option.data('Side', side);
+                                    option.val(item.get('ContextGuid')+','+res.get('ResGuid')).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.get('Name'));
+                                    sel.append(option);
                                 }
                             }
                             return;
@@ -524,20 +542,20 @@ $(document).ready( function() {
             $('#loginForm').click(function(e){e.stopPropagation();});
 
             $('#userContext').change(function(){
-                var masterGuid = $(this).val();
-                var vc = $(this).find('option[value="'+masterGuid+'"]');
-                var vcGuid = vc.data('ContextGuid');
-                var vcSide = vc.data('Side');
-                if(masterGuid && vc)
-                    that.selectContext({masterGuid: masterGuid, vc:vcGuid,  side: vcSide});
+                var vcGuid = $(this).val().split(',')[0];
+                var option = $(this).find('option[value="'+$(this).val()+'"]'),
+                    resGuid = option.data('ResGuid'),
+                    vcSide = option.data('Side');
+
+                if(vcGuid)
+                    that.selectContext({vc:vcGuid,  side: vcSide, formGuids:resGuid?[resGuid]:null});
                 else
                     that.clearTabs();
             });
 
             $('#userContextOn').change(function(){
-                var masterGuid = $(this).val();
-                var vc = $(this).find('option[value="'+masterGuid+'"]').data('ContextGuid');
-                if(masterGuid && vc) {
+                var vc = $(this).val();
+                if(vc) {
                     var vcObj = uccelloClt.getSysCM().getByGuid(vc);
                     vcObj.off(function(){
                         that.getContexts();
