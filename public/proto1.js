@@ -80,13 +80,14 @@ $(document).ready( function() {
              * Выбрать контекст
              * @param guidcd
              */
-            this.selectContext = function(params) {
+            this.selectContext = function(params, resGuids) {
                 that.clearTabs();
 
-                if (params.formGuids || params.formGuids==null) {
-                    var formGuids = params.formGuids;
+                // гуиды форм
+                var formGuids = 'all';
+                if (resGuids !== undefined) {
+                    formGuids = resGuids;
                 } else {
-                    var formGuids = 'all';
                     var urlGuids = url('#formGuids');
                     if (urlGuids != null) {
                         formGuids = urlGuids.split(',');
@@ -120,9 +121,9 @@ $(document).ready( function() {
                             }, that.renderRoot);
                         });
                     } else {
-                        that.rootsGuids = formGuids;
                         params.formGuids = formGuids;
                         uccelloClt.setContext(params, function(result) {
+                            console.log(resGuids);
                             uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
                                 var newFormGuids = [];
                                 for(var i in formGuids) {
@@ -135,7 +136,9 @@ $(document).ready( function() {
                                         newFormGuids.push(formGuids[i]);
                                 }
                                 if (newFormGuids.length > 0)
-                                    uccelloClt.createRoot(newFormGuids, "res");
+                                    uccelloClt.createRoot(newFormGuids, "res", function(){
+                                        that.getContexts();
+                                    });
                             });
                             that.setContextUrl(params.vc, formGuids);
                             that.setAutoSendDeltas(true);
@@ -225,7 +228,7 @@ $(document).ready( function() {
                                     option.data('DataBase', item.get('DataBase'));
                                     option.data('ResGuid', res.get('ResGuid'));
                                     option.data('Side', side);
-                                    option.val(item.get('ContextGuid')+','+res.get('ResGuid')).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.get('Name'));
+                                    option.val(item.get('ContextGuid')+','+res.get('ResGuid')).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.get('Title'));
                                     sel.append(option);
                                 }
                             }
@@ -266,10 +269,19 @@ $(document).ready( function() {
                         $('#login').hide(); $('#logout').show();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
 
-                        var vc = url('#context');
+                       /* var vc = url('#context');
                         var vcObj = uccelloClt.getSysCM().getByGuid(vc);
                         if(vcObj && vc)
-                            $('#userContext').val(vcObj.dataBase()).change();
+                            $('#userContext').val(vcObj.contextGuid()).change();*/
+
+                        var vc = url('#context');
+                        var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                        if(vcObj && vc) {
+                            var urlGuids = url('#formGuids');
+                            urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
+                            that.selectContext({vc:vc,  side: 'server'});
+                        }
+
 
                     } else {
                         $('#logout').hide(); $('#login').show();
@@ -503,6 +515,12 @@ $(document).ready( function() {
                 uccelloClt.getClient().newTab(url('#context'), uccelloClt.getSysCM().getByGuid(url('#context')).dataBase(), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
+           window.openTab2 = function() {
+                var userContext = $('#userContext').val().split(',');
+                var context = userContext[0];
+                uccelloClt.getClient().newTab(context, uccelloClt.getSysCM().getByGuid(context).dataBase(), userContext[1]?userContext[1]:'all', $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
+            }
+
             window.refreshContexts = function() {
                     that.getContexts();
             }
@@ -541,14 +559,16 @@ $(document).ready( function() {
             $(window).click(function(){$('#loginForm').hide();});
             $('#loginForm').click(function(e){e.stopPropagation();});
 
-            $('#userContext').change(function(){
-                var vcGuid = $(this).val().split(',')[0];
-                var option = $(this).find('option[value="'+$(this).val()+'"]'),
+            $('#openContext').click(function(){
+                var vcGuid = $('#userContext').val();
+                if (!vcGuid) return;
+                vcGuid = vcGuid.split(',')[0];
+                var option = $('#userContext').find('option[value="'+$('#userContext').val()+'"]'),
                     resGuid = option.data('ResGuid'),
                     vcSide = option.data('Side');
 
                 if(vcGuid)
-                    that.selectContext({vc:vcGuid,  side: vcSide, formGuids:resGuid?[resGuid]:null});
+                    that.selectContext({vc:vcGuid,  side: vcSide}, resGuid?[resGuid]:null);
                 else
                     that.clearTabs();
             });
@@ -571,8 +591,11 @@ $(document).ready( function() {
                 if (window.isHashchange) {
                     var vc = url('#context');
                     var vcObj = uccelloClt.getSysCM().getByGuid(vc);
-                    if(vcObj && vc)
-                        $('#userContext').val(vcObj.dataBase()).change();
+                    if(vcObj && vc) {
+                        var urlGuids = url('#formGuids');
+                        urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
+                        that.selectContext({vc:vc,  side: 'server'});
+                    }
                 }
                 window.isHashchange = true;
             });

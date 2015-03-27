@@ -6,7 +6,7 @@
   "fields":{
     "Id":3000,
     "Name":"MainForm",
-    "Title": "vc2"
+    "Title": "crm-edit"
   },
   "collections": {
     "Params": [

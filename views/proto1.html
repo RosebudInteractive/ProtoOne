@@ -35,6 +35,8 @@
     <!--<input type="button" value="subscribe user" onclick="subscribeRootSys();">-->
     <input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
     <select id="userContext"></select>
+    <input type="button" id="openContext" value="open" />
+    <input type="button" value="newTab" onclick="openTab2()" />
     <select id="userContextOn"></select>
     <!--<input type="button" value="refresh" title="refresh" onclick="refreshContexts(true);">-->
 
@@ -46,7 +48,7 @@
             <option value="4a4abdb4-3e3b-85a7-09b9-5f15b4b187f9">crm-edit</option>
             <option value="88b9280f-7cce-7739-1e65-a883371cd498">test</option>
             <option value="02fad346-dc0b-7d02-b395-729186589611">company</option>
-            <option value="0fab9989-3047-26b6-326c-19b78d66e4d1">contact</option>
+            <!--<option value="0fab9989-3047-26b6-326c-19b78d66e4d1">contact</option>-->
         </select></td></tr>
     </table>
     <input id="selSub" type="checkbox"><label for="selSub">выборочная подписка</label>
