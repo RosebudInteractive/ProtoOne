@@ -102,7 +102,7 @@ $(document).ready( function() {
                 }
 
                 // бд контекста
-                params.masterGuid = uccelloClt.getSysCM().getByGuid(params.vc).dataBase()
+                var masterGuid = uccelloClt.getSysCM().getByGuid(params.vc).dataBase();
 
                 if (params.side == 'client') {
                     uccelloClt.setContext(params, function(result) {
@@ -112,7 +112,7 @@ $(document).ready( function() {
                 } else {
                     if (formGuids == null || formGuids == 'all') {
                         // запросить гуиды рутов
-                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
+                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                             that.rootsGuids = result.roots;
                             params.formGuids = result.roots;
                             uccelloClt.setContext(params, function(result) {
@@ -125,7 +125,7 @@ $(document).ready( function() {
                         params.formGuids = formGuids;
                         uccelloClt.setContext(params, function(result) {
                             console.log(resGuids);
-                            uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
+                            uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
                                 var newFormGuids = [];
                                 for(var i in formGuids) {
                                     var found = false;
