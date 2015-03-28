@@ -114,6 +114,7 @@ $(document).ready( function() {
                         // запросить гуиды рутов
                         uccelloClt.getClient().socket.send({action:"getRootGuids", db:params.masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
                             that.rootsGuids = result.roots;
+                            params.formGuids = result.roots;
                             uccelloClt.setContext(params, function(result) {
                                 that.setContextUrl(params.vc, formGuids);
                                 that.setAutoSendDeltas(true);
@@ -266,7 +267,7 @@ $(document).ready( function() {
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
-                        $('#login').hide(); $('#logout').show();
+                        $('#login').hide(); $('#logout').show();$('#loginForm').hide();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
 
                        /* var vc = url('#context');
@@ -388,7 +389,7 @@ $(document).ready( function() {
             window.logout = function(){
                 uccelloClt.deauthenticate(function(result){
                     $('#login').show(); $('#logout').hide();
-                    $('#userInfo').html('');
+                    $('#userInfo').html('');$('#loginForm').show();
                 });
             }
 
@@ -458,14 +459,35 @@ $(document).ready( function() {
              */
             window.createRoot = function(){
                 var formGuids = $('#selForm').val();
+                var context = $('#userContext').val()? $('#userContext').val().split(',')[0]: url('#context');
+                var contextObj = uccelloClt.getSysCM().getByGuid(context);
+                var urlGuids = url('#formGuids');
+                var selSub = $('#selSub').is(':checked');
+
                 if (!formGuids) {
                     console.log('выберите формы для создания рута');
                     return;
                 }
+
+                // закладка
+                if (selSub) {
+                    uccelloClt.getClient().newTab(context, contextObj.dataBase(), formGuids, $('#sessionGuid').val() == '' ? uccelloClt.getSessionGuid() : $('#sessionGuid').val());
+                    return;
+                }
+
                 uccelloClt.createRoot(formGuids, "res", function(result){
-                    if (result.guids)
-                        that.setContextUrl(url('#context'), result.guids);
-                });
+                    // формы
+                    if (urlGuids) {
+                        urlGuids = urlGuids.split(',');
+                        result.guids = urlGuids.concat(result.guids);
+                    } else {
+                        result.guids = null;
+                    }
+                    that.getContexts();
+                    if (url('#context') == context)
+                        that.selectContext({vc:context,  side: 'server'}, null);
+                        //that.setContextUrl(context, result.guids);
+                }, contextObj);
             }
 
             /**
