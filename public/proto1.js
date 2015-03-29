@@ -411,7 +411,7 @@ $(document).ready( function() {
                 $(that.resultForm).empty();
                 that.clearTabs();
                 uccelloClt.createContext('server', formGuids, function(result){
-                    that.selectContext(result);
+                    that.selectContext(result, null);
                 });
             }
 
