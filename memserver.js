@@ -130,6 +130,7 @@ var config = {
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
+DEBUG = true;
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
