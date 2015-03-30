@@ -95,12 +95,12 @@ $(document).ready( function() {
                 }
 
                 // выборочная подписка
-                var selSub = $('#selSub').is(':checked');
+                /*var selSub = $('#selSub').is(':checked');
                 if (selSub) {
                     formGuids = $('#selForm').val();
                     formGuids = formGuids!=null? formGuids: [];
                 }
-
+*/
                 // бд контекста
                 var masterGuid = uccelloClt.getSysCM().getByGuid(params.vc).dataBase();
 
