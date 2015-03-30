@@ -46,6 +46,7 @@
         'connection/user2',
         'connection/userInfo',
         'connection/vc',
+        'connection/vcresource',
         'controls/aComponent',
         'controls/aControl',
         'controls/aDataControl',
@@ -86,5 +87,5 @@
         'uccelloClt'
     ],
     insertRequire: [],
-    out: "../../Uccello/build/build.js"
+    out: "../public/libs/uccello.js"
 })
