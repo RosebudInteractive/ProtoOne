@@ -12,7 +12,7 @@ var uccelloClt = null, UCCELLO_CONFIG={uccelloPath:''}, module=null;
 // когда документ загружен
 $(document).ready( function() {
     require(
-        ['./uccello/build/build'],
+        ['./libs/uccello'],
         function(){
 
 

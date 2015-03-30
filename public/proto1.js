@@ -124,7 +124,6 @@ $(document).ready( function() {
                     } else {
                         params.formGuids = formGuids;
                         uccelloClt.setContext(params, function(result) {
-                            console.log(resGuids);
                             uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result2) {
                                 var newFormGuids = [];
                                 for(var i in formGuids) {
