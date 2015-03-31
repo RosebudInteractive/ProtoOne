@@ -5,12 +5,15 @@ requirejs.config({
         text       : '/public/uccello/uses/text',
         underscore : '/public/uccello/uses/underscore'
     }
-});
+}); 
 
 var uccelloClt = null, DEBUG = false;
 
 // когда документ загружен
 $(document).ready( function() {
+
+
+
     require(['./uccello/config/config'], function(Config){
 
         var config = {
@@ -271,7 +274,14 @@ $(document).ready( function() {
                     if (user) {
                         that.getContexts();
                         $('#login').hide(); $('#logout').show();$('#loginForm').hide();
-                        $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
+                        $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()+'  <a id="copySession" href="#" >copy</a>');
+
+                        $('#copySession').zclip({
+                            path:'/public/libs/zclip/ZeroClipboard.swf',
+                            copy:function(){return uccelloClt.getSessionGuid();},
+                            beforeCopy:function(){},
+                            afterCopy:function(){}
+                        });
 
                        /* var vc = url('#context');
                         var vcObj = uccelloClt.getSysCM().getByGuid(vc);
@@ -297,9 +307,25 @@ $(document).ready( function() {
             });
 
 
+
+
             // --------------------------------------------------------------------------------------------------------
             // --------------------- Глобальные методы для кнопок управления -----------------------------------------
             // --------------------------------------------------------------------------------------------------------
+
+            window.executeCopy = function(text) {
+
+                window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+
+                return;
+                var input = document.createElement('textarea');
+                document.body.appendChild(input);
+                input.value = text;
+                input.focus();
+                input.select();
+                document.execCommand('Copy');
+                input.remove();
+            }
 
             /**
              * subscribe user
@@ -375,7 +401,13 @@ $(document).ready( function() {
                                 $('#login').hide(); $('#logout').show();
                                 $('#loginForm').hide();
                                 $('#loginError').hide();
-                                $('#userInfo').html('User: '+result.user.user+' <br>Session:'+uccelloClt.getSessionGuid()/*+' <br>DeviceName:'+uccelloClt.getSession().deviceName*/);
+                                $('#userInfo').html('User: '+result.user.user+' <br>Session:'+uccelloClt.getSessionGuid()+' <a id="copySession" href="#" >copy</a>');
+                                $('#copySession').zclip({
+                                    path:'/public/libs/zclip/ZeroClipboard.swf',
+                                    copy:function(){return uccelloClt.getSessionGuid();},
+                                    beforeCopy:function(){},
+                                    afterCopy:function(){}
+                                });
                             }
                         });
                     } else {
@@ -623,6 +655,15 @@ $(document).ready( function() {
                 }
                 window.isHashchange = true;
             });
+
+            $('#DataColumnContact30').click(function(){
+                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
+                obj.width(30);
+            });
+            $('#DataColumnContact20').click(function(){
+                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
+                obj.width(20);
+            })
 
 
             // ----------------------------------------------------------------------------------------------------

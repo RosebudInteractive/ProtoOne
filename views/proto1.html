@@ -6,9 +6,11 @@
 <link href="/public/img/Favicon.png" rel="icon" type="image/png" />
 <link type="text/css" rel="stylesheet" href="/public/css/style.css" media="all">
 <script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
+
 <script src="/public/uccello/uses/url.js"></script>
 <script src="/public/uccello/uses/jquery.cookie.js"></script>
 <script src="/public/libs/jeditable/jquery.jeditable.mini.js"></script>
+<script type="text/javascript" src="/public/libs/zclip/jquery.zclip.min.js"></script>
 <script src="/public/uccello/uses/class-extend.js"></script>
 <script src="/public/uccello/uses/require.js"></script>
 <script src="/public/proto1.js"></script>
@@ -36,7 +38,7 @@
     <input type="checkbox" id="autoSendDelta" checked><label for="autoSendDelta" title="авто отсылка дельты">автодельта</label> <input type="button" value="send delta" title="Отправить дельту" onclick="sendDeltas(true);">
     <select id="userContext"></select>
     <input type="button" id="openContext" value="open" />
-    <input type="button" value="newTab" onclick="openTab2()" />
+    <!--<input type="button" value="newTab" onclick="openTab2()" />-->
     <input type="button" value="refresh" title="refresh" onclick="refreshContexts(true);">
     <select id="userContextOn"></select>
 
@@ -66,6 +68,8 @@
     <input type="text" id="sessionGuid"  value="" placeholder="гуид сессии">
     <!--<input type="button" value="открывает закладку" title="открывает закладку" onclick="openTab();"><br><br>-->
 
+    <input type="button" type="text" id="DataColumnContact30" value="ContactWidth30" >
+    <input type="button" type="text" id="DataColumnContact20" value="ContactWidth20" >
     <br><br>
 
     <div id="tabs"></div>

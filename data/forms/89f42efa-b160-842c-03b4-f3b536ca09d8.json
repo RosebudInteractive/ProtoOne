@@ -206,6 +206,73 @@
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
               },
               "collections": {
+                "Columns": [
+                  {
+                    "$sys": {
+                      "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
+                      "Name": "DataColumnState",
+                      "Label": "State",
+                      "Field": "296988a7-6d26-6fec-bd6f-de7cb565cc9b",
+                      "Width": 10
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "248c23d2-da4a-11a6-3562-c0f782d190e4",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8002,
+                      "Name": "DataColumnClient",
+                      "Label": "Client",
+                      "Field": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
+                      "Width": 20
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "5d2cadef-2d8b-4e72-8e20-c032444fb947",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8004,
+                      "Name": "DataColumnContact",
+                      "Label": "Contact",
+                      "Field": "a0e1e0e0-0c82-29ba-cd5d-b770aa9ffcc9",
+                      "Width": 20
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "8776baf4-2a38-4542-bbd9-50619a6b0e20",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8005,
+                      "Name": "DataColumnPhone",
+                      "Label": "Phone",
+                      "Field": "c34e850f-7c2d-cdf1-85b7-b74a2295cc73",
+                      "Width": 20
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "69ff74bd-be53-4685-986f-3e1f15b2c201",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8006,
+                      "Name": "DataColumnEmail",
+                      "Label": "EMail",
+                      "Field": "54ed8415-9663-d4e0-e19f-a6e2bf2ee7ad",
+                      "Width": 20
+                    }
+                  }
+                ]
               }
             }
           ]
