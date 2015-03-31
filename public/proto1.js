@@ -102,7 +102,8 @@ $(document).ready( function() {
                 }
 */
                 // бд контекста
-                var masterGuid = uccelloClt.getSysCM().getByGuid(params.vc).dataBase();
+                var context = uccelloClt.getSysCM().getByGuid(params.vc);
+                var masterGuid = context.dataBase();
 
                 if (params.side == 'client') {
                     uccelloClt.setContext(params, function(result) {
@@ -137,7 +138,9 @@ $(document).ready( function() {
                                 }
                                 if (newFormGuids.length > 0)
                                     uccelloClt.createRoot(newFormGuids, "res", function(){
-                                        that.getContexts();
+                                        context.addNewResRoots(newFormGuids, function(result){
+                                            that.getContexts();
+                                        });
                                     });
                             });
                             that.setContextUrl(params.vc, formGuids);
@@ -230,6 +233,7 @@ $(document).ready( function() {
                                     option.data('Side', side);
                                     option.val(item.get('ContextGuid')+','+res.get('ResGuid')).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.get('Title'));
                                     sel.append(option);
+                                    res.get('ResGuid');
                                 }
                             }
                             return;
@@ -482,10 +486,9 @@ $(document).ready( function() {
                     } else {
                         result.guids = null;
                     }
-                    that.getContexts();
-                    if (url('#context') == context)
+                    contextObj.addNewResRoots(formGuids, function(result){
                         that.selectContext({vc:context,  side: 'server'}, null);
-                        //that.setContextUrl(context, result.guids);
+                    });
                 }, contextObj);
             }
 
