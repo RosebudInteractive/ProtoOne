@@ -657,12 +657,20 @@ $(document).ready( function() {
             });
 
             $('#DataColumnContact30').click(function(){
+                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
-                obj.width(30);
+
+                cm.userEventHandler(obj, function () {
+                    obj.width(30);
+                });
             });
             $('#DataColumnContact20').click(function(){
+                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
-                obj.width(20);
+
+                cm.userEventHandler(obj, function () {
+                    obj.width(20);
+                });
             })
 
 

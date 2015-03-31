@@ -214,6 +214,19 @@
                     },
                     "fields": {
                       "Id": 8001,
+                      "Name": "DataColumnId",
+                      "Label": "id",
+                      "Field": "eb6fa823-11cf-6f34-053e-533c2d391b64",
+                      "Width": 10
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
                       "Name": "DataColumnState",
                       "Label": "State",
                       "Field": "296988a7-6d26-6fec-bd6f-de7cb565cc9b",
@@ -230,7 +243,7 @@
                       "Name": "DataColumnClient",
                       "Label": "Client",
                       "Field": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
-                      "Width": 20
+                      "Width": 10
                     }
                   },
                   {
