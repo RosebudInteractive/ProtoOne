@@ -287,6 +287,226 @@
                   }
                 ]
               }
+            },
+
+
+            {
+              "$sys": {
+                "guid": "25da1515-d770-37ec-caad-73b840d26612",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelId",
+                "Top": 225,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "Id"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "d9913e62-d5f7-8b4b-9717-5c34ffe9c57b",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadId",
+                "Top": 220,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Id"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "c341e242-7a13-e469-fcb3-c5c0be053a8d",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelState",
+                "Top": 247,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "state"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "eadd6911-0beb-7de2-e663-332bfddc4a9b",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadState",
+                "Top": 242,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "state"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "b6715f14-84c9-1e86-e61c-906d1c241734",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelState",
+                "Top": 247,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "state"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "381623d6-f962-fdf7-eebd-8914a04627ca",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadState",
+                "Top": 242,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "state"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "80e4c4ea-bc01-449a-c9e5-7145c1318837",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelClient",
+                "Top": 269,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "client"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "c6c83f69-2bce-37f6-5bc1-42534ae8b1ef",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadClient",
+                "Top": 264,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "client"
+              }
+            },
+
+            {
+              "$sys": {
+                "guid": "fda67e8e-7acc-ae79-2fc6-db14a7bcb70d",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelContact",
+                "Top": 291,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "contact"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "63bb2eb6-f1a4-b951-0948-dfecc1f592e0",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadContact",
+                "Top": 286,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "contact"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "2fc59e34-3f7c-5ace-69fb-44d5eeae35b3",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelPhone",
+                "Top": 313,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "phone"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "4694da5e-9bce-8297-91bf-fdff05aa30ed",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadPhone",
+                "Top": 308,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "phone"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "d5655cdb-02cf-e87e-5ae9-06142d9bfc46",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelEmail",
+                "Top": 335,
+                "Left": 10,
+                "Width": 100,
+                "Height": 20,
+                "Label": "email"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "969f77b9-30ee-3b34-b5ce-82cd741a2328",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadEmail",
+                "Top": 330,
+                "Left": 100,
+                "Width": 100,
+                "Height": 20,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "email"
+              }
             }
           ]
         }

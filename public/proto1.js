@@ -173,8 +173,10 @@ $(document).ready( function() {
                 fixHeight();
                 that.tabCount++;
 
-                if (i==0)
+                if (i==0) {
                     that.currRoot = that.rootsGuids[0];
+                    $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.rootsGuids[0]+'"]').html());
+                }
 
                 return {rootContainer: "#result"+i};
             }
@@ -486,6 +488,7 @@ $(document).ready( function() {
                 that.resultForm = '#result'+i;
                 that.currRoot = that.rootsGuids[i];
                 that.setAutoSendDeltas(true);
+                $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.currRoot+'"]').html());
             }
 
 
@@ -506,7 +509,7 @@ $(document).ready( function() {
 
                 // закладка
                 if (selSub) {
-                    uccelloClt.getClient().newTab(context, contextObj.dataBase(), formGuids, $('#sessionGuid').val() == '' ? uccelloClt.getSessionGuid() : $('#sessionGuid').val());
+                    uccelloClt.getClient().newTab(context, formGuids, $('#sessionGuid').val() == '' ? uccelloClt.getSessionGuid() : $('#sessionGuid').val());
                     return;
                 }
 
@@ -568,13 +571,13 @@ $(document).ready( function() {
                 if (selSub) {
                     formGuids = $('#selForm').val();
                 }
-                uccelloClt.getClient().newTab(url('#context'), uccelloClt.getSysCM().getByGuid(url('#context')).dataBase(), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
+                uccelloClt.getClient().newTab(url('#context'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
            window.openTab2 = function() {
                 var userContext = $('#userContext').val().split(',');
                 var context = userContext[0];
-                uccelloClt.getClient().newTab(context, uccelloClt.getSysCM().getByGuid(context).dataBase(), userContext[1]?userContext[1]:'all', $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
+                uccelloClt.getClient().newTab(context, userContext[1]?userContext[1]:'all', $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
             }
 
             window.refreshContexts = function() {
