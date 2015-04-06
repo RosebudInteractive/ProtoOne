@@ -11,11 +11,7 @@ var uccelloClt = null, DEBUG = true;
 
 // когда документ загружен
 $(document).ready( function() {
-
-
-
     require(['./uccello/config/config'], function(Config){
-
         var config = {
             controls: [
                 {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
@@ -44,6 +40,8 @@ $(document).ready( function() {
     require(
         ['./uccello/uccelloClt'],
         function(UccelloClt){
+
+            //setTimeout(function(){
 
             var that = this;
 			this.tabCount = 0;
@@ -83,75 +81,14 @@ $(document).ready( function() {
              * Выбрать контекст
              * @param guidcd
              */
-            this.selectContext = function(params, resGuids) {
+            this.selectContext = function(params, cb) {
                 that.clearTabs();
-
-                // гуиды форм
-                var formGuids = 'all';
-                if (resGuids !== undefined) {
-                    formGuids = resGuids;
-                } else {
-                    var urlGuids = url('#formGuids');
-                    if (urlGuids != null) {
-                        formGuids = urlGuids.split(',');
-                    }
-                }
-                params.formGuids = formGuids;
-                that.rootsGuids = formGuids;
-
-                // выбрать контекст
-                function setContext(par, cb) {
-                    uccelloClt.setContext(par, function(result) {
-                        that.setContextUrl(par.vc, params.formGuids);
-                        that.setAutoSendDeltas(true);
-                        that.getContexts();
-                        if(cb) cb(result);
-                    }, that.renderRoot);
-                }
-
-                // бд контекста
-                var context = uccelloClt.getSysCM().getByGuid(params.vc);
-                var masterGuid = context.dataBase();
-
-                if (params.side == 'client') {
-                    setContext(params);
-                } else {
-                    if (formGuids == null || formGuids == 'all') {
-                        uccelloClt.getClient().socket.send({action:"getRootGuids", db:masterGuid, rootKind:'res', type:'method', formGuids:formGuids}, function(result) {
-                            that.rootsGuids = result.roots;
-                            params.formGuids = result.roots;
-                            setContext(params);
-                        });
-                    } else {
-                        setContext(params, function(result) {
-                            uccelloClt.getClient().socket.send({
-                                action: "getRootGuids",
-                                db: masterGuid,
-                                rootKind: 'res',
-                                type: 'method',
-                                formGuids: formGuids
-                            }, function (result2) {
-                                var newFormGuids = [];
-                                for (var i in formGuids) {
-                                    var found = false;
-                                    for (var j in result2.roots)
-                                        if (result2.roots[j] == formGuids[i])
-                                            found = true;
-                                    if (!found)
-                                        newFormGuids.push(formGuids[i]);
-                                }
-                                if (newFormGuids.length > 0) {
-                                    uccelloClt.createRoot(newFormGuids, "res", function () {
-                                        context.addNewResRoots(newFormGuids, function (result3) {
-                                            setContext(params);
-                                        });
-                                    }, context);
-                                } else
-                                    setContext(params);
-                            });
-                        });
-                    }
-                }
+                uccelloClt.setContext(params, function(result) {
+                    that.setContextUrl(params.vc, params.urlFormGuids?params.urlFormGuids:params.formGuids);
+                    that.setAutoSendDeltas(true);
+                    that.getContexts();
+                    if (cb) cb(result);
+                }, that.renderRoot);
             }
 
             /**
@@ -262,13 +199,14 @@ $(document).ready( function() {
 
             }
 
+            /**
+             * Колбе для отрытия новой формы в новой закладке
+             * @param data
+             */
             this.newTab = function(data) {
                 window.open(that.getContextUrl(data.contextGuid, data.resGuids));
             }
 
-
-
-//setTimeout(function(){
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
@@ -285,103 +223,32 @@ $(document).ready( function() {
                             afterCopy:function(){}
                         });
 
-                       /* var vc = url('#context');
-                        var vcObj = uccelloClt.getSysCM().getByGuid(vc);
-                        if(vcObj && vc)
-                            $('#userContext').val(vcObj.contextGuid()).change();*/
-
                         var vc = url('#context');
                         var vcObj = uccelloClt.getSysCM().getByGuid(vc);
-                        if(vcObj && vc) {
-                            var urlGuids = url('#formGuids');
-                            urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
+                        var formGuids = url('#formGuids') ? url('#formGuids').split(',') : null;
+                        if (formGuids) {
+                            that.selectContext({vc:vc,  side: 'server', formGuids:formGuids}, function(){
+                                uccelloClt.createRoot(formGuids, "res", function (result) {
+                                    vcObj.addNewResRoots(result.guids, function (result2) {
+                                        that.selectContext({vc: vc, side: 'server', formGuids:result.guids, urlFormGuids:result.guids});
+                                    });
+                                }, vcObj);
+                            });
+                        } else {
                             that.selectContext({vc:vc,  side: 'server'});
                         }
-
 
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
                     }
                 },
-                //renderRoot: that.renderRoot,
                 newTabCallback: that.newTab
             });
-//}, 10000);
-
-
 
             // --------------------------------------------------------------------------------------------------------
             // --------------------- Глобальные методы для кнопок управления -----------------------------------------
             // --------------------------------------------------------------------------------------------------------
-
-            window.executeCopy = function(text) {
-
-                window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-
-                return;
-                var input = document.createElement('textarea');
-                document.body.appendChild(input);
-                input.value = text;
-                input.focus();
-                input.select();
-                document.execCommand('Copy');
-                input.remove();
-            }
-
-            /**
-             * subscribe user
-             */
-            window.subscribeRootSys = function() {
-                // подписываемся на корневой объект контейнера
-                uccelloClt.getSysDB().subscribeRoots(uccelloClt.pvt.guids.sysRootGuid, function(result){
-                    that.getContexts();
-                }, function() {
-
-                } );
-            }
-
-            var addControlId = 1000;
-            window.addControl = function(guid, ini, cm) {
-                if (!cm) cm = uccelloClt.getContextCM(that.currRoot);
-                if (!ini) {
-                    ini = {fields: {"Id": addControlId, "Name": 'Component'+addControlId, "Left":"300", "Top":"150"}};
-                    addControlId++;
-                }
-
-                var rootCont = null;
-                var gl = cm._getCompGuidList();
-                for (var f in gl)
-                    if (gl[f].getClassName() == "Container") { rootCont=gl[f]; break; }
-
-                var constr = uccelloClt.getConstr(guid);
-                var control = new constr(cm, {parent: rootCont, colName: "Children", ini:ini }, {parent:that.resultForm});
-                sendDeltas(false);
-                uccelloClt.getContext().renderAll(true);
-            }
-
-            /**
-             * Удалить контрол
-             * @param guid
-             * @param cm
-             */
-            window.delControl = function(guid, cm) {
-                if (!cm) cm = uccelloClt.getContextCM(that.currRoot);
-                cm.del(guid);
-                uccelloClt.getController().genDeltas(cm.getDB().getGuid());
-                uccelloClt.getContext().renderAll(true);
-            }
-
-            /**
-             * Получить  получить на клиент от сервера структуру - все сессии с номерами и когда созданы,
-             * все коннекты этих сессий - с номерами и когда созданы - и чтобы эту инфо можно было вывести
-             * в мемо поле по кнопке (трассировка)
-             */
-            window.getSessions = function() {
-                uccelloClt.getClient().socket.send({action:"getSessions", type:'method'}, function(result){
-                    console.log(result);
-                });
-            }
 
             /**
              * Логин
@@ -396,13 +263,10 @@ $(document).ready( function() {
                         uccelloClt.subscribeUser(function(result2){
                             if (!result2) {
                                 $('#logout').hide(); $('#login').show();
-                                $('#loginError').html('Ошибка подписки').show();
-                                $('#userInfo').html('');
+                                $('#loginError').html('Ошибка подписки').show();$('#userInfo').html('');
                             } else {
                                 that.getContexts();
-                                $('#login').hide(); $('#logout').show();
-                                $('#loginForm').hide();
-                                $('#loginError').hide();
+                                $('#login').hide(); $('#logout').show();$('#loginForm').hide();$('#loginError').hide();
                                 $('#userInfo').html('User: '+result.user.user+' <br>Session:'+uccelloClt.getSessionGuid()+' <a id="copySession" href="#" >copy</a>');
                                 $('#copySession').zclip({
                                     path:'/public/libs/zclip/ZeroClipboard.swf',
@@ -444,37 +308,22 @@ $(document).ready( function() {
              * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
             window.createContext = function(formGuids) {
-                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
-                $(that.resultForm).empty();
-                that.clearTabs();
+                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498']; // по умолчанию "test"
                 uccelloClt.createContext('server', formGuids, function(result){
-                    that.selectContext(result, null);
+                    that.selectContext({vc:result.vc, side:result.side, formGuids:result.roots, urlFormGuids:'all'});
                 });
             }
-
 
             /**
              * Создать клиентский контекст
              * @param guid
              */
             window.createClientContext = function(formGuids) {
-                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
-                $(that.resultForm).empty();
-                that.clearTabs();
+                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498']; // по умолчанию "test"
                 uccelloClt.createContext('client', formGuids, function(result){
-                    that.selectContext(result);
+                    that.selectContext({vc:result.vc, side:result.side, formGuids:result.formGuids});
                 });
-
-                /*uccelloClt.createContext('client', formGuids, function(result){
-                    result.formGuids = formGuids;
-                    uccelloClt.setContext(result, function(result2) {
-                        that.setContextUrl(result.vc, formGuids);
-                        that.getContexts();
-                    }, that.renderRoot);
-                });*/
             }
-
-
 
             /**
              * Выбрать рут
@@ -499,7 +348,6 @@ $(document).ready( function() {
                 var formGuids = $('#selForm').val();
                 var context = $('#userContext').val()? $('#userContext').val().split(',')[0]: url('#context');
                 var contextObj = uccelloClt.getSysCM().getByGuid(context);
-                var urlGuids = url('#formGuids');
                 var selSub = $('#selSub').is(':checked');
 
                 if (!formGuids) {
@@ -514,34 +362,10 @@ $(document).ready( function() {
                 }
 
                 uccelloClt.createRoot(formGuids, "res", function(result){
-                    // формы
-                    if (urlGuids) {
-                        urlGuids = urlGuids.split(',');
-                        result.guids = urlGuids.concat(result.guids);
-                    } else {
-                        result.guids = null;
-                    }
-                    contextObj.addNewResRoots(formGuids, function(result){
-                        that.selectContext({vc:context,  side: 'server'}, null);
+                    contextObj.addNewResRoots(result.guids, function(result2){
+                        that.selectContext({vc:context,  side: 'server'});
                     });
                 }, contextObj);
-            }
-
-            /**
-             * Кнопка query
-             */
-            window.loadQuery = function(rootGuid){
-                var context = uccelloClt.getContext();
-                if (!context) return;
-                uccelloClt.createRoot(rootGuid, "data", function(result){
-                    var cm = uccelloClt.getContextCM(that.currRoot);
-                    var db = cm.getDB();
-                    if (result[0]) {
-                        var dataset = cm.getByName("DatasetCompany");
-                        dataset.root(result[0]);
-                        sendDeltas(false);
-                    }
-                });
             }
 
             /**
@@ -553,35 +377,8 @@ $(document).ready( function() {
                 console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));
             }
 
-            /**
-             * присваивается значение параметру формы
-             * @param value
-             */
-            window.setParam = function(value) {
-                var cm = uccelloClt.getContextCM(that.currRoot);
-                var formParam1 = cm.getByName("FormParam1");
-                formParam1.value(value);
-                sendDeltas(true);
-            }
-
-            window.openTab = function() {
-                // выборочная подписка
-                var selSub = $('#selSub').is(':checked');
-                var formGuids = 'all';
-                if (selSub) {
-                    formGuids = $('#selForm').val();
-                }
-                uccelloClt.getClient().newTab(url('#context'), formGuids, $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
-            }
-
-           window.openTab2 = function() {
-                var userContext = $('#userContext').val().split(',');
-                var context = userContext[0];
-                uccelloClt.getClient().newTab(context, userContext[1]?userContext[1]:'all', $('#sessionGuid').val()==''?uccelloClt.getSessionGuid():$('#sessionGuid').val());
-            }
-
             window.refreshContexts = function() {
-                    that.getContexts();
+                that.getContexts();
             }
 
             // ----------------------------------------------------------------------------------------------------
@@ -627,7 +424,7 @@ $(document).ready( function() {
                     vcSide = option.data('Side');
 
                 if(vcGuid)
-                    that.selectContext({vc:vcGuid,  side: vcSide}, resGuid?[resGuid]:null);
+                    that.selectContext({vc:vcGuid,  side: vcSide, formGuids:resGuid?[resGuid]:'all'});
                 else
                     that.clearTabs();
             });
@@ -650,10 +447,17 @@ $(document).ready( function() {
                 if (window.isHashchange) {
                     var vc = url('#context');
                     var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                    var formGuids = url('#formGuids') ? url('#formGuids').split(',') : null;
                     if(vcObj && vc) {
-                        var urlGuids = url('#formGuids');
-                        urlGuids = urlGuids==null || urlGuids=='all'?'all':urlGuids.split(',');
-                        that.selectContext({vc:vc,  side: 'server'});
+                        if (formGuids) {
+                            uccelloClt.createRoot(formGuids, "res", function (result) {
+                                vcObj.addNewResRoots(result.guids, function (result2) {
+                                    that.selectContext({vc: context, side: 'server', formGuids:result.guids});
+                                });
+                            }, vcObj);
+                        } else {
+                            that.selectContext({vc:vc,  side: 'server'});
+                        }
                     }
                 }
                 window.isHashchange = true;
@@ -662,7 +466,6 @@ $(document).ready( function() {
             $('#DataColumnContact30').click(function(){
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
-
                 cm.userEventHandler(obj, function () {
                     obj.width(30);
                 });
@@ -670,12 +473,11 @@ $(document).ready( function() {
             $('#DataColumnContact20').click(function(){
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
-
                 cm.userEventHandler(obj, function () {
                     obj.width(20);
                 });
             })
-
+            //}, 10000);
 
             // ----------------------------------------------------------------------------------------------------
 
