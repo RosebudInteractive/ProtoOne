@@ -5,7 +5,7 @@
   },
   "fields":{
     "Id":3000,
-    "Name":"MainForm",
+    "Name":"MainFormEdit",
     "Title": "crm-edit"
   },
   "collections": {
@@ -21,7 +21,7 @@
           "Type": "param",
           "Kind": "in",
           "Value": "",
-          "OnModify": " { console.log('NEW PARAMETER '+newVal); this.getControlMgr().getByName('DatasetLead').cursor(newVal); return; }"
+          "OnModify": " { console.log('NEW PARAMETER '+newVal); this.getControlMgr().getByName('DatasetLeadEdit').cursor(newVal); return; }"
         },
         "collections": {}
       }
@@ -29,12 +29,12 @@
     "Children": [
       {
         "$sys": {
-          "guid": "29f93a72-5488-9284-23f9-b34d22fbdb2e",
+          "guid": "3845245b-9095-e806-7e5a-2681f4315da5",
           "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
         },
         "fields": {
           "Id": 3002,
-          "Name": "MainContainer"
+          "Name": "MainContainerEdit"
         },
         "collections": {
           "Children": [
@@ -56,7 +56,7 @@
                     },
                     "fields": {
                       "Id": 2004,
-                      "Name": "DatasetLead",
+                      "Name": "DatasetLeadEdit",
                       "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                       "Active": true
                     },
