@@ -350,11 +350,6 @@ $(document).ready( function() {
                 var contextObj = uccelloClt.getSysCM().getByGuid(context);
                 var selSub = $('#selSub').is(':checked');
 
-                if (!formGuids) {
-                    console.log('выберите формы для создания рута');
-                    return;
-                }
-
                 // закладка
                 if (selSub) {
                     uccelloClt.getClient().newTab(context, formGuids, $('#sessionGuid').val() == '' ? uccelloClt.getSessionGuid() : $('#sessionGuid').val());
@@ -379,6 +374,16 @@ $(document).ready( function() {
 
             window.refreshContexts = function() {
                 that.getContexts();
+            }
+
+            window.addControl = function(className) {
+                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var vc = uccelloClt.getContext();
+                var rootCont = cm.getByName('MainContainerList');
+                var obj = new (vc.getComponent(className).module)(cm, {parent: rootCont, colName: "Children", ini:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20} });
+                cm.userEventHandler(obj, function () {
+
+                });
             }
 
             // ----------------------------------------------------------------------------------------------------
@@ -476,7 +481,11 @@ $(document).ready( function() {
                 cm.userEventHandler(obj, function () {
                     obj.width(20);
                 });
-            })
+            });
+
+
+
+
             //}, 10000);
 
             // ----------------------------------------------------------------------------------------------------
