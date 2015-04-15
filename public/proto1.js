@@ -427,7 +427,6 @@ $(document).ready( function() {
             window.viewNavigator = function() {
                 if (!that.vNavigator){
                     require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
-                        that.vNavigator = VDbNavigator;
                         VDbNavigator.getLid = function(){return 1000000;};
                         VDbNavigator.getParent = function(){return null;};
                         VDbNavigator.top = function(){return 5;};
@@ -441,6 +440,7 @@ $(document).ready( function() {
                         ]};
                         VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#dbNavigatorForm').dialog('open');
+                        that.vNavigator = VDbNavigator;
                     });
                 } else {
                     $('#dbNavigatorForm').dialog('open');
