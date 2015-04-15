@@ -380,7 +380,7 @@ $(document).ready( function() {
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var vc = uccelloClt.getContext();
                 var rootCont = cm.getByName('MainContainerList');
-                var obj = new (vc.getComponent(className).module)(cm, {parent: rootCont, colName: "Children", ini:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20} });
+                var obj = new (vc.getComponent(className).module)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
                 cm.userEventHandler(obj, function () {
 
                 });
