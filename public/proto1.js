@@ -409,7 +409,7 @@ $(document).ready( function() {
                 var datasetGuid = $('#contextDatasets').val();
                 var dataset = cm.getByGuid(datasetGuid);
 
-                dataset.addObject({Id:recordid, Name:'Record '+recordid,
+				cm.userEventHandler(dataset,dataset.addObject,{Id:recordid, Name:'Record '+recordid,
                     state:'state '+recordid,
                     client:'client '+recordid,
                     companyId:recordid,
