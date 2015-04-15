@@ -136,6 +136,10 @@ DEBUG = true;
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var uccelloServ = new UccelloServ({authenticate:fakeAuthenticate});
 
+// логирование
+//var logger = require('../'+uccelloDir+'/system/winstonLogger');
+//logger.info("test msg");
+
 // запускаем http сервер
 http.createServer(app).listen(1325);
 console.log('Сервер запущен на http://127.0.0.1:1325/');

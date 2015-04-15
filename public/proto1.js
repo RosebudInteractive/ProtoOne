@@ -87,6 +87,7 @@ $(document).ready( function() {
                     that.setContextUrl(params.vc, params.urlFormGuids?params.urlFormGuids:params.formGuids);
                     that.setAutoSendDeltas(true);
                     that.getContexts();
+                    that.getDatasets();
                     if (cb) cb(result);
                 }, that.renderRoot);
             }
@@ -246,6 +247,21 @@ $(document).ready( function() {
                 newTabCallback: that.newTab
             });
 
+            /**
+             * Получить датасеты текущего контекста и отобразить в комбо
+             */
+            this.getDatasets = function() {
+                var sel = $('#contextDatasets');
+                var datasets = uccelloClt.getContextCM().getByName('DataModel').getObj().getCol('Datasets');
+                sel.empty();
+                for (var j = 0, len2 = datasets.count(); j < len2; j++) {
+                    var item = datasets.get(j);
+                    var option = $('<option/>');
+                    option.val(item.getGuid()).html(item.get('Name'));
+                    sel.append(option);
+                }
+            }
+
             // --------------------------------------------------------------------------------------------------------
             // --------------------- Глобальные методы для кнопок управления -----------------------------------------
             // --------------------------------------------------------------------------------------------------------
@@ -376,14 +392,59 @@ $(document).ready( function() {
                 that.getContexts();
             }
 
-            window.addControl = function(className) {
+            window.addControl = function(classGuid) {
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var vc = uccelloClt.getContext();
                 var rootCont = cm.getByName('MainContainerList');
-                var obj = new (vc.getComponent(className).module)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
+                var obj = new (vc.getConstructorHolder().getComponent(classGuid).constr)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
                 cm.userEventHandler(obj, function () {
 
                 });
+            }
+
+            that.recordid = 10000;
+            window.addRecord = function() {
+                var recordId = that.recordid++;
+                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var datasetGuid = $('#contextDatasets').val();
+                var dataset = cm.getByGuid(datasetGuid);
+
+                dataset.addObject({Id:recordid, Name:'Record '+recordid,
+                    state:'state '+recordid,
+                    client:'client '+recordid,
+                    companyId:recordid,
+                    contact:'contact '+recordid,
+                    phone:'phone '+recordid,
+                    email:'email '+recordid,
+                    contactId:recordid,
+                    proba:recordid,
+                    amount:recordid,
+                    user:recordid
+                });
+            }
+
+            that.vNavigator = null;
+            window.viewNavigator = function() {
+                if (!that.vNavigator){
+                    require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
+                        that.vNavigator = VDbNavigator;
+                        VDbNavigator.getLid = function(){return 1000000;};
+                        VDbNavigator.getParent = function(){return null;};
+                        VDbNavigator.top = function(){return 5;};
+                        VDbNavigator.left = function(){return 3;};
+                        VDbNavigator.nlevels = function(){return 3;};
+                        VDbNavigator.dataBase = function(val){if(val !== undefined) this.db=val; else return this.db;};
+                        VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
+                        VDbNavigator.params = {dbSelector:[
+                            {'guid': uccelloClt.getContext().getDB().getGuid(), 'name': 'Пользовательская БД'},
+                            {'guid': uccelloClt.getSysDB().getGuid(), 'name': 'Системная БД'}
+                        ]};
+                        VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
+                        $('#dbNavigatorForm').dialog('open');
+                    });
+                } else {
+                    $('#dbNavigatorForm').dialog('open');
+                }
             }
 
             // ----------------------------------------------------------------------------------------------------
@@ -392,8 +453,8 @@ $(document).ready( function() {
             // высота окошка результатов
             fixHeight = function() {
                 var h = $(window).height();
-                $('.tabs-page').height(h-120);
-                $('#editor').height(h-100);
+                $('.tabs-page').height(h-125);
+                $('#editor').height(h-160);
                 $('#console').width('100%');
             };
             fixHeight();
@@ -484,7 +545,16 @@ $(document).ready( function() {
             });
 
 
-
+            $('#dbNavigatorForm').dialog({
+                title: "Database Navigator",
+                resizable: false,
+                width:867,
+                height:460,
+                modal: true,
+                autoOpen: false,
+                buttons: {
+                }
+            });
 
             //}, 10000);
 

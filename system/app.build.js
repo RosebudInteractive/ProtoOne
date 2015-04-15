@@ -18,7 +18,8 @@
         compress: {
             global_defs: {
                 DEBUG: false
-            }
+            },
+	    drop_console: true
         }
         /*,
         warnings: true,
@@ -87,5 +88,6 @@
         'uccelloClt'
     ],
     insertRequire: [],
-    out: "../public/libs/uccello.js"
+    //out: "../public/libs/uccello.js"
+out: "uccello.js"
 })

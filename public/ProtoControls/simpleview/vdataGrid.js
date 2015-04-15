@@ -192,6 +192,24 @@ define(
                 $($(rowsTr[i]).children()[index]).css('width', width+'%');
         }
 
+        /**
+         * Рендер столбца
+         * @param index
+         * @param full true-полный рендер с данными, false-только аттрибуты и заголовок
+         */
+        vDataGrid.renderColumn = function(index, full) {
+            var column = this.getObj().getCol('Columns').get(index);
+            var width = column.width();
+            var table = $('#' + this.getLid()).find('.table');
+            var header = table.find('.header');
+
+
+            $(header.children()[index]).css('width', width+'%');
+            var rowsTr = table.find('.row');
+            for(var i = 0, len = rowsTr.length; i<len; i++)
+                $($(rowsTr[i]).children()[index]).css('width', width+'%');
+        }
+
         return vDataGrid;
     }
 );

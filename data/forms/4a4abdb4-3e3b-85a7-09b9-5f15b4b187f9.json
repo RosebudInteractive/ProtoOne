@@ -58,7 +58,8 @@
                       "Id": 2004,
                       "Name": "DatasetLeadEdit",
                       "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
-                      "Active": true
+                      "Active": true,
+                      "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
                     },
                     "collections": {
                       "Fields": [

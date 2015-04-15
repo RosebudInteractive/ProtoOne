@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <title>Uccello</title>
 <link href="/public/img/Favicon.png" rel="icon" type="image/png" />
-<link type="text/css" rel="stylesheet" href="/public/css/style.css" media="all">
+<link href="/public/libs/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet">
 <script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
+<script src="/public/libs/jquery-ui/jquery-ui.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/public/css/style.css" media="all">
 
 <script src="/public/uccello/uses/url.js"></script>
 <script src="/public/uccello/uses/jquery.cookie.js"></script>
@@ -60,7 +62,15 @@
                 <option value="1d95ab61-df00-aec8-eff5-0f90187891cf">Container</option>
                 <option value="a0e02c45-1600-6258-b17a-30a56301d7f1">PropEditor</option>
                 <option value="38aec981-30ae-ec1d-8f8f-5004958b4cfa">DbNavigator</option>
-    </select>--><input type="button" value="add button" onclick="addControl('Button');">
+    </select>-->
+    <input type="button" value="add button" onclick="addControl('af419748-7b25-1633-b0a9-d539cada8e0d');">
+
+    <select id="contextDatasets">
+
+    </select>
+    <input type="button" value="addRecord" title="добавить запись в выбранный датасет" onclick="addRecord();">
+
+    <input type="button" value="navigator" onclick="viewNavigator();">
     <br><br>
 
     <div id="tabs"></div>
@@ -73,6 +83,10 @@
     <input type="hidden" value="p1" id="loginPass">
     <!-- Пароль:<input type="password" value="p1" id="loginPass"><br>-->
     <input type="button" value="Войти" onclick="login($('#loginName').val(), $('#loginPass').val())">
+</div>
+
+<div id="dbNavigatorForm" >
+
 </div>
 
 </body>
