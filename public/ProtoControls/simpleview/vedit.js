@@ -6,7 +6,7 @@ define(
         vEdit.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
-                item = $(this._templates['edit']).attr('id', this.getLid());
+                item = $(vEdit._templates['edit']).attr('id', this.getLid());
                 var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
                 $(parent).append(item);
             }
