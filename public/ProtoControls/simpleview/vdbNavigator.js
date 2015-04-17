@@ -26,6 +26,7 @@ define(
 
                 var dbSelector = editor.find('.dbSelector');
                 dbSelector.append('<option />');
+                if (!this.params.dbSelector) this.params.dbSelector = [];
                 for(var i=0, len=this.params.dbSelector.length; i<len; i++) {
                     var option = $('<option />').attr('value', this.params.dbSelector[i].guid).html(this.params.dbSelector[i].name);
                     dbSelector.append(option);
