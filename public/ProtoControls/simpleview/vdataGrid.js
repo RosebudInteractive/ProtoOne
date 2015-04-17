@@ -59,8 +59,10 @@ define(
             if (rootElem)
             {
                 var col = rootElem.getCol('DataElements');
-                var columns = this.getObj().getCol('Columns');
-                var fields = dataset.getObj().getCol('Fields');
+                //var columns = this.getObj().getCol('Columns');
+                //var fields = dataset.getObj().getCol('Fields');
+                var columns = this.getCol('Columns');
+                var fields = dataset.getCol('Fields');
                 var idIndex = null, cursor = dataset.cursor(), rows = '', cursorIndex = -1;
                 var fieldsArr = {};
                 for (var i = 0, len = fields.count(); i < len; i++) {
@@ -162,7 +164,8 @@ define(
          * @param value
          */
         vDataGrid.renderCell = function(id, datafield, value) {
-            var index=null, columns = this.getObj().getCol('Columns');
+            //var index=null, columns = this.getObj().getCol('Columns');
+			var index=null, columns = this.getCol('Columns');
             if (columns) {
                 for (var i = 0, len = columns.count(); i < len; i++) {
                     if (columns.get(i).get('Field') == datafield) {
@@ -198,7 +201,8 @@ define(
          * @param full true-полный рендер с данными, false-только аттрибуты и заголовок
          */
         vDataGrid.renderColumn = function(index, full) {
-            var column = this.getObj().getCol('Columns').get(index);
+            //var column = this.getObj().getCol('Columns').get(index);
+			var column = this.getCol('Columns').get(index);
             var width = column.width();
             var table = $('#' + this.getLid()).find('.table');
             var header = table.find('.header');

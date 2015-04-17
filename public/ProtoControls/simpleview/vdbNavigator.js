@@ -79,7 +79,8 @@ define(
                 var cnt = rootElem? 1: db.countRoot();
 
                 for (var i = 0; i < cnt; i++) {
-                    var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
+                    //var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
+					var root = rootElem ? db: db.getRoot(i);
                     var name = root.get('Name');
                     if (!name)
                         name = root.getGuid();

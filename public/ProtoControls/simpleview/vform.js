@@ -13,7 +13,8 @@ define(
             item.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
 
             // убираем удаленные объекты
-            var del = this.getObj().getLogCol('Children').del;
+            //var del = this.getObj().getLogCol('Children').del;
+			var del = this.getLogCol('Children').del;
             for (var guid in del)
                 $('#' + del[guid].getLid()).remove();
 

@@ -50,7 +50,8 @@ define(
                 change.hide();
                 delbtn = editor.find('.delbtn');
                 delbtn.hide();
-                if (this.getObj().isFldModified('Top') || this.getObj().isFldModified('Left'))
+                //if (this.getObj().isFldModified('Top') || this.getObj().isFldModified('Left'))
+				if (this.isFldModified('Top') || this.isFldModified('Left'))
                     editor.css({top: this.top() + 'px', left: this.left() + 'px'});
             }
 
@@ -60,9 +61,11 @@ define(
             for (var f in gl) {
                 var name = gl[f].getClassName();
                 var id = gl[f].getGuid();
-                controls.append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
+                //controls.append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
+				controls.append($('<option/>').val(id).html(gl[f].get('Name')));
                 if (gl[f].pvt.obj.getCol("Children")) {
-                    parents.find('select').append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
+					parents.find('select').append($('<option/>').val(id).html(gl[f].get('Name')));
+                    //parents.find('select').append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
                 }
             }
 

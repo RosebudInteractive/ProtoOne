@@ -254,7 +254,8 @@ $(document).ready( function() {
                 var sel = $('#contextDatasets');
                 var dataModel = uccelloClt.getContextCM().getByName('DataModel');
                 if (!dataModel) return;
-                var datasets = uccelloClt.getContextCM().getByName('DataModel').getObj().getCol('Datasets');
+                //var datasets = uccelloClt.getContextCM().getByName('DataModel').getObj().getCol('Datasets');
+				var datasets = uccelloClt.getContextCM().getByName('DataModel').getCol('Datasets');
                 sel.empty();
                 for (var j = 0, len2 = datasets.count(); j < len2; j++) {
                     var item = datasets.get(j);
