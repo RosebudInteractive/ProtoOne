@@ -26,7 +26,12 @@ define(
 
                 var dbSelector = editor.find('.dbSelector');
                 dbSelector.append('<option />');
-                if (!this.params.dbSelector) this.params.dbSelector = [];
+                if (!this.params.dbSelector){ // если базы не указаны берем из контроллера
+                    this.params.dbSelector = [];
+                    var dbList = that.getControlMgr().getDB().getController().getDbList();
+                    for(var i=0; i<dbList.length; i++)
+                        this.params.dbSelector.push({name:dbList[i].db.getName(), guid:dbList[i].db.getGuid()});
+                }
                 for(var i=0, len=this.params.dbSelector.length; i<len; i++) {
                     var option = $('<option />').attr('value', this.params.dbSelector[i].guid).html(this.params.dbSelector[i].name);
                     dbSelector.append(option);
