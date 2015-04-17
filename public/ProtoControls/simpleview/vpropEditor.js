@@ -63,7 +63,8 @@ define(
                 var id = gl[f].getGuid();
                 //controls.append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
 				controls.append($('<option/>').val(id).html(gl[f].get('Name')));
-                if (gl[f].pvt.obj.getCol("Children")) {
+                //if (gl[f].pvt.obj.getCol("Children")) {
+				if (gl[f].getCol("Children")) {
 					parents.find('select').append($('<option/>').val(id).html(gl[f].get('Name')));
                     //parents.find('select').append($('<option/>').val(id).html(gl[f].getObj().get('Name')));
                 }
