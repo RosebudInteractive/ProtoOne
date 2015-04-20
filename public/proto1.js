@@ -446,14 +446,8 @@ $(document).ready( function() {
                         VDbNavigator.dataBase = function(val){if(val !== undefined) VDbNavigator.database=val; return VDbNavigator.database;};
                         VDbNavigator.rootElem = function(val){if(val !== undefined) VDbNavigator.rootelem=val; return VDbNavigator.rootelem;};
                         VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
-<<<<<<< HEAD
                         VDbNavigator.params = {};
-=======
-                        VDbNavigator.params = {dbSelector:[
-                            {'guid': uccelloClt.getContext().getGuid(), 'name': 'Пользовательская БД'},
-                            {'guid': uccelloClt.getSysDB().getGuid(), 'name': 'Системная БД'}
-                        ]};
->>>>>>> origin/refactoring
+
                         VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#clientNav').find('.dbSelector').change(function(){
                             VDbNavigator.render({rootContainer:'#dbNavigatorForm'});

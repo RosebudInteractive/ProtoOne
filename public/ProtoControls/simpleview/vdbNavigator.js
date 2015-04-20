@@ -28,7 +28,6 @@ define(
                 dbSelector.append('<option />');
                 if (!this.params.dbSelector){ // если базы не указаны берем из контроллера
                     this.params.dbSelector = [];
-                    //var dbList = that.getControlMgr().getDB().getController().getDbList();
 					var dbList = that.getControlMgr().getController().getDbList();
                     for(var i=0; i<dbList.length; i++)
                         this.params.dbSelector.push({name:dbList[i].db.getName(), guid:dbList[i].db.getGuid()});
