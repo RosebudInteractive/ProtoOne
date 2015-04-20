@@ -290,18 +290,20 @@ define(
             // отображаем справа поля
             var right = editor.find('.right');
             right.empty();
-            for (var i = 0, len = obj.count(); i < len; i++) {
-                if (obj.getFieldType) {
-                    var rightTpl = $(vDBNavigator._templates['right']);
-                    rightTpl.find('.name').html(obj.getFieldName(i));
-                    rightTpl.find('.type').html(obj.getFieldType(i));
-                    rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));
-                    rightTpl.find('.save').click(function () {
-                        var val = $(this).parent().find('.value');
-                        val.data('obj').set(val.attr('name'), val.val());
-                        return false;
-                    });
-                    right.append(rightTpl);
+            if (obj.count) {
+                for (var i = 0, len = obj.count(); i < len; i++) {
+                    if (obj.getFieldType) {
+                        var rightTpl = $(vDBNavigator._templates['right']);
+                        rightTpl.find('.name').html(obj.getFieldName(i));
+                        rightTpl.find('.type').html(obj.getFieldType(i));
+                        rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));
+                        rightTpl.find('.save').click(function () {
+                            var val = $(this).parent().find('.value');
+                            val.data('obj').set(val.attr('name'), val.val());
+                            return false;
+                        });
+                        right.append(rightTpl);
+                    }
                 }
             }
         }

@@ -447,12 +447,13 @@ $(document).ready( function() {
                         VDbNavigator.rootElem = function(val){if(val !== undefined) VDbNavigator.rootelem=val; return VDbNavigator.rootelem;};
                         VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
                         VDbNavigator.params = {};
-
+                        that.vNavigator = VDbNavigator;
                         VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#clientNav').find('.dbSelector').change(function(){
-                            VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
+                            that.vNavigator.rootelem = null;
+                            that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
-                        that.vNavigator = VDbNavigator;
+
                         $('#dbNavigatorForm').dialog('open');
                     });
                 } else {
