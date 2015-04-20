@@ -430,22 +430,28 @@ $(document).ready( function() {
             window.viewNavigator = function() {
                 if (!that.vNavigator){
                     require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
-                        VDbNavigator.getLid = function(){return 1000000;};
+                        VDbNavigator.getLid = function(){return 'clientNav';};
                         VDbNavigator.getParent = function(){return null;};
                         VDbNavigator.top = function(){return 5;};
                         VDbNavigator.left = function(){return 3;};
                         VDbNavigator.nlevels = function(){return 3;};
-                        VDbNavigator.dataBase = function(val){if(val !== undefined) this.db=val; else return this.db;};
+                        VDbNavigator.database = null;
+                        VDbNavigator.level = null;
+                        VDbNavigator.rootelem = null;
+                        VDbNavigator.level = function(val){if(val !== undefined) VDbNavigator.level=val; return VDbNavigator.level;};
+                        VDbNavigator.dataBase = function(val){if(val !== undefined) VDbNavigator.database=val; return VDbNavigator.database;};
+                        VDbNavigator.rootElem = function(val){if(val !== undefined) VDbNavigator.rootelem=val; return VDbNavigator.rootelem;};
                         VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
-                        VDbNavigator.params = {dbSelector:[
-                            {'guid': uccelloClt.getContext().getDB().getGuid(), 'name': 'Пользовательская БД'},
-                            {'guid': uccelloClt.getSysDB().getGuid(), 'name': 'Системная БД'}
-                        ]};
+                        VDbNavigator.params = {};
                         VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
-                        $('#dbNavigatorForm').dialog('open');
+                        $('#clientNav').find('.dbSelector').change(function(){
+                            VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
+                        });
                         that.vNavigator = VDbNavigator;
+                        $('#dbNavigatorForm').dialog('open');
                     });
                 } else {
+                    that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                     $('#dbNavigatorForm').dialog('open');
                 }
             }
