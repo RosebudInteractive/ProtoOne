@@ -8,7 +8,7 @@ define(
         var DataCompany = AComponent.extend({
 
             className: "DataCompany",
-            classGuid: "59583572-20fa-1f58-8d3f-5114af0f2c514",
+            classGuid: "59583572-20fa-1f58-8d3f-5114af0f2c51",
             metaCols: [],
             metaFields: [
                 {fname:"country",ftype:"string"},
