@@ -71,10 +71,10 @@ p {padding:0;margin: 4px 0;}
 .divCell textarea {min-width:50px;min-height: 20px;}
 
 .grid {position: absolute;border:1px solid  #666666;border-spacing:0px;overflow: auto;box-sizing: border-box;}
-.grid .table {display: table;box-sizing: border-box;}
+.grid .table {display: table;box-sizing: border-box;width:100%;}
 .grid .row .cell:last-child {border-right:1px solid  #666666;}
 .grid:last-child .row:last-child .cell {border-bottom:0;}
-.grid .row{display:table-row;width:auto;clear:both;box-sizing: border-box;}
+.grid .row{display:table-row;width:auto;clear:both;box-sizing: border-box;width:100%;}
 .grid .row.active{background-color: #333333; color:#ffffff;}
 .grid .cell{font-size:11px;display:table-cell;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:5px;float:left;overflow: hidden;white-space: nowrap; text-overflow: ellipsis;box-sizing: border-box;}
 .grid .cell.w60{width: 60px;}
