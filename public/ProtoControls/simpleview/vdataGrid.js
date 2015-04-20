@@ -44,7 +44,7 @@ define(
             }
 
             var cm = this.getControlMgr();
-            var db = cm.getDB();
+            //var db = cm.getDB();
             var rootElem = null;
 
 
@@ -52,7 +52,7 @@ define(
                 dataset = cm.getByGuid(this.dataset());
                 if (dataset) {
                     rootElem = dataset.root();
-                    rootElem = rootElem? db.getObj(rootElem): null;
+                    rootElem = rootElem? cm.getObj(rootElem): null;
                 }
             }
 
