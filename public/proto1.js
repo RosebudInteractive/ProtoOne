@@ -145,7 +145,7 @@ $(document).ready( function() {
             this.addColItems = function(cm, colName, side) {
                 var sel = $('#userContext');
                 var selOn = $('#userContextOn');
-                var db = cm.getDB();
+                var db = cm; //.getDB();
                 for (var i = 0, len = db.countRoot(); i < len; i++) {
                     var root = db.getRoot(i);
                     var obj = root.obj;
@@ -319,7 +319,8 @@ $(document).ready( function() {
              */
             window.sendDeltas = function (force) {
                 if ($('#autoSendDelta').is(':checked') || force)
-                    uccelloClt.getController().genDeltas(uccelloClt.getContextCM(that.currRoot).getDB().getGuid());
+					uccelloClt.getController().genDeltas(uccelloClt.getContextCM(that.currRoot).getGuid());
+                    //uccelloClt.getController().genDeltas(uccelloClt.getContextCM(that.currRoot).getDB().getGuid());
             }
 
             /**
@@ -387,8 +388,11 @@ $(document).ready( function() {
              */
             window.serializeForm = function(){
                 if (!uccelloClt.getContext()) return;
+                var root = uccelloClt.getContextCM(that.currRoot).getObj(that.currRoot);
+                console.log(uccelloClt.getContextCM(that.currRoot).serialize(root));
+				/*
                 var root = uccelloClt.getContextCM(that.currRoot).getDB().getObj(that.currRoot);
-                console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));
+                console.log(uccelloClt.getContextCM(that.currRoot).getDB().serialize(root));*/
             }
 
             window.refreshContexts = function() {
@@ -442,7 +446,14 @@ $(document).ready( function() {
                         VDbNavigator.dataBase = function(val){if(val !== undefined) VDbNavigator.database=val; return VDbNavigator.database;};
                         VDbNavigator.rootElem = function(val){if(val !== undefined) VDbNavigator.rootelem=val; return VDbNavigator.rootelem;};
                         VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
+<<<<<<< HEAD
                         VDbNavigator.params = {};
+=======
+                        VDbNavigator.params = {dbSelector:[
+                            {'guid': uccelloClt.getContext().getGuid(), 'name': 'Пользовательская БД'},
+                            {'guid': uccelloClt.getSysDB().getGuid(), 'name': 'Системная БД'}
+                        ]};
+>>>>>>> origin/refactoring
                         VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#clientNav').find('.dbSelector').change(function(){
                             VDbNavigator.render({rootContainer:'#dbNavigatorForm'});

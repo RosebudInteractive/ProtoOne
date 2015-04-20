@@ -28,7 +28,8 @@ define(
                 dbSelector.append('<option />');
                 if (!this.params.dbSelector){ // если базы не указаны берем из контроллера
                     this.params.dbSelector = [];
-                    var dbList = that.getControlMgr().getDB().getController().getDbList();
+                    //var dbList = that.getControlMgr().getDB().getController().getDbList();
+					var dbList = that.getControlMgr().getController().getDbList();
                     for(var i=0; i<dbList.length; i++)
                         this.params.dbSelector.push({name:dbList[i].db.getName(), guid:dbList[i].db.getGuid()});
                 }
@@ -77,7 +78,8 @@ define(
 
             // отображаем слева рут элементы
             dbSelector.val(that.dataBase());
-            var controller = that.getControlMgr().getDB().getController();
+            //var controller = that.getControlMgr().getDB().getController();
+			var controller = that.getControlMgr().getController();
             var db = that.dataBase()? controller.getDB(that.dataBase()): null;
             if (db) {
                 var rootElemLink = null;
