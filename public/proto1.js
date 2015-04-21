@@ -7,7 +7,7 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = true;
+var uccelloClt = null, DEBUG = false;
 
 // когда документ загружен
 $(document).ready( function() {
