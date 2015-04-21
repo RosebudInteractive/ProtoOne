@@ -562,9 +562,9 @@ $(document).ready( function() {
 
             $('#dbNavigatorForm').dialog({
                 title: "Database Navigator",
-                resizable: false,
+                resizable: true,
                 width:867,
-                height:460,
+                height:600,
                 modal: true,
                 autoOpen: false,
                 buttons: {
