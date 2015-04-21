@@ -34,7 +34,7 @@ define(
                         e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
-                            that.getControlMgr().getByGuid(that.dataset()).cursor(rowTr.attr('data-id'));
+                            that.getControlMgr().get(that.dataset()).cursor(rowTr.attr('data-id'));
                         });
                     }
                 });
@@ -49,7 +49,7 @@ define(
 
 
             if (this.dataset()) {
-                dataset = cm.getByGuid(this.dataset());
+                dataset = cm.get(this.dataset());
                 if (dataset) {
                     rootElem = dataset.root();
                     rootElem = rootElem? cm.getObj(rootElem): null;

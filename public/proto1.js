@@ -156,7 +156,7 @@ $(document).ready( function() {
                             for (var k = 0, len3 = col.count(); k < len3; k++) {
                                 var item = col.get(k);
                                 var option = $('<option/>');
-                                var isOn = cm.getByGuid(item.getGuid()).isOn();
+                                var isOn = cm.get(item.getGuid()).isOn();
                                 option.data('Side', side);
                                 option.val(item.get('ContextGuid')).html(item.get('Name')+(isOn?' isOn ':'')+' '+side);
                                 sel.append(option);
@@ -225,7 +225,7 @@ $(document).ready( function() {
                         });
 
                         var vc = url('#context');
-                        var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                        var vcObj = uccelloClt.getSysCM().get(vc);
                         var formGuids = url('#formGuids') ? url('#formGuids').split(',') : null;
                         if (formGuids) {
                             that.selectContext({vc:vc,  side: 'server', formGuids:formGuids}, function(){
@@ -367,7 +367,7 @@ $(document).ready( function() {
             window.createRoot = function(){
                 var formGuids = $('#selForm').val();
                 var context = $('#userContext').val()? $('#userContext').val().split(',')[0]: url('#context');
-                var contextObj = uccelloClt.getSysCM().getByGuid(context);
+                var contextObj = uccelloClt.getSysCM().get(context);
                 var selSub = $('#selSub').is(':checked');
 
                 // закладка
@@ -414,7 +414,7 @@ $(document).ready( function() {
                 var recordId = that.recordid++;
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var datasetGuid = $('#contextDatasets').val();
-                var dataset = cm.getByGuid(datasetGuid);
+                var dataset = cm.get(datasetGuid);
 
 				cm.userEventHandler(dataset,dataset.addObject,{Id:recordid, Name:'Record '+recordid,
                     state:'state '+recordid,
@@ -513,7 +513,7 @@ $(document).ready( function() {
             $('#userContextOn').change(function(){
                 var vc = $(this).val();
                 if(vc) {
-                    var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                    var vcObj = uccelloClt.getSysCM().get(vc);
                     vcObj.off(function(){
                         that.getContexts();
                     });
@@ -527,7 +527,7 @@ $(document).ready( function() {
             $(window).on('hashchange', function() {
                 if (window.isHashchange) {
                     var vc = url('#context');
-                    var vcObj = uccelloClt.getSysCM().getByGuid(vc);
+                    var vcObj = uccelloClt.getSysCM().get(vc);
                     var formGuids = url('#formGuids') ? url('#formGuids').split(',') : null;
                     if(vcObj && vc) {
                         if (formGuids) {

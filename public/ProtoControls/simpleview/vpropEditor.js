@@ -101,7 +101,7 @@ define(
             delbtn.show();
             parents.show();
 
-            var comp = this.getControlMgr().getByGuid(guid);
+            var comp = this.getControlMgr().get(guid);
             if (!comp) {
                 vPropEditor.renderProps.apply(this, ['']);
                 return;
@@ -125,7 +125,7 @@ define(
             var editor = $('#' + this.getLid());
             var props = editor.find('.props');
             var inputs = props.find('input');
-            var comp = this.getControlMgr().getByGuid(editor.find('.controls').val());
+            var comp = this.getControlMgr().get(editor.find('.controls').val());
             var parents = editor.find('.parents');
             var that = this;
 
