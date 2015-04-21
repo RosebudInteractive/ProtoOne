@@ -3,14 +3,15 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 define(
-    [UCCELLO_CONFIG.uccelloPath+'controls/aComponent'],
-    function(AComponent) {
-        var DataLead = AComponent.extend({
+    [UCCELLO_CONFIG.uccelloPath+'system/uobject'],
+    function(UObject) {
+        var DataLead = UObject.extend({
 
             className: "DataLead",
             classGuid: "86c611ee-ed58-10be-66f0-dfbb60ab8907",
             metaCols: [],
             metaFields: [
+                {fname:"Id",ftype:"int"},
                 {fname:"state",ftype:"string"},
                 {fname:"client",ftype:"string"},
                 {fname:"companyId",ftype:"int"},
@@ -27,6 +28,9 @@ define(
                 this._super(cm,params);
             },
 
+            id: function(value) {
+                return this._genericSetter("Id",value);
+            },
             state: function(value) {
                 return this._genericSetter("state", value);
             },

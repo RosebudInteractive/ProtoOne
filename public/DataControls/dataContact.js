@@ -3,14 +3,15 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 define(
-    [UCCELLO_CONFIG.uccelloPath+'controls/aComponent'],
-    function(AComponent) {
-        var DataContact = AComponent.extend({
+    [UCCELLO_CONFIG.uccelloPath+'system/uobject'],
+    function(UObject) {
+        var DataContact = UObject.extend({
 
             className: "DataContact",
             classGuid: "73596fd8-6901-2f90-12d7-d1ba12bae8f4",
             metaCols: [],
             metaFields: [
+                {fname:"Id",ftype:"int"},
                 {fname:"parent",ftype:"integer"},
                 {fname:"firstname",ftype:"string"},
                 {fname:"lastname",ftype:"string"},
@@ -22,6 +23,10 @@ define(
 
             init: function(cm,params){
                 this._super(cm,params);
+            },
+
+            id: function(value) {
+                return this._genericSetter("Id",value);
             },
 
             parent: function(value) {
