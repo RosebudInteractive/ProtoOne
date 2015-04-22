@@ -31,7 +31,9 @@
                 "Name": "ButtonControls1",
                 "Top": "10",
                 "Left": "200",
-                "Caption": "Button1"
+                "Caption": "Button1",
+                "Width": 190,
+                "Height": 21
               },
               "collections": {
               }
@@ -46,7 +48,9 @@
                 "Name": "ButtonControls2",
                 "Top": "40",
                 "Left": "200",
-                "Caption": "Button2"
+                "Caption": "Button2",
+                "Width": 190,
+                "Height": 21
               },
               "collections": {
               }
@@ -61,8 +65,8 @@
                 "Name": "EditControl1",
                 "Top": "10",
                 "Left": "10",
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Value": "Value1"
               },
               "collections": {
@@ -78,8 +82,8 @@
                 "Name": "EditControl2",
                 "Top": "40",
                 "Left": "10",
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Value": "Value2"
               },
               "collections": {

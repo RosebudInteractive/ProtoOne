@@ -20,7 +20,7 @@ define(
             if (grid.length == 0) {
                 grid = $(vDataGrid._templates['grid']).attr('id', this.getLid());
                 table = grid.find('.table');
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
+                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
                 $(parent).append(grid);
 
                 grid.find('.refresh').click(function () {
@@ -142,7 +142,6 @@ define(
                     table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
             }
 
-            grid.css({top: this.top() + 'px', left: this.left() + 'px', width: this.width() + 'px', height: this.height() + 'px'});
             if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }
 

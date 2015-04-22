@@ -257,7 +257,7 @@
                 "Top": 50,
                 "Left": 300,
                 "Width": 450,
-                "Height": 200,
+                "Height": 210,
                 "Dataset": "da185853-e1aa-8b58-2de5-7cbc0d685501"
               }
             },
@@ -271,8 +271,8 @@
                 "Name": "LabelId",
                 "Top": 55,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "Id"
               }
             },
@@ -286,8 +286,8 @@
                 "Name": "LeadId",
                 "Top": 50,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "Id"
               }
@@ -302,8 +302,8 @@
                 "Name": "LabelState",
                 "Top": 77,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "state"
               }
             },
@@ -317,8 +317,8 @@
                 "Name": "LeadState",
                 "Top": 72,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "state"
               }
@@ -333,8 +333,8 @@
                 "Name": "LabelState",
                 "Top": 77,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "state"
               }
             },
@@ -348,8 +348,8 @@
                 "Name": "LeadState",
                 "Top": 72,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "state"
               }
@@ -364,8 +364,8 @@
                 "Name": "LabelClient",
                 "Top": 99,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "client"
               }
             },
@@ -379,8 +379,8 @@
                 "Name": "LeadClient",
                 "Top": 94,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "client"
               }
@@ -395,8 +395,8 @@
                 "Name": "LabelCompanyId",
                 "Top": 121,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "companyId"
               }
             },
@@ -410,8 +410,8 @@
                 "Name": "LeadCompanyId",
                 "Top": 116,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "companyId"
               }
@@ -426,8 +426,8 @@
                 "Name": "LabelContact",
                 "Top": 143,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "contact"
               }
             },
@@ -441,8 +441,8 @@
                 "Name": "LeadContact",
                 "Top": 138,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "contact"
               }
@@ -457,8 +457,8 @@
                 "Name": "LabelPhone",
                 "Top": 165,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "phone"
               }
             },
@@ -472,8 +472,8 @@
                 "Name": "LeadPhone",
                 "Top": 160,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "phone"
               }
@@ -488,8 +488,8 @@
                 "Name": "LabelEmail",
                 "Top": 187,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "email"
               }
             },
@@ -503,8 +503,8 @@
                 "Name": "LeadEmail",
                 "Top": 182,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
                 "DataField": "email"
               }
@@ -519,8 +519,8 @@
                 "Name": "Header",
                 "Top": 10,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "<b>Lead Edit Form</b>"
               }
             },
@@ -534,8 +534,8 @@
                 "Name": "HeaderIncomeplan",
                 "Top": 10,
                 "Left": 300,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "<b>Incomeplan</b>"
               }
             }

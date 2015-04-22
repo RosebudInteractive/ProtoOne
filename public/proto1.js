@@ -24,6 +24,7 @@ $(document).ready( function() {
                 {className:'MatrixGrid', component:'matrixGrid', viewset:true, guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
                 {className:'PropEditor', component:'propEditor', viewset:true, guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
                 {className:'Container', viewset:true},
+                {className:'CContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
                 {className:'DataGrid', viewset:true},
@@ -211,6 +212,9 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();

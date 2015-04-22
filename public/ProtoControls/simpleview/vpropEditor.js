@@ -35,9 +35,8 @@ define(
                 editor.append(props);
                 editor.append(change);
                 editor.append(delbtn);
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
+                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
                 $(parent).append(editor);
-                editor.css({top: this.top() + 'px', left: this.left() + 'px'});
             } else {
                 controls = editor.find('.controls');
                 controls.empty();
@@ -50,9 +49,6 @@ define(
                 change.hide();
                 delbtn = editor.find('.delbtn');
                 delbtn.hide();
-                //if (this.getObj().isFldModified('Top') || this.getObj().isFldModified('Left'))
-				if (this.isFldModified('Top') || this.isFldModified('Left'))
-                    editor.css({top: this.top() + 'px', left: this.left() + 'px'});
             }
 
             parents.find('select').append('<option value=""></option>');

@@ -38,7 +38,7 @@
           "Top": 10,
           "Left": 10,
           "Width": 305,
-          "Height": 200
+          "Height": 210
         },
         "collections": {
           "Children": [
@@ -79,8 +79,8 @@
                 "Name": "Label1",
                 "Top": 10,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "Name"
               },
               "collections": {}
@@ -95,8 +95,8 @@
                 "Name": "DataEdit1",
                 "Top": "10",
                 "Left": "120",
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
                 "DataField": "Name"
               },
@@ -112,8 +112,8 @@
                 "Name": "Label2",
                 "Top": 35,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "country"
               },
               "collections": {}
@@ -128,8 +128,8 @@
                 "Name": "DataEdit2",
                 "Top": 35,
                 "Left": 120,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
                 "DataField": "country"
               },
@@ -145,8 +145,8 @@
                 "Name": "Label3",
                 "Top": 60,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "city"
               },
               "collections": {}
@@ -161,8 +161,8 @@
                 "Name": "DataEdit3",
                 "Top": 60,
                 "Left": 120,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
                 "DataField": "city"
               },
@@ -178,8 +178,8 @@
                 "Name": "Label4",
                 "Top": 85,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "address"
               },
               "collections": {}
@@ -194,8 +194,8 @@
                 "Name": "DataEdit4",
                 "Top": 85,
                 "Left": 120,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
                 "DataField": "address"
               },

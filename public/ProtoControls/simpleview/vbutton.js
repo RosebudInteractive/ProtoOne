@@ -7,10 +7,10 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vButton._templates['button']).attr('id', this.getLid());
-                var parent = '#' + (this.getParent()? this.getParent().getLid():options.rootContainer);
+                var parent = '#' + (this.getParent()? this.getParent().getRenderArea(this).attr('id'):options.rootContainer);
                 $(parent).append(item);
             }
-            item.css({top: this.top() + 'px', left: this.left() + 'px'}).val(this.caption());
+            item.val(this.caption());
         }
         return vButton;
     }

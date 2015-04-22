@@ -9,7 +9,7 @@ define(
             if (editor.length == 0) {
                 editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
 
-                var parent = (that.getParent()? '#' + that.getParent().getLid(): options.rootContainer);
+                var parent = (that.getParent()? '#' + that.getParent().getRenderArea(this).attr('id'): options.rootContainer);
                 $(parent).append(editor);
                 // перейти к паренту
                 editor.find('.dragRight').click(function () {
@@ -49,7 +49,6 @@ define(
                 });
 
             }
-            editor.css({top: that.top() + 'px', left: that.left() + 'px'});
 
             var left = editor.find('.left');
             var centerTop = editor.find('.centerTop');

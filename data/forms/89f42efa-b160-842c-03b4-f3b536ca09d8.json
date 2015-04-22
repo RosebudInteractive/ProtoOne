@@ -203,7 +203,7 @@
                 "Top": 10,
                 "Left": 10,
                 "Width": 900,
-                "Height": 200,
+                "Height": 210,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
               },
               "collections": {
@@ -301,8 +301,8 @@
                 "Name": "LabelId",
                 "Top": 225,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "Id"
               }
             },
@@ -316,8 +316,8 @@
                 "Name": "LeadId",
                 "Top": 220,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "Id"
               }
@@ -332,8 +332,8 @@
                 "Name": "LabelState",
                 "Top": 247,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "state"
               }
             },
@@ -347,8 +347,8 @@
                 "Name": "LeadState",
                 "Top": 242,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "state"
               }
@@ -363,8 +363,8 @@
                 "Name": "LabelState",
                 "Top": 247,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "state"
               }
             },
@@ -378,8 +378,8 @@
                 "Name": "LeadState",
                 "Top": 242,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "state"
               }
@@ -394,8 +394,8 @@
                 "Name": "LabelClient",
                 "Top": 269,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "client"
               }
             },
@@ -409,8 +409,8 @@
                 "Name": "LeadClient",
                 "Top": 264,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "client"
               }
@@ -426,8 +426,8 @@
                 "Name": "LabelContact",
                 "Top": 291,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "contact"
               }
             },
@@ -441,8 +441,8 @@
                 "Name": "LeadContact",
                 "Top": 286,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "contact"
               }
@@ -457,8 +457,8 @@
                 "Name": "LabelPhone",
                 "Top": 313,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "phone"
               }
             },
@@ -472,8 +472,8 @@
                 "Name": "LeadPhone",
                 "Top": 308,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "phone"
               }
@@ -488,8 +488,8 @@
                 "Name": "LabelEmail",
                 "Top": 335,
                 "Left": 10,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Label": "email"
               }
             },
@@ -503,8 +503,8 @@
                 "Name": "LeadEmail",
                 "Top": 330,
                 "Left": 100,
-                "Width": 100,
-                "Height": 20,
+                "Width": 190,
+                "Height": 21,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "DataField": "email"
               }

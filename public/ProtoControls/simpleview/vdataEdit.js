@@ -8,7 +8,7 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vDataEdit._templates['edit']).attr('id', this.getLid());
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
+                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
                 $(parent).append(item);
 
                 // сохранять при потере фокуса
@@ -21,9 +21,6 @@ define(
                     }
                 });
             }
-
-            // координаты контрола
-            item.css({top: this.top() + 'px', left: this.left() + 'px'});
 
             // устанавливаем значение
             if (this.dataset() && this.dataField()) {
