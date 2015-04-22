@@ -1,12 +1,12 @@
 define(
     ['/public/uccello/uses/template.js', 'text!./templates/cContainer.html'],
     function(template, tpl) {
-        var vCContainer = {};
-        vCContainer._templates = template.parseTemplate(tpl);
-        vCContainer.render = function(options) {
+        var vGContainer = {};
+        vGContainer._templates = template.parseTemplate(tpl);
+        vGContainer.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
-                item = $(vCContainer._templates['container']).attr('id', this.getLid());
+                item = $(vGContainer._templates['container']).attr('id', this.getLid());
                 var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
                 $(parent).append(item);
             }
@@ -17,6 +17,6 @@ define(
                 $('#' + del[guid].getLid()).remove();
 
         }
-        return vCContainer;
+        return vGContainer;
     }
 );
