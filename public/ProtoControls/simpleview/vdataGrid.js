@@ -20,7 +20,7 @@ define(
             if (grid.length == 0) {
                 grid = $(vDataGrid._templates['grid']).attr('id', this.getLid());
                 table = grid.find('.table');
-                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(grid);
 
                 grid.find('.refresh').click(function () {

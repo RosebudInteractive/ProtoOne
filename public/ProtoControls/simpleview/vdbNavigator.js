@@ -9,7 +9,7 @@ define(
             if (editor.length == 0) {
                 editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
 
-                var parent = (that.getParent()? '#' + that.getParent().getRenderArea(this).attr('id'): options.rootContainer);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
                 // перейти к паренту
                 editor.find('.dragRight').click(function () {

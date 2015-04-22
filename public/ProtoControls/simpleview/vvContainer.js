@@ -6,17 +6,48 @@ define(
         vVContainer.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
+                // создаем враппер для контейнера
+                var itemWr = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+this.getLid());
                 item = $(vVContainer._templates['container']).attr('id', this.getLid());
-                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
-                $(parent).append(item);
+                itemWr.append(item);
+                var left=this.left(), top=this.top(), width=this.width(), height=this.height();
+                if ($.isNumeric(left)) left += 'px';
+                if ($.isNumeric(top)) top += 'px';
+                if ($.isNumeric(width)) width += 'px';
+                else if (!width) width = '100%';
+                if ($.isNumeric(height)) height += 'px';
+                else if (!height) height = '100%';
+                itemWr.css({top:top, left:left, width:width, height:height});
+
+                // создаем врапперы для чайлдов
+                var childs = this.getCol('Children');
+                for(var i=0; i<childs.count();i++) {
+                    var child = this.getControlMgr().get(childs.get(i).getGuid());
+                    if (!child.left) continue;
+                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
+                    var left=child.left(), top=child.top(), width=child.width(), height=child.height();
+                    if ($.isNumeric(left)) left += 'px';
+                    if ($.isNumeric(top)) top += 'px';
+                    if ($.isNumeric(width)) width += 'px';
+                    else if (!width) width = '100%';
+                    if ($.isNumeric(height)) height += 'px';
+                    else if (!height) height = '100%';
+                    div.css({top:top, left:left, width:width, height:height});
+                    item.append(div);
+                }
+
+                // добавляем в парент
+                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
+                $(parent).append(itemWr);
             }
 
             // убираем удаленные объекты
-			var del = this.getLogCol('Children').del;
+            var del = this.getLogCol('Children').del;
             for (var guid in del)
                 $('#' + del[guid].getLid()).remove();
 
         }
+
         return vVContainer;
     }
 );

@@ -7,7 +7,7 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vButton._templates['button']).attr('id', this.getLid());
-                var parent = '#' + (this.getParent()? this.getParent().getRenderArea(this).attr('id'):options.rootContainer);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
             item.val(this.caption());

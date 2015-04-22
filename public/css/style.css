@@ -10,8 +10,10 @@ p {padding:0;margin: 4px 0;}
 #console-block {height: 70px;position:absolute;}
 #console {padding: 0;margin: 0;}
 
-.control {position: absolute;top:0;left:0;z-index: 1;}
-.control.edit{background-color: #fff;}
+.control {top:0;left:0;z-index: 1;}
+.control.edit{background-color: #fff;display: block;
+    width: 100%;
+    box-sizing: border-box;}
 .control.label{background-color: #fff;}
 .control.container{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}
 .control.form{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}
@@ -21,6 +23,7 @@ p {padding:0;margin: 4px 0;}
 .control.prop-editor .parents .name {width:100px;display: inline-block;}
 .control.c-container {  width: 100%;  height: 100%;  box-sizing: border-box;}
 .control.c-container .control-wrapper {position: absolute;overflow: auto; border:1px solid #ddd; box-sizing: border-box;}
+.control.button {display: block;  width: 100%;  box-sizing: border-box;}
 
 .navigator {position: absolute; background-color: #fff;font-size: 12px;}
 .navigator .left {width:240px;overflow: auto;}

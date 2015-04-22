@@ -35,7 +35,7 @@ define(
                 editor.append(props);
                 editor.append(change);
                 editor.append(delbtn);
-                var parent = (this.getParent()? '#' + this.getParent().getRenderArea(this).attr('id'): options.rootContainer);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
             } else {
                 controls = editor.find('.controls');
