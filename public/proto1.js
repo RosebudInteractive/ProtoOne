@@ -45,7 +45,7 @@ $(document).ready( function() {
         ['./uccello/uccelloClt'],
         function(UccelloClt){
 
-            //setTimeout(function(){
+            setTimeout(function(){
 
             var that = this;
 			this.tabCount = 0;
@@ -72,13 +72,13 @@ $(document).ready( function() {
 
             }
 
-            this.getContextUrl = function(context, formGuids) {
+            this.getContextUrl = function(context, formGuids, timeout) {
                 var location = document.location.href;
                 location = location.replace(/#.*/, '');
                 formGuids = !formGuids || formGuids=='all'?'all':formGuids;
                 if (formGuids !='all' && typeof formGuids == "string") formGuids = [formGuids];
                 formGuids = !formGuids || formGuids=='all'?'all':formGuids.join(',');
-                return location+'#context='+context+(formGuids=='all'?'':'&formGuids='+formGuids)
+                return location+'#context='+context+(formGuids=='all'?'':'&formGuids='+formGuids)+(timeout?'&timeout='+timeout:'');
             }
 
             /**
@@ -209,7 +209,7 @@ $(document).ready( function() {
              * @param data
              */
             this.newTab = function(data) {
-                window.open(that.getContextUrl(data.contextGuid, data.resGuids));
+                window.open(that.getContextUrl(data.contextGuid, data.resGuids, $('#addTimeout').is(':checked')?10000:false));
             }
 
             uccelloClt = new UccelloClt({
@@ -578,7 +578,7 @@ $(document).ready( function() {
                 }
             });
 
-            //}, 10000);
+            }, url('#timeout')?url('#timeout'):10);
 
             // ----------------------------------------------------------------------------------------------------
 

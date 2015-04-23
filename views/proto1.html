@@ -51,7 +51,10 @@
     <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext($('#selForm').val());">
     <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext($('#selForm').val());">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
-    <input id="selSub" type="checkbox"><label for="selSub">в новой закладке</label>
+    <table style="display: inline-block;vertical-align: text-bottom;">
+        <tr><td><input id="addTimeout" type="checkbox"><label for="addTimeout">с задержкой</label></td></tr>
+        <tr><td><input id="selSub" type="checkbox"><label for="selSub">в новой закладке</label></td></tr>
+    </table>
     <input type="button" value="+ root" title="добавить рут" onclick="createRoot();">
     <input type="text" id="sessionGuid"  value="" placeholder="гуид сессии">
     <input type="button" type="text" id="DataColumnContact30" value="ContactWidth30" >
