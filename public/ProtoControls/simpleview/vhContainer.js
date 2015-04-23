@@ -28,7 +28,7 @@ define(
             // убираем удаленные объекты
             var del = this.getLogCol('Children').del;
             for (var guid in del)
-                $('#' + del[guid].getLid()).remove();
+                $('#ch_' + del[guid].getLid()).remove();
 
         }
 
