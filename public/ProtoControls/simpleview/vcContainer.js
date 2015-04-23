@@ -6,16 +6,8 @@ define(
         vCContainer.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
-                // создаем враппер для контейнера
-                var itemWr = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+this.getLid());
+                // объект контейнера
                 item = $(vCContainer._templates['container']).attr('id', this.getLid());
-                itemWr.append(item);
-                var left=this.left(), top=this.top(), width=this.width(), height=this.height();
-                if ($.isNumeric(left)) left += 'px';
-                if ($.isNumeric(top)) top += 'px';
-                if ($.isNumeric(width)) width += 'px';
-                if ($.isNumeric(height)) height += 'px';
-                itemWr.css({top:top, left:left, width:width, height:height});
 
                 // создаем врапперы для чайлдов
                 var childs = this.getCol('Children');
@@ -33,8 +25,8 @@ define(
                 }
 
                 // добавляем в парент
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
-                $(parent).append(itemWr);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                $(parent).append(item);
             }
 
             // убираем удаленные объекты
