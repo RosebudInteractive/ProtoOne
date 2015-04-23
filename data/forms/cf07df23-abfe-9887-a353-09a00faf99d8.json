@@ -31,7 +31,7 @@
               "fields": {
                 "Id": 1108,
                 "Name": "Label01",
-                "Label": "Label in cell 01",
+                "Label": "Label in cell 00",
                 "Left": 0,
                 "Top": 0
               }
@@ -44,7 +44,7 @@
               "fields": {
                 "Id": 1109,
                 "Name": "Label22",
-                "Label": "Label in cell 11",
+                "Label": "Label in cell 01",
                 "Left": 0,
                 "Top": 1
               }
