@@ -1,23 +1,13 @@
 define(
-    ['/public/uccello/uses/template.js', 'text!./templates/cContainer.html'],
+    ['/public/uccello/uses/template.js', 'text!./templates/vContainer.html'],
     function(template, tpl) {
         var vVContainer = {};
         vVContainer._templates = template.parseTemplate(tpl);
         vVContainer.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
-                // создаем враппер для контейнера
-                var itemWr = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+this.getLid());
+                // объект контейнера
                 item = $(vVContainer._templates['container']).attr('id', this.getLid());
-                itemWr.append(item);
-                var left=this.left(), top=this.top(), width=this.width(), height=this.height();
-                if ($.isNumeric(left)) left += 'px';
-                if ($.isNumeric(top)) top += 'px';
-                if ($.isNumeric(width)) width += 'px';
-                else if (!width) width = '100%';
-                if ($.isNumeric(height)) height += 'px';
-                else if (!height) height = '100%';
-                itemWr.css({top:top, left:left, width:width, height:height});
 
                 // создаем врапперы для чайлдов
                 var childs = this.getCol('Children');
@@ -25,20 +15,15 @@ define(
                     var child = this.getControlMgr().get(childs.get(i).getGuid());
                     if (!child.left) continue;
                     var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
-                    var left=child.left(), top=child.top(), width=child.width(), height=child.height();
-                    if ($.isNumeric(left)) left += 'px';
-                    if ($.isNumeric(top)) top += 'px';
+                    var width=child.width();
                     if ($.isNumeric(width)) width += 'px';
-                    else if (!width) width = '100%';
-                    if ($.isNumeric(height)) height += 'px';
-                    else if (!height) height = '100%';
-                    div.css({top:top, left:left, width:width, height:height});
+                    div.css({width: width});
                     item.append(div);
                 }
 
                 // добавляем в парент
-                var parent = (this.getParent()? '#' + this.getParent().getLid(): options.rootContainer);
-                $(parent).append(itemWr);
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                $(parent).append(item);
             }
 
             // убираем удаленные объекты

@@ -14,10 +14,9 @@ define(
                     var child = this.getControlMgr().get(childs.get(i).getGuid());
                     if (!child.left) continue;
                     var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
-                    var width=child.width(), height=child.height();
+                    var width=child.width();
                     if ($.isNumeric(width)) width += 'px';
-                    if ($.isNumeric(height)) height += 'px';
-                    div.css({width:width, height:height});
+                    div.css({width: width});
                     item.append(div);
                 }
 
