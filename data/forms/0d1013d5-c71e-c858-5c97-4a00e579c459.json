@@ -18,7 +18,7 @@
         "fields": {
           "Id": 900,
           "Name": "ContainerH20",
-          "Width": "20%"
+          "Height": 20
         },
         "collections": {
           "Children": [
@@ -30,8 +30,8 @@
               "fields": {
                 "Id": 901,
                 "Name": "Label11",
-                "Height": 30,
-                "Label": "Label11 H30%"
+                "Width": "30%",
+                "Label": "Label11 W30%"
               }
             },
             {
@@ -42,8 +42,8 @@
               "fields": {
                 "Id": 902,
                 "Name": "Label12",
-                "Height": 70,
-                "Label": "Label12 H70%"
+                "Width": "70%",
+                "Label": "Label12 W70%"
               }
             }
           ]
@@ -57,7 +57,7 @@
         "fields": {
           "Id": 1000,
           "Name": "ContainerH80",
-          "Width": "80%"
+          "Height": 80
         },
         "collections": {
           "Children": [
@@ -69,8 +69,8 @@
               "fields": {
                 "Id": 1001,
                 "Name": "Label21",
-                "Height": 60,
-                "Label": "Label21 H60%"
+                "Width": "60%",
+                "Label": "Label21 W60%"
               }
             },
             {
@@ -81,8 +81,8 @@
               "fields": {
                 "Id": 1002,
                 "Name": "Label22",
-                "Height": 40,
-                "Label": "Labe22 H40%"
+                "Width": "40%",
+                "Label": "Labe22 W40%"
               }
             }
           ]

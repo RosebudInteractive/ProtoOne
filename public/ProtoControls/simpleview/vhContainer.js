@@ -15,8 +15,9 @@ define(
                     var child = this.getControlMgr().get(childs.get(i).getGuid());
                     if (!child.left) continue;
                     var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
-                    var height=child.height();
-                    div.css({flex: height+' 0 auto',  '-webkit-flex': height+' 0 auto', '-ms-flex': height+' 0 auto'});
+                    var width=child.width();
+                    if ($.isNumeric(width)) width += 'px';
+                    div.css({width: width});
                     item.append(div);
                 }
 
