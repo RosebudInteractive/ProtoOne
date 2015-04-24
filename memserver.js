@@ -134,7 +134,10 @@ DEBUG = true;
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
-var uccelloServ = new UccelloServ({authenticate:fakeAuthenticate});
+var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
+
+var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
+var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
 // логирование
 //var logger = require('../'+uccelloDir+'/system/winstonLogger');
@@ -143,3 +146,6 @@ var uccelloServ = new UccelloServ({authenticate:fakeAuthenticate});
 // запускаем http сервер
 http.createServer(app).listen(1325);
 console.log('Сервер запущен на http://127.0.0.1:1325/');
+
+communicationServer.start();
+console.log("Communication Server started (port: " + UCCELLO_CONFIG.webSocketServer.port + ").");

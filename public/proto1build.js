@@ -44,8 +44,8 @@ $(document).ready( function() {
         UCCELLO_CONFIG = new Config(config);
 
         require(
-            ['uccelloClt'],
-            function(UccelloClt){
+            ['uccelloClt', './connection/commClient'],
+            function(UccelloClt, CommunicationClient){
 
                 //setTimeout(function(){
 
@@ -214,6 +214,7 @@ $(document).ready( function() {
                     window.open(that.getContextUrl(data.contextGuid, data.resGuids));
                 }
 
+                var commClient = new CommunicationClient.Client(UCCELLO_CONFIG.webSocketClient);
                 uccelloClt = new UccelloClt({
                     host:"ws://"+url('hostname')+":8081",
                     callback: function(){
@@ -250,7 +251,8 @@ $(document).ready( function() {
                             $('#userInfo').html('');
                         }
                     },
-                    newTabCallback: that.newTab
+                    newTabCallback: that.newTab,
+                    commClient: commClient
                 });
 
                 /**
