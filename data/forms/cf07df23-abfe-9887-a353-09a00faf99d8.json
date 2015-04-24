@@ -72,6 +72,21 @@
                 "Left": 1,
                 "Top": 1
               }
+            },
+            {
+              "$sys": {
+                "guid": "28503320-c2d7-9072-7296-68314a94a042",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1111,
+                "Name": "Button1",
+                "Left": 1,
+                "Top": 2,
+                "Caption": "Button1"
+              },
+              "collections": {
+              }
             }
           ],
           "Columns":[
@@ -112,6 +127,17 @@
           "Rows":[
             {
               "$sys": {
+                "guid": "34fe74fb-f46e-3b72-fa3b-b7b46c2f88bc",
+                "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
+              },
+              "fields": {
+                "Id": 1112,
+                "Name": "Row0",
+                "Height": 100
+              }
+            },
+            {
+              "$sys": {
                 "guid": "e41cd697-bda3-4913-cc56-650e783be727",
                 "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
               },
@@ -128,8 +154,7 @@
               },
               "fields": {
                 "Id": 1105,
-                "Name": "Row2",
-                "Height": 100
+                "Name": "Row2"
               }
             },
             {
@@ -165,7 +190,7 @@
                 "Id": 1110,
                 "Name": "Cell01",
                 "Left": 0,
-                "Top": 2,
+                "Top": 3,
                 "Width": 2
               }
             },
@@ -178,7 +203,7 @@
                 "Id": 1110,
                 "Name": "Cell01",
                 "Left": 2,
-                "Top": 2,
+                "Top": 3,
                 "Height": 2
               }
             }
