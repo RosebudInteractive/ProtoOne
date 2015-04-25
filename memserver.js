@@ -27,7 +27,7 @@ app.get("/update/:what", function(req, res){
     var shell = require('shelljs');
 
     switch (req.params.what){
-        case 'uccello':
+        case 'uccelloold':
             res.writeHead(200,{"Content-Type" : "text/html"});
             res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
             res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
@@ -44,12 +44,27 @@ app.get("/update/:what", function(req, res){
             res.write('$ cd /var/www/sites/mobimed/docs/MobiDoc/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/mobimed/docs/MobiDoc/; git pull').output+'<br><br>');
             break;
-            case 'genetix':
+        case 'genetix':
             res.writeHead(200,{"Content-Type" : "text/html"});
             res.write('$ cd /var/www/sites/genetix/Genetix/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
             res.write('$ cd /var/www/sites/genetix/Uccello/; git pull<br>');
             res.write(shell.exec('cd /var/www/sites/genetix/Uccello/; git pull').output+'<br><br>');
+            break;
+        case 'proto':
+            res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write('$ cd /var/www/sites/node/ProtoOne/; git pull<br>');
+            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; git pull').output+'<br><br>');
+            fakeFunctionForRestart();// node restarted
+            break;
+        case 'uccello':
+            res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write('$ cd /var/www/sites/node/Uccello/; git pull<br>');
+            res.write(shell.exec('cd /var/www/sites/node/Uccello/; git pull').output+'<br><br>');
+            fakeFunctionForRestart();// node restarted
+            break;
+        case 'restart':
+            fakeFunctionForRestart();// node restarted
             break;
     }
 
