@@ -64,7 +64,8 @@ app.get("/update/:what", function(req, res){
             fakeFunctionForRestart();// node restarted
             break;
         case 'restart':
-            require('fakeModuleForRestart');
+            res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; forever restart memserver.js').output+'<br><br>');
             break;
     }
 
