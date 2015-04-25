@@ -64,7 +64,7 @@ app.get("/update/:what", function(req, res){
             fakeFunctionForRestart();// node restarted
             break;
         case 'restart':
-            fakeFunctionForRestart();// node restarted
+            require('fakeModuleForRestart');
             break;
     }
 
