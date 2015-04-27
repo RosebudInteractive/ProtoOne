@@ -144,16 +144,19 @@ var config = {
     uccelloPath: __dirname+'/../'+uccelloDir+'/'
 };
 
-// логирование
-logger = require('../'+uccelloDir+'/system/winstonLogger');
-perfomance = {now:require("performance-now")};
-var fs = require('fs')
-fs.writeFileSync('../logs/funcexec.csv', '');
-
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
 DEBUG = false;
+
+// логирование
+logger = require('../'+uccelloDir+'/system/winstonLogger');
+//perfomance = {now:require("performance-now")};
+// очищаем файл лога при старте
+if (UCCELLO_CONFIG.logger.clearOnStart) {
+    var fs = require('fs')
+    fs.writeFileSync(UCCELLO_CONFIG.logger.file, '');
+}
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
