@@ -7,7 +7,7 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = false;
+var uccelloClt = null, DEBUG = true;
 
 // когда документ загружен
 $(document).ready( function() {
@@ -425,7 +425,7 @@ $(document).ready( function() {
                 var datasetGuid = $('#contextDatasets').val();
                 var dataset = cm.get(datasetGuid);
 
-				cm.userEventHandler(dataset,dataset.addObject,{Id:recordid, Name:'Record '+recordid,
+				cm.userEventHandler(dataset,dataset.addObject,{ fields:{Id:recordid, Name:'Record '+recordid,
                     state:'state '+recordid,
                     client:'client '+recordid,
                     companyId:recordid,
@@ -436,7 +436,7 @@ $(document).ready( function() {
                     proba:recordid,
                     amount:recordid,
                     user:recordid
-                });
+                }});
             }
 
             that.vNavigator = null;
