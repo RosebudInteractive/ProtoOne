@@ -19,8 +19,8 @@ define(
             ],
 
             init: function(cm,params){
-				//this._super(cm,params);
-				this.uobjectInit(cm,params);
+				this._super(cm,params);
+				//this.uobjectInit(cm,params);
             },
 
             country: function(value) {
