@@ -65,6 +65,7 @@ app.get("/update/:what", function(req, res){
             break;
         case 'restart':
             res.writeHead(200,{"Content-Type" : "text/html"});
+            res.write('$ cd /var/www/sites/node/ProtoOne/; forever restart memserver.js<br>');
             res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; forever restart memserver.js').output+'<br><br>');
             break;
     }
@@ -143,10 +144,14 @@ var config = {
     uccelloPath: __dirname+'/../'+uccelloDir+'/'
 };
 
+// логирование
+logger = require('../'+uccelloDir+'/system/winstonLogger');
+perfomance = {now:require("performance-now")};
+
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
-DEBUG = true;
+DEBUG = false;
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
@@ -155,9 +160,7 @@ var CommunicationServer = require('../' + uccelloDir + '/connection/commServer')
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
 var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
-// логирование
-//var logger = require('../'+uccelloDir+'/system/winstonLogger');
-//logger.info("test msg");
+//logger.info("test;msg;1231");
 
 // запускаем http сервер
 http.createServer(app).listen(1325);
