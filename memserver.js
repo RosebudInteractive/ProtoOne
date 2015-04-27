@@ -148,7 +148,7 @@ var config = {
 logger = require('../'+uccelloDir+'/system/winstonLogger');
 perfomance = {now:require("performance-now")};
 var fs = require('fs')
-fs.writeFileSync('./logs/funcexec.csv', '');
+fs.writeFileSync('../logs/funcexec.csv', '');
 
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
