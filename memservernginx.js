@@ -162,6 +162,7 @@ if (UCCELLO_CONFIG.logger.clearOnStart) {
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
 
+UCCELLO_CONFIG.webSocketServer.port = 8083;
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
 var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
@@ -171,6 +172,5 @@ var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: 
 http.createServer(app).listen(1329);
 console.log('Сервер запущен на http://127.0.0.1:1329/');
 
-UCCELLO_CONFIG.webSocketServer.port = 8083;
 communicationServer.start();
 console.log("Communication Server started (port: " + UCCELLO_CONFIG.webSocketServer.port + ").");
