@@ -151,7 +151,7 @@ DEBUG = false;
 
 // логирование
 logger = require('../'+uccelloDir+'/system/winstonLogger');
-perfomance = {now:require("performance-now")};
+//perfomance = {now:require("performance-now")};
 // очищаем файл лога при старте
 if (UCCELLO_CONFIG.logger.clearOnStart) {
     var fs = require('fs')
