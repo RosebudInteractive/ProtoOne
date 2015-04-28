@@ -171,5 +171,6 @@ var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: 
 http.createServer(app).listen(1329);
 console.log('Сервер запущен на http://127.0.0.1:1329/');
 
+UCCELLO_CONFIG.webSocketServer.port = 8083;
 communicationServer.start();
 console.log("Communication Server started (port: " + UCCELLO_CONFIG.webSocketServer.port + ").");
