@@ -84,7 +84,7 @@ app.post("/admin/:what", function(req, res) {
     function execCommand(command) {
         res.write('$ '+command+'<br>');
         var output = shell.exec(command).output;
-        output.replace(new RegExp("https://(.*?)@(.*)",'g'), 'https://$2');
+        output = output.replace(new RegExp("https://(.*?)@(.*)",'g'), 'https://$2');
         res.write(output+'<br>');
     }
 
