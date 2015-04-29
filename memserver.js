@@ -85,6 +85,7 @@ app.post("/admin/:what", function(req, res) {
         res.write('$ '+command+'<br>');
         var output = shell.exec(command).output;
         output = output.replace(new RegExp("https://(.*?)@(.*)",'g'), 'https://$2');
+        output = output?output:'Ok';
         res.write(output+'<br>');
     }
 
@@ -125,6 +126,14 @@ app.post("/admin/:what", function(req, res) {
             break;
         case 'restart':
             var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memserver.js';
+            execCommand(cmd);
+            break;
+        case 'restartNginx':
+            var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memservernginx.js';
+            execCommand(cmd);
+            break;
+        case 'restartGenetix':
+            var cmd = 'cd /var/www/sites/genetix/Genetix/web/; forever restart genetixSrv.js';
             execCommand(cmd);
             break;
     }

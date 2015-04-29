@@ -17,7 +17,6 @@
         <li><a href="#tabs-2">Сервер</a></li>
     </ul>
     <div id="tabs-1">
-        <p><b>Создать ветку</b></p>
         <p>Проект
         <select id="branchProject">
             <option value="TestProject">TestProject</option>
@@ -31,7 +30,9 @@
             <input type="button" value="Слить ветку в мастер" onclick="doAction(this, 'merge');"></p>
     </div>
     <div id="tabs-2">
-        <p><input type="button" value="Перезагрузить сервер" onclick="doAction(this, 'restart');"></p>
+        <p><input type="button" value="Перезагрузить сервер ProroOne" onclick="doAction(this, 'restart');"></p>
+        <p><input type="button" value="Перезагрузить сервер ProroOne Nginx" onclick="doAction(this, 'restartNginx');"></p>
+        <p><input type="button" value="Перезагрузить сервер Genetix" onclick="doAction(this, 'restartGenetix');"></p>
     </div>
 </div>
 <p>&nbsp;</p>

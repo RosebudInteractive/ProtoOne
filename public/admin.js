@@ -11,7 +11,7 @@ function doAction(btn, action) {
     })
         .done(function( msg ) {
             //console.log(arguments);
-            if (msg == '') msg = 'Ok';
+            if (!msg && msg == '') msg = 'Ok';
             $('#branchResponse').html('<p>'+msg+'</p>'+$('#branchResponse').html());
             //$('#branchResponse').html('<p>'+msg+'</p>');
             $(btn).attr('disabled', false);
