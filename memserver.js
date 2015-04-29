@@ -105,6 +105,9 @@ app.post("/admin/:what", function(req, res) {
             }
             if (projectPath && branchName) {
                 var cmd = 'cd '+projectPath+'; git '+gitCmd+' '+branchName;
+                res.write('$ '+cmd+'<br>');
+                res.write(shell.exec(cmd).output+'<br>');
+                // publish branch
                 if (req.params.what == 'checkout') {
                     cmd = 'cd '+projectPath+'; git push --all -u';
                     res.write('$ '+cmd+'<br>');
