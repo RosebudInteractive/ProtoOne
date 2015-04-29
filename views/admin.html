@@ -25,7 +25,10 @@
             <option value="ProtoOne">ProtoOne</option>
             <option value="Genetix">Genetix</option>
         </select>
-        <input id="branchName" placeholder="Название ветки"> <input type="button" value="Создать ветку" onclick="doAction(this, 'createBranch');"> <input type="button" value="Переключиться на ветку" onclick="doAction(this, 'switchBranch');"></p>
+        <input id="branchName" placeholder="Название ветки">
+            <input type="button" value="Создать ветку" onclick="doAction(this, 'branch');">
+            <input type="button" value="Переключиться на ветку" onclick="doAction(this, 'checkout');"></p>
+            <input type="button" value="Слить ветку в мастер" onclick="doAction(this, 'merge');"></p>
     </div>
     <div id="tabs-2">
         <p><input type="button" value="Перезагрузить сервер" onclick="doAction(this, 'restart');"></p>

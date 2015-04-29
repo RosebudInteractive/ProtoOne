@@ -87,7 +87,7 @@ app.post("/admin/:what", function(req, res) {
         case 'switchBranch':
             var projectPath = null;
             var branchName = req.body.branchName;
-            var gitCmd = req.params.what == 'createBranch'? 'branch': 'checkout';
+            var gitCmd = req.params.what;
             switch (req.body.branchProject){
                 case 'TestProject':
                     projectPath = '/var/www/sites/node/MatrixExample/';
