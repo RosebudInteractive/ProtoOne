@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Uccello</title>
+    <link href="/public/img/Favicon.png" rel="icon" type="image/png" />
+    <link href="/public/libs/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <script src="/public/uccello/uses/jquery-1.11.1.min.js"></script>
+    <script src="/public/libs/jquery-ui/jquery-ui.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/public/css/admin.css" media="all">
+    <script src="/public/admin.js"></script>
+</head>
+<body>
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Ветки</a></li>
+        <li><a href="#tabs-2">Сервер</a></li>
+    </ul>
+    <div id="tabs-1">
+        <p><b>Создать ветку</b></p>
+        <p>Проект
+        <select id="branchProject">
+            <option value="TestProject">TestProject</option>
+            <option value="Uccello">Uccello</option>
+            <option value="ProtoOne">ProtoOne</option>
+            <option value="Genetix">Genetix</option>
+        </select>
+        <input id="branchName" placeholder="Название ветки"> <input type="button" value="Создать ветку" onclick="doAction(this, 'createBranch');"> <input type="button" value="Переключиться на ветку" onclick="doAction(this, 'switchBranch');"></p>
+    </div>
+    <div id="tabs-2">
+        <p><input type="button" value="Перезагрузить сервер" onclick="doAction(this, 'restart');"></p>
+    </div>
+</div>
+<p>&nbsp;</p>
+<div class="ui-widget ui-widget-content ui-corner-all" style="padding:10px;height: 200px;overflow: auto;">
+<p><b>Ответ сервера:</b></p>
+<p><div id="branchResponse"></div></p>
+</div>
+</body>
+</html>

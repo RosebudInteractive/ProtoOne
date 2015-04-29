@@ -5,7 +5,9 @@ console.log('Using folder: '+uccelloDir);
 // Модули nodejs
 var http = require('http');
 var express = require('express');
+var bodyParser = require("body-parser");
 var app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Обработчики express
 // ----------------------------------------------------------------------------------------------------------------------
@@ -70,6 +72,50 @@ app.get("/update/:what", function(req, res){
             break;
     }
 
+    res.end();
+});
+
+// админ
+app.get('/admin', function(req, res){
+    res.render('admin.html');
+});
+app.post("/admin/:what", function(req, res) {
+    var shell = require('shelljs');
+    res.writeHead(200,{"Content-Type" : "text/html"});
+    switch (req.params.what){
+        case 'createBranch':
+        case 'switchBranch':
+            var projectPath = null;
+            var branchName = req.body.branchName;
+            var gitCmd = req.params.what == 'createBranch'? 'branch': 'checkout';
+            switch (req.body.branchProject){
+                case 'TestProject':
+                    projectPath = '/var/www/sites/node/MatrixExample/';
+                    break;
+                case 'Uccello':
+                    projectPath = '/var/www/sites/node/Uccello/';
+                    break;
+                case 'ProtoOne':
+                    projectPath = '/var/www/sites/node/ProtoOne/';
+                    break;
+                case 'Genetix':
+                    projectPath = '/var/www/sites/genetix/Genetix/';
+                    break;
+            }
+            if (projectPath && branchName) {
+                var cmd = 'cd '+projectPath+'; git '+gitCmd+' '+branchName;
+                res.write('$ '+cmd+'<br>');
+                res.write(shell.exec(cmd).output+'<br>');
+            } else {
+                res.write('Error: не задан проект или название ветки');
+            }
+            break;
+        case 'restart':
+            var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memserver.js';
+            res.write('$ '+cmd+'<br>');
+            res.write(shell.exec(cmd).output+'<br>');
+            break;
+    }
     res.end();
 });
 
