@@ -80,6 +80,14 @@ app.get('/admin', function(req, res){
     res.render('admin.html');
 });
 app.post("/admin/:what", function(req, res) {
+
+    function execCommand(command) {
+        res.write('$ '+command+'<br>');
+        var output = shell.exec(command).output;
+        output.replace(new RegExp("https://(.*?)@(.*)",'g'), 'https://$2');
+        res.write(output+'<br>');
+    }
+
     var shell = require('shelljs');
     res.writeHead(200,{"Content-Type" : "text/html"});
     switch (req.params.what){
@@ -105,13 +113,11 @@ app.post("/admin/:what", function(req, res) {
             }
             if (projectPath && branchName) {
                 var cmd = 'cd '+projectPath+'; git '+gitCmd+' '+branchName;
-                res.write('$ '+cmd+'<br>');
-                res.write(shell.exec(cmd).output+'<br>');
+                execCommand(cmd);
                 // publish branch
                 if (req.params.what == 'branch') {
                     cmd = 'cd '+projectPath+'; git push -u origin '+branchName;
-                    res.write('$ '+cmd+'<br>');
-                    res.write(shell.exec(cmd).output+'<br>');
+                    execCommand(cmd);
                 }
             } else {
                 res.write('Error: не задан проект или название ветки');
@@ -119,8 +125,7 @@ app.post("/admin/:what", function(req, res) {
             break;
         case 'restart':
             var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memserver.js';
-            res.write('$ '+cmd+'<br>');
-            res.write(shell.exec(cmd).output+'<br>');
+            execCommand(cmd);
             break;
     }
     res.end();
