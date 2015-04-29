@@ -83,8 +83,9 @@ app.post("/admin/:what", function(req, res) {
     var shell = require('shelljs');
     res.writeHead(200,{"Content-Type" : "text/html"});
     switch (req.params.what){
-        case 'createBranch':
-        case 'switchBranch':
+        case 'branch':
+        case 'checkout':
+        case 'merge':
             var projectPath = null;
             var branchName = req.body.branchName;
             var gitCmd = req.params.what;
