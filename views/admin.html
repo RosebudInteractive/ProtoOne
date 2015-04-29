@@ -30,9 +30,16 @@
             <input type="button" value="Слить ветку в мастер" onclick="doAction(this, 'merge');"></p>
     </div>
     <div id="tabs-2">
-        <p><input type="button" value="Перезагрузить сервер ProroOne" onclick="doAction(this, 'restart');"></p>
-        <p><input type="button" value="Перезагрузить сервер ProroOne Nginx" onclick="doAction(this, 'restartNginx');"></p>
-        <p><input type="button" value="Перезагрузить сервер Genetix" onclick="doAction(this, 'restartGenetix');"></p>
+        <p>Проект
+            <select id="serverProject">
+                <option value="Uccello">Uccello</option>
+                <option value="ProtoOne">ProtoOne</option>
+                <option value="ProtoOneNginx">ProtoOneNginx</option>
+                <option value="Genetix">Genetix</option>
+            </select>
+            <input type="button" value="Обновить" onclick="doAction(this, 'update');">
+            <input type="button" value="Перезагрузить" onclick="doAction(this, 'restart');">
+        </p>
     </div>
 </div>
 <p>&nbsp;</p>

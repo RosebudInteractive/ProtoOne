@@ -124,17 +124,52 @@ app.post("/admin/:what", function(req, res) {
                 res.write('Error: не задан проект или название ветки');
             }
             break;
+        case 'update':
+            var projectPath = null;
+            switch (req.body.serverProject){
+                case 'Uccello':
+                    projectPath = '/var/www/sites/node/Uccello/';
+                    break;
+                case 'ProtoOneNginx':
+                    projectPath = '/var/www/sites/node/ProtoOne/';
+                    break;
+                case 'ProtoOne':
+                    projectPath = '/var/www/sites/node/ProtoOne/';
+                    break;
+                case 'Genetix':
+                    projectPath = '/var/www/sites/genetix/Genetix/';
+                    break;
+            }
+            if (projectPath) {
+                var cmd = 'cd '+projectPath+'; git pull';
+                execCommand(cmd);
+            } else {
+                res.write('Error: метод не поддерживается');
+            }
+            break;
         case 'restart':
-            var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memserver.js';
-            execCommand(cmd);
-            break;
-        case 'restartNginx':
-            var cmd = 'cd /var/www/sites/node/ProtoOne/; forever restart memservernginx.js';
-            execCommand(cmd);
-            break;
-        case 'restartGenetix':
-            var cmd = 'cd /var/www/sites/genetix/Genetix/web/; forever restart genetixSrv.js';
-            execCommand(cmd);
+            var projectPath = null;
+            var projectFile = null;
+            switch (req.body.serverProject){
+                case 'ProtoOneNginx':
+                    projectPath = '/var/www/sites/node/ProtoOne/';
+                    projectFile = 'memservernginx.js';
+                    break;
+                case 'ProtoOne':
+                    projectPath = '/var/www/sites/node/ProtoOne/';
+                    projectFile = 'memserver.js';
+                    break;
+                case 'Genetix':
+                    projectPath = '/var/www/sites/genetix/Genetix/';
+                    projectFile = 'genetixSrv.js';
+                    break;
+            }
+            if (projectPath && projectFile) {
+                var cmd = 'cd '+projectPath+'; forever restart '+projectFile;
+                execCommand(cmd);
+            } else {
+                res.write('Error: метод не поддерживается');
+            }
             break;
     }
     res.end();

@@ -7,7 +7,7 @@ function doAction(btn, action) {
     $.ajax({
         method: "POST",
         url: "/admin/"+action,
-        data: { branchProject: $('#branchProject').val(), branchName: $('#branchName').val() }
+        data: { branchProject: $('#branchProject').val(), branchName: $('#branchName').val(), serverProject: $('#serverProject').val() }
     })
         .done(function( msg ) {
             //console.log(arguments);
