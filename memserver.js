@@ -1,6 +1,10 @@
 // дирректория где лежит Uccello
-var uccelloDir = process.argv[2]?process.argv[2]:'Uccello';
+var uccelloDir = process.argv[2]&&process.argv[2]!='-'?process.argv[2]:'Uccello';
 console.log('Using folder: '+uccelloDir);
+// порт web
+var uccelloPortWeb = process.argv[3]&&process.argv[3]!='-'?process.argv[3]:null;
+// порт websocket
+var uccelloPortWs = process.argv[4]&&process.argv[3]!='-'?process.argv[4]:null;
 
 // Модули nodejs
 var http = require('http');
@@ -17,162 +21,10 @@ app.engine('html', require('ejs').renderFile);
 
 // обработка /tests
 app.get('/test', function(req, res){
-    res.render('proto1.html');
+    res.render('proto1.html', { webSocketServerPort: UCCELLO_CONFIG.webSocketServer.port});
 });
 app.get('/build', function(req, res){
     res.render('proto1build.html');
-});
-
-// апдейт
-app.get("/update/:what", function(req, res){
-
-    var shell = require('shelljs');
-
-    switch (req.params.what){
-        case 'uccelloold':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
-            res.write('$ git pull<br>');
-            res.write(shell.exec('git pull').output+'<br><br>');
-            res.write('$ jsdoc public -r -d public/docs<br>');
-            res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
-            res.write('$ forever restart memserver.js<br>');
-            //res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'mobimed':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/mobimed/docs/MobiDoc/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/mobimed/docs/MobiDoc/; git pull').output+'<br><br>');
-            break;
-        case 'genetix':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/genetix/Genetix/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
-            res.write('$ cd /var/www/sites/genetix/Uccello/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/genetix/Uccello/; git pull').output+'<br><br>');
-            break;
-        case 'proto':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; git pull').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'uccello':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/Uccello/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/node/Uccello/; git pull').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'restart':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/; forever restart memserver.js<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; forever restart memserver.js').output+'<br><br>');
-            break;
-    }
-
-    res.end();
-});
-
-// админ
-app.get('/admin', function(req, res){
-    res.render('admin.html');
-});
-app.post("/admin/:what", function(req, res) {
-
-    function execCommand(command) {
-        res.write('$ '+command+'<br>');
-        var output = shell.exec(command).output;
-        output = output.replace(new RegExp("https://(.*?)@(.*)",'g'), 'https://$2');
-        output = output?output:'Ok';
-        res.write(output+'<br>');
-    }
-
-    var shell = require('shelljs');
-    res.writeHead(200,{"Content-Type" : "text/html"});
-    switch (req.params.what){
-        case 'branch':
-        case 'checkout':
-        case 'merge':
-            var projectPath = null;
-            var branchName = req.body.branchName;
-            var gitCmd = req.params.what;
-            switch (req.body.branchProject){
-                case 'TestProject':
-                    projectPath = '/var/www/sites/node/MatrixExample/';
-                    break;
-                case 'Uccello':
-                    projectPath = '/var/www/sites/node/Uccello/';
-                    break;
-                case 'ProtoOne':
-                    projectPath = '/var/www/sites/node/ProtoOne/';
-                    break;
-                case 'Genetix':
-                    projectPath = '/var/www/sites/genetix/Genetix/';
-                    break;
-            }
-            if (projectPath && branchName) {
-                var cmd = 'cd '+projectPath+'; git '+gitCmd+' '+branchName;
-                execCommand(cmd);
-                // publish branch
-                if (req.params.what == 'branch') {
-                    cmd = 'cd '+projectPath+'; git push -u origin '+branchName;
-                    execCommand(cmd);
-                }
-            } else {
-                res.write('Error: не задан проект или название ветки');
-            }
-            break;
-        case 'update':
-            var projectPath = null;
-            switch (req.body.serverProject){
-                case 'Uccello':
-                    projectPath = '/var/www/sites/node/Uccello/';
-                    break;
-                case 'ProtoOneNginx':
-                    projectPath = '/var/www/sites/node/ProtoOne/';
-                    break;
-                case 'ProtoOne':
-                    projectPath = '/var/www/sites/node/ProtoOne/';
-                    break;
-                case 'Genetix':
-                    projectPath = '/var/www/sites/genetix/Genetix/';
-                    break;
-            }
-            if (projectPath) {
-                var cmd = 'cd '+projectPath+'; git pull';
-                execCommand(cmd);
-            } else {
-                res.write('Error: метод не поддерживается');
-            }
-            break;
-        case 'restart':
-            var projectPath = null;
-            var projectFile = null;
-            switch (req.body.serverProject){
-                case 'ProtoOneNginx':
-                    projectPath = '/var/www/sites/node/ProtoOne/';
-                    projectFile = 'memservernginx.js';
-                    break;
-                case 'ProtoOne':
-                    projectPath = '/var/www/sites/node/ProtoOne/';
-                    projectFile = 'memserver.js';
-                    break;
-                case 'Genetix':
-                    projectPath = '/var/www/sites/genetix/Genetix/';
-                    projectFile = 'genetixSrv.js';
-                    break;
-            }
-            if (projectPath && projectFile) {
-                var cmd = 'cd '+projectPath+'; forever restart '+projectFile;
-                execCommand(cmd);
-            } else {
-                res.write('Error: метод не поддерживается');
-            }
-            break;
-    }
-    res.end();
 });
 
 // компрессия статики
@@ -249,14 +101,16 @@ var config = {
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
+if (uccelloPortWeb) UCCELLO_CONFIG.webServer.port = uccelloPortWeb;
+if (uccelloPortWs) UCCELLO_CONFIG.webSocketServer.port = uccelloPortWs;
 DEBUG = false;
 
 // логирование
 logger = require('../'+uccelloDir+'/system/winstonLogger');
-//perfomance = {now:require("performance-now")};
+
 // очищаем файл лога при старте
 if (UCCELLO_CONFIG.logger.clearOnStart) {
-    var fs = require('fs')
+    var fs = require('fs');
     fs.writeFileSync(UCCELLO_CONFIG.logger.file, '');
 }
 
@@ -264,14 +118,14 @@ if (UCCELLO_CONFIG.logger.clearOnStart) {
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
 
+// комуникационный модуль
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
 var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
-//logger.info("test;msg;1231");
-
 // запускаем http сервер
-http.createServer(app).listen(1325);
-console.log('Сервер запущен на http://127.0.0.1:1325/');
+http.createServer(app).listen(UCCELLO_CONFIG.webServer.port);
+console.log('Web server started http://127.0.0.1:'+UCCELLO_CONFIG.webServer.port+'/');
 
+// зщапускаем коммуникационный сервер
 communicationServer.start();
 console.log("Communication Server started (port: " + UCCELLO_CONFIG.webSocketServer.port + ").");
