@@ -17,7 +17,7 @@
 <script src="/public/uccello/uses/class-extend.js"></script>
 <script src="/public/uccello/uses/require.js"></script>
 
-<script>var webSocketServerPort = <%= webSocketServerPort %>;</script>
+<script>var webSocketServerPort = '<%= webSocketServerPort %>';</script>
 <script src="/public/proto1.js"></script>
 </head>
 <body>
@@ -40,6 +40,7 @@
     <table style="display: inline-block;vertical-align: bottom;;">
         <tr><td></td></tr>
         <tr><td><select id="selForm" multiple size="3">
+            <option value="1bf3b1a3-edba-32ca-5033-75e3cf9a709a">f-container</option>
             <option value="cf07df23-abfe-9887-a353-09a00faf99d8">g-container</option>
             <option value="0d1013d5-c71e-c858-5c97-4a00e579c459">h-containers</option>
             <option value="80f30ea2-b916-8f7a-3557-dcdbd6c6a9d6">controls</option>

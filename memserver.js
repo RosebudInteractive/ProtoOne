@@ -20,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('html', require('ejs').renderFile);
 
 // обработка /tests
+app.get('/', function(req, res){
+    res.render('proto1.html', { webSocketServerPort: UCCELLO_CONFIG.webSocketServer.port});
+});
 app.get('/test', function(req, res){
     res.render('proto1.html', { webSocketServerPort: UCCELLO_CONFIG.webSocketServer.port});
 });

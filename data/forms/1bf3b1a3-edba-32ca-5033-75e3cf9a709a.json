@@ -1,0 +1,44 @@
+{
+  "$sys":{
+    "guid":"1bf3b1a3-edba-32ca-5033-75e3cf9a709a",
+    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  },
+  "fields":{
+    "Id":1456,
+    "Name":"MainForm",
+    "Title": "FContainer"
+  },
+  "collections": {
+    "Children": [
+      {
+        "$sys": {
+          "guid": "dd845768-3ba1-bd3a-3b53-63b97fd0e6cf",
+          "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+        },
+        "fields": {
+          "Id": 11,
+          "Name": "MainContainer"
+        },
+        "collections": {
+          "Children": [
+            {
+              "$sys": {
+                "guid": "1215a0ae-a3bd-356a-1c98-e80244b95d52",
+                "typeGuid": "902822d8-3079-f394-2eed-3ad9ac27b2f2"
+              },
+              "fields": {
+                "Id": 4568,
+                "Name": "FContainer",
+                "Top": 0,
+                "Left": 0,
+                "Width":900,
+                "Height":500,
+                "LayoutProp": "16,false,br"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

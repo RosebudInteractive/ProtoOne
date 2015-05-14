@@ -28,6 +28,7 @@ $(document).ready( function() {
                 {className:'HContainer', viewset:true},
                 {className:'VContainer', viewset:true},
                 {className:'GContainer', viewset:true},
+                {className:'FContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
                 {className:'DataGrid', viewset:true},
