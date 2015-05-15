@@ -9,9 +9,7 @@ var uccelloPortWs = process.argv[4]&&process.argv[3]!='-'?process.argv[4]:null;
 // Модули nodejs
 var http = require('http');
 var express = require('express');
-var bodyParser = require("body-parser");
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
 
 // Обработчики express
 // ----------------------------------------------------------------------------------------------------------------------
