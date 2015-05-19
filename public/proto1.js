@@ -164,12 +164,12 @@ $(document).ready( function() {
                                 var option = $('<option/>');
                                 var isOn = cm.get(item.getGuid()).isOn();
                                 option.data('Side', side);
-                                option.val(item.get('ContextGuid')).html(item.get('Name')+(isOn?' isOn ':'')+' '+side);
+                                option.val(item.contextGuid()).html(item.name()+(isOn?' isOn ':'')+' '+side);
                                 sel.append(option);
                                 if (isOn) {
                                     var option = $('<option/>');
                                     option.data('Side', side);
-                                    option.val(item.get('ContextGuid')).html(item.get('Name')+' '+side);
+                                    option.val(item.contextGuid()).html(item.name()+' '+side);
                                     selOn.append(option);
                                 }
 
@@ -177,12 +177,11 @@ $(document).ready( function() {
                                 for (var n = 0, len4 = colRes.count(); n < len4; n++) {
                                     var res = colRes.get(n);
                                     var option = $('<option/>');
-                                    option.data('DataBase', item.get('DataBase'));
-                                    option.data('ResGuid', res.get('ResGuid'));
+                                    option.data('DataBase', item.dataBase());
+                                    option.data('ResGuid', res.resGuid());
                                     option.data('Side', side);
-                                    option.val(item.get('ContextGuid')+','+res.get('ResGuid')).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.get('Title'));
+                                    option.val(item.contextGuid()+','+res.resGuid()).html('&nbsp;&nbsp;&nbsp;&nbsp;' + res.title());
                                     sel.append(option);
-                                    res.get('ResGuid');
                                 }
                             }
                             return;
@@ -218,6 +217,7 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
+                    //console.log(uccelloClt.getController().guid())
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
@@ -268,7 +268,7 @@ $(document).ready( function() {
                 for (var j = 0, len2 = datasets.count(); j < len2; j++) {
                     var item = datasets.get(j);
                     var option = $('<option/>');
-                    option.val(item.getGuid()).html(item.get('Name'));
+                    option.val(item.getGuid()).html(item.name());
                     sel.append(option);
                 }
             }
@@ -462,6 +462,9 @@ $(document).ready( function() {
                             that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
 
+                        $('#dbNavigatorForm .navigator').css({
+
+                        });
                         $('#dbNavigatorForm').dialog('open');
                     });
                 } else {
@@ -571,7 +574,7 @@ $(document).ready( function() {
             $('#dbNavigatorForm').dialog({
                 title: "Database Navigator",
                 resizable: true,
-                width:867,
+                width:900,
                 height:600,
                 modal: true,
                 autoOpen: false,

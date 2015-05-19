@@ -67,8 +67,8 @@ define(
                 var fieldsArr = {};
                 for (var i = 0, len = fields.count(); i < len; i++) {
                     var field = fields.get(i);
-                    fieldsArr[field.getGuid()] = field.get('Name');
-                    if (field.get('Name') == 'Id')
+                    fieldsArr[field.getGuid()] = field.name();
+                    if (field.name() == 'Id')
                         idIndex = field.getGuid();
                 }
 
@@ -77,10 +77,10 @@ define(
                     var row = $(vDataGrid._templates['row']), columnsArr=[];
                     for (var i = 0, len = columns.count(); i < len; i++) {
                         var column = columns.get(i);
-                        var header = $(vDataGrid._templates['header']).html(column.get('Label'));
-                        header.css('width', column.get('Width')+'%');
+                        var header = $(vDataGrid._templates['header']).html(column.label());
+                        header.css('width', column.width()+'%');
                         row.append(header);
-                        columnsArr.push({field:column.get('Field'), width:column.get('Width')});
+                        columnsArr.push({field:column.field(), width:column.width()});
                     }
                     table.append(row);
 
@@ -92,7 +92,7 @@ define(
 
                         // добавляем ячейка
                         for (var j = 0, len2 = columnsArrLen; j < len2; j++) {
-                            var text = obj.get(fieldsArr[columnsArr[j].field]);
+                            var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
                             var width = columnsArr[j].width;
                             cells += '<div class="cell" style="width:'+(width?width:'10%')+'%;">' + (text ? text : '&nbsp;') + '</div>';
                             if (idIndex == columnsArr[j].field)
@@ -110,7 +110,7 @@ define(
                     // header
                     var row = $(vDataGrid._templates['row']);
                     for (var i = 0, len = fields.count(); i < len; i++) {
-                        var cell = $(vDataGrid._templates['header']).html(fields.get(i).get('Name')).addClass('w60');
+                        var cell = $(vDataGrid._templates['header']).html(fields.get(i).name()).addClass('w60');
                         row.append(cell);
                     }
                     table.append(row);
@@ -122,7 +122,7 @@ define(
 
                         // добавляем ячейка
                         for (var j in fieldsArr) {
-                            var text = obj.get(fieldsArr[j]);
+                            var text = obj[fieldsArr[j].toLowerCase()]();
                             cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
                             if (idIndex == j)
                                 id = text;
@@ -167,7 +167,7 @@ define(
 			var index=null, columns = this.getCol('Columns');
             if (columns) {
                 for (var i = 0, len = columns.count(); i < len; i++) {
-                    if (columns.get(i).get('Field') == datafield) {
+                    if (columns.get(i).field() == datafield) {
                         index = i;
                         break;
                     }
@@ -200,13 +200,10 @@ define(
          * @param full true-полный рендер с данными, false-только аттрибуты и заголовок
          */
         vDataGrid.renderColumn = function(index, full) {
-            //var column = this.getObj().getCol('Columns').get(index);
 			var column = this.getCol('Columns').get(index);
             var width = column.width();
             var table = $('#' + this.getLid()).find('.table');
             var header = table.find('.header');
-
-
             $(header.children()[index]).css('width', width+'%');
             var rowsTr = table.find('.row');
             for(var i = 0, len = rowsTr.length; i<len; i++)

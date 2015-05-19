@@ -87,7 +87,7 @@ define(
                 for (var i = 0; i < cnt; i++) {
                     //var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
 					var root = rootElem ? db: db.getRoot(i).obj;
-                    var name = root.get('Name');
+                    var name = 'name' in root? root.name(): null;
                     if (!name)
                         name = root.getGuid();
 
@@ -173,7 +173,7 @@ define(
             var centerBottom = editor.find('.centerBottom');
             var right = editor.find('.right');
             var parent = this._activeRoot.getParent();
-            var name = parent.get('Name') ? parent.get('Name') : parent.getGuid();
+            var name = 'name' in parent &&  parent.name() ? parent.name() : parent.getGuid();
             left.empty();
             centerTop.empty();
             centerBottom.empty();
@@ -255,7 +255,7 @@ define(
             var centerBottom = editor.find('.centerBottom.level'+level);
             for (var i = 0, len = obj.count(); i < len; i++) {
                 var col = obj.get(i);
-                var name = col.get('Name');
+                var name = 'name' in col && col.name()? col.name(): null;
                 if (!name)
                     name = col.getGuid();
                 var centerTpl = $(vDBNavigator._templates['centerTop']);
@@ -298,7 +298,7 @@ define(
                         rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));
                         rightTpl.find('.save').click(function () {
                             var val = $(this).parent().find('.value');
-                            val.data('obj').set(val.attr('name'), val.val());
+                            val.data('obj')[val.attr('name').charAt(0).toLowerCase() + val.attr('name').slice(1)](val.val());
                             return false;
                         });
                         right.append(rightTpl);

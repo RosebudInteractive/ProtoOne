@@ -1,0 +1,303 @@
+{
+  "$sys":{
+    "guid":"4c9cc20d-04a9-6c01-afb6-61ea3ee3327a",
+    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  },
+  "fields":{
+    "Id":1456,
+    "Name":"MainForm",
+    "Title": "company-list"
+  },
+  "collections": {
+    "Params": [
+      {
+        "$sys": {
+          "guid": "1db96961-d5db-e317-18b7-e71cfcd4daac",
+          "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
+        },
+        "fields": {
+          "Id": 1457,
+          "Name": "FormParam1",
+          "Type": "param",
+          "Kind": "out",
+          "Value": ""
+        },
+        "collections": {}
+      }
+    ],
+    "Children": [
+      {
+        "$sys": {
+          "guid": "43767cdd-2785-7b80-1bdf-15cc2d5331a9",
+          "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+        },
+        "fields": {
+          "Id": 11,
+          "Name": "MainContainer"
+        },
+        "collections": {
+          "Children": [
+            {
+              "$sys": {
+                "guid": "9916d91d-6293-c8e5-0b84-41fd8be1b2d5",
+                "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
+              },
+              "fields": {
+                "Id": 127,
+                "Name": "DataModel"
+              },
+              "collections": {
+                "Datasets": [
+                  {
+                    "$sys": {
+                      "guid": "cca4004b-da87-d016-a992-01fbaa8189f9",
+                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                    },
+                    "fields": {
+                      "Id": 122,
+                      "Name": "DatasetCompany",
+                      "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
+                      "Active": true,
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
+                    },
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "8de602c9-4f68-8f74-71b0-2117a1297eb8",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7001,
+                            "Name": "Name"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "ef66e4b0-a57c-4232-4b03-1f809da356b4",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "a4b6a20e-a354-52ad-0145-8065c9bf0d64",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7003,
+                            "Name": "country"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7b5aa87a-e25b-5373-8bb0-3c95ec746282",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7004,
+                            "Name": "city"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "20e9f538-b71d-dfec-f1c8-d18a07d07506",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 7005,
+                            "Name": "address"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "22e5c10c-44c1-860a-6736-4214f8fd3ce3",
+                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                    },
+                    "fields": {
+                      "Id": 2004,
+                      "Name": "DatasetLeadList",
+                      "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+                      "Active": true,
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
+                      "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+                    },
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "800ad10c-3e61-8d31-2237-e47a91d52661",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2bcdeaa5-fcf2-1c89-fe75-5c1f55537502",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "state"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "264c6fbc-7551-ad8b-b400-87be79296af6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5003,
+                            "Name": "client"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "5b09b14b-c945-8a6c-39c7-639724c752e8",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5004,
+                            "Name": "companyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "19ce8153-4ac3-955e-f6f5-445d11e7ee11",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5005,
+                            "Name": "contact"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f63aea6a-f949-53db-2eaf-0044c210c2f2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5006,
+                            "Name": "phone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b41ab3f3-f5f6-2535-be71-c4caff30fcc3",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5007,
+                            "Name": "email"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "33fe10ae-cd12-0e52-cba7-2fb262833369",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5008,
+                            "Name": "contactId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "e8382634-e23b-61dc-72c5-4992a84f002f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5009,
+                            "Name": "proba"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1c803f0d-ad6d-642e-cf7a-9dfbbcee6dba",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5010,
+                            "Name": "amount"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2475bf91-0055-973a-d703-5ee4591fdf6d",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5011,
+                            "Name": "user"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "eeba901d-1c23-d0b0-d35d-795f5af807f4",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 22,
+                "Name": "DataGridCompanyLead",
+                "Top": "67",
+                "Left": "10",
+                "Width": 900,
+                "Height": 400,
+                "Dataset": "cca4004b-da87-d016-a992-01fbaa8189f9"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "ac20ecfb-a534-758a-6abf-3868ca0eb588",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1033,
+                "Name": "Button1",
+                "Top": "5",
+                "Left": "10",
+                "Caption": "Dataset Company",
+                "OnClick": " { var cm=this.getControlMgr(); cm.getByName('DataGridCompanyLead').dataset('cca4004b-da87-d016-a992-01fbaa8189f9'); }"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "68068885-23c4-1bc7-6359-0de2de717e5f",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1045,
+                "Name": "Button2",
+                "Top": "5",
+                "Left": "200",
+                "Caption": "Dataset Lead",
+                "OnClick": " { var cm=this.getControlMgr(); cm.getByName('DataGridCompanyLead').dataset('22e5c10c-44c1-860a-6736-4214f8fd3ce3'); }"
+              },
+              "collections": {
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

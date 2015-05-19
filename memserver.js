@@ -4,7 +4,7 @@ console.log('Using folder: '+uccelloDir);
 // порт web
 var uccelloPortWeb = process.argv[3]&&process.argv[3]!='-'?process.argv[3]:null;
 // порт websocket
-var uccelloPortWs = process.argv[4]&&process.argv[3]!='-'?process.argv[4]:null;
+var uccelloPortWs = process.argv[4]&&process.argv[4]!='-'?process.argv[4]:null;
 
 // Модули nodejs
 var http = require('http');
