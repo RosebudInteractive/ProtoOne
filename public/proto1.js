@@ -18,6 +18,7 @@ $(document).ready( function() {
                 {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
                 {className:'DataCompany', component:'../DataControls/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c51'},
                 {className:'DataAddress', component:'../DataControls/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
+                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'DataLead', component:'../DataControls/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
                 {className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
                 {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
@@ -217,7 +218,12 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
-                    //console.log(uccelloClt.getController().guid())
+                    /*console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())*/
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
