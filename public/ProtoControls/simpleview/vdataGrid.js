@@ -93,7 +93,7 @@ define(
                         var obj = col.get(i);
                         var id = null, cells = '';
 
-                        // добавляем ячейка
+                        // добавляем ячейку
                         for (var j = 0, len2 = columnsArrLen; j < len2; j++) {
                             var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
                             var width = columnsArr[j].width;
@@ -123,7 +123,7 @@ define(
                         var obj = col.get(i);
                         var id = null, cells = '';
 
-                        // добавляем ячейка
+                        // добавляем ячейку
                         for (var j in fieldsArr) {
                             var text = obj[fieldsArr[j].charAt(0).toLowerCase() + fieldsArr[j].slice(1)]();
                             cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
