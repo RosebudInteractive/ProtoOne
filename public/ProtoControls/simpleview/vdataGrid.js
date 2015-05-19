@@ -34,7 +34,8 @@ define(
                         e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
-                            that.getControlMgr().get(that.dataset()).cursor(rowTr.attr('data-id'));
+                            //that.getControlMgr().get(that.dataset()).cursor(rowTr.attr('data-id'));
+                            that.dataset().cursor(rowTr.attr('data-id'));
                         });
                     }
                 });
@@ -49,9 +50,11 @@ define(
 
 
             if (this.dataset()) {
-                dataset = cm.get(this.dataset());
+                //dataset = cm.get(this.dataset());
+                dataset = this.dataset();
                 if (dataset) {
-                    rootElem = dataset.root();
+                    //rootElem = dataset.root();
+                    rootElem = dataset.rootInstance();
                     rootElem = rootElem? cm.getObj(rootElem): null;
                 }
             }
@@ -80,7 +83,7 @@ define(
                         var header = $(vDataGrid._templates['header']).html(column.label());
                         header.css('width', column.width()+'%');
                         row.append(header);
-                        columnsArr.push({field:column.field(), width:column.width()});
+                        columnsArr.push({ field: column.field().getGuid(), width: column.width() });
                     }
                     table.append(row);
 
