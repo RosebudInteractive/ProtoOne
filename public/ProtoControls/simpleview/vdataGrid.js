@@ -125,7 +125,7 @@ define(
 
                         // добавляем ячейка
                         for (var j in fieldsArr) {
-                            var text = obj[fieldsArr[j].toLowerCase()]();
+                            var text = obj[fieldsArr[j].charAt(0).toLowerCase() + fieldsArr[j].slice(1)]();
                             cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
                             if (idIndex == j)
                                 id = text;
