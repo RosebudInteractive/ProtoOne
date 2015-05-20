@@ -6,7 +6,7 @@
   "fields":{
     "Id":1456,
     "Name":"MainForm",
-    "Title": "company-list"
+    "Title": "grid & datasets"
   },
   "collections": {
     "Params": [
