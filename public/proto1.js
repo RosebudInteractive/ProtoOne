@@ -14,11 +14,16 @@ $(document).ready( function() {
     require(['./uccello/config/config'], function(Config){
         var config = {
             controls: [
+                {className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
+                {className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
+                {className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
+                {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
+                {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
+                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
                 {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
                 {className:'DataCompany', component:'../DataControls/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c51'},
                 {className:'DataAddress', component:'../DataControls/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
-                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'DataLead', component:'../DataControls/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
                 {className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
                 {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
@@ -218,12 +223,12 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
-                    /*console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())*/
+                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
@@ -467,9 +472,10 @@ $(document).ready( function() {
                             that.vNavigator.rootelem = null;
                             that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
-
-                        $('#dbNavigatorForm .navigator').css({
-
+                        $('#dbNavigatorForm .dbSelector').off('change');
+                        $('#dbNavigatorForm .dbSelector').change(function(){
+                            VDbNavigator.dataBase($(this).val());
+                            VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
                         $('#dbNavigatorForm').dialog('open');
                     });

@@ -3,9 +3,9 @@ if (typeof define !== 'function') {
     var Class = require('class.extend');
 }
 define(
-    [UCCELLO_CONFIG.uccelloPath+'system/uobject'],
-    function(UObject) {
-        var DataContact = UObject.extend({
+    [UCCELLO_CONFIG.uccelloPath+'dataman/dataobject'],
+    function(DataObject) {
+        var DataContact = DataObject.extend({
 
             className: "DataContact",
             classGuid: "73596fd8-6901-2f90-12d7-d1ba12bae8f4",
