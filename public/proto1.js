@@ -120,7 +120,7 @@ $(document).ready( function() {
 
                 if (i==0) {
                     that.currRoot = that.rootsGuids[0];
-                    $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.rootsGuids[0]+'"]').html());
+                    $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.rootsGuids[0].substring(0, 36)+'"]').html());
                 }
 
                 return {rootContainer: "#result"+i};
@@ -371,7 +371,7 @@ $(document).ready( function() {
                 that.resultForm = '#result'+i;
                 that.currRoot = that.rootsGuids[i];
                 that.setAutoSendDeltas(true);
-                $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.currRoot+'"]').html());
+                $('title').html('Uccello - ' + $('#selForm').find('option[value="'+that.currRoot.substring(0, 36)+'"]').html());
             }
 
 
