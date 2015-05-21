@@ -247,11 +247,7 @@ $(document).ready( function() {
                         var formGuids = url('#formGuids') ? url('#formGuids').split(',') : null;
                         if (formGuids) {
                             that.selectContext({vc:vc,  side: 'server', formGuids:formGuids}, function(){
-                                uccelloClt.createRoot(formGuids, "res", function (result) {
-                                    vcObj.addNewResRoots(result.guids, function (result2) {
-                                        that.selectContext({vc: vc, side: 'server', formGuids:result.guids, urlFormGuids:result.guids});
-                                    });
-                                }, vcObj);
+                                uccelloClt.createRoot(formGuids, "res", null, vcObj);
                             });
                         } else {
                             that.selectContext({vc:vc,  side: 'server'});
@@ -388,19 +384,10 @@ $(document).ready( function() {
                 var context = $('#userContext').val()? $('#userContext').val().split(',')[0]: url('#context');
                 var contextObj = uccelloClt.getSysCM().get(context);
                 var selSub = $('#selSub').is(':checked');
-
-                // закладка
-                if (selSub) {
+                if (selSub) // открыть в новой закладке
                     uccelloClt.getClient().newTab(context, formGuids, $('#sessionGuid').val() == '' ? uccelloClt.getSessionGuid() : $('#sessionGuid').val());
-                    return;
-                }
-
-                uccelloClt.createRoot(formGuids, "res", /*function(result){
-                    //contextObj.addNewResRoots(result.guids, function(result2){
-                        that.selectContext({vc:context,  side: 'server'});
-                    //}
-					//);
-                },*/ contextObj);
+                else
+                    uccelloClt.createRoot(formGuids, "res");
             }
 
             /**
