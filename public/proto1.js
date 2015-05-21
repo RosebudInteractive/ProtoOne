@@ -7,7 +7,7 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var uccelloClt = null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -395,11 +395,12 @@ $(document).ready( function() {
                     return;
                 }
 
-                uccelloClt.createRoot(formGuids, "res", function(result){
-                    contextObj.addNewResRoots(result.guids, function(result2){
+                uccelloClt.createRoot(formGuids, "res", /*function(result){
+                    //contextObj.addNewResRoots(result.guids, function(result2){
                         that.selectContext({vc:context,  side: 'server'});
-                    });
-                }, contextObj);
+                    //}
+					//);
+                },*/ contextObj);
             }
 
             /**
