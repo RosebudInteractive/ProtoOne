@@ -544,9 +544,7 @@ $(document).ready( function() {
                     if(vcObj && vc) {
                         if (formGuids) {
                             uccelloClt.createRoot(formGuids, "res", function (result) {
-                                vcObj.addNewResRoots(result.guids, function (result2) {
                                     that.selectContext({vc: context, side: 'server', formGuids:result.guids});
-                                });
                             }, vcObj);
                         } else {
                             that.selectContext({vc:vc,  side: 'server'});
