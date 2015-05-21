@@ -223,12 +223,12 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
+                   /* console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
                     console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
+                    console.log(uccelloClt.getController().guid())*/
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
@@ -453,29 +453,30 @@ $(document).ready( function() {
             window.viewNavigator = function() {
                 if (!that.vNavigator){
                     require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
-                        VDbNavigator.getLid = function(){return 'clientNav';};
-                        VDbNavigator.getParent = function(){return null;};
-                        VDbNavigator.top = function(){return 5;};
-                        VDbNavigator.left = function(){return 3;};
-                        VDbNavigator.nlevels = function(){return 3;};
-                        VDbNavigator.database = null;
-                        VDbNavigator.level = null;
-                        VDbNavigator.rootelem = null;
-                        VDbNavigator.level = function(val){if(val !== undefined) VDbNavigator.level=val; return VDbNavigator.level;};
-                        VDbNavigator.dataBase = function(val){if(val !== undefined) VDbNavigator.database=val; return VDbNavigator.database;};
-                        VDbNavigator.rootElem = function(val){if(val !== undefined) VDbNavigator.rootelem=val; return VDbNavigator.rootelem;};
-                        VDbNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
-                        VDbNavigator.params = {};
                         that.vNavigator = VDbNavigator;
-                        VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
+                        that.vNavigator.getLid = function(){return 'clientNav';};
+                        that.vNavigator.getParent = function(){return null;};
+                        that.vNavigator.top = function(){return 5;};
+                        that.vNavigator.left = function(){return 3;};
+                        that.vNavigator.nlevels = function(){return 3;};
+                        that.vNavigator.database = null;
+                        that.vNavigator.level = null;
+                        that.vNavigator.rootelem = null;
+                        that.vNavigator.level = function(val){if(val !== undefined) that.vNavigator.level=val; return that.vNavigator.level;};
+                        that.vNavigator.dataBase = function(val){if(val !== undefined) that.vNavigator.database=val; return that.vNavigator.database;};
+                        that.vNavigator.rootElem = function(val){if(val !== undefined) that.vNavigator.rootelem=val; return that.vNavigator.rootelem;};
+                        that.vNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
+                        that.vNavigator.params = {};
+
+                        that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#clientNav').find('.dbSelector').change(function(){
                             that.vNavigator.rootelem = null;
                             that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
                         $('#dbNavigatorForm .dbSelector').off('change');
                         $('#dbNavigatorForm .dbSelector').change(function(){
-                            VDbNavigator.dataBase($(this).val());
-                            VDbNavigator.render({rootContainer:'#dbNavigatorForm'});
+                            that.vNavigator.dataBase($(this).val());
+                            that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
                         $('#dbNavigatorForm').dialog('open');
                     });
