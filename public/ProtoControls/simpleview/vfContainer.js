@@ -30,7 +30,7 @@ define(
             }
 
             // убираем удаленные объекты
-			var del = this.getLogCol('Children').del;
+			var del = this.getLogCol('Children') && 'del' in this.getLogCol('Children')? this.getLogCol('Children').del: {};
             for (var guid in del)
                 $('#ch_' + del[guid].getLid()).remove();
 

@@ -439,8 +439,9 @@ $(document).ready( function() {
 
             that.vNavigator = null;
             window.viewNavigator = function() {
-                if (!that.vNavigator){
+                //if (!that.vNavigator){
                     require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
+                        $('#clientNav').remove();
                         that.vNavigator = VDbNavigator;
                         that.vNavigator.getLid = function(){return 'clientNav';};
                         that.vNavigator.getParent = function(){return null;};
@@ -461,17 +462,12 @@ $(document).ready( function() {
                             that.vNavigator.rootelem = null;
                             that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         });
-                        $('#dbNavigatorForm .dbSelector').off('change');
-                        $('#dbNavigatorForm .dbSelector').change(function(){
-                            that.vNavigator.dataBase($(this).val());
-                            that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
-                        });
                         $('#dbNavigatorForm').dialog('open');
                     });
-                } else {
+                /*} else {
                     that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                     $('#dbNavigatorForm').dialog('open');
-                }
+                }*/
             }
 
             // ----------------------------------------------------------------------------------------------------
