@@ -34,7 +34,6 @@ define(
                         e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
-                            //that.getControlMgr().get(that.dataset()).cursor(rowTr.attr('data-id'));
                             that.dataset().cursor(rowTr.attr('data-id'));
                         });
                     }
@@ -45,12 +44,10 @@ define(
             }
 
             var cm = this.getControlMgr();
-            //var db = cm.getDB();
             var rootElem = null;
 
 
             if (this.dataset()) {
-                //dataset = cm.get(this.dataset());
                 dataset = this.dataset();
                 if (dataset) {
                     rootElem = dataset.root();
@@ -60,8 +57,6 @@ define(
             if (rootElem)
             {
                 var col = rootElem.getCol('DataElements');
-                //var columns = this.getObj().getCol('Columns');
-                //var fields = dataset.getObj().getCol('Fields');
                 var columns = this.getCol('Columns');
                 var fields = dataset.getCol('Fields');
                 var idIndex = null, cursor = dataset.cursor(), rows = '', cursorIndex = -1;
