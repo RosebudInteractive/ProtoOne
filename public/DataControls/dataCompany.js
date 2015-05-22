@@ -19,8 +19,8 @@ define(
             ],
 
             init: function(cm,params){
-				//UccelloClass.super.apply(this, [cm, params]);
-				this.uobjectInit(cm,params);
+				UccelloClass.super.apply(this, [cm, params]);
+				//this.uobjectInit(cm,params);
             },
 
             country: function(value) {
