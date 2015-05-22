@@ -53,9 +53,7 @@ define(
                 //dataset = cm.get(this.dataset());
                 dataset = this.dataset();
                 if (dataset) {
-                    //rootElem = dataset.root();
-                    rootElem = dataset.rootInstance();
-                    rootElem = rootElem? cm.getObj(rootElem): null;
+                    rootElem = dataset.root();
                 }
             }
 
