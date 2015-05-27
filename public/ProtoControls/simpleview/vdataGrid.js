@@ -29,7 +29,7 @@ define(
 
                 // клик на таблицу
                 table.click(function(e){
-                    var rowTr = $(e.target).parent();
+                    var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){

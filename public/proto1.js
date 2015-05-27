@@ -83,6 +83,7 @@ $(document).ready( function() {
             this.getContextUrl = function(context, formGuids, timeout) {
                 var location = document.location.href;
                 location = location.replace(/#.*/, '');
+                location = location.replace(/\?runtest=1/, '?runtesttab=1');
                 formGuids = !formGuids || formGuids=='all'?'all':formGuids;
                 if (formGuids !='all' && typeof formGuids == "string") formGuids = [formGuids];
                 formGuids = !formGuids || formGuids=='all'?'all':formGuids.join(',');
@@ -223,12 +224,6 @@ $(document).ready( function() {
             uccelloClt = new UccelloClt({
                 host:"ws://"+url('hostname')+":8081",
                 callback: function(){
-                   /* console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())
-                    console.log(uccelloClt.getController().guid())*/
                     var user = uccelloClt.getUser();
                     if (user) {
                         that.getContexts();
@@ -248,6 +243,25 @@ $(document).ready( function() {
                         if (formGuids) {
                             that.selectContext({vc:vc,  side: 'server', formGuids:formGuids}, function(){
                                 uccelloClt.createRoot(formGuids, "res", null, vcObj);
+
+                                // тест
+                                if (url('?runtesttab')) {
+                                    setTimeout(function () {
+                                        var testFreq = 100;
+                                        // ходим по мастеру
+                                        var dataGrid = uccelloClt.getContextCM().getByName('DataGridCompany');
+                                        var rows = $('#' + dataGrid.getLid()).find('.row.data');
+                                         var selectedRow = 1;
+                                         setInterval(function(){
+                                         console.log(selectedRow, rows[selectedRow]);
+                                         $(rows[selectedRow]).click();
+                                         selectedRow++;
+                                         if (selectedRow >= 10 /*rows.length*/)
+                                         selectedRow = 0;
+                                         }, testFreq);
+                                    }, 2000);
+                                }
+
                             });
                         } else {
                             that.selectContext({vc:vc,  side: 'server'});
@@ -257,6 +271,28 @@ $(document).ready( function() {
                         $('#logout').hide(); $('#login').show();
                         $('#userInfo').html('');
                     }
+
+                    // тест
+                    if (url('?runtest')) {
+                        var testNumContext=10, testNumTabs=5;
+                        // логин
+                        login('u1', 'p1', function(result){
+                            if (result) {
+                                var formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
+                                for(var i=0; i<testNumContext; i++){
+                                    (function(i) {
+                                        // создаем контексты формы тест
+                                        uccelloClt.createContext('server', formGuids, function(result){
+                                            if (testNumTabs>i) // открываем закладки
+                                                uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
+                                        });
+                                    })(i);
+                                }
+                                    //createContext($('#selForm').val());
+                            }
+                        });
+                    }
+
                 },
                 newTabCallback: that.newTab,
                 commClient: commClient
@@ -289,7 +325,7 @@ $(document).ready( function() {
              * @param name
              * @param pass
              */
-            window.login = function(name, pass){
+            window.login = function(name, pass, done){
                 var session = $.cookie('session_'+name)? JSON.parse($.cookie('session_'+name)): {guid:uccelloClt.getSessionGuid(), deviceName:'MyComputer', deviceType:'C', deviceColor:'#6ca9f0'};
                 uccelloClt.getClient().authenticate({user:name, pass:pass, session:session}, function(result){
                     if (result.user) {
@@ -309,11 +345,15 @@ $(document).ready( function() {
                                     afterCopy:function(){}
                                 });
                             }
+                            if (done)
+                                done(true);
                         });
                     } else {
                         $('#logout').hide(); $('#login').show();
                         $('#loginError').html('Неправильный логин или пароль').show();
                         $('#userInfo').html('');
+                        if (done)
+                            done(false);
                     }
                 });
             }
@@ -578,6 +618,7 @@ $(document).ready( function() {
             });
 
             }, url('#timeout')?url('#timeout'):10);
+
 
             // ----------------------------------------------------------------------------------------------------
 
