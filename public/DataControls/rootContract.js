@@ -9,7 +9,6 @@ define(
 
             className: "RootContract",
             classGuid: "4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b",
-            metaCols: [{"cname": "DataElements", "ctype": "data"}],
             metaFields: [],
 
             init: function(cm,params){

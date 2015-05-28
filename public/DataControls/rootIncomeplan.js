@@ -9,7 +9,6 @@ define(
 
             className: "RootIncomeplan",
             classGuid: "194fbf71-2f84-b763-eb9c-177bf9ac565d",
-            metaCols: [{"cname": "DataElements", "ctype": "data"}],
             metaFields: [],
 
             init: function(cm,params){
