@@ -7,7 +7,7 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var uccelloClt = null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -219,6 +219,8 @@ $(document).ready( function() {
             this.newTab = function(data) {
                 window.open(that.getContextUrl(data.contextGuid, data.resGuids, $('#addTimeout').is(':checked')?10000:false));
             }
+
+
                     
             var commClient = new CommunicationClient.Client(UCCELLO_CONFIG.webSocketClient);
             uccelloClt = new UccelloClt({
@@ -245,21 +247,8 @@ $(document).ready( function() {
                                 uccelloClt.createRoot(formGuids, "res", null, vcObj);
 
                                 // тест
-                                if (url('?runtesttab')) {
-                                    setTimeout(function () {
-                                        var testFreq = 100;
-                                        // ходим по мастеру
-                                        var dataGrid = uccelloClt.getContextCM().getByName('DataGridCompany');
-                                        var rows = $('#' + dataGrid.getLid()).find('.row.data');
-                                         var selectedRow = 1;
-                                         setInterval(function(){
-                                         $(rows[selectedRow]).click();
-                                         selectedRow++;
-                                         if (selectedRow >= 10 /*rows.length*/)
-                                         selectedRow = 0;
-                                         }, testFreq);
-                                    }, 4000);
-                                }
+                                if (url('?runtesttab'))
+                                    setTimeout(runTestTab, 4000);
 
                             });
                         } else {
@@ -273,24 +262,7 @@ $(document).ready( function() {
 
                     // тест
                     if (url('?runtest')) {
-                        var testNumContext=10, testNumTabs=10;
-                        // логин
-                        login('u1', 'p1', function(result){
-                            if (result) {
-                                var formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
-                                for(var i=0; i<testNumContext; i++){
-                                    (function(i) {
-                                        setTimeout(function(){
-                                            // создаем контексты формы тест
-                                            uccelloClt.createContext('server', formGuids, function(result){
-                                                if (testNumTabs>i) // открываем закладки
-                                                    uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
-                                            });
-                                        }, 7000*(i+1));
-                                    })(i);
-                                }
-                            }
-                        });
+                        runLoadTest();
                     }
 
                 },
@@ -508,6 +480,46 @@ $(document).ready( function() {
                     that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                     $('#dbNavigatorForm').dialog('open');
                 }*/
+            }
+
+
+
+            window.runLoadTest = function(testNumContext, testNumTabs) {
+                testNumContext = testNumContext?testNumContext:10,
+                testNumTabs= testNumTabs?testNumTabs:10;
+                // логин
+                login('u1', 'p1', function(result){
+                    if (result) {
+                        var formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
+                        for(var i=0; i<testNumContext; i++){
+                            (function(i) {
+                                setTimeout(function(){
+                                    // создаем контексты формы тест
+                                    uccelloClt.createContext('server', formGuids, function(result){
+                                        if (testNumTabs>i) // открываем закладки
+                                            uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
+                                    });
+                                }, 7000*(i));
+                            })(i);
+                        }
+                    }
+                });
+            }
+
+            window.runTestTab = function (testFreq) {
+                testFreq = testFreq?testFreq:100;
+                // ходим по мастеру
+                var dataGrid = uccelloClt.getContextCM().getByName('DataGridCompany');
+                var rows = $('#' + dataGrid.getLid()).find('.row.data');
+                var selectedRow = 1;
+                setInterval(function(){
+                    console.timeEnd('click');
+                    $(rows[selectedRow]).click();
+                    selectedRow++;
+                    if (selectedRow >= 10 /*rows.length*/)
+                        selectedRow = 0;
+                    console.time('click');
+                }, testFreq);
             }
 
             // ----------------------------------------------------------------------------------------------------
