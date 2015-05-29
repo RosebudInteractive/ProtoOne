@@ -253,7 +253,6 @@ $(document).ready( function() {
                                         var rows = $('#' + dataGrid.getLid()).find('.row.data');
                                          var selectedRow = 1;
                                          setInterval(function(){
-                                         console.log(selectedRow, rows[selectedRow]);
                                          $(rows[selectedRow]).click();
                                          selectedRow++;
                                          if (selectedRow >= 10 /*rows.length*/)
@@ -274,21 +273,22 @@ $(document).ready( function() {
 
                     // тест
                     if (url('?runtest')) {
-                        var testNumContext=10, testNumTabs=5;
+                        var testNumContext=10, testNumTabs=10;
                         // логин
                         login('u1', 'p1', function(result){
                             if (result) {
                                 var formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
                                 for(var i=0; i<testNumContext; i++){
                                     (function(i) {
-                                        // создаем контексты формы тест
-                                        uccelloClt.createContext('server', formGuids, function(result){
-                                            if (testNumTabs>i) // открываем закладки
-                                                uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
-                                        });
+                                        setTimeout(function(){
+                                            // создаем контексты формы тест
+                                            uccelloClt.createContext('server', formGuids, function(result){
+                                                if (testNumTabs>i) // открываем закладки
+                                                    uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
+                                            });
+                                        }, 5000*(i+1));
                                     })(i);
                                 }
-                                    //createContext($('#selForm').val());
                             }
                         });
                     }
