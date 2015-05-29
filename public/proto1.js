@@ -258,7 +258,7 @@ $(document).ready( function() {
                                          if (selectedRow >= 10 /*rows.length*/)
                                          selectedRow = 0;
                                          }, testFreq);
-                                    }, 2000);
+                                    }, 4000);
                                 }
 
                             });
@@ -286,7 +286,7 @@ $(document).ready( function() {
                                                 if (testNumTabs>i) // открываем закладки
                                                     uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
                                             });
-                                        }, 5000*(i+1));
+                                        }, 7000*(i+1));
                                     })(i);
                                 }
                             }
