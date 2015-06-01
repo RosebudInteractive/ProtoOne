@@ -12,28 +12,326 @@
     "Children": [
       {
         "$sys": {
-          "guid": "dd845768-3ba1-bd3a-3b53-63b97fd0e6cf",
-          "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+          "guid": "1215a0ae-a3bd-356a-1c98-e80244b95d52",
+          "typeGuid": "902822d8-3079-f394-2eed-3ad9ac27b2f2"
         },
         "fields": {
-          "Id": 11,
-          "Name": "MainContainer"
+          "Id": 4568,
+          "Name": "FContainer",
+          "Top": 0,
+          "Left": 0,
+          "Width":800,
+          "Height":500,
+          "LayoutProp": "false,br",
+          "HasGrid": true,
+          "ColumnsCount": 2,
+          "MinColWidth": 200,
+          "MaxColWidth": 800
         },
         "collections": {
           "Children": [
             {
               "$sys": {
-                "guid": "1215a0ae-a3bd-356a-1c98-e80244b95d52",
+                "guid": "9555a1e2-8431-5f97-8140-23cc4d37417b",
+                "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
+              },
+              "fields": {
+                "Id": 3003,
+                "Name": "DataModel"
+              },
+              "collections": {
+                "Datasets": [
+                  {
+                    "$sys": {
+                      "guid": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
+                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                    },
+                    "fields": {
+                      "Id": 2004,
+                      "Name": "DatasetLeadEdit",
+                      "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+                      "Active": true,
+                      "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+                    },
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "eb6fa823-11cf-6f34-053e-533c2d391b64",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "296988a7-6d26-6fec-bd6f-de7cb565cc9b",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "state"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5003,
+                            "Name": "client"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e046710-cb8b-9414-5097-139ffe7ed389",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5004,
+                            "Name": "companyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "a0e1e0e0-0c82-29ba-cd5d-b770aa9ffcc9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5005,
+                            "Name": "contact"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c34e850f-7c2d-cdf1-85b7-b74a2295cc73",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5006,
+                            "Name": "phone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "54ed8415-9663-d4e0-e19f-a6e2bf2ee7ad",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5007,
+                            "Name": "email"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0eeebe01-ee89-2923-80aa-d05d195b006d",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5008,
+                            "Name": "contactId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "03d0837e-f530-9ecc-471c-61b860a05fa2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5009,
+                            "Name": "proba"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e31b95d-36ad-ff55-0390-2e1f4c4de3c6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5010,
+                            "Name": "amount"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "18113bf8-9b2f-98b1-2cbf-9e1470e7d8bf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5011,
+                            "Name": "user"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "da185853-e1aa-8b58-2de5-7cbc0d685501",
+                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                    },
+                    "fields": {
+                      "Id": 2005,
+                      "Name": "DatasetIncomeplan",
+                      "Root": "8770f400-fd42-217c-90f5-507ca52943c2",
+                      "Active": true,
+                      "Master": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a"
+                    },
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "b78d2606-9c24-416c-8dc7-e8a1aa3b7b80",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8001,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "cc1e3e82-0577-4b3f-8713-022bfb2df995",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8002,
+                            "Name": "leadId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6bf3081f-5337-4e7c-beea-a15340285f7b",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8003,
+                            "Name": "date"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f1f4533f-4d03-45e4-97be-803b713eb368",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8004,
+                            "Name": "amount"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "e1f2eb84-516d-4971-966c-6f411f4b2310",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 8005,
+                            "Name": "comment"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "985cb7ed-a61a-41fb-81e7-c2a173219850",
                 "typeGuid": "902822d8-3079-f394-2eed-3ad9ac27b2f2"
               },
               "fields": {
                 "Id": 4568,
-                "Name": "FContainer",
+                "Name": "FContainer2",
+                "Width":1,
+                "LayoutProp": "false,",
+                "HasGrid": true,
+                "ColumnsCount": 8,
+                "MinColWidth": 60,
+                "MaxColWidth": 70
+              },
+              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "3289602b-2261-6623-7e7f-30abce4719e5",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 3007,
+                      "Name": "LabelId",
+                      "Label": "Id",
+                      "Width": 4,
+                      "LayoutProp": "true,nbr"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "7e046710-cb8b-9414-5097-139ffe7ed389",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": 5004,
+                      "Name": "companyId",
+                      "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
+                      "DataField": "contact",
+                      "Width": 4,
+                      "LayoutProp": "true,br"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "f12576d0-dfbb-4efa-9698-45ebb8f3505c",
+                "typeGuid": "902822d8-3079-f394-2eed-3ad9ac27b2f2"
+              },
+              "fields": {
+                "Id": 4568,
+                "Name": "FContainer3",
                 "Top": 0,
                 "Left": 0,
-                "Width":900,
-                "Height":500,
-                "LayoutProp": "16,false,br"
+                "Width":1,
+                "LayoutProp": "false,br",
+                "HasGrid": true,
+                "ColumnsCount": 8,
+                "MinColWidth": 60,
+                "MaxColWidth": 70
+              },
+              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "32f136a2-b876-4b26-a355-3a22df362728",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 3007,
+                      "Name": "LabelId",
+                      "Label": "Id",
+                      "Width": 4,
+                      "LayoutProp": "true,nbr"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "b73d7bc2-4774-4f78-9a6f-4196a589679b",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": 5004,
+                      "Name": "companyId",
+                      "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
+                      "DataField": "contact",
+                      "Width": 4,
+                      "LayoutProp": "true,br"
+                    }
+                  }
+                ]
               }
             }
           ]
