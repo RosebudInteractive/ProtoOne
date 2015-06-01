@@ -513,12 +513,12 @@ $(document).ready( function() {
                 var rows = $('#' + dataGrid.getLid()).find('.row.data');
                 var selectedRow = 1;
                 setInterval(function(){
-                    console.timeEnd('click');
+                    //console.timeEnd('click');
                     $(rows[selectedRow]).click();
                     selectedRow++;
                     if (selectedRow >= 10 /*rows.length*/)
                         selectedRow = 0;
-                    console.time('click');
+                    //console.time('click');
                 }, testFreq);
             }
 
