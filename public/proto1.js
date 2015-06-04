@@ -37,8 +37,8 @@ $(document).ready( function() {
                 {className:'FContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
-                {className:'DataGrid', viewset:true},
-                {className:'DataEdit', viewset:true},
+                {className:'DataGrid', viewset:false},
+                {className:'DataEdit', viewset:false},
                 {className:'Edit', viewset:true},
                 {className:'Label', viewset:true}
             ],
@@ -247,8 +247,8 @@ $(document).ready( function() {
                                 uccelloClt.createRoot(formGuids, "res", null, vcObj);
 
                                 // тест
-                                if (url('?runtesttab'))
-                                    setTimeout(runTestTab, 4000);
+                                /*if (url('?runtesttab'))
+                                    setTimeout(runTestTab, 4000);*/
 
                             });
                         } else {
@@ -488,7 +488,7 @@ $(document).ready( function() {
                 testNumContext = testNumContext?testNumContext:10,
                 testNumTabs= testNumTabs?testNumTabs:10;
                 // логин
-                login('u1', 'p1', function(result){
+                login($('#loginName').val(), 'p1', function(result){
                     if (result) {
                         var formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498'];
                         for(var i=0; i<testNumContext; i++){
@@ -499,25 +499,37 @@ $(document).ready( function() {
                                         if (testNumTabs>i) // открываем закладки
                                             uccelloClt.getClient().newTab(result.vc, result.roots, uccelloClt.getSessionGuid());
                                     });
-                                }, 7000*(i));
+                                }, 3000*(i));
                             })(i);
                         }
                     }
                 });
             }
 
-            window.runTestTab = function (testFreq) {
-                testFreq = testFreq?testFreq:100;
+            that.interval = null;
+            window.runTestTab = function (btn, testFreq) {
+
+                if (that.interval) {
+                    $(btn).val('autoClickMaster');
+                    clearInterval(that.interval);
+                    that.interval = null;
+                    return;
+                } else {
+                    $(btn).val('stopAutoClick');
+                }
+
+                testFreq = testFreq?testFreq:20;
                 // ходим по мастеру
                 var dataGrid = uccelloClt.getContextCM().getByName('DataGridCompany');
                 var rows = $('#' + dataGrid.getLid()).find('.row.data');
                 var selectedRow = 1;
-                setInterval(function(){
+                that.interval = setInterval(function(){
                     //console.timeEnd('click');
-                    $(rows[selectedRow]).click();
+                    dataGrid.dataset().cursor(selectedRow);
+                    //$(rows[selectedRow]).click();
                     selectedRow++;
                     if (selectedRow >= 10 /*rows.length*/)
-                        selectedRow = 0;
+                        selectedRow = 1;
                     //console.time('click');
                 }, testFreq);
             }

@@ -130,7 +130,7 @@ var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocke
 var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
 // запускаем http сервер
-http.createServer(app).listen(UCCELLO_CONFIG.webServer.port);
+http.createServer(app).listen(UCCELLO_CONFIG.webServer.port, '0.0.0.0');
 console.log('Web server started http://127.0.0.1:'+UCCELLO_CONFIG.webServer.port+'/');
 
 // зщапускаем коммуникационный сервер
