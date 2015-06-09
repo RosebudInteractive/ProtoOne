@@ -68,7 +68,7 @@ define(
 
         };
 
-        vFContainer.getObj = function(curStr, rowObj, el, pos) {
+        vFContainer.getObj = function(curStr, rowObj, el) {
             var elObj = null;
             if (curStr != "EMPTY") {
                 var srcStr = curStr.trim();
