@@ -228,6 +228,13 @@ $(document).ready( function() {
                 callback: function(){
                     var user = uccelloClt.getUser();
                     if (user) {
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
                         that.getContexts();
                         $('#login').hide(); $('#logout').show();$('#loginForm').hide();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()+'  <a id="copySession" href="#" >copy</a>');
@@ -421,7 +428,7 @@ $(document).ready( function() {
             window.addControl = function(classGuid) {
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
                 var vc = uccelloClt.getContext();
-                var rootCont = cm.getByName('MainContainerList');
+                var rootCont = cm.getByName('MainContainer');
                 var obj = new (vc.getConstructorHolder().getComponent(classGuid).constr)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
                 cm.userEventHandler(obj, function () {
 
