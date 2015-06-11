@@ -63,15 +63,6 @@ define(
                 }
                 tableEl.find('.splittcell').remove();
 
-                // создаем врапперы для чайлдов
-                var childs = this.getCol('Children');
-                for(var i=0; i<childs.count();i++) {
-                    var child = cm.get(childs.get(i).getGuid());
-                    if (!child.left) continue;
-                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
-                    var cell = tableEl.find('#td_'+lid+'_'+child.left()+'_'+child.top());
-                    cell.append(div);
-                }
 
                 // добавляем табличку
                 item.append(tableEl);
@@ -80,6 +71,19 @@ define(
                 var parent = this.getParent()? '#ch_' + lid: options.rootContainer;
                 $(parent).append(item);
             }
+
+            // создаем врапперы для чайлдов
+            var childs = this.getCol('Children');
+            for(var i=0; i<childs.count();i++) {
+                var child = cm.get(childs.get(i).getGuid());
+                if (!child.left) continue;
+                if ($('#ch_'+child.getLid()).length == 0) {
+                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_' + child.getLid());
+                    var cell = tableEl.find('#td_' + lid + '_' + child.left() + '_' + child.top());
+                    cell.append(div);
+                }
+            }
+
 
             // убираем удаленные объекты
             var del = this.getLogCol('Children') && 'del' in this.getLogCol('Children')? this.getLogCol('Children').del: {};
