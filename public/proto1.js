@@ -37,8 +37,8 @@ $(document).ready( function() {
                 {className:'FContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
-                {className:'DataGrid', viewset:false},
-                {className:'DataEdit', viewset:false},
+                {className:'DataGrid', viewset:true},
+                {className:'DataEdit', viewset:true},
                 {className:'Edit', viewset:true},
                 {className:'Label', viewset:true}
             ],
