@@ -110,7 +110,7 @@ var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
 if (uccelloPortWeb) UCCELLO_CONFIG.webServer.port = uccelloPortWeb;
 if (uccelloPortWs) UCCELLO_CONFIG.webSocketServer.port = uccelloPortWs;
-DEBUG = false;
+DEBUG = true;
 
 // логирование
 logger = require('../'+uccelloDir+'/system/winstonLogger');
