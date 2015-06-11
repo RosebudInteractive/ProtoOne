@@ -9,11 +9,17 @@ define(
                 // объект контейнера
                 item = $(vCContainer._templates['container']).attr('id', this.getLid());
 
-                // создаем врапперы для чайлдов
-                var childs = this.getCol('Children');
-                for(var i=0; i<childs.count();i++) {
-                    var child = this.getControlMgr().get(childs.get(i).getGuid());
-                    if (!child.left) continue;
+                // добавляем в парент
+                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                $(parent).append(item);
+            }
+
+            // создаем врапперы для чайлдов
+            var childs = this.getCol('Children');
+            for(var i=0; i<childs.count();i++) {
+                var child = this.getControlMgr().get(childs.get(i).getGuid());
+                if (!child.left) continue;
+                if ($('#ch_'+child.getLid()).length == 0) {
                     var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
                     var left=child.left(), top=child.top(), width=child.width(), height=child.height();
                     if ($.isNumeric(left)) left += 'px';
@@ -23,11 +29,8 @@ define(
                     div.css({top:top, left:left, width:width, height:height});
                     item.append(div);
                 }
-
-                // добавляем в парент
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
-                $(parent).append(item);
             }
+
 
             // убираем удаленные объекты
 			var del = this.getLogCol('Children') && 'del' in this.getLogCol('Children')? this.getLogCol('Children').del: {};
