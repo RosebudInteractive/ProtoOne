@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Uccello" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../Uccello" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../Uccello" />
+    </SOURCES>
+  </library>
+</component>
