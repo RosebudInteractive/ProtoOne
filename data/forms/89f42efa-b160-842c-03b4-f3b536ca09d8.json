@@ -6,7 +6,8 @@
   "fields":{
     "Id":2000,
     "Name":"MainFormList",
-    "Title": "crm-list"
+    "Title": "crm-list",
+    "dbgName": "FormCrmList"
   },
   "collections": {
     "Params": [

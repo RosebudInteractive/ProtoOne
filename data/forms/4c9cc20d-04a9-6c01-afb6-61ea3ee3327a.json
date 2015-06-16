@@ -6,7 +6,8 @@
   "fields":{
     "Id":1456,
     "Name":"MainForm",
-    "Title": "grid & datasets"
+    "Title": "grid & datasets",
+    "dbgName": "FormGridDatasets"
   },
   "collections": {
     "Params": [

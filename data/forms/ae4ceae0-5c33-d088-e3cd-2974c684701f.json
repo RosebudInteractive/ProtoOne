@@ -6,7 +6,8 @@
   "fields":{
     "Id":1456,
     "Name":"MainForm",
-    "Title": "navigator"
+    "Title": "navigator",
+    "dbgName": "FormNavigator"
   },
   "collections": {
     "Children": [

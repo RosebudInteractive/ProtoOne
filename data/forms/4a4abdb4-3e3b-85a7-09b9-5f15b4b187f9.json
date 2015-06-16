@@ -6,7 +6,8 @@
   "fields":{
     "Id":3000,
     "Name":"MainFormEdit",
-    "Title": "crm-edit"
+    "Title": "crm-edit",
+    "dbgName": "FormCrmEdit"
   },
   "collections": {
     "Params": [

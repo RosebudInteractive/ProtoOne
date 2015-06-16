@@ -6,7 +6,8 @@
   "fields":{
     "Id":1456,
     "Name":"MainFormH",
-    "Title": "h-containers"
+    "Title": "h-containers",
+    "dbgName": "FormHContainers"
   },
   "collections": {
     "Children": [

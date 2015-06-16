@@ -5,7 +5,8 @@
   },
   "fields":{
     "Id":1000,
-    "Name":"RootCompany"
+    "Name":"RootCompany",
+    "dbgName": "DataCompany"
   },
   "collections":{
     "DataElements":[
