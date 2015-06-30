@@ -426,7 +426,7 @@ $(document).ready( function() {
             }
 
             window.addControl = function(classGuid) {
-                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var cm = uccelloClt.getContextCM();
                 var vc = uccelloClt.getContext();
                 var rootCont = cm.getByName('MainContainer');
                 var obj = new (vc.getConstructorHolder().getComponent(classGuid).constr)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
@@ -435,10 +435,10 @@ $(document).ready( function() {
                 });
             }
 
-            that.recordid = 10000;
+           //that.recordid = 10000;
             window.addRecord = function() {
-                var recordId = that.recordid++;
-                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var recordid = Math.floor(Math.random()*10000)+10000;   // that.recordid++;
+                var cm = uccelloClt.getContextCM();
                 var datasetGuid = $('#contextDatasets').val();
                 var dataset = cm.get(datasetGuid);
 
