@@ -302,7 +302,7 @@
                 "Top": "360",
                 "Left": "10",
                 "Caption": "New lead",
-                "OnClick": " { var recordid = Math.floor(Math.random()*10000)+10000; var cm = uccelloClt.getContextCM(); var datasetGuid = $('#contextDatasets').val(); var dataset = cm.get(datasetGuid); cm.userEventHandler(dataset,dataset.addObject,[{ fields:{Id:recordid, Name:'Record '+recordid, state:'state '+recordid,client:'client '+recordid,companyId:recordid,contact:'contact '+recordid,phone:'phone '+recordid,email:'email '+recordid,contactId:recordid,proba:recordid,amount:recordid,user:recordid}}, function() { console.log('END ADD OBJ'); }]); }"
+                "OnClick": " { var recordid = Math.floor(Math.random()*10000)+10000; var cm = uccelloClt.getContextCM(); var datasetGuid = $('#contextDatasets').val(); var dataset = cm.get(datasetGuid); dataset.addObject({ fields:{Id:recordid, Name:'Record '+recordid, state:'state '+recordid,client:'client '+recordid,companyId:recordid,contact:'contact '+recordid,phone:'phone '+recordid,email:'email '+recordid,contactId:recordid,proba:recordid,amount:recordid,user:recordid}}, function() { console.log('END ADD OBJ'); }); }"
               },
               "collections": {
               }
