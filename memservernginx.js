@@ -1,6 +1,10 @@
 // дирректория где лежит Uccello
-var uccelloDir = process.argv[2]?process.argv[2]:'Uccello';
+var uccelloDir = process.argv[2]&&process.argv[2]!='-'?process.argv[2]:'Uccello';
 console.log('Using folder: '+uccelloDir);
+// порт web
+var uccelloPortWeb = process.argv[3]&&process.argv[3]!='-'?process.argv[3]:1329;
+// порт websocket
+var uccelloPortWs = process.argv[4]&&process.argv[4]!='-'?process.argv[4]:8083;
 
 // Модули nodejs
 var http = require('http');
@@ -14,63 +18,14 @@ var app = express();
 app.engine('html', require('ejs').renderFile);
 
 // обработка /tests
+app.get('/', function(req, res){
+    res.render('proto1.html', { webSocketServerPort: UCCELLO_CONFIG.webSocketServer.port});
+});
 app.get('/test', function(req, res){
-    res.render('proto1.html');
+    res.render('proto1.html', { webSocketServerPort: UCCELLO_CONFIG.webSocketServer.port});
 });
 app.get('/build', function(req, res){
     res.render('proto1build.html');
-});
-
-// апдейт
-app.get("/update/:what", function(req, res){
-
-    var shell = require('shelljs');
-
-    switch (req.params.what){
-        case 'uccelloold':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/').output+'<br><br>');
-            res.write('$ git pull<br>');
-            res.write(shell.exec('git pull').output+'<br><br>');
-            res.write('$ jsdoc public -r -d public/docs<br>');
-            res.write(shell.exec('jsdoc public -r -d public/docs').output+'<br><br>');
-            res.write('$ forever restart memserver.js<br>');
-            //res.write(shell.exec('forever restart memserver.js').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'mobimed':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/mobimed/docs/MobiDoc/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/mobimed/docs/MobiDoc/; git pull').output+'<br><br>');
-            break;
-        case 'genetix':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/genetix/Genetix/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/genetix/Genetix/; git pull').output+'<br><br>');
-            res.write('$ cd /var/www/sites/genetix/Uccello/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/genetix/Uccello/; git pull').output+'<br><br>');
-            break;
-        case 'proto':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; git pull').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'uccello':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/Uccello/; git pull<br>');
-            res.write(shell.exec('cd /var/www/sites/node/Uccello/; git pull').output+'<br><br>');
-            fakeFunctionForRestart();// node restarted
-            break;
-        case 'restart':
-            res.writeHead(200,{"Content-Type" : "text/html"});
-            res.write('$ cd /var/www/sites/node/ProtoOne/; forever restart memserver.js<br>');
-            res.write(shell.exec('cd /var/www/sites/node/ProtoOne/; forever restart memserver.js').output+'<br><br>');
-            break;
-    }
-
-    res.end();
 });
 
 // компрессия статики
@@ -85,23 +40,23 @@ app.get("/update/:what", function(req, res){
 // ----------------------------------------------------------------------------------------------------------------------
 // база данных
 /*
-var Mysql = require('./db/mysql');
-var mysql = new Mysql();
-var mysqlConnection = mysql.connect({
-    host:     'localhost',
-    user:     'root',
-    password: '111111',
-    database: 'mobimed_test'
-});
-function mysqlAuthenticate(user, pass, done) {
-    mysqlConnection.queryRow(
-        'SELECT user_id, email FROM user WHERE username=? AND password=MD5(?)', [user, pass],
-        function(err, row) {
-            done(err, row);
-        }
-    );
-}
-*/
+ var Mysql = require('./db/mysql');
+ var mysql = new Mysql();
+ var mysqlConnection = mysql.connect({
+ host:     'localhost',
+ user:     'root',
+ password: '111111',
+ database: 'mobimed_test'
+ });
+ function mysqlAuthenticate(user, pass, done) {
+ mysqlConnection.queryRow(
+ 'SELECT user_id, email FROM user WHERE username=? AND password=MD5(?)', [user, pass],
+ function(err, row) {
+ done(err, row);
+ }
+ );
+ }
+ */
 
 /**
  * Функция заглушка для аутентификации
@@ -129,6 +84,12 @@ function fakeAuthenticate(user, pass, done) {
 
 var config = {
     controls:[
+        {className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
+        {className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
+        {className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
+        {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
+        {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
+        {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
         {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
         {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
         {className:'DataCompany', component:'../DataControls/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c51'},
@@ -147,14 +108,16 @@ var config = {
 // модуль настроек
 var UccelloConfig = require('../'+uccelloDir+'/config/config');
 UCCELLO_CONFIG = new UccelloConfig(config);
-DEBUG = false;
+if (uccelloPortWeb) UCCELLO_CONFIG.webServer.port = uccelloPortWeb;
+if (uccelloPortWs) UCCELLO_CONFIG.webSocketServer.port = uccelloPortWs;
+DEBUG = true;
 
 // логирование
 logger = require('../'+uccelloDir+'/system/winstonLogger');
-//perfomance = {now:require("performance-now")};
+
 // очищаем файл лога при старте
 if (UCCELLO_CONFIG.logger.clearOnStart) {
-    var fs = require('fs')
+    var fs = require('fs');
     fs.writeFileSync(UCCELLO_CONFIG.logger.file, '');
 }
 
@@ -162,15 +125,14 @@ if (UCCELLO_CONFIG.logger.clearOnStart) {
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
 
-UCCELLO_CONFIG.webSocketServer.port = 8083;
+// комуникационный модуль
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
 var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
 
-//logger.info("test;msg;1231");
-
 // запускаем http сервер
-http.createServer(app).listen(1329);
-console.log('Сервер запущен на http://127.0.0.1:1329/');
+http.createServer(app).listen(UCCELLO_CONFIG.webServer.port, '0.0.0.0');
+console.log('Web server started http://127.0.0.1:'+UCCELLO_CONFIG.webServer.port+'/');
 
+// зщапускаем коммуникационный сервер
 communicationServer.start();
 console.log("Communication Server started (port: " + UCCELLO_CONFIG.webSocketServer.port + ").");

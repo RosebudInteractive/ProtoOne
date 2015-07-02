@@ -6,7 +6,8 @@
   "fields":{
     "Id":2000,
     "Name":"MainFormList",
-    "Title": "crm-list"
+    "Title": "crm-list",
+    "dbgName": "FormCrmList"
   },
   "collections": {
     "Params": [
@@ -287,6 +288,23 @@
                     }
                   }
                 ]
+              }
+            },
+
+ 	    {
+              "$sys": {
+                "guid": "ac20ecfb-a534-758a-6abf-3868ca0eb588",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1033,
+                "Name": "Button1",
+                "Top": "360",
+                "Left": "10",
+                "Caption": "New lead",
+                "OnClick": " { var recordid = Math.floor(Math.random()*10000)+10000; var cm = uccelloClt.getContextCM(); var datasetGuid = $('#contextDatasets').val(); var dataset = cm.get(datasetGuid); dataset.addObject({ fields:{Id:recordid, Name:'Record '+recordid, state:'state '+recordid,client:'client '+recordid,companyId:recordid,contact:'contact '+recordid,phone:'phone '+recordid,email:'email '+recordid,contactId:recordid,proba:recordid,amount:recordid,user:recordid}}, function() { console.log('END ADD OBJ'); }); }"
+              },
+              "collections": {
               }
             },
 

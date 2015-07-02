@@ -9,6 +9,7 @@ define(
 
             className: "RootAddress",
             classGuid: "07e64ce0-4a6c-978e-077d-8f6810bf9386",
+            metaCols: [{ "cname": "DataElements", "ctype": "DataAddress" }],
             metaFields: [],
 
             init: function(cm,params){

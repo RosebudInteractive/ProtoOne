@@ -6,7 +6,8 @@
   "fields":{
     "Id":536,
     "Name":"MainFormControls",
-    "Title": "controls"
+    "Title": "controls",
+    "dbgName": "FormControls"
   },
   "collections": {
     "Children": [

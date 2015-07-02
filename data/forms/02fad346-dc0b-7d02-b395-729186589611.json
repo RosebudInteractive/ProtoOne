@@ -6,7 +6,8 @@
   "fields": {
     "Id": 1456,
     "Name": "CompanyForm",
-    "Title": "company"
+    "Title": "company",
+    "dbgName": "CompanyForm"
   },
   "collections": {
     "Params": [

@@ -9,7 +9,7 @@ define(
          * @param options
          */
         vDataGrid.render = function(options) {
-            if (DEBUG) console.time('renderGrid '+this.name());
+            //if (DEBUG) console.time('renderGrid '+this.name());
 
             var that = this;
             var grid = $('#' + this.getLid());
@@ -138,7 +138,7 @@ define(
                     table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
             }
 
-            if (DEBUG) console.timeEnd('renderGrid '+this.name());
+            //if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }
 
         /**

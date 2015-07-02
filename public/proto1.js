@@ -7,7 +7,7 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var uccelloClt = null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -37,8 +37,8 @@ $(document).ready( function() {
                 {className:'FContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
-                {className:'DataGrid', viewset:false},
-                {className:'DataEdit', viewset:false},
+                {className:'DataGrid', viewset:true},
+                {className:'DataEdit', viewset:true},
                 {className:'Edit', viewset:true},
                 {className:'Label', viewset:true}
             ],
@@ -228,6 +228,13 @@ $(document).ready( function() {
                 callback: function(){
                     var user = uccelloClt.getUser();
                     if (user) {
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
+                        console.log(uccelloClt.getController().guid())
                         that.getContexts();
                         $('#login').hide(); $('#logout').show();$('#loginForm').hide();
                         $('#userInfo').html('User: '+user.name()+' <br>Session:'+uccelloClt.getSessionGuid()+'  <a id="copySession" href="#" >copy</a>');
@@ -419,23 +426,23 @@ $(document).ready( function() {
             }
 
             window.addControl = function(classGuid) {
-                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var cm = uccelloClt.getContextCM();
                 var vc = uccelloClt.getContext();
-                var rootCont = cm.getByName('MainContainerList');
+                var rootCont = cm.getByName('MainContainer');
                 var obj = new (vc.getConstructorHolder().getComponent(classGuid).constr)(cm, {parent: rootCont, colName: "Children", ini:{fields:{Id:1, Name:'Button1', Caption:'SuperButton', Left:500, Top:20}} });
                 cm.userEventHandler(obj, function () {
 
                 });
             }
 
-            that.recordid = 10000;
+           //that.recordid = 10000;
             window.addRecord = function() {
-                var recordId = that.recordid++;
-                var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
+                var recordid = Math.floor(Math.random()*10000)+10000;   // that.recordid++;
+                var cm = uccelloClt.getContextCM();
                 var datasetGuid = $('#contextDatasets').val();
                 var dataset = cm.get(datasetGuid);
 
-				cm.userEventHandler(dataset,dataset.addObject,{ fields:{Id:recordid, Name:'Record '+recordid,
+				cm.userEventHandler(dataset,dataset.addObject,[{ fields:{Id:recordid, Name:'Record '+recordid,
                     state:'state '+recordid,
                     client:'client '+recordid,
                     companyId:recordid,
@@ -446,7 +453,7 @@ $(document).ready( function() {
                     proba:recordid,
                     amount:recordid,
                     user:recordid
-                }});
+                }}, function() { console.log("END ADD OBJ"); }]);
             }
 
             that.vNavigator = null;
