@@ -317,7 +317,7 @@
                     "fields": {
                       "Id": 5002,
                       "Label": "Id",
-                      "Width": 2,
+                      "Width": 4,
                       "Field": "eb6fa823-11cf-6f34-053e-533c2d391b64"
                     }
                   },
@@ -353,7 +353,7 @@
                     "fields": {
                       "Id": 5004,
                       "Label": "Content",
-                      "Width": 58,
+                      "Width": 56,
                       "Field": "7e046710-cb8b-9414-5097-139ffe7ed389"
                     }
                   },
