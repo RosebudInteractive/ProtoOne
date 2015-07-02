@@ -12,16 +12,26 @@ define(
             metaCols: [],
             metaFields: [
                 {fname:"Id",ftype:"int"},
-                {fname:"state",ftype:"string"},
-                {fname:"client",ftype:"string"},
-                {fname:"companyId",ftype:"int"},
-                {fname:"contact",ftype:"string"},
-                {fname:"phone",ftype:"string"},
-                {fname:"email",ftype:"string"},
-                {fname:"contactId",ftype:"int"},
-                {fname:"proba",ftype:"int"},
-                {fname:"amount",ftype:"int"},
-                {fname:"user",ftype:"int"}
+                {fname:"Source",ftype:"string"},
+                {fname:"State",ftype:"string"},
+                {fname:"Content",ftype:"string"},
+                {fname:"Creation",ftype:"date"},
+                {fname:"Closed",ftype:"date"},
+                {fname:"OpportunityId",ftype:"int"},
+                {fname:"ContactId",ftype:"int"},
+                {fname:"FirstName",ftype:"string"},
+                {fname:"LastName",ftype:"string"},
+                {fname:"Title",ftype:"string"},
+                {fname:"MobilePhone",ftype:"string"},
+                {fname:"WorkPhone",ftype:"string"},
+                {fname:"Email",ftype:"string"},
+                {fname:"CompanyId",ftype:"string"},
+                {fname:"Company",ftype:"string"},
+                {fname:"Industry",ftype:"string"},
+                {fname:"NbEmpl",ftype:"int"},
+                {fname:"City",ftype:"string"},
+                {fname:"Address",ftype:"string"},
+                {fname:"PostalCode",ftype:"string"}
             ],
 
             init: function(cm,params){
@@ -31,35 +41,65 @@ define(
             id: function(value) {
                 return this._genericSetter("Id",value);
             },
+            source: function(value) {
+                return this._genericSetter("Source", value);
+            },
             state: function(value) {
-                return this._genericSetter("state", value);
+                return this._genericSetter("State", value);
             },
-            client: function(value) {
-                return this._genericSetter("client", value);
+            content: function(value) {
+                return this._genericSetter("Content", value);
             },
-            companyId: function(value) {
-                return this._genericSetter("companyId", value);
+            creation: function(value) {
+                return this._genericSetter("Creation", value);
             },
-            contact: function(value) {
-                return this._genericSetter("contact", value);
+            closed: function(value) {
+                return this._genericSetter("Closed", value);
             },
-            phone: function(value) {
-                return this._genericSetter("phone", value);
-            },
-            email: function(value) {
-                return this._genericSetter("email", value);
+            opportunityId: function(value) {
+                return this._genericSetter("OpportunityId", value);
             },
             contactId: function(value) {
-                return this._genericSetter("contactId", value);
+                return this._genericSetter("ContactId", value);
             },
-            proba: function(value) {
-                return this._genericSetter("proba", value);
+            firstName: function(value) {
+                return this._genericSetter("FirstName", value);
             },
-            amount: function(value) {
-                return this._genericSetter("amount", value);
+            lastName: function(value) {
+                return this._genericSetter("LastName", value);
             },
-            user: function(value) {
-                return this._genericSetter("user", value);
+            title: function(value) {
+                return this._genericSetter("Title", value);
+            },
+            mobilePhone: function(value) {
+                return this._genericSetter("MobilePhone", value);
+            },
+            workPhone: function(value) {
+                return this._genericSetter("WorkPhone", value);
+            },
+            email: function(value) {
+                return this._genericSetter("Email", value);
+            },
+            companyId: function(value) {
+                return this._genericSetter("CompanyId", value);
+            },
+            company: function(value) {
+                return this._genericSetter("Company", value);
+            },
+            industry: function(value) {
+                return this._genericSetter("Industry", value);
+            },
+            nbEmpl: function(value) {
+                return this._genericSetter("NbEmpl", value);
+            },
+            city: function(value) {
+                return this._genericSetter("City", value);
+            },
+            address: function(value) {
+                return this._genericSetter("Address", value);
+            },
+            postalCode: function(value) {
+                return this._genericSetter("PostalCode", value);
             }
         });
         return DataLead;

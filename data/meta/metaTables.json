@@ -41,7 +41,7 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "state", 
+                                "Name": "Source",
                                 "FieldType": {
                                     "type": "string"
                                 }, 
@@ -56,7 +56,7 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "client", 
+                                "Name": "State",
                                 "FieldType": {
                                     "type": "string"
                                 }, 
@@ -71,9 +71,9 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "companyId", 
+                                "Name": "Content",
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "string"
                                 }, 
                                 "Order": 3
                             }, 
@@ -86,9 +86,9 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "contact", 
+                                "Name": "Creation",
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "date"
                                 }, 
                                 "Order": 4
                             }, 
@@ -101,9 +101,9 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "phone", 
+                                "Name": "Closed",
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "date"
                                 }, 
                                 "Order": 5
                             }, 
@@ -116,71 +116,11 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "email", 
+                                "Name": "OpportunityId",
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "int"
                                 }, 
                                 "Order": 6
-                            }, 
-                            "collections": { }
-                        }, 
-                        "7": {
-                            "$sys": {
-                                "guid": "e6be8ce8-a61d-bb4e-3d35-30532ffaa30c", 
-                                "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
-                            }, 
-                            "ver": 0, 
-                            "fields": {
-                                "Name": "contactId", 
-                                "FieldType": {
-                                    "type": "int"
-                                }, 
-                                "Order": 7
-                            }, 
-                            "collections": { }
-                        }, 
-                        "8": {
-                            "$sys": {
-                                "guid": "73662cd3-0087-21e4-138c-6f5e7b51399b", 
-                                "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
-                            }, 
-                            "ver": 0, 
-                            "fields": {
-                                "Name": "proba", 
-                                "FieldType": {
-                                    "type": "int"
-                                }, 
-                                "Order": 8
-                            }, 
-                            "collections": { }
-                        }, 
-                        "9": {
-                            "$sys": {
-                                "guid": "bd974d74-0ebe-5d99-e5ce-837a439d913d", 
-                                "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
-                            }, 
-                            "ver": 0, 
-                            "fields": {
-                                "Name": "amount", 
-                                "FieldType": {
-                                    "type": "int"
-                                }, 
-                                "Order": 9
-                            }, 
-                            "collections": { }
-                        }, 
-                        "10": {
-                            "$sys": {
-                                "guid": "2cc0871f-5e67-8942-5b92-e1107001989f", 
-                                "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
-                            }, 
-                            "ver": 0, 
-                            "fields": {
-                                "Name": "user", 
-                                "FieldType": {
-                                    "type": "int"
-                                }, 
-                                "Order": 10
                             }, 
                             "collections": { }
                         }
