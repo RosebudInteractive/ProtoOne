@@ -308,6 +308,92 @@
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
               },
               "collections": {
+                "Columns": [
+                  {
+                    "$sys": {
+                      "guid": "7a6be3dc-3235-4f76-7684-1a940433c73a",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5002,
+                      "Label": "Id",
+                      "Width": 2,
+                      "Field": "eb6fa823-11cf-6f34-053e-533c2d391b64"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "0e7edf0a-9648-804c-1200-df4cbf9bf408",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5001,
+                      "Label": "Source",
+                      "Width": 5,
+                      "Field": "296988a7-6d26-6fec-bd6f-de7cb565cc9b"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "40263777-70c8-3532-a683-6cec83378999",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5003,
+                      "Label": "State",
+                      "Width": 7,
+                      "Field": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "19d70a3d-1b52-2c0d-831a-7d4a35ddb56e",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5004,
+                      "Label": "Content",
+                      "Width": 58,
+                      "Field": "7e046710-cb8b-9414-5097-139ffe7ed389"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "181548f0-fdc0-9c90-ebaf-4a44c20f90e0",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5005,
+                      "Label": "Creation",
+                      "Width": 10,
+                      "Field": "a0e1e0e0-0c82-29ba-cd5d-b770aa9ffcc9"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "b5a3c5e5-d85e-e2d5-f10c-198f57c30ed2",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5006,
+                      "Label": "Closed",
+                      "Width": 10,
+                      "Field": "c34e850f-7c2d-cdf1-85b7-b74a2295cc73"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "e261cfc1-4935-2bee-0868-18c6cb64c3c8",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 5007,
+                      "Label": "OpportunityId",
+                      "Width": 8,
+                      "Field": "54ed8415-9663-d4e0-e19f-a6e2bf2ee7ad"
+                    }
+                  }
+              ]
               }
             },
 
