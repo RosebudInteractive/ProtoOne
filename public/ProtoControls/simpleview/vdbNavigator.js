@@ -290,6 +290,11 @@ define(
             var right = editor.find('.right');
             right.empty();
             if (obj.count) {
+
+                if ("getGuid" in obj)
+                    right.append('<p><span class="name" style="width: 54px;vertical-align: top;">Guid</span> <textarea style="width: 157px;height: 30px;" class="value"  >'+obj.getGuid()+'</textarea> <input style="vertical-align: top;" class="save" type="button" value="c" title="copy" onclick="$(this).prev().select(); document.execCommand(\'copy\');"></p>');
+                if ("getTypeGuid" in obj)
+                    right.append('<p><span class="name" style="width: 54px;vertical-align: top;">TypeGuid</span> <textarea style="width: 157px;height: 30px;" class="value"  >'+obj.getTypeGuid()+'</textarea> <input style="vertical-align: top;" class="save" type="button" value="c" title="copy" onclick="$(this).prev().select(); document.execCommand(\'copy\');"></p>');
                 for (var i = 0, len = obj.count(); i < len; i++) {
                     if (obj.getFieldType) {
                         var rightTpl = $(vDBNavigator._templates['right']);
