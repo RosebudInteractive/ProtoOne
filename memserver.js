@@ -83,7 +83,7 @@ function fakeAuthenticate(user, pass, done) {
 
 
 var config = {
-    controls:[
+    controls: [
         { className: 'DataContact', component: '../DataControls/dataContact', guid: '73596fd8-6901-2f90-12d7-d1ba12bae8f4' },
         { className: 'DataContract', component: '../DataControls/dataContract', guid: '08a0fad1-d788-3604-9a16-3544a6f97721' },
         { className: 'DataCompany', component: '../DataControls/dataCompany', guid: '59583572-20fa-1f58-8d3f-5114af0f2c51' },
@@ -100,9 +100,17 @@ var config = {
         { className: 'MatrixGrid', component: 'matrixGrid', guid: '827a5cb3-e934-e28c-ec11-689be18dae97' },
         { className: 'PropEditor', component: 'propEditor', guid: 'a0e02c45-1600-6258-b17a-30a56301d7f1' }
     ],
-    controlsPath: __dirname+'/../ProtoOne/public/ProtoControls/',
-    dataPath: __dirname+'/../ProtoOne/data/',
-    uccelloPath: __dirname+'/../'+uccelloDir+'/'
+    
+    controlsPath: __dirname + '/../ProtoOne/public/ProtoControls/',
+    dataPath: __dirname + '/../ProtoOne/data/',
+    uccelloPath: __dirname + '/../' + uccelloDir + '/',
+    masaccioPath: __dirname + '/../Masaccio/wfe/',
+    
+    wfe : {
+        processStorage  : __dirname + '/ProtoOne/data/wfeData/',
+        scriptsPath     : __dirname + '/ProtoOne/data/wfeUserScripts/',
+        idleTimeout     : 10000
+    }
 };
 
 // модуль настроек
@@ -124,10 +132,18 @@ if (UCCELLO_CONFIG.logger.clearOnStart) {
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
 var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
+var EngineSingleton;
+
+if (fs.existsSync(UCCELLO_CONFIG.masaccioPath + 'engineSingleton.js'))
+    EngineSingleton = require(UCCELLO_CONFIG.masaccioPath + 'engineSingleton');
 
 // комуникационный модуль
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
-var uccelloServ = new UccelloServ({ authenticate: fakeAuthenticate, commServer: communicationServer });
+var uccelloServ = new UccelloServ({
+    authenticate: fakeAuthenticate,
+    commServer: communicationServer,
+    engineSingleton: EngineSingleton
+});
 
 // запускаем http сервер
 http.createServer(app).listen(UCCELLO_CONFIG.webServer.port, '0.0.0.0');
