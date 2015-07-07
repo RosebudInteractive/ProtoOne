@@ -89,6 +89,7 @@ var config = {
         { className: 'DataCompany', component: '../DataControls/dataCompany', guid: '59583572-20fa-1f58-8d3f-5114af0f2c51' },
         { className: 'DataAddress', component: '../DataControls/dataAddress', guid: '16ec0891-1144-4577-f437-f98699464948' },
         { className: 'DataLead', component: '../DataControls/dataLead', guid: '86c611ee-ed58-10be-66f0-dfbb60ab8907' },
+        { className: 'DataOpportunity', component: '../DataControls/dataOpportunity', guid: '5b64caea-45b0-4973-1496-f0a9a44742b7' },
         { className: 'DataIncomeplan', component: '../DataControls/dataIncomeplan', guid: '56cc264c-5489-d367-1783-2673fde2edaf' },
         { className: 'RootAddress', component: '../DataControls/rootAddress', guid: '07e64ce0-4a6c-978e-077d-8f6810bf9386' },
         { className: 'RootCompany', component: '../DataControls/rootCompany', guid: '0c2f3ec8-ad4a-c311-a6fa-511609647747' },

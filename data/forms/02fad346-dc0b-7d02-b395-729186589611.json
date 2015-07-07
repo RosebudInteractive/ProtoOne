@@ -65,7 +65,90 @@
                       "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
                       "Active": true
                     },
-                    "collections": {}
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "fa866d8f-725e-f688-3de6-c0a782c95d5e",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "14026604-f339-348e-abee-02b9f0cbf9f9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6001,
+                            "Name": "CompanyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3e9600e8-e4e8-cbef-39ab-c195fbe382cb",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id":6003,
+                            "Name": "Company"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "d1950452-80e5-0196-d5ea-e6fb1cb38676",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6004,
+                            "Name": "Industry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1299f8bc-4de5-5ad4-1486-8e91edf3d7a2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6005,
+                            "Name": "NbEmpl"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3512f50f-750b-9025-2e19-cc66c4823417",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6006,
+                            "Name": "City"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b91eea9e-36d1-f45a-a9c0-b3b9fe31d07f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6007,
+                            "Name": "Address"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "9680e45c-70ef-1f85-0838-e0bcfb0ad81f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6008,
+                            "Name": "PostalCode"
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -82,7 +165,7 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Name"
+                "Label": "Company"
               },
               "collections": {}
             },
@@ -99,7 +182,7 @@
                 "Width": 190,
                 "Height": 23,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
-                "DataField": "Name"
+                "DataField": "Company"
               },
               "collections": {}
             },
@@ -115,7 +198,7 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "country"
+                "Label": "Industry"
               },
               "collections": {}
             },
@@ -132,7 +215,7 @@
                 "Width": 190,
                 "Height": 23,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
-                "DataField": "country"
+                "DataField": "Industry"
               },
               "collections": {}
             },
@@ -148,7 +231,7 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "city"
+                "Label": "NbEmpl"
               },
               "collections": {}
             },
@@ -165,7 +248,7 @@
                 "Width": 190,
                 "Height": 23,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
-                "DataField": "city"
+                "DataField": "NbEmpl"
               },
               "collections": {}
             },
@@ -181,7 +264,7 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "address"
+                "Label": "Address"
               },
               "collections": {}
             },
@@ -198,7 +281,7 @@
                 "Width": 190,
                 "Height": 23,
                 "Dataset": "11cdec62-0a44-ddfb-0dd2-f42cfc88157a",
-                "DataField": "address"
+                "DataField": "Address"
               },
               "collections": {}
             }
