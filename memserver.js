@@ -107,8 +107,8 @@ var config = {
     masaccioPath: __dirname + '/../Masaccio/wfe/',
     
     wfe : {
-        processStorage  : __dirname + '/ProtoOne/data/wfeData/',
-        scriptsPath     : __dirname + '/ProtoOne/data/wfeUserScripts/',
+        processStorage  : __dirname + '/../ProtoOne/data/wfeData/',
+        scriptsPath     : __dirname + '/../ProtoOne/data/wfeUserScripts/',
         idleTimeout     : 10000
     }
 };
