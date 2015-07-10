@@ -12,13 +12,13 @@ define(
             metaCols: [],
             metaFields: [
                 {fname:"Id",ftype:"int"},
-                {fname:"parent",ftype:"integer"},
-                {fname:"firstname",ftype:"string"},
-                {fname:"lastname",ftype:"string"},
-                {fname:"birthdate",ftype:"date"},
-                {fname:"country",ftype:"string"},
-                {fname:"city",ftype:"string"},
-                {fname:"address",ftype:"string"}
+                {fname:"CompanyId",ftype:"int"},
+                {fname:"FirstName",ftype:"string"},
+                {fname:"LastName",ftype:"string"},
+                {fname:"Title",ftype:"date"},
+                {fname:"MobilePhone",ftype:"string"},
+                {fname:"WorkPhone",ftype:"string"},
+                {fname:"Email",ftype:"string"}
             ],
 
             init: function(cm,params){
@@ -28,28 +28,26 @@ define(
             id: function(value) {
                 return this._genericSetter("Id",value);
             },
-
-            parent: function(value) {
-                return this._genericSetter("parent", value);
+            companyId: function(value) {
+                return this._genericSetter("Id",value);
             },
-
-            firstname: function(value) {
-                return this._genericSetter("firstname", value);
+            firstName: function(value) {
+                return this._genericSetter("FirstName", value);
             },
-            lastname: function(value) {
-                return this._genericSetter("lastname", value);
+            lastName: function(value) {
+                return this._genericSetter("LastName", value);
             },
-            birthdate: function(value) {
-                return this._genericSetter("birthdate", value);
+            title: function(value) {
+                return this._genericSetter("Title", value);
             },
-            country: function(value) {
-                return this._genericSetter("country", value);
+            mobilePhone: function(value) {
+                return this._genericSetter("mobilePhone", value);
             },
-            city: function(value) {
-                return this._genericSetter("city", value);
+            workPhone: function(value) {
+                return this._genericSetter("WorkPhone", value);
             },
-            address: function(value) {
-                return this._genericSetter("address", value);
+            email: function(value) {
+                return this._genericSetter("Email", value);
             }
         });
         return DataContact;

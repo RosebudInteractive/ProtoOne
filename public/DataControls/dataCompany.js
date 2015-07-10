@@ -12,10 +12,13 @@ define(
             metaCols: [],
             metaFields: [
                 {fname:"Id",ftype:"int"},
-                {fname:"Name",ftype:"string"},
-                {fname:"country",ftype:"string"},
-                {fname:"city",ftype:"string"},
-                {fname:"address",ftype:"string"}
+                {fname:"CompanyId",ftype:"int"},
+                {fname:"Company",ftype:"string"},
+                {fname:"Industry",ftype:"string"},
+                {fname:"NbEmpl",ftype:"int"},
+                {fname:"City",ftype:"string"},
+                {fname:"Address",ftype:"string"},
+                {fname:"PostalCode",ftype:"string"}
             ],
 
             init: function(cm,params){
@@ -23,22 +26,29 @@ define(
 				//this.uobjectInit(cm,params);
             },
 
-            country: function(value) {
-                return this._genericSetter("country", value);
-            },
-            city: function(value) {
-                return this._genericSetter("city", value);
-            },
-            address: function(value) {
-                return this._genericSetter("address", value);
-            },
-
             id: function(value) {
                 return this._genericSetter("Id",value);
             },
-
-            name: function(value) {
-                return this._genericSetter("Name",value);
+            companyId: function(value) {
+                return this._genericSetter("CompanyId", value);
+            },
+            company: function(value) {
+                return this._genericSetter("Company", value);
+            },
+            industry: function(value) {
+                return this._genericSetter("Industry", value);
+            },
+            nbEmpl: function(value) {
+                return this._genericSetter("NbEmpl",value);
+            },
+            city: function(value) {
+                return this._genericSetter("City",value);
+            },
+            address: function(value) {
+                return this._genericSetter("Address",value);
+            },
+            postalCode: function(value) {
+                return this._genericSetter("PostalCode",value);
             }
         });
         return DataCompany;

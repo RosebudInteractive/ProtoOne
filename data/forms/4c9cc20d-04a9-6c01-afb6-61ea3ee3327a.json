@@ -65,52 +65,82 @@
                       "Fields": [
                         {
                           "$sys": {
-                            "guid": "8de602c9-4f68-8f74-71b0-2117a1297eb8",
+                            "guid": "6fcd46ad-cb18-e7c1-92cd-61d84333ecd5",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7001,
-                            "Name": "Name"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "ef66e4b0-a57c-4232-4b03-1f809da356b4",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 7002,
+                            "Id": 6002,
                             "Name": "Id"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "a4b6a20e-a354-52ad-0145-8065c9bf0d64",
+                            "guid": "14026604-f339-348e-abee-02b9f0cbf9f9",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7003,
-                            "Name": "country"
+                            "Id": 6001,
+                            "Name": "CompanyId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "7b5aa87a-e25b-5373-8bb0-3c95ec746282",
+                            "guid": "c13cb48d-57bf-1fbe-afc8-40abbbd64bbe",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7004,
-                            "Name": "city"
+                            "Id":6003,
+                            "Name": "Company"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "20e9f538-b71d-dfec-f1c8-d18a07d07506",
+                            "guid": "d1950452-80e5-0196-d5ea-e6fb1cb38676",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7005,
-                            "Name": "address"
+                            "Id": 6004,
+                            "Name": "Industry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1299f8bc-4de5-5ad4-1486-8e91edf3d7a2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6005,
+                            "Name": "NbEmpl"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3512f50f-750b-9025-2e19-cc66c4823417",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6006,
+                            "Name": "City"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b91eea9e-36d1-f45a-a9c0-b3b9fe31d07f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6007,
+                            "Name": "Address"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "9680e45c-70ef-1f85-0838-e0bcfb0ad81f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6008,
+                            "Name": "PostalCode"
                           }
                         }
                       ]
@@ -133,7 +163,7 @@
                       "Fields": [
                         {
                           "$sys": {
-                            "guid": "800ad10c-3e61-8d31-2237-e47a91d52661",
+                            "guid": "eb6fa823-11cf-6f34-053e-533c2d391b64",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
@@ -143,102 +173,202 @@
                         },
                         {
                           "$sys": {
-                            "guid": "2bcdeaa5-fcf2-1c89-fe75-5c1f55537502",
+                            "guid": "296988a7-6d26-6fec-bd6f-de7cb565cc9b",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5001,
-                            "Name": "state"
+                            "Name": "Source"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "264c6fbc-7551-ad8b-b400-87be79296af6",
+                            "guid": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5003,
-                            "Name": "client"
+                            "Name": "State"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "5b09b14b-c945-8a6c-39c7-639724c752e8",
+                            "guid": "7e046710-cb8b-9414-5097-139ffe7ed389",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5004,
-                            "Name": "companyId"
+                            "Name": "Content"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "19ce8153-4ac3-955e-f6f5-445d11e7ee11",
+                            "guid": "a0e1e0e0-0c82-29ba-cd5d-b770aa9ffcc9",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5005,
-                            "Name": "contact"
+                            "Name": "Creation"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "f63aea6a-f949-53db-2eaf-0044c210c2f2",
+                            "guid": "c34e850f-7c2d-cdf1-85b7-b74a2295cc73",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5006,
-                            "Name": "phone"
+                            "Name": "Closed"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "b41ab3f3-f5f6-2535-be71-c4caff30fcc3",
+                            "guid": "54ed8415-9663-d4e0-e19f-a6e2bf2ee7ad",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5007,
-                            "Name": "email"
+                            "Name": "OpportunityId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "33fe10ae-cd12-0e52-cba7-2fb262833369",
+                            "guid": "4c5fedcb-c43c-fb33-17e6-6df0e3b3e728",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5008,
-                            "Name": "contactId"
+                            "Name": "ContactId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "e8382634-e23b-61dc-72c5-4992a84f002f",
+                            "guid": "81d400b0-8f58-a800-576f-19ea369a994d",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5009,
-                            "Name": "proba"
+                            "Name": "FirstName"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "1c803f0d-ad6d-642e-cf7a-9dfbbcee6dba",
+                            "guid": "fc1bdfc6-906f-a742-1218-8454d9125623",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5010,
-                            "Name": "amount"
+                            "Name": "LastName"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "2475bf91-0055-973a-d703-5ee4591fdf6d",
+                            "guid": "d0c2d70e-7572-de26-f8a3-a527e529db0d",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5011,
-                            "Name": "user"
+                            "Name": "Title"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "eca1ef71-09a7-11a2-e244-d611df8dd77a",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5012,
+                            "Name": "MobilePhone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2fec5ab0-24cf-83e5-5486-19dda237c4bf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5013,
+                            "Name": "WorkPhone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f0b24e9c-b140-bf20-1083-1edf425dfa74",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5014,
+                            "Name": "Email"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6819d5a5-0789-eda5-3cf8-43f128545ec9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5015,
+                            "Name": "CompanyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "bb76eac7-7f14-532f-bb28-72122339d7e0",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5016,
+                            "Name": "Company"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0bf0fc84-9c00-4d78-447b-242a18e3cd7d",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5017,
+                            "Name": "Industry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "808e498c-0586-17d0-1ce5-0ef3e65d6e12",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5018,
+                            "Name": "NbEmpl"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "771cf450-fb24-04ae-dbdc-a1d1ea4a1450",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5019,
+                            "Name": "City"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "dad54b1c-2a3c-a272-049a-42dd2a3a1351",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5020,
+                            "Name": "Address"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e6cdfb8-93d7-8dee-38f0-3e2cce92bfd6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5021,
+                            "Name": "PostalCode"
                           }
                         }
                       ]
@@ -249,7 +379,7 @@
             },
             {
               "$sys": {
-                "guid": "eeba901d-1c23-d0b0-d35d-795f5af807f4",
+                "guid": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                 "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
               },
               "fields": {
@@ -257,7 +387,7 @@
                 "Name": "DataGridCompanyLead",
                 "Top": "67",
                 "Left": "10",
-                "Width": 900,
+                "Width": 1300,
                 "Height": 400,
                 "Dataset": "cca4004b-da87-d016-a992-01fbaa8189f9"
               },

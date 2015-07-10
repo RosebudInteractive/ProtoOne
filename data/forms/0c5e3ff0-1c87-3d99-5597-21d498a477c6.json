@@ -65,52 +65,82 @@
                       "Fields": [
                         {
                           "$sys": {
-                            "guid": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 7001,
-                            "Name": "Name"
-                          }
-                        },
-                        {
-                          "$sys": {
                             "guid": "c1f02d7a-1bc7-6605-3bca-08dd4d69fb8e",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7002,
+                            "Id": 6002,
                             "Name": "Id"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "004f0127-28d8-9d21-956a-5ac64e2f8b2b",
+                            "guid": "14026604-f339-348e-abee-02b9f0cbf9f9",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7003,
-                            "Name": "country"
+                            "Id": 6001,
+                            "Name": "CompanyId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "a3fc8491-c96b-f272-9065-ec1970771e16",
+                            "guid": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7004,
-                            "Name": "city"
+                            "Id":6003,
+                            "Name": "Company"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "994097a4-2aa1-80e6-528e-707ac722fb8d",
+                            "guid": "d1950452-80e5-0196-d5ea-e6fb1cb38676",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
-                            "Id": 7005,
-                            "Name": "address"
+                            "Id": 6004,
+                            "Name": "Industry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "1299f8bc-4de5-5ad4-1486-8e91edf3d7a2",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6005,
+                            "Name": "NbEmpl"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3512f50f-750b-9025-2e19-cc66c4823417",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6006,
+                            "Name": "City"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b91eea9e-36d1-f45a-a9c0-b3b9fe31d07f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6007,
+                            "Name": "Address"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "9680e45c-70ef-1f85-0838-e0bcfb0ad81f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 6008,
+                            "Name": "PostalCode"
                           }
                         }
                       ]

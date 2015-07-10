@@ -7,24 +7,29 @@ requirejs.config({
     }
 }); 
 
-var uccelloClt = null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var uccelloClt = null, $u=null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
-    require(['./uccello/config/config'], function(Config){
+    require(['./uccello/config/config', './uccello/system/utils'], function(Config, Utils){
         var config = {
             controls: [
                 {className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
                 {className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
+                {className:'RootTstCompany', component:'../DataControls/rootTstCompany', guid:'c4d626bf-1639-2d27-16df-da3ec0ee364e'},
                 {className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
+                {className:'RootTstContact', component:'../DataControls/rootTstContact', guid:'de984440-10bd-f1fd-2d50-9af312e1cd4f'},
                 {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
                 {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
                 {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
+                {className:'DataTstContact', component:'../DataControls/dataTstContact', guid:'27ce7537-7295-1a45-472c-a422e63035c7'},
                 {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
                 {className:'DataCompany', component:'../DataControls/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c51'},
+                {className:'DataTstCompany', component:'../DataControls/dataTstCompany', guid:'34c6f03d-f6ba-2203-b32b-c7d54cd0185a'},
                 {className:'DataAddress', component:'../DataControls/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
                 {className:'DataLead', component:'../DataControls/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
+                {className:'DataOpportunity', component: '../DataControls/dataOpportunity', guid: '5b64caea-45b0-4973-1496-f0a9a44742b7' },
                 {className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
                 {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
                 {className:'MatrixGrid', component:'matrixGrid', viewset:true, guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
@@ -50,8 +55,8 @@ $(document).ready( function() {
         UCCELLO_CONFIG = new Config(config);
 
     require(
-        ['./uccello/uccelloClt', './uccello/connection/commClient'],
-        function(UccelloClt, CommunicationClient){
+        ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr'],
+        function(UccelloClt, CommunicationClient, ControlMgr){
 
             setTimeout(function(){
 
@@ -276,6 +281,9 @@ $(document).ready( function() {
                 newTabCallback: that.newTab,
                 commClient: commClient
             });
+
+            // глобальная переменная для доступа к методом дебага
+            $u = uccelloClt.getDebugApi();
 
             /**
              * Получить датасеты текущего контекста и отобразить в комбо
@@ -539,6 +547,245 @@ $(document).ready( function() {
                         selectedRow = 1;
                     //console.time('click');
                 }, testFreq);
+            }
+
+
+            window.parseForm = function(code) {
+                var lines = code.split("\n");
+                var sections = [];
+
+                function getLevel(node) {
+                    var level = 0;
+                    for(var i=0; i<node.length; i++) {
+                        if (node.charAt(i) == ' ')
+                            level++;
+                        else
+                            break;
+                    }
+                    return level;
+                }
+
+                function getChildsNodes(node, index) {
+                    var childs = [];
+                    for (var i = index+1; i < lines.length; i++)
+                        if (getLevel(node)+1 == getLevel(lines[i]))
+                            childs.push([lines[i], i]);
+                    return childs;
+                }
+
+                function getFields(dsName) {
+                    var dmDb = uccelloClt.getDatamanCM();
+                    var metaDataMgr = uccelloClt.getDatamanCM().getRoot(1).obj;
+                    var model = metaDataMgr.getModel(dsName);
+                    var fields = [];
+                    if (model) {
+                        var modelCol = model.getCol('Fields');
+                        for(var i=0; i<modelCol.count(); i++) {
+                            var field = modelCol.get(i);
+                            fields.push({
+                                "$sys": {
+                                    "guid": Utils.guid(),
+                                    "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                    "Id": Utils.id(),
+                                    "Name": field.get('Name')
+                                }
+                            });
+                        }
+                    }
+                    return fields;
+                }
+
+                function parseLine(line, parentLine) {
+                    var re = /^\s*(.+)\((.+)\)-(.+)$/i;
+                    var matches = re.exec(line);
+                    var matchesParent = re.exec(parentLine);
+
+                    if (matches) {
+                        var dsName = matches[1].trim();
+                        var dsGuid = matches[2].trim().split(',')[0];
+                        var dsRoot = matches[2].trim().split(',')[1];
+                        var layouts = matches[3].trim().split(',');
+                        var objs = [];
+                        var childcont = null;
+
+                        var dataset = {
+                            "$sys": {
+                                "guid": dsGuid,
+                                "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                            },
+                            "fields": {
+                                "Id": Utils.id(),
+                                "Name": dsName,
+                                "Root": dsRoot,
+                                "Active": true,
+                                "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
+                            },
+                            "collections": {
+                                "Fields": getFields(dsName)
+                            }
+                        };
+                        if (matchesParent && matchesParent[2]) {
+                            dataset.fields.Master = matchesParent[2].split(',')[0];
+                        }
+
+                        for(var i=0; i<layouts.length; i++) {
+                            var layout = layouts[i].trim();
+                            var id = Utils.id();
+                            switch (layout) {
+                                case 'GRID':
+                                    objs.push({
+                                        "$sys": {
+                                            "guid": Utils.guid(),
+                                            "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                                        },
+                                        "fields": {
+                                            "Id": id,
+                                            "Name": "DataGrid"+id,
+                                            "Dataset": dsGuid
+                                    }});
+                                    break;
+                                case 'EDIT':
+                                    var fields = getFields(dsName);
+                                    var container  = {
+                                        "$sys": {
+                                            "guid": "15e8110a-1453-725a-c443-c63f9f10ef6a",
+                                            "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                                        },
+                                        "fields": {
+                                            "Id": id,
+                                            "Name": "MainContainer"+id
+                                        },
+                                        "collections": {
+                                            "Children": []
+                                        }
+                                    };
+                                    for(var j=0; j<fields.length; j++) {
+                                        container.collections.Children.push({
+                                            "$sys": {
+                                                "guid": Utils.guid(),
+                                                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                                            },
+                                            "fields": {
+                                                "Id": Utils.id(),
+                                                "Name": fields[j].fields.Name+id,
+                                                "Top": j*23,
+                                                "Width": 190,
+                                                "Height": 23,
+                                                "Dataset": dsGuid,
+                                                "DataField": fields[j].fields.Name
+                                            }
+                                        });
+                                    }
+                                    objs.push(container);
+                                    break;
+                                case 'CR':
+                                   // break;
+                                case 'CHILDCONT':
+                                    childcont = {
+                                        "$sys": {
+                                            "guid": Utils.guid(),
+                                            "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
+                                        },
+                                        "fields": {
+                                            "Id": id,
+                                            "Name": 'Container'+id
+                                        },
+                                        "collections": {
+                                            "Children": []
+                                        }
+                                    };
+                                    break;
+                            }
+                        }
+                    }
+                    return [dataset, objs, childcont];
+                }
+
+
+                function processSection(objs, rootNode, index) {
+                    var childNodes = getChildsNodes(rootNode, index);
+                    if (!objs) {
+                        objs = [];
+                        objs.push(parseLine(rootNode, null));
+                    }
+                    for (var i = 0; i < childNodes.length; i++) {
+                        objs.push(parseLine(childNodes[i][0], rootNode));
+                        processSection(objs, childNodes[i][0], childNodes[i][1]);
+                    }
+                    return objs;
+                }
+
+                function getDatasets(){
+                    var datasets = [];
+                    for(var i=0; i<sections.length; i++)
+                        for (var j = 0; j < sections[i].length; j++)
+                            datasets.push(sections[i][j][0]);
+                    return datasets;
+                }
+
+                // находим секции
+                for(var i=0; i<lines.length; i++) {
+                    if (lines[i].charAt(0) != ' ') {
+                        var section = processSection(null, lines[i], i);
+                        sections.push(section);
+                    }
+                }
+
+                var formId = Utils.id();
+                var form = {
+                    "$sys":{
+                        "guid":Utils.guid(),
+                        "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+                    },
+                    "fields":{
+                        "Id":formId,
+                        "Name":"Form"+formId,
+                        "Title": "Form"+formId,
+                        "dbgName": "Form"+formId
+                    },
+                    "collections": {
+                        "Params": [
+                            {
+                                "$sys": {
+                                    "guid": Utils.guid(),
+                                    "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
+                                },
+                                "fields": {
+                                    "Id": 1457,
+                                    "Name": "FormParam1",
+                                    "Type": "param",
+                                    "Kind": "out",
+                                    "Value": ""
+                                }
+                            }
+                        ],
+                        "Children": [
+                            {
+                                "$sys": {
+                                    "guid": Utils.guid(),
+                                    "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
+                                },
+                                "fields": {
+                                    "Id": 127,
+                                    "Name": "DataModel"
+                                },
+                                "collections": {
+                                    "Datasets": getDatasets()
+                                }
+                            }
+                        ]
+                    }
+                };
+
+                for(var i=0; i<sections.length; i++)
+                    for (var j = 0; j < sections[i].length; j++)
+                        for (var k = 0; k < sections[i][j][1].length; k++)
+                            form.collections.Children.push(sections[i][j][1][k]);
+
+                console.log(sections);
+                console.log(JSON.stringify(form, null, 4));
             }
 
             // ----------------------------------------------------------------------------------------------------
