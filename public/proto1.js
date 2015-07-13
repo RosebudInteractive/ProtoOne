@@ -40,6 +40,7 @@ $(document).ready( function() {
                 {className:'VContainer', viewset:true},
                 {className:'GContainer', viewset:true},
                 {className:'FContainer', viewset:true},
+                {className:'TabContainer', viewset:true},
                 {className:'Form', viewset:true},
                 {className:'Button', viewset:true},
                 {className:'DataGrid', viewset:true},
