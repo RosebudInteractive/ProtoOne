@@ -599,7 +599,9 @@ $(document).ready( function() {
                     return fields;
                 }
 
+                var posX=0, posY=0, childcont = null;
                 function parseLine(line, parentLine) {
+                    posX=0;
                     var re = /^\s*(.+)\((.+)\)-([^|]+)\|(.+)$/i;
                     var matches = re.exec(line);
                     var matchesParent = re.exec(parentLine);
@@ -611,7 +613,7 @@ $(document).ready( function() {
                         var layouts = matches[3].trim().split(',');
                         var dsGuid = matches[4].trim();
                         var objs = [];
-                        var childcont = null;
+
 
                         var dsFields = getFields(dsGuidObj);
                         var dataset = {
@@ -646,6 +648,14 @@ $(document).ready( function() {
 
                         for(var i=0; i<layouts.length; i++) {
                             var layout = layouts[i].trim();
+                            var re = /^(.+)\[(.+)\]/i;
+                            var matchParam = re.exec(layout);
+                            var params = [];
+                            if (matchParam) {
+                                layout = matchParam[0].trim();
+                                params = matchParam[1].trim().split(';');
+                            }
+
                             var id = Utils.id();
                             switch (layout) {
                                 case 'GRID':
@@ -664,9 +674,21 @@ $(document).ready( function() {
                                     var objFields = {
                                             "Id": obj.fields.Id,
                                             "Name": obj.fields.Name,
-                                            "Dataset": genDsGuid
+                                            "Dataset": genDsGuid,
+                                            Width: 70*dsFields.length,
+                                            Height: 200,
+                                            Top:posY,
+                                            Left:posX
                                     };
-                                    $u.add('DataGrid', obj.fields.Name, objFields, 'EmptyForm');
+                                    for(var p=0;p<params.length; p++) {
+                                        var pname=params.split(':')[0];
+                                        var pvalue=params.split(':')[1];
+                                        if (pname && pvalue)
+                                            objFields[pname] = pvalue;
+                                    }
+                                    //$u.add('VContainer', "VContainer"+id, {}, 'MainContainerParse');
+                                    $u.add('DataGrid', obj.fields.Name, objFields, childcont?childcont.fields.Name:'MainContainerParse');
+                                    posX+= 70*dsFields.length;
                                     break;
                                 case 'EDIT':
                                     var fields = getFields(dsGuidObj);
@@ -677,13 +699,23 @@ $(document).ready( function() {
                                         },
                                         "fields": {
                                             "Id": id,
-                                            "Name": "Container"+id
+                                            "Name": "Container"+id,
+                                            Width: 300,
+                                            Height: 200,
+                                            Top:posY,
+                                            Left:posX
                                         },
                                         "collections": {
                                             "Children": []
                                         }
                                     };
-                                    $u.add('CContainer', container.fields.Name, container.fields, 'EmptyForm');
+                                    for(var p=0;p<params.length; p++) {
+                                        var pname=params.split(':')[0];
+                                        var pvalue=params.split(':')[1];
+                                        if (pname && pvalue)
+                                            container.fields[pname] = pvalue;
+                                    }
+                                    $u.add('CContainer', container.fields.Name, container.fields, childcont?childcont.fields.Name:'MainContainerParse');
                                     for(var j=0; j<fields.length; j++) {
                                         var obj = {
                                             "$sys": {
@@ -713,11 +745,27 @@ $(document).ready( function() {
                                         };
                                         $u.add('DataEdit', obj.fields.Name, objFields, container.fields.Name);
                                     }
+                                    posX+=70*dsFields.length>300?70*dsFields.length:300;
                                     objs.push(container);
                                     break;
                                 case 'CR':
-                                   // break;
+                                    posY+=200;
+                                    posX-=70*dsFields.length;
+                                    break;
                                 case 'CHILDCONT':
+                                    var contParams = {Top:0, Left:posX, Width:'100%', Height:'100%'};
+                                    for(var p=0;p<params.length; p++) {
+                                        var pname=params.split(':')[0];
+                                        var pvalue=params.split(':')[1];
+                                        if (pname && pvalue)
+                                            contParams = pvalue;
+                                    }
+
+                                    $u.add('HContainer', 'HContainer'+id, contParams, childcont?childcont.fields.Name:'MainContainerParse');
+                                    $u.add('CContainer', 'Container'+id, {Width:'100%', Height:'100%'}, 'HContainer'+id);
+                                    posX = 0;
+                                    posY = 0;
+
                                     childcont = {
                                         "$sys": {
                                             "guid": Utils.guid(),
@@ -731,6 +779,8 @@ $(document).ready( function() {
                                             "Children": []
                                         }
                                     };
+
+                                    //posX+=300;
                                     break;
                             }
                         }
@@ -766,7 +816,9 @@ $(document).ready( function() {
 
                 // добавляем датамодель
                 $u.add('ADataModel', 'DataModelParse', null, 'EmptyForm');
+                $u.add('CContainer', 'MainContainerParse', {Width:100, Height:100}, 'EmptyForm');
 
+                posX=0; posY=0;
                 for(var i=0; i<lines.length; i++) {
                     if (lines[i].charAt(0) != ' ') {
                         var section = processSection(null, lines[i], i);
