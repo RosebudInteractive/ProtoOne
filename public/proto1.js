@@ -753,6 +753,7 @@ $(document).ready( function() {
                                     posX-=70*dsFields.length;
                                     break;
                                 case 'CHILDCONT':
+                                case 'CHILDTABCONT':
                                     var contParams = {Top:0, Left:posX, Width:'100%', Height:'100%'};
                                     for(var p=0;p<params.length; p++) {
                                         var pname=params.split(':')[0];
@@ -762,7 +763,7 @@ $(document).ready( function() {
                                     }
 
                                     $u.add('HContainer', 'HContainer'+id, contParams, childcont?childcont.fields.Name:'MainContainerParse');
-                                    $u.add('CContainer', 'Container'+id, {Width:'100%', Height:'100%'}, 'HContainer'+id);
+                                    $u.add(layout=='CHILDCONT'?'CContainer':'TabContainer', 'Container'+id, {Width:'100%', Height:'100%'}, 'HContainer'+id);
                                     posX = 0;
                                     posY = 0;
 
