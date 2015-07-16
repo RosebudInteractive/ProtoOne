@@ -25,7 +25,7 @@ define(
                     var objTypeGuid = response.findParameter("objTypeGuid").value();
                     var flds = response.findParameter("flds").value();
                     
-                    console.log("Create new object started:");
+                    console.log("New object creation started:");
                     console.log("  dbGuid: " + dbGuid);
                     console.log("  rootGuid: " + rootGuid);
                     console.log("  objTypeGuid: " + objTypeGuid);
