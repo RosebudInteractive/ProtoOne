@@ -48,7 +48,55 @@ define(
                 } else {
                     throw 'scriptObject не определен'
                 }
-            }
+            },
+            
+            _locateObj : function (uri) {
+                var obj = null;
+                var i = uri.indexOf("://");
+                if (i >= 0) {
+                    var scheme = uri.substring(0, i);
+                    if (scheme === "memdb") {
+                        var j = uri.indexOf(".");
+                        if (j >= 0) {
+                            var dbGuid = uri.substring(i + 3, j);
+                            var objGuid = uri.substring(j + 1, uri.length);
+                            var db = this.scriptObject.processFacade.getDB().getController().getDB(dbGuid);
+                            obj = db ? db.getObj(objGuid) : null;
+                        };
+                    };
+                };
+                return obj;
+            },
+            
+            execObjMethod : function () {
+                
+                if (this.scriptObject) {
+                    var response = this.scriptObject.processFacade
+                    .currentToken().getPropertiesOfNode("UserTask1").responses().get(0);
+                    
+                    var objURI = response.findParameter("objURI").value();
+                    var args = response.findParameter("args").value();
+                    var obj = this._locateObj(objURI);
+
+                    console.log("New object creation started:");
+                    console.log("  dbGuid: " + dbGuid);
+                    console.log("  rootGuid: " + rootGuid);
+                    console.log("  objTypeGuid: " + objTypeGuid);
+                    console.log("  flds: " + JSON.stringify(flds));
+                    
+                    console.log("### New object has been created !!!");
+                    
+                    var that = this;
+                    
+                    //setTimeout(function() {
+                    that.scriptObject.returnResult(null);
+                    //}, 0);
+                } else {
+                    throw 'scriptObject не определен'
+                }
+            },
+
+
         });
 
         return TestScript;
