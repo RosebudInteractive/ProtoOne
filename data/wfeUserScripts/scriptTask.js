@@ -70,6 +70,8 @@ define(
             
             execObjMethod : function () {
                 
+                console.log("==> [execObjMethod] started!");
+                
                 if (this.scriptObject) {
                     var response = this.scriptObject.processFacade
                     .currentToken().getPropertiesOfNode("UserTask1").responses().get(0);
@@ -78,13 +80,7 @@ define(
                     var args = response.findParameter("args").value();
                     var obj = this._locateObj(objURI);
 
-                    console.log("New object creation started:");
-                    console.log("  dbGuid: " + dbGuid);
-                    console.log("  rootGuid: " + rootGuid);
-                    console.log("  objTypeGuid: " + objTypeGuid);
-                    console.log("  flds: " + JSON.stringify(flds));
-                    
-                    console.log("### New object has been created !!!");
+                    console.log("<== [execObjMethod] finished!");
                     
                     var that = this;
                     
