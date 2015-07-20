@@ -56,8 +56,8 @@ $(document).ready( function() {
         UCCELLO_CONFIG = new Config(config);
 
     require(
-        ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr'],
-        function(UccelloClt, CommunicationClient, ControlMgr){
+        ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr', './leadEdit'],
+        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit){
 
             setTimeout(function(){
 
@@ -882,6 +882,9 @@ $(document).ready( function() {
                 console.log(JSON.stringify(form, null, 4));
 
             }
+
+            // переменная для формы crm-edit
+            $leadEdit = new LeadEdit(uccelloClt);
 
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------

@@ -22,6 +22,7 @@ define(
             }
 
             item.val(this.caption());
+            item.attr('disabled', this.enabled()===false? false: true);
         }
         return vButton;
     }

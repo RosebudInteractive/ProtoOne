@@ -52,7 +52,7 @@
                 "Datasets": [
                   {
                     "$sys": {
-                      "guid": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
+                      "guid": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
                       "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                     },
                     "fields": {
@@ -60,6 +60,7 @@
                       "Name": "DatasetLeadEdit",
                       "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                       "Active": true,
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
                       "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
                     },
                     "collections": {
@@ -81,7 +82,7 @@
                           },
                           "fields": {
                             "Id": 5001,
-                            "Name": "state"
+                            "Name": "Source"
                           }
                         },
                         {
@@ -91,7 +92,7 @@
                           },
                           "fields": {
                             "Id": 5003,
-                            "Name": "client"
+                            "Name": "State"
                           }
                         },
                         {
@@ -101,7 +102,7 @@
                           },
                           "fields": {
                             "Id": 5004,
-                            "Name": "companyId"
+                            "Name": "Content"
                           }
                         },
                         {
@@ -111,7 +112,7 @@
                           },
                           "fields": {
                             "Id": 5005,
-                            "Name": "contact"
+                            "Name": "Creation"
                           }
                         },
                         {
@@ -121,7 +122,7 @@
                           },
                           "fields": {
                             "Id": 5006,
-                            "Name": "phone"
+                            "Name": "Closed"
                           }
                         },
                         {
@@ -131,47 +132,147 @@
                           },
                           "fields": {
                             "Id": 5007,
-                            "Name": "email"
+                            "Name": "OpportunityId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "0eeebe01-ee89-2923-80aa-d05d195b006d",
+                            "guid": "4c5fedcb-c43c-fb33-17e6-6df0e3b3e728",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5008,
-                            "Name": "contactId"
+                            "Name": "ContactId"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "03d0837e-f530-9ecc-471c-61b860a05fa2",
+                            "guid": "81d400b0-8f58-a800-576f-19ea369a994d",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5009,
-                            "Name": "proba"
+                            "Name": "FirstName"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "7e31b95d-36ad-ff55-0390-2e1f4c4de3c6",
+                            "guid": "fc1bdfc6-906f-a742-1218-8454d9125623",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5010,
-                            "Name": "amount"
+                            "Name": "LastName"
                           }
                         },
                         {
                           "$sys": {
-                            "guid": "18113bf8-9b2f-98b1-2cbf-9e1470e7d8bf",
+                            "guid": "d0c2d70e-7572-de26-f8a3-a527e529db0d",
                             "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                           },
                           "fields": {
                             "Id": 5011,
-                            "Name": "user"
+                            "Name": "Title"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "eca1ef71-09a7-11a2-e244-d611df8dd77a",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5012,
+                            "Name": "MobilePhone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2fec5ab0-24cf-83e5-5486-19dda237c4bf",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5013,
+                            "Name": "WorkPhone"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f0b24e9c-b140-bf20-1083-1edf425dfa74",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5014,
+                            "Name": "Email"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6819d5a5-0789-eda5-3cf8-43f128545ec9",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5015,
+                            "Name": "CompanyId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "bb76eac7-7f14-532f-bb28-72122339d7e0",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5016,
+                            "Name": "Company"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0bf0fc84-9c00-4d78-447b-242a18e3cd7d",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5017,
+                            "Name": "Industry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "808e498c-0586-17d0-1ce5-0ef3e65d6e12",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5018,
+                            "Name": "NbEmpl"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "771cf450-fb24-04ae-dbdc-a1d1ea4a1450",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5019,
+                            "Name": "City"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "dad54b1c-2a3c-a272-049a-42dd2a3a1351",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5020,
+                            "Name": "Address"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "7e6cdfb8-93d7-8dee-38f0-3e2cce92bfd6",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5021,
+                            "Name": "PostalCode"
                           }
                         }
                       ]
@@ -187,7 +288,7 @@
                       "Name": "DatasetIncomeplan",
                       "Root": "8770f400-fd42-217c-90f5-507ca52943c2",
                       "Active": true,
-                      "Master": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a"
+                      "Master": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
                     },
                     "collections": {
                       "Fields": [
@@ -264,13 +365,13 @@
             },
             {
               "$sys": {
-                "guid": "3289602b-2261-6623-7e7f-30abce4719e5",
+                "guid": "25da1515-d770-37ec-caad-73b840d26612",
                 "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
               },
               "fields": {
                 "Id": 3007,
                 "Name": "LabelId",
-                "Top": 55,
+                "Top": 50,
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
@@ -279,235 +380,212 @@
             },
             {
               "$sys": {
-                "guid": "109e9d5a-3d3e-6fee-3d1d-4f41e4be5371",
+                "guid": "d9913e62-d5f7-8b4b-9717-5c34ffe9c57b",
                 "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
               },
               "fields": {
                 "Id": 3007,
                 "Name": "LeadId",
-                "Top": 50,
+                "Top": 45,
                 "Left": 100,
                 "Width": 190,
                 "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "Id"
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Id",
+                "Enabled": false
               }
             },
             {
               "$sys": {
-                "guid": "e6462516-32ce-32b8-290a-6c400ecab494",
+                "guid": "c341e242-7a13-e469-fcb3-c5c0be053a8d",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelSource",
+                "Top": 72,
+                "Left": 10,
+                "Width": 190,
+                "Height": 23,
+                "Label": "Source"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "eadd6911-0beb-7de2-e663-332bfddc4a9b",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadSource",
+                "Top": 67,
+                "Left": 100,
+                "Width": 190,
+                "Height": 23,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Source",
+                "Enabled": false
+              }
+            },
+            {
+              "$sys": {
+                "guid": "80e4c4ea-bc01-449a-c9e5-7145c1318837",
                 "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
               },
               "fields": {
                 "Id": 3007,
                 "Name": "LabelState",
-                "Top": 77,
-                "Left": 10,
-                "Width": 190,
-                "Height": 23,
-                "Label": "state"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "13a9da4c-9a10-ceee-28a6-1442cb8b7d4c",
-                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LeadState",
-                "Top": 72,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "state"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "e6462516-32ce-32b8-290a-6c400ecab494",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelState",
-                "Top": 77,
-                "Left": 10,
-                "Width": 190,
-                "Height": 23,
-                "Label": "state"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "13a9da4c-9a10-ceee-28a6-1442cb8b7d4c",
-                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LeadState",
-                "Top": 72,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "state"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "fb15ae4a-64df-81c5-bc66-fb8731d63327",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelClient",
-                "Top": 99,
-                "Left": 10,
-                "Width": 190,
-                "Height": 23,
-                "Label": "client"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "b2788da2-58b5-c2bd-739d-d10967accd6a",
-                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LeadClient",
                 "Top": 94,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "client"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "8fe46a05-13bc-fff3-71d7-faccaaf9d1fd",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelCompanyId",
-                "Top": 121,
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "companyId"
+                "Label": "State"
               }
             },
             {
               "$sys": {
-                "guid": "97bfa7d7-1221-fe5b-3216-cf6e430b09cb",
+                "guid": "c6c83f69-2bce-37f6-5bc1-42534ae8b1ef",
                 "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
               },
               "fields": {
                 "Id": 3007,
-                "Name": "LeadCompanyId",
+                "Name": "LeadState",
+                "Top": 89,
+                "Left": 100,
+                "Width": 190,
+                "Height": 23,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "State",
+                "Enabled": false
+              }
+            },
+
+            {
+              "$sys": {
+                "guid": "fda67e8e-7acc-ae79-2fc6-db14a7bcb70d",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelContent",
                 "Top": 116,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "companyId"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "3ddd3888-8b75-f9d3-3107-3fbd1eb33473",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelContact",
-                "Top": 143,
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "contact"
+                "Label": "Content"
               }
             },
             {
               "$sys": {
-                "guid": "03dcdef6-12c3-9f21-6b57-15296b267426",
+                "guid": "63bb2eb6-f1a4-b951-0948-dfecc1f592e0",
                 "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
               },
               "fields": {
                 "Id": 3007,
-                "Name": "LeadContact",
+                "Name": "LeadContent",
+                "Top": 111,
+                "Left": 100,
+                "Width": 190,
+                "Height": 23,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Content",
+                "Enabled": false
+              }
+            },
+            {
+              "$sys": {
+                "guid": "2fc59e34-3f7c-5ace-69fb-44d5eeae35b3",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelCreation",
                 "Top": 138,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "contact"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "4e0e673c-d941-3c54-1fdd-2f8f9236a449",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelPhone",
-                "Top": 165,
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "phone"
+                "Label": "Creation"
               }
             },
             {
               "$sys": {
-                "guid": "b5977e14-d68d-e145-e4ac-87e127977244",
+                "guid": "4694da5e-9bce-8297-91bf-fdff05aa30ed",
                 "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
               },
               "fields": {
                 "Id": 3007,
-                "Name": "LeadPhone",
+                "Name": "LeadCreation",
+                "Top": 133,
+                "Left": 100,
+                "Width": 190,
+                "Height": 23,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Creation",
+                "Enabled": false
+              }
+            },
+            {
+              "$sys": {
+                "guid": "d5655cdb-02cf-e87e-5ae9-06142d9bfc46",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelClosed",
                 "Top": 160,
-                "Left": 100,
-                "Width": 190,
-                "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "phone"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "b5ee48a7-13cf-30ef-6625-0f5cdda28bd5",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 3007,
-                "Name": "LabelEmail",
-                "Top": 187,
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "email"
+                "Label": "Closed"
               }
             },
             {
               "$sys": {
-                "guid": "907ff70a-0a0c-dd1f-8015-03dbad574671",
+                "guid": "969f77b9-30ee-3b34-b5ce-82cd741a2328",
                 "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
               },
               "fields": {
                 "Id": 3007,
-                "Name": "LeadEmail",
-                "Top": 182,
+                "Name": "LeadClosed",
+                "Top": 155,
                 "Left": 100,
                 "Width": 190,
                 "Height": 23,
-                "Dataset": "cdb101b4-2bef-3b2a-f422-42e2cc46fc7a",
-                "DataField": "email"
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "Closed",
+                "Enabled": false
+              }
+            },
+            {
+              "$sys": {
+                "guid": "b54d3656-0ed5-ac79-3612-572f5f12ddb8",
+                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LabelOpportunityId",
+                "Top": 182,
+                "Left": 10,
+                "Width": 190,
+                "Height": 23,
+                "Label": "OpportunityId"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "af3790a1-5b62-37e6-01f8-b7f1f018ecea",
+                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+              },
+              "fields": {
+                "Id": 3007,
+                "Name": "LeadOpportunityId",
+                "Top": 177,
+                "Left": 100,
+                "Width": 190,
+                "Height": 23,
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "DataField": "OpportunityId",
+                "Enabled": false
               }
             },
             {
@@ -538,6 +616,91 @@
                 "Width": 190,
                 "Height": 23,
                 "Label": "<b>Incomeplan</b>"
+              }
+            },
+            {
+              "$sys": {
+                "guid": "933e4541-b070-832d-dbe0-de564971b1b9",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1033,
+                "Name": "EditButton",
+                "Top": 210,
+                "Left": 10,
+                "Caption": "EDIT",
+                "OnClick": " { $leadEdit.clickEdit(); }",
+                "Enabled": true
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "07b22b61-2bcc-a597-7cee-efd29a9acc26",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1034,
+                "Name": "SaveButton",
+                "Top": 236,
+                "Left": 10,
+                "Caption": "SAVE",
+                "OnClick": " { $leadEdit.clickSave(); }",
+                "Enabled": false
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "46dcd2b2-47fa-8363-9a57-3f876078550a",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1034,
+                "Name": "CancelButton",
+                "Top": 236,
+                "Left": 65,
+                "Caption": "CANCEL",
+                "OnClick": " { $leadEdit.clickCancel(); }",
+                "Enabled": false
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "60d63759-38e2-4c56-609a-b32c1f7b5a25",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1034,
+                "Name": "ConvertButton",
+                "Top": 210,
+                "Left": 60,
+                "Caption": "CONVERT",
+                "OnClick": " { $leadEdit.clickConvert(); }",
+                "Enabled": true
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "e28f8c3e-74f8-3925-cc14-38504a8572a4",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1034,
+                "Name": "ArchiveButton",
+                "Top": 210,
+                "Left": 144,
+                "Caption": "ARCHIVE",
+                "OnClick": " { $leadEdit.clickArchive(); }",
+                "Enabled": true
+              },
+              "collections": {
               }
             }
           ]
