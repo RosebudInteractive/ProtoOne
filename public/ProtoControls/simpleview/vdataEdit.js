@@ -30,7 +30,7 @@ define(
                 item.attr('disabled', false);
                 item.val(dataset? dataset.getField(this.dataField()): '');
             }
-            item.attr('disabled', this.enabled()===false? false: true);
+            item.attr('disabled', this.enabled()===false? true: false);
         }
         return vDataEdit;
     }
