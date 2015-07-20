@@ -27,8 +27,10 @@ define(
             if (this.dataset() && this.dataField()) {
                 //var dataset = that.getControlMgr().get(that.dataset());
                 var dataset = that.dataset();
+                item.attr('disabled', false);
                 item.val(dataset? dataset.getField(this.dataField()): '');
             }
+            item.attr('disabled', this.enabled()===false? true: false);
         }
         return vDataEdit;
     }
