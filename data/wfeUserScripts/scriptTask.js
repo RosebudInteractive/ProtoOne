@@ -3,13 +3,13 @@
  */
 if (typeof define !== 'function') {
     var define = require('amdefine')(module);
-    var Class = require('class.extend');
+    var UccelloClass = require(UCCELLO_CONFIG.uccelloPath + '/system/uccello-class');
 }
 
 define(
     [],
     function (){
-        var TestScript = Class.extend({
+        var TestScript = UccelloClass.extend({
             init : function() {
                 this.scriptObject = null;
             },
@@ -77,16 +77,20 @@ define(
                     .currentToken().getPropertiesOfNode("UserTask1").responses().get(0);
                     
                     var objURI = response.findParameter("objURI").value();
+                    var func = response.findParameter("func").value();
                     var args = response.findParameter("args").value();
                     var obj = this._locateObj(objURI);
-
-                    console.log("<== [execObjMethod] finished!");
                     
                     var that = this;
                     
-                    //setTimeout(function() {
-                    that.scriptObject.returnResult(null);
-                    //}, 0);
+                    function callback() {
+                        that.scriptObject.returnResult(null);
+                        console.log("<== [execObjMethod] finished!");
+                    }                    ;
+                    
+                    args.push(callback);
+                    obj[func].apply(obj, args);
+
                 } else {
                     throw 'scriptObject не определен'
                 }
