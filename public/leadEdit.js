@@ -20,6 +20,16 @@ define(
                 this.setEditForm(true);
             },
 
+            clickNext: function(edit) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                cm.getByName('DatasetLeadEdit').next();
+            },
+
+            clickPrev: function(edit) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                cm.getByName('DatasetLeadEdit').prev();
+            },
+
             clickSave: function(edit) {
                 this.setEditForm(false);
             },
@@ -33,6 +43,8 @@ define(
                 cm.getByName('EditButton').enabled(!edit);
                 cm.getByName('ConvertButton').enabled(!edit);
                 cm.getByName('ArchiveButton').enabled(!edit);
+                cm.getByName('NextButton').enabled(!edit);
+                cm.getByName('PrevButton').enabled(!edit);
                 cm.getByName('SaveButton').enabled(edit);
                 cm.getByName('CancelButton').enabled(edit);
                 cm.getByName('LeadId').enabled(edit);

@@ -643,7 +643,7 @@
               "fields": {
                 "Id": 1034,
                 "Name": "SaveButton",
-                "Top": 236,
+                "Top": 262,
                 "Left": 10,
                 "Caption": "SAVE",
                 "OnClick": " { $leadEdit.clickSave(); }",
@@ -660,7 +660,7 @@
               "fields": {
                 "Id": 1034,
                 "Name": "CancelButton",
-                "Top": 236,
+                "Top": 262,
                 "Left": 65,
                 "Caption": "CANCEL",
                 "OnClick": " { $leadEdit.clickCancel(); }",
@@ -698,6 +698,40 @@
                 "Left": 144,
                 "Caption": "ARCHIVE",
                 "OnClick": " { $leadEdit.clickArchive(); }",
+                "Enabled": true
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "2d4c60e2-7992-4363-27fc-28d2013cfb03",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1055,
+                "Name": "NextButton",
+                "Top": 236,
+                "Left": 66,
+                "Caption": "NEXT",
+                "OnClick": " { $leadEdit.clickNext(); }",
+                "Enabled": true
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "ada09fce-2e48-bee7-3dfd-053b72689a20",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1065,
+                "Name": "PrevButton",
+                "Top": 236,
+                "Left": 10,
+                "Caption": "PREV",
+                "OnClick": " { $leadEdit.clickPrev(); }",
                 "Enabled": true
               },
               "collections": {

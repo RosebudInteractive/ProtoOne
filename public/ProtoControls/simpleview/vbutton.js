@@ -9,17 +9,20 @@ define(
 
             if (item.length == 0) {
                 item = $(vButton._templates['button']).attr('id', this.getLid());
+                
+                if ("onClick" in this) {
+                    item.click(function(e){
+                        that.getControlMgr().userEventHandler(that, function(){
+                            that.onClick.apply(that);
+                        });
+                    });
+                }
+
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
 
-            if ("onClick" in this) {
-                item.click(function(e){
-                    that.getControlMgr().userEventHandler(that, function(){
-                        that.onClick.apply(that);
-                    });
-                });
-            }
+
 
             item.val(this.caption());
             item.attr('disabled', this.enabled()===false? true: false);
