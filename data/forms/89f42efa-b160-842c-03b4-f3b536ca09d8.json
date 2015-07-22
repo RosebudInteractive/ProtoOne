@@ -305,7 +305,8 @@
                 "Left": 10,
                 "Width": 1300,
                 "Height": 210,
-                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
+                "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
+                "Editable": true
               },
               "collections": {
                 "Columns": [
@@ -342,7 +343,8 @@
                       "Id": 5003,
                       "Label": "State",
                       "Width": 7,
-                      "Field": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648"
+                      "Field": "7e81d9b8-ffdd-9adb-b27e-50bed6bf9648",
+                      "Values": "Open|Converted|Canceled"
                     }
                   },
                   {
@@ -397,7 +399,7 @@
               }
             },
 
- 	    {
+ 	        {
               "$sys": {
                 "guid": "ac20ecfb-a534-758a-6abf-3868ca0eb588",
                 "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
@@ -409,6 +411,40 @@
                 "Left": 10,
                 "Caption": "New lead",
                 "OnClick": " { var recordid = Math.floor(Math.random()*10000)+10000; var cm = uccelloClt.getContextCM(); var datasetGuid = $('#contextDatasets').val(); var dataset = cm.get(datasetGuid); dataset.addObject({ fields:{Id:recordid, Name:'Record '+recordid, State:'state '+recordid,Source:'Source '+recordid,Content:'Content '+recordid,Creation:new Date().toISOString().slice(0, 19).replace('T', ' '),OpportunityId:recordid}}, function() { console.log('END ADD OBJ'); }); }"
+              },
+              "collections": {
+              }
+            },
+
+            {
+              "$sys": {
+                "guid": "10c7cb44-f3d5-3b71-b3a3-d264f063966b",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1033,
+                "Name": "EditableGridButton",
+                "Top": 382,
+                "Left": 100,
+                "Caption": "Editable",
+                "OnClick": " { var cm = uccelloClt.getContextCM(); var grid = cm.getByName('DataGridLead'); grid.editable(true); }"
+              },
+              "collections": {
+              }
+            },
+
+            {
+              "$sys": {
+                "guid": "d30a876d-38e5-35a8-0dd7-cb256bb4b73b",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1033,
+                "Name": "NoteditGridButton",
+                "Top": 382,
+                "Left": 166,
+                "Caption": "NotEditable",
+                "OnClick": " { var cm = uccelloClt.getContextCM(); var grid = cm.getByName('DataGridLead'); grid.editable(false); }"
               },
               "collections": {
               }

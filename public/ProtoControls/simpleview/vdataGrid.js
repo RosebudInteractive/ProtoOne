@@ -33,6 +33,7 @@ define(
                     if (rowTr.hasClass('data')){
                         e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){
+                            vDataGrid.saveRow.apply(that);
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                             that.dataset().cursor(rowTr.attr('data-id'));
                         });
@@ -134,9 +135,15 @@ define(
                 table.append(rows);
 
                 // устанавливаем курсор
-                if (cursorIndex != -1)
+                if (cursorIndex != -1) {
                     table.find('.row.data:eq(' + cursorIndex + ')').addClass('active');
+                    // если надо отобразить редактирование
+                    if (this.editable())
+                        vDataGrid.renderEditMode.apply(this, [cursorIndex]);
+                }
             }
+
+
 
             //if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }
@@ -148,6 +155,7 @@ define(
         vDataGrid.renderCursor = function(id) {
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');
+            var that = this;
             table.find('.row.active').removeClass('active');
             rowTr.addClass('active');
         }
@@ -205,6 +213,83 @@ define(
             for(var i = 0, len = rowsTr.length; i<len; i++)
                 $($(rowsTr[i]).children()[index]).css('width', width+'%');
         }
+
+        vDataGrid.renderEditMode = function(cursorIndex) {
+            this.pvt.cursorIndex = cursorIndex;
+            var cm = this.getControlMgr();
+            var rootElem = null, dataset = null;
+            if (this.dataset()) {
+                dataset = this.dataset();
+                if (dataset)
+                    rootElem = dataset.root();
+            }
+
+            if (rootElem) {
+                var col = rootElem.getCol('DataElements'), columns = this.getCol('Columns'), fields = this.getCol('Fields');
+                var cursor = col.get(cursorIndex);
+                var table = $('#' + this.getLid()).find('.table');
+                if (cursor) {
+                    var row = table.find('.row.data:eq(' + cursorIndex + ')');
+                    var tFields = columns.count()>0 ? columns : fields;
+                    for (var i = 0, len = columns.count(); i < len; i++) {
+                        var child =  $(row.children()[i]),
+                            field = tFields.get(i),
+                            name = columns.count()>0 ? field.field().name() : field.name(),
+                            val = cursor[name.charAt(0).toLowerCase() + name.slice(1)]();
+
+                        if (columns.count()>0 && field.values()) {
+                            var input = $('<select class="editField"/>')
+                                .width(child.width()-4)
+                                .attr('name', name);
+
+                                var values = field.values().split('|');
+                                for(var v = 0; v < values.length; v++) {
+                                    var option = $('<option/>').attr('value', values[v]).html(values[v]);
+                                    input.append(option);
+                                }
+                                input.val(val);
+                        } else {
+                            var input = $('<input class="editField"/>')
+                                .width(child.width()-4)
+                                .attr('name', name)
+                                .val(val);
+                        }
+
+                        child.empty();
+                        child.append(input);
+                    }
+                }
+            }
+        }
+
+
+
+        vDataGrid.saveRow = function() {
+            if (this.editable()) {
+                var cm = this.getControlMgr();
+                var rootElem = null, dataset = null;
+                if (this.dataset()) {
+                    dataset = this.dataset();
+                    if (dataset)
+                        rootElem = dataset.root();
+                }
+
+                if (rootElem) {
+                    var col = rootElem.getCol('DataElements'), columns = this.getCol('Columns'), fields = this.getCol('Fields');
+                    var cursor = col.get(this.pvt.cursorIndex);
+                    if (cursor) {
+                        var table = $('#' + this.getLid()).find('.table');
+                        var edits = table.find('.editField');
+                        for(var i=0, len=edits.length; i<len; i++) {
+                            var name = $(edits[i]).attr('name');
+                            var val = $(edits[i]).val();
+                            cursor[name.charAt(0).toLowerCase() + name.slice(1)](val);
+                        }
+                    }
+                }
+            }
+        }
+
 
         return vDataGrid;
     }
