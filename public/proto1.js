@@ -408,7 +408,7 @@ $(document).ready( function() {
              * Создать рут ресурсов (не данных)
              */
             window.createRoot = function(){
-                var formGuids = $('#selForm').val();
+                var formGuids = [$('#selForm').val()];
                 var context = $('#userContext').val()? $('#userContext').val().split(',')[0]: url('#context');
                 var contextObj = uccelloClt.getSysCM().get(context);
                 var selSub = $('#selSub').is(':checked');

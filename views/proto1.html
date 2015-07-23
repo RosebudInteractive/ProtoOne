@@ -40,7 +40,7 @@
 
     <table style="display: inline-block;vertical-align: bottom;;">
         <tr><td></td></tr>
-        <tr><td><select id="selForm" multiple size="3">
+        <tr><td><select id="selForm" >  <!--multiple size="3">-->
             <option value="0d6f3891-f800-9f8f-edac-53cd51792f0c">tabcontainer</option>
             <option value="167734b1-103c-7047-acf9-87e118442a9a">generated</option>
             <option value="95a99d2b-73a6-4091-841f-5115b95fb720">empty</option>
@@ -62,8 +62,8 @@
 
 
 
-    <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext($('#selForm').val());">
-    <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext($('#selForm').val());">
+    <input type="button" value="+ srv context" title="создать серверный контекст" onclick="createContext([$('#selForm').val()]);">
+    <input type="button" value="+ clt context" title="создать клиентский контекст" onclick="createClientContext([$('#selForm').val()]);">
     <input type="button" value="serialize" title="сериализованное представление формы" onclick="serializeForm();">
     <table style="display: inline-block;vertical-align: text-bottom;">
         <tr><td><input id="addTimeout" type="checkbox"><label for="addTimeout">с задержкой</label></td></tr>
