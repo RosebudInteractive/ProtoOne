@@ -569,9 +569,13 @@ $(document).ready( function() {
 
                 function getChildsNodes(node, index) {
                     var childs = [];
-                    for (var i = index+1; i < lines.length; i++)
-                        if (getLevel(node)+1 == getLevel(lines[i]))
+                    for (var i = index+1; i < lines.length; i++) {
+                        var levelNode = getLevel(node);
+                        var levelLine = getLevel(lines[i]);
+                        if (levelLine <= levelNode) break;
+                        if (levelNode+1 == levelLine)
                             childs.push([lines[i], i]);
+                    }
                     return childs;
                 }
 
@@ -623,7 +627,7 @@ $(document).ready( function() {
                             },
                             "fields": {
                                 "Id": Utils.id(),
-                                "Name": dsName,
+                                "Name": 'Dataset'+dsName,
                                 "Root": dsRoot,
                                 "Active": true//,
                                // "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
@@ -652,8 +656,8 @@ $(document).ready( function() {
                             var matchParam = re.exec(layout);
                             var params = [];
                             if (matchParam) {
-                                layout = matchParam[0].trim();
-                                params = matchParam[1].trim().split(';');
+                                layout = matchParam[1].trim();
+                                params = matchParam[2].trim().split(';');
                             }
 
                             var id = Utils.id();
@@ -666,7 +670,7 @@ $(document).ready( function() {
                                         },
                                         "fields": {
                                             "Id": id,
-                                            "Name": "DataGrid"+id,
+                                            "Name": dsName,
                                             "Dataset": dsGuid
                                         }}
                                     objs.push(obj);
@@ -681,8 +685,8 @@ $(document).ready( function() {
                                             Left:posX
                                     };
                                     for(var p=0;p<params.length; p++) {
-                                        var pname=params.split(':')[0];
-                                        var pvalue=params.split(':')[1];
+                                        var pname=params[p].split(':')[0];
+                                        var pvalue=params[p].split(':')[1];
                                         if (pname && pvalue)
                                             objFields[pname] = pvalue;
                                     }
@@ -710,8 +714,8 @@ $(document).ready( function() {
                                         }
                                     };
                                     for(var p=0;p<params.length; p++) {
-                                        var pname=params.split(':')[0];
-                                        var pvalue=params.split(':')[1];
+                                        var pname=params[p].split(':')[0];
+                                        var pvalue=params[p].split(':')[1];
                                         if (pname && pvalue)
                                             container.fields[pname] = pvalue;
                                     }
@@ -754,16 +758,16 @@ $(document).ready( function() {
                                     break;
                                 case 'CHILDCONT':
                                 case 'CHILDTABCONT':
-                                    var contParams = {Top:0, Left:posX, Width:'100%', Height:'100%'};
+                                    var contParams = {Top:0, Left:posX, Width:'100%', Height:'100%', Name:'HContainer'+id};
                                     for(var p=0;p<params.length; p++) {
-                                        var pname=params.split(':')[0];
-                                        var pvalue=params.split(':')[1];
+                                        var pname=params[p].split(':')[0];
+                                        var pvalue=params[p].split(':')[1];
                                         if (pname && pvalue)
-                                            contParams = pvalue;
+                                            contParams[pname] = pvalue;
                                     }
 
-                                    $u.add('HContainer', 'HContainer'+id, contParams, childcont?childcont.fields.Name:'MainContainerParse');
-                                    $u.add(layout=='CHILDCONT'?'CContainer':'TabContainer', 'Container'+id, {Width:'100%', Height:'100%'}, 'HContainer'+id);
+                                    $u.add('HContainer', contParams.Name, contParams, childcont?childcont.fields.Name:'MainContainerParse');
+                                    $u.add(layout=='CHILDCONT'?'CContainer':'TabContainer', 'Container'+id, {Width:'100%', Height:'100%'}, contParams.Name);
                                     posX = 0;
                                     posY = 0;
 
