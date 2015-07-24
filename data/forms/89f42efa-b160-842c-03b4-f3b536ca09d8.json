@@ -289,8 +289,82 @@
                         }
                       ]
                     }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "504729ba-e002-d856-b694-271ca843a98c",
+                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                    },
+                    "fields": {
+                      "Id": 2005,
+                      "Name": "DatasetLeadLog",
+                      "Root": "bb48579c-808e-291e-0242-0facc4876051",
+                      "Active": true,
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
+                      "ObjType": "c4fa07b5-03f7-4041-6305-fbd301e7408a",
+                      "Master": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
+                    },
+                    "collections": {
+                      "Fields": [
+                        {
+                          "$sys": {
+                            "guid": "cdec4144-dbdf-85c6-db91-231bb402ee84",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5002,
+                            "Name": "Id"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c63d1dd4-ffa2-2bd0-f9b4-8f658018c1c3",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "LeadId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b707c450-6cba-c9ee-f62d-4ce35f449c5f",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "Date"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "4507be07-a3ff-65d9-465c-7f8d6ff122a5",
+                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                          },
+                          "fields": {
+                            "Id": 5001,
+                            "Name": "Content"
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "1fb25404-3a70-d33d-8249-2b7b74b2dc72",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 2005,
+                "Name": "DataGridLeadLog",
+                "Top": 225,
+                "Left": 300,
+                "Width": 300,
+                "Height": 210,
+                "Dataset": "504729ba-e002-d856-b694-271ca843a98c"
               }
             },
             {

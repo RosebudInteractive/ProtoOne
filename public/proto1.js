@@ -22,6 +22,7 @@ $(document).ready( function() {
                 {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
                 {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
                 {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
+                {className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
                 {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
                 {className:'DataTstContact', component:'../DataControls/dataTstContact', guid:'27ce7537-7295-1a45-472c-a422e63035c7'},
                 {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
@@ -29,6 +30,7 @@ $(document).ready( function() {
                 {className:'DataTstCompany', component:'../DataControls/dataTstCompany', guid:'34c6f03d-f6ba-2203-b32b-c7d54cd0185a'},
                 {className:'DataAddress', component:'../DataControls/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
                 {className:'DataLead', component:'../DataControls/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
+                {className:'DataLeadLog', component:'../DataControls/dataLeadLog', guid:'c4fa07b5-03f7-4041-6305-fbd301e7408a'},
                 {className:'DataOpportunity', component: '../DataControls/dataOpportunity', guid: '5b64caea-45b0-4973-1496-f0a9a44742b7' },
                 {className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
                 {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
@@ -603,7 +605,7 @@ $(document).ready( function() {
                     return fields;
                 }
 
-                var posX=0, posY=0, childcont = null;
+                var posX=0, posY=0, childcont = null, parentcont = {};
                 function parseLine(line, parentLine) {
                     posX=0;
                     var re = /^\s*(.+)\((.+)\)-([^|]+)\|(.+)$/i;
@@ -616,6 +618,7 @@ $(document).ready( function() {
                         var dsRoot = matches[2].trim().split(',')[1];
                         var layouts = matches[3].trim().split(',');
                         var dsGuid = matches[4].trim();
+                        var dsParentGuid = matchesParent? matchesParent[4].trim(): null;
                         var objs = [];
 
 
@@ -636,13 +639,12 @@ $(document).ready( function() {
                                 "Fields": dsFields
                             }
                         };
-                        if (matchesParent && matchesParent[4]) {
-                            dataset.fields.Master = matchesParent[4].trim();
-                        }
+                        if (dsParentGuid)
+                            dataset.fields.Master = dsParentGuid;
 
                         // добавляем датасет
                         var dsInitFields = {Id: dataset.fields.Id, Name:dataset.fields.Name, Root:dataset.fields.Root, Active:true};
-                        if ("Master" in dataset.fields) dsInitFields.Master = dsGuids[matchesParent[4].trim()];
+                        if ("Master" in dataset.fields) dsInitFields.Master = dsGuids[dsParentGuid];
                         $u.add('Dataset', dataset.fields.Name, dsInitFields, 'DataModelParse', 'Datasets');
                         // добавляем филды датасета
                         for(var i=0; i<dsFields.length; i++)
@@ -691,7 +693,7 @@ $(document).ready( function() {
                                             objFields[pname] = pvalue;
                                     }
                                     //$u.add('VContainer', "VContainer"+id, {}, 'MainContainerParse');
-                                    $u.add('DataGrid', obj.fields.Name, objFields, childcont?childcont.fields.Name:'MainContainerParse');
+                                    $u.add('DataGrid', obj.fields.Name, objFields, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
                                     posX+= 70*dsFields.length;
                                     break;
                                 case 'EDIT':
@@ -719,7 +721,7 @@ $(document).ready( function() {
                                         if (pname && pvalue)
                                             container.fields[pname] = pvalue;
                                     }
-                                    $u.add('CContainer', container.fields.Name, container.fields, childcont?childcont.fields.Name:'MainContainerParse');
+                                    $u.add('CContainer', container.fields.Name, container.fields, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
                                     for(var j=0; j<fields.length; j++) {
                                         var obj = {
                                             "$sys": {
@@ -766,12 +768,12 @@ $(document).ready( function() {
                                             contParams[pname] = pvalue;
                                     }
 
-                                    $u.add('HContainer', contParams.Name, contParams, childcont?childcont.fields.Name:'MainContainerParse');
+                                    $u.add('HContainer', contParams.Name, contParams, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
                                     $u.add(layout=='CHILDCONT'?'CContainer':'TabContainer', 'Container'+id, {Width:'100%', Height:'100%'}, contParams.Name);
                                     posX = 0;
                                     posY = 0;
 
-                                    childcont = {
+                                    parentcont[dsGuid] = {
                                         "$sys": {
                                             "guid": Utils.guid(),
                                             "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
@@ -790,7 +792,7 @@ $(document).ready( function() {
                             }
                         }
                     }
-                    return [dataset, objs, childcont];
+                    return [dataset, objs, parentcont[dsParentGuid]];
                 }
 
 
