@@ -651,7 +651,7 @@ $(document).ready( function() {
                         var genDsGuid = $u.get(dataset.fields.Name).getGuid().substr(0, 36);
                         dsGuids[dsGuid] = genDsGuid;
 
-
+                        $u.add('CContainer', 'Cont'+dsName, {Width:'100%', Height:'100%'}, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
 
                         for(var i=0; i<layouts.length; i++) {
                             var layout = layouts[i].trim();
@@ -694,7 +694,7 @@ $(document).ready( function() {
                                             objFields[pname] = pvalue;
                                     }
                                     //$u.add('VContainer', "VContainer"+id, {}, 'MainContainerParse');
-                                    $u.add('DataGrid', obj.fields.Name, objFields, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
+                                    $u.add('DataGrid', obj.fields.Name, objFields, 'Cont'+dsName);
                                     posX+= 70*dsFields.length;
                                     break;
                                 case 'EDIT':
@@ -722,7 +722,7 @@ $(document).ready( function() {
                                         if (pname && pvalue)
                                             container.fields[pname] = pvalue;
                                     }
-                                    $u.add('CContainer', container.fields.Name, container.fields, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
+                                    $u.add('CContainer', container.fields.Name, container.fields, 'Cont'+dsName);
                                     for(var j=0; j<fields.length; j++) {
                                         var obj = {
                                             "$sys": {
@@ -769,7 +769,7 @@ $(document).ready( function() {
                                             contParams[pname] = pvalue;
                                     }
 
-                                    $u.add('HContainer', contParams.Name, contParams, parentcont[dsParentGuid]?parentcont[dsParentGuid].fields.Name:'MainContainerParse');
+                                    $u.add('HContainer', contParams.Name, contParams, 'Cont'+dsName);
                                     $u.add(layout=='CHILDCONT'?'CContainer':'TabContainer', 'Container'+id, {Width:'100%', Height:'100%'}, contParams.Name);
                                     posX = 0;
                                     posY = 0;
@@ -824,7 +824,7 @@ $(document).ready( function() {
 
                 // добавляем датамодель
                 $u.add('ADataModel', 'DataModelParse', null, 'EmptyForm');
-                $u.add('CContainer', 'MainContainerParse', {Width:100, Height:100}, 'EmptyForm');
+                $u.add('HContainer', 'MainContainerParse', {Width:100, Height:100}, 'EmptyForm');
 
                 posX=0; posY=0;
                 for(var i=0; i<lines.length; i++) {
