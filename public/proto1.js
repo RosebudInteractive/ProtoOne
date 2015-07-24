@@ -14,15 +14,6 @@ $(document).ready( function() {
     require(['./uccello/config/config', './uccello/system/utils'], function(Config, Utils){
         var config = {
             controls: [
-                {className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
-                {className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
-                {className:'RootTstCompany', component:'../DataControls/rootTstCompany', guid:'c4d626bf-1639-2d27-16df-da3ec0ee364e'},
-                {className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
-                {className:'RootTstContact', component:'../DataControls/rootTstContact', guid:'de984440-10bd-f1fd-2d50-9af312e1cd4f'},
-                {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
-                {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
-                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
-                {className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
                 {className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
                 {className:'DataTstContact', component:'../DataControls/dataTstContact', guid:'27ce7537-7295-1a45-472c-a422e63035c7'},
                 {className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
@@ -33,6 +24,15 @@ $(document).ready( function() {
                 {className:'DataLeadLog', component:'../DataControls/dataLeadLog', guid:'c4fa07b5-03f7-4041-6305-fbd301e7408a'},
                 {className:'DataOpportunity', component: '../DataControls/dataOpportunity', guid: '5b64caea-45b0-4973-1496-f0a9a44742b7' },
                 {className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
+                {className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
+                {className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
+                {className:'RootTstCompany', component:'../DataControls/rootTstCompany', guid:'c4d626bf-1639-2d27-16df-da3ec0ee364e'},
+                {className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
+                {className:'RootTstContact', component:'../DataControls/rootTstContact', guid:'de984440-10bd-f1fd-2d50-9af312e1cd4f'},
+                {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
+                {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
+                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
+                {className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
                 {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
                 {className:'MatrixGrid', component:'matrixGrid', viewset:true, guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
                 {className:'PropEditor', component:'propEditor', viewset:true, guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
@@ -607,7 +607,7 @@ $(document).ready( function() {
 
                 var posX=0, posY=0, childcont = null, parentcont = {};
                 function parseLine(line, parentLine) {
-                    posX=0;
+                    //posX=0;
                     var re = /^\s*(.+)\((.+)\)-([^|]+)\|(.+)$/i;
                     var matches = re.exec(line);
                     var matchesParent = re.exec(parentLine);
@@ -621,7 +621,6 @@ $(document).ready( function() {
                         var dsParentGuid = matchesParent? matchesParent[4].trim(): null;
                         var objs = [];
 
-
                         var dsFields = getFields(dsGuidObj);
                         var dataset = {
                             "$sys": {
@@ -632,8 +631,7 @@ $(document).ready( function() {
                                 "Id": Utils.id(),
                                 "Name": 'Dataset'+dsName,
                                 "Root": dsRoot,
-                                "Active": true//,
-                               // "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
+                                "Active": true
                             },
                             "collections": {
                                 "Fields": dsFields
@@ -646,11 +644,14 @@ $(document).ready( function() {
                         var dsInitFields = {Id: dataset.fields.Id, Name:dataset.fields.Name, Root:dataset.fields.Root, Active:true};
                         if ("Master" in dataset.fields) dsInitFields.Master = dsGuids[dsParentGuid];
                         $u.add('Dataset', dataset.fields.Name, dsInitFields, 'DataModelParse', 'Datasets');
+
                         // добавляем филды датасета
                         for(var i=0; i<dsFields.length; i++)
                             $u.add('DataField', dsFields[i].fields.Name, dsFields[i].fields, dataset.fields.Name, 'Fields');
                         var genDsGuid = $u.get(dataset.fields.Name).getGuid().substr(0, 36);
                         dsGuids[dsGuid] = genDsGuid;
+
+
 
                         for(var i=0; i<layouts.length; i++) {
                             var layout = layouts[i].trim();
