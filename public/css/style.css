@@ -14,6 +14,7 @@ p {padding:0;margin: 4px 0;}
 .control.edit{background-color: #fff;display: block;
     width: 100%;
     box-sizing: border-box;}
+.control.checkbox{ width: auto; height: auto;}
 .control.label{background-color: #fff;}
 .control.container{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}
 .control.form{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}

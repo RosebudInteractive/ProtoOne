@@ -50,6 +50,7 @@ $(document).ready( function() {
                 {className:'DataGrid', viewset:true},
                 {className:'DataEdit', viewset:true},
                 {className:'DataCombo', viewset:true},
+                {className:'DataCheckbox', viewset:true},
                 {className:'Edit', viewset:true},
                 {className:'Label', viewset:true}
             ],
