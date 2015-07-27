@@ -110,6 +110,8 @@ p {padding:0;margin: 4px 0;}
 .grid .cell.w60{width: 60px;}
 .grid .header{font-weight:bold;font-size:12px;display:table-caption;border-right:1px solid  #666666;border-bottom:1px solid  #666666;border-collapse: collapse;padding:5px;border-top:1px solid  #666666;float:left;box-sizing: border-box;}
 .grid .header.w60{width: 60px;}
+.grid .cell input.editField {    height: 9px;font-size: 11px;}
+.grid .cell select.editField {    height: 15px;font-size: 11px;}
 
 #loginForm { padding:5px; position: absolute; width: 200px; height: auto; left: 100px; top: 50px; z-index: 2; background-color: #ffffff; border: 1px solid #bababa; }
 #header {position:absolute;}
