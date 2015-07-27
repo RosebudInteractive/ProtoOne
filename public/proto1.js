@@ -40,10 +40,12 @@ $(document).ready( function() {
                 {className:'CContainer', viewset:true},
                 {className:'HContainer', viewset:true},
                 {className:'VContainer', viewset:true},
+                {className:'GenVContainer', component:'genVContainer', viewset:true, guid:'b75474ef-26d0-4298-9dad-4133edaa8a9c'},
                 {className:'GContainer', viewset:true},
                 {className:'FContainer', viewset:true},
                 {className:'TabContainer', viewset:true},
                 {className:'Form', viewset:true},
+                {className:'GenForm', component:'genForm', viewset:true, guid:'29bc7a01-2065-4664-b1ad-7cc86f92c177'},
                 {className:'Button', viewset:true},
                 {className:'DataGrid', viewset:true},
                 {className:'DataEdit', viewset:true},
@@ -900,7 +902,7 @@ $(document).ready( function() {
             // высота окошка результатов
             fixHeight = function() {
                 var h = $(window).height();
-                $('.tabs-page').height(h-125);
+                $('.tabs-page').height(h-140);
                 $('#editor').height(h-160);
                 $('#console').width('100%');
             };

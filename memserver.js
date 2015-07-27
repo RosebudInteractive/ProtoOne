@@ -105,7 +105,9 @@ var config = {
         { className: 'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
         { className: 'DbNavigator', component: 'dbNavigator', guid: '38aec981-30ae-ec1d-8f8f-5004958b4cfa' },
         { className: 'MatrixGrid', component: 'matrixGrid', guid: '827a5cb3-e934-e28c-ec11-689be18dae97' },
-        { className: 'PropEditor', component: 'propEditor', guid: 'a0e02c45-1600-6258-b17a-30a56301d7f1' }
+        { className: 'PropEditor', component: 'propEditor', guid: 'a0e02c45-1600-6258-b17a-30a56301d7f1' },
+        { className: 'GenVContainer', component:'genVContainer', viewset:true, guid:'b75474ef-26d0-4298-9dad-4133edaa8a9c'},
+        { className: 'GenForm', component:'genForm', viewset:true, guid:'29bc7a01-2065-4664-b1ad-7cc86f92c177'}
     ],
     
     controlsPath: __dirname + '/../ProtoOne/public/ProtoControls/',

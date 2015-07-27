@@ -1,0 +1,60 @@
+{
+  "$sys":{
+    "guid":"4c050ec3-beb4-2d67-e0b9-31fb59ade416",
+    "typeGuid":"29bc7a01-2065-4664-b1ad-7cc86f92c177"
+  },
+  "fields":{
+    "Id":2000,
+    "Name":"v-containers",
+    "Title": "v-containers",
+    "dbgName": "v-containers"
+  },
+  "collections": {
+    "Children": [
+      {
+        "$sys": {
+          "guid": "56de2e6e-1f2a-ecd2-36ce-21ab488e0a47",
+          "typeGuid": "b75474ef-26d0-4298-9dad-4133edaa8a9c"
+        },
+        "fields": {
+          "Id": 2002,
+          "Name": "V-Container",
+          "Height": "100%"
+        },
+        "collections": {
+          "Children": [
+            {
+              "$sys": {
+                "guid": "bc0144a3-43c3-82ac-408c-281baf5c8c90",
+                "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
+              },
+              "fields": {
+                "Id": 2002,
+                "Name": "HContainer-30",
+                "Height": "30%"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "f61e1b8f-3528-cec5-c545-da884cb5afe5",
+                "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
+              },
+              "fields": {
+                "Id": 2002,
+                "Name": "HContainer-70",
+                "Height": "70%"
+              },
+              "collections": {
+                "Children": [
+
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

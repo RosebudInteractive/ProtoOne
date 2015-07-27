@@ -19,7 +19,7 @@ define(
                     var option = $('<option/>').attr('value', values[v]).html(values[v]);
                     item.append(option);
                 }
-                
+
                 // сохранять при изменении
                 item.change(function () {
                     if (that.dataset() && that.dataField()) {
