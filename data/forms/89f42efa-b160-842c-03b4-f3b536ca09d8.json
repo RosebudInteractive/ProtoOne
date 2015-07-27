@@ -605,7 +605,7 @@
             {
               "$sys": {
                 "guid": "c6c83f69-2bce-37f6-5bc1-42534ae8b1ef",
-                "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                "typeGuid": "dc67f373-4a0c-5c22-f6fb-db321f6ed192"
               },
               "fields": {
                 "Id": 3007,
@@ -615,7 +615,8 @@
                 "Width": 190,
                 "Height": 23,
                 "Dataset": "c2de9609-237a-c3b3-12ac-43bf5b35c169",
-                "DataField": "State"
+                "DataField": "State",
+                "Values": "Open|Converted|Canceled"
               }
             },
 
