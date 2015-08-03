@@ -38,6 +38,8 @@ define(
                 }
                 dbSelector.change(function(){
                     var val = $(this).val();
+                    var db = that.getControlMgr().getController().getDB(val);
+                    editor.find('.dbVersionSpan').html('DB versions valid:'+db.getVersion('valid')+' sent:'+db.getVersion('sent')+' draft:'+db.getVersion('draft'));
                     for(var i=0, len=that.params.dbSelector.length; i<len; i++) {
                         if (val == that.params.dbSelector[i].guid) {
                             that.getControlMgr().userEventHandler(that, function () {
@@ -105,6 +107,8 @@ define(
                             }, {obj:a.data('obj')});
                             return false;
                         });
+
+                    link.attr('title', 'getRootVersion' in root? 'Root versions valid:'+root.getRootVersion('valid')+' sent:'+root.getRootVersion('sent')+' draft:'+root.getRootVersion('draft'): '');
                     left.append(leftTpl);
 
                     if (!rootElemLink && this.rootElem() == root.getGuid())
