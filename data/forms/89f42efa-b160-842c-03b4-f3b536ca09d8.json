@@ -70,7 +70,6 @@
                     "fields": {
                       "Id": 2004,
                       "Name": "DatasetLeadList",
-                      "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
                       "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
@@ -298,7 +297,6 @@
                     "fields": {
                       "Id": 2005,
                       "Name": "DatasetLeadLog",
-                      "Root": "bb48579c-808e-291e-0242-0facc4876051",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
                       "ObjType": "c4fa07b5-03f7-4041-6305-fbd301e7408a",
