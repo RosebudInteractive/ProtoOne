@@ -72,7 +72,7 @@
                       "Name": "DatasetLeadList",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
-                      "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+                      "ObjType": "c170c217-e519-7c23-2811-ff75cd4bfe81"
                     },
                     "collections": {
                       "Fields": [
@@ -299,7 +299,7 @@
                       "Name": "DatasetLeadLog",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
-                      "ObjType": "c4fa07b5-03f7-4041-6305-fbd301e7408a",
+                      "ObjType": "bb48579c-808e-291e-0242-0facc4876051",
                       "Master": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
                     },
                     "collections": {
