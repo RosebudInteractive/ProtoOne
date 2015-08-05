@@ -45,7 +45,7 @@
                             "fields": {
                                 "Id": 974621,
                                 "Name": "DataCompany",
-                                "Root": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
+                                "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
                                 "Active": true
                             },
                             "collections": {
@@ -111,7 +111,7 @@
                             "fields": {
                                 "Id": 634924,
                                 "Name": "DataContact",
-                                "Root": "3618f084-7f99-ebe9-3738-4af7cf53dc49",
+                                "ObjType": "3618f084-7f99-ebe9-3738-4af7cf53dc49",
                                 "Active": true,
                                 "Master": "7e0183a3-44b4-e18f-1858-c3dee4163b56"
                             },
@@ -208,7 +208,7 @@
                             "fields": {
                                 "Id": 834584,
                                 "Name": "DataAddress",
-                                "Root": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
+                                "ObjType": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
                                 "Active": true,
                                 "Master": "41b483ab-678d-30cf-af6f-c91f15953b5b"
                             },
@@ -275,7 +275,7 @@
                             "fields": {
                                 "Id": 813972,
                                 "Name": "DataContract",
-                                "Root": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
+                                "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
                                 "Active": true,
                                 "Master": "7e0183a3-44b4-e18f-1858-c3dee4163b56"
                             },

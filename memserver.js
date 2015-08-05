@@ -103,6 +103,7 @@ var config = {
         { className: 'RootIncomeplan', component: '../DataControls/rootIncomeplan', guid: '194fbf71-2f84-b763-eb9c-177bf9ac565d' },
         { className: 'RootLead', component: '../DataControls/rootLead', guid: '31c99003-c0fc-fbe6-55eb-72479c255556' },
         { className: 'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
+        { className: 'RootOpportunity', component:'../DataControls/rootOpportunity', guid:'3fe7cd6f-b146-8898-7215-e89a2d8ea702'},
         { className: 'DbNavigator', component: 'dbNavigator', guid: '38aec981-30ae-ec1d-8f8f-5004958b4cfa' },
         { className: 'MatrixGrid', component: 'matrixGrid', guid: '827a5cb3-e934-e28c-ec11-689be18dae97' },
         { className: 'PropEditor', component: 'propEditor', guid: 'a0e02c45-1600-6258-b17a-30a56301d7f1' },

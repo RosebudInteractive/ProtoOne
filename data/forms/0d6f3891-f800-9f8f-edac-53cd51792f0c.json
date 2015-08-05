@@ -57,7 +57,7 @@
                     "fields": {
                       "Id": 122,
                       "Name": "DatasetCompany",
-                      "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
+                      "ObjType": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },

@@ -31,7 +31,7 @@
             "fields": {
               "Id": 10003,
               "Name": "Dataset",
-              "Root": "b49d39c9-b903-cccd-7d32-b84beb1b76dc",
+              "ObjType": "b49d39c9-b903-cccd-7d32-b84beb1b76dc",
               "Active": true
             },
             "collections": {}

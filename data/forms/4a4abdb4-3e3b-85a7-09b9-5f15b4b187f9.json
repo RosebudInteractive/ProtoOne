@@ -58,7 +58,7 @@
                     "fields": {
                       "Id": 2004,
                       "Name": "DatasetLeadEdit",
-                      "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+                      "ObjType": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
                       "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
@@ -286,7 +286,7 @@
                     "fields": {
                       "Id": 2005,
                       "Name": "DatasetIncomeplan",
-                      "Root": "8770f400-fd42-217c-90f5-507ca52943c2",
+                      "ObjType": "8770f400-fd42-217c-90f5-507ca52943c2",
                       "Active": true,
                       "Master": "c2de9609-237a-c3b3-12ac-43bf5b35c169"
                     },

@@ -57,7 +57,7 @@
                     "fields": {
                       "Id": 122,
                       "Name": "DatasetCompany",
-                      "Root": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
+                      "ObjType": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },
@@ -154,10 +154,9 @@
                     "fields": {
                       "Id": 2004,
                       "Name": "DatasetLeadList",
-                      "Root": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+                      "ObjType": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                       "Active": true,
-                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
-                      "ObjType": "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },
                     "collections": {
                       "Fields": [

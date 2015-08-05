@@ -70,7 +70,7 @@
                     "fields": {
                       "Id": 122,
                       "Name": "DatasetCompany",
-                      "Root": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
+                      "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
                       "Active": true,
                       "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
                     },
@@ -137,7 +137,7 @@
                     "fields": {
                       "Id": 123,
                       "Name": "DatasetContact",
-                      "Root": "3618f084-7f99-ebe9-3738-4af7cf53dc49",
+                      "ObjType": "3618f084-7f99-ebe9-3738-4af7cf53dc49",
                       "Active": true,
                       "Master": "061b1347-18a2-a829-fcce-ba59058b4bdf"
                     },
@@ -234,7 +234,7 @@
                     "fields": {
                       "Id": 125,
                       "Name": "DatasetContract",
-                      "Root": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
+                      "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
                       "Active": true,
                       "Master": "061b1347-18a2-a829-fcce-ba59058b4bdf"
                     },
@@ -291,7 +291,7 @@
                     "fields": {
                       "Id": 226,
                       "Name": "DatasetAddress",
-                      "Root": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
+                      "ObjType": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
                       "Active": true,
                       "Master": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
                     },
