@@ -9,6 +9,7 @@ define(
 
             className: "RootLead",
             classGuid: "31c99003-c0fc-fbe6-55eb-72479c255556",
+            metaCols: [{ "cname": "DataElements", "ctype": "DataLead" }],
             metaFields: [],
 
             init: function(cm,params){
