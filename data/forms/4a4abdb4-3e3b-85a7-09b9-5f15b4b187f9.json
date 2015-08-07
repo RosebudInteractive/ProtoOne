@@ -670,6 +670,23 @@
             },
             {
               "$sys": {
+                "guid": "8fd4ba25-3753-4393-8332-483b7f6b9ee5",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1034,
+                "Name": "NewButton",
+                "Top": 288,
+                "Left": 10,
+                "Caption": "NEW",
+                "OnClick": " { $leadEdit.clickNew(); }",
+                "Enabled": true
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
                 "guid": "60d63759-38e2-4c56-609a-b32c1f7b5a25",
                 "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
               },

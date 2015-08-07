@@ -7,8 +7,8 @@ if (typeof define !== 'function') {
 }
 
 define(
-    [],
-    function (){
+    [UCCELLO_CONFIG.uccelloPath + '/process/processObject'],
+    function (ProcessObject){
         var TestScript = UccelloClass.extend({
             init : function() {
                 this.scriptObject = null;
@@ -80,13 +80,23 @@ define(
                     var func = response.findParameter("func").value();
                     var args = response.findParameter("args").value();
                     var obj = this._locateObj(objURI);
-                    
+                    var db = obj ? obj.getDB() : null;
+
                     var that = this;
                     
-                    function callback() {
+                    function callback(result) {
+                        
+                        if (result && result.newObject && db) {
+                            var newObject = db.getObj(result.newObject);
+                            if (newObject instanceof ProcessObject) {
+                                var processID = that.scriptObject.processFacade.get("ProcessID");
+                                newObject.currentProcess(processID);
+                            };
+                        };
+                        
                         that.scriptObject.returnResult(null);
                         console.log("<== [execObjMethod] finished!");
-                    }                    ;
+                    };
                     
                     args.push(callback);
                     obj[func].apply(obj, args);
