@@ -9,18 +9,21 @@ define(
             },
 
             clickEdit: function() {
-                this.setEditForm(true);
-                this._invokeObjMethod("edit");
+                this._invokeObjMethod("edit", function () {
+                    this.setEditForm(true);
+                });
             },
 
             clickConvert: function(edit) {
-                this.setEditForm(true);
-                this._invokeObjMethod("convert");
+                this._invokeObjMethod("convert", function () {
+                    this.setEditForm(true);
+                });
             },
 
             clickArchive: function(edit) {
-                this.setEditForm(true);
-                this._invokeObjMethod("archive");
+                this._invokeObjMethod("archive", function () {
+                    this.setEditForm(true);
+                });
             },
 
             clickNext: function(edit) {
@@ -34,13 +37,15 @@ define(
             },
 
             clickSave: function(edit) {
-                this.setEditForm(false);
-                this._invokeObjMethod("save");
+                this._invokeObjMethod("save", function () {
+                    this.setEditForm(false);
+                });
             },
 
             clickCancel: function(edit) {
-                this.setEditForm(false);
-                this._invokeObjMethod("cancel");
+                this._invokeObjMethod("cancel", function () {
+                    this.setEditForm(false);
+                });
             },
 
             clickNew: function (edit) {
@@ -96,17 +101,31 @@ define(
                 return this._dataset().getCurrentDataObject();
             },
 
-            _invokeObjMethod: function (method_name) {
+            _invokeObjMethod: function (method_name, callback) {
                 var obj = this._currentObj();
+                var isDone = true;
                 if (obj)
                     obj[method_name](function (result) {
                         if (DEBUG)
                             console.log('"' + method_name + '" finished with result: ' + JSON.stringify(result));
                         if (result && result.result) {
-                            if (result.result !== "OK")
-                                alert("Error occured !");
-                        }
-                    });
+                            if (result.result !== "OK") {
+                                var msg = result.message ? ": \"" + result.message + "\"" : ".";
+                                alert("Error occured" + msg);
+                                isDone = false;
+                            };
+                        };
+                        if (isDone && callback)
+                            setTimeout(function () {
+                                callback();
+                            }, 0);
+                    })
+                else {
+                    if (callback)
+                        setTimeout(function () {
+                            callback();
+                        }, 0);
+                };
             }
         });
         return LeadEdit;

@@ -55,6 +55,11 @@ $(document).ready( function() {
                 {className:'Edit', viewset:true},
                 {className:'Label', viewset:true}
             ],
+            
+            classGuids: {
+                'DataLead': "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+            },
+            
             controlsPath: 'ProtoControls/',
             uccelloPath: 'uccello/',
             viewSet: {name: 'simpleview', path:'ProtoControls/simpleview/'},

@@ -50,6 +50,14 @@ define(
                 }
             },
             
+            execObjMethodCreate : function () {
+                this._execObjMethod("StartTask");
+            },            
+            
+            execObjMethodEdit : function () {
+                this._execObjMethod("ObjEditTask");
+            },            
+            
             _locateObj : function (uri) {
                 var obj = null;
                 var i = uri.indexOf("://");
@@ -68,13 +76,13 @@ define(
                 return obj;
             },
             
-            execObjMethod : function () {
+            _execObjMethod : function (prev_node) {
                 
                 console.log("==> [execObjMethod] started!");
                 
                 if (this.scriptObject) {
                     var response = this.scriptObject.processFacade
-                    .currentToken().getPropertiesOfNode("UserTask1").responses().get(0);
+                    .currentToken().getPropertiesOfNode(prev_node).responses().get(0);
                     
                     var objURI = response.findParameter("objURI").value();
                     var func = response.findParameter("func").value();
@@ -104,9 +112,7 @@ define(
                 } else {
                     throw 'scriptObject не определен'
                 }
-            },
-
-
+            }
         });
 
         return TestScript;

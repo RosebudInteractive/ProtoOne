@@ -111,6 +111,10 @@ var config = {
         { className: 'GenForm', component:'genForm', viewset:true, guid:'29bc7a01-2065-4664-b1ad-7cc86f92c177'}
     ],
     
+    classGuids: {
+        'DataLead': "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+    },
+    
     controlsPath: __dirname + '/../ProtoOne/public/ProtoControls/',
     dataPath: __dirname + '/../ProtoOne/data/',
     uccelloPath: __dirname + '/../' + uccelloDir + '/',
