@@ -8,21 +8,24 @@ define(
                 this.pvt.uccelloClt = uccelloClt;
             },
 
-            clickEdit: function() {
+            clickEdit: function () {
+                var self = this;
                 this._invokeObjMethod("edit", function () {
-                    this.setEditForm(true);
+                    self.setEditForm(true);
                 });
             },
 
             clickConvert: function(edit) {
+                var self = this;
                 this._invokeObjMethod("convert", function () {
-                    this.setEditForm(true);
+                    self.setEditForm(true);
                 });
             },
 
             clickArchive: function(edit) {
+                var self = this;
                 this._invokeObjMethod("archive", function () {
-                    this.setEditForm(true);
+                    self.setEditForm(true);
                 });
             },
 
@@ -37,14 +40,16 @@ define(
             },
 
             clickSave: function(edit) {
+                var self = this;
                 this._invokeObjMethod("save", function () {
-                    this.setEditForm(false);
+                    self.setEditForm(false);
                 });
             },
 
             clickCancel: function(edit) {
+                var self = this;
                 this._invokeObjMethod("cancel", function () {
-                    this.setEditForm(false);
+                    self.setEditForm(false);
                 });
             },
 
