@@ -94,15 +94,17 @@ define(
                     
                     function callback(result) {
                         
+                        var res = null;
                         if (result && result.newObject && db) {
                             var newObject = db.getObj(result.newObject);
                             if (newObject instanceof ProcessObject) {
                                 var processID = that.scriptObject.processFacade.get("ProcessID");
                                 newObject.currentProcess(processID);
+                                res = newObject.getGuid();
                             };
                         };
                         
-                        that.scriptObject.returnResult(null);
+                        that.scriptObject.returnResult(res);
                         console.log("<== [execObjMethod] finished!");
                     };
                     
