@@ -9,11 +9,11 @@ if (typeof define !== 'function') {
 define(
     [UCCELLO_CONFIG.uccelloPath + '/process/processObject'],
     function (ProcessObject){
-        var TestScript = UccelloClass.extend({
-            init : function() {
+        var TestScript = UccelloClass.extend( {
+            init : function () {
                 this.scriptObject = null;
             },
-
+            
             execScript : function () {
                 
                 if (this.scriptObject) {
@@ -37,11 +37,11 @@ define(
                     
                     var params = { parent: dataRoot, colName: "DataElements", ini: flds };
                     var obj = new constr(db, params);
-
+                    
                     console.log("### New object has been created !!!");
                     
                     var that = this;
-
+                    
                     //setTimeout(function() {
                     that.scriptObject.returnResult(null);
                     //}, 0);
@@ -57,6 +57,41 @@ define(
             execObjMethodEdit : function () {
                 this._execObjMethod("ObjEditTask");
             },            
+            
+            checkIfDone : function () {
+                this.scriptObject.returnResult(this._checkIfDone());
+            },
+            
+            checkIfNotDone : function () {
+                this.scriptObject.returnResult(!this._checkIfDone());
+            },
+            
+            _checkIfDone : function () {
+                var param = this.scriptObject.processFacade.findParameter("IsDone");
+                var result = param ? param.value() : false;
+                return result;
+            },
+            
+            _setDone : function (clearContext) {
+                if (this.scriptObject) {
+                    var result = false;
+                    var param = this.scriptObject.processFacade.findParameter("CurrentObj");
+                    if (param) {
+                        var obj = this._locateObj(param.value());
+                        if (obj && (obj instanceof ProcessObject)) {
+                            var state = obj._genericSetter("State");
+                            result = ((state == "Converted") || (state == "Archieved"));
+                            if (result && clearContext)
+                                obj.currentProcess("");
+                            param = this.scriptObject.processFacade.findParameter("IsDone");
+                            if (param && result)
+                                param.value(result);
+                        };
+                    };
+                } else {
+                    throw 'scriptObject не определен'
+                };
+            },
             
             _locateObj : function (uri) {
                 var obj = null;
@@ -83,25 +118,33 @@ define(
                 if (this.scriptObject) {
                     var response = this.scriptObject.processFacade
                     .currentToken().getPropertiesOfNode(prev_node).responses().get(0);
+                    //var response = this.scriptObject.response;
                     
                     var objURI = response.findParameter("objURI").value();
                     var func = response.findParameter("func").value();
                     var args = response.findParameter("args").value();
                     var obj = this._locateObj(objURI);
                     var db = obj ? obj.getDB() : null;
-
+                    
                     var that = this;
                     
                     function callback(result) {
                         
-                        var res = null;
+                        var res = result;
                         if (result && result.newObject && db) {
                             var newObject = db.getObj(result.newObject);
+                            
                             if (newObject instanceof ProcessObject) {
+                                
                                 var processID = that.scriptObject.processFacade.get("ProcessID");
                                 newObject.currentProcess(processID);
-                                res = newObject.getGuid();
+                                
+                                var param = that.scriptObject.processFacade.findParameter("CurrentObj");
+                                if (param)
+                                    param.value("memdb://" + db.getGuid() + "." + result.newObject);
                             };
+                        } else {
+                            that._setDone(true);
                         };
                         
                         that.scriptObject.returnResult(res);

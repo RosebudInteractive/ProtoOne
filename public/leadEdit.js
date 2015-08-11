@@ -18,14 +18,14 @@ define(
             clickConvert: function(edit) {
                 var self = this;
                 this._invokeObjMethod("convert", function () {
-                    self.setEditForm(true);
+                    //self.setEditForm(true);
                 });
             },
 
             clickArchive: function(edit) {
                 var self = this;
                 this._invokeObjMethod("archive", function () {
-                    self.setEditForm(true);
+                    //self.setEditForm(true);
                 });
             },
 
@@ -60,7 +60,7 @@ define(
                         fields: {
                             Id: recordid,
                             Name: 'Record ' + recordid,
-                            State: 'state ' + recordid,
+                            State: 'Opened',
                             Source: 'Source ' + recordid,
                             Content: 'Content ' + recordid,
                             Creation: new Date().toISOString().slice(0, 19).replace('T', ' '),
@@ -91,10 +91,10 @@ define(
                     cm.getByName('NewButton').enabled(!edit);
                     cm.getByName('LeadId').enabled(edit);
                     cm.getByName('LeadSource').enabled(edit);
-                    cm.getByName('LeadState').enabled(edit);
+                    //cm.getByName('LeadState').enabled(edit);
                     cm.getByName('LeadContent').enabled(edit);
                     cm.getByName('LeadCreation').enabled(edit);
-                    cm.getByName('LeadClosed').enabled(edit);
+                    //cm.getByName('LeadClosed').enabled(edit);
                     cm.getByName('LeadOpportunityId').enabled(edit);
                 });
             },
