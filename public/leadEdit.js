@@ -71,9 +71,9 @@ define(
                             console.log('END ADD OBJ with result: ' + JSON.stringify(result));
                         if (result && result.result) {
                             if (result.result === "OK")
-                                alert("Object has been successfully created !")
+                                alert("Object has been successfully created !\nGUID: \"" + result.newObject + "\".");
                             else
-                                alert("Error occured !");
+                                alert("Error occured: \"" + result.message + "\"");
                         }
                     });
             },
