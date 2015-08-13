@@ -1,10 +1,20 @@
 // дирректория где лежит Uccello
-var uccelloDir = process.argv[2]&&process.argv[2]!='-'?process.argv[2]:'Uccello';
+var uccelloDir = process.argv[2]&&process.argv[2][0]!='-'?process.argv[2]:'Uccello';
 console.log('Using folder: '+uccelloDir);
 // порт web
-var uccelloPortWeb = process.argv[3]&&process.argv[3]!='-'?process.argv[3]:null;
+var uccelloPortWeb = process.argv[3] && process.argv[3][0] != '-' ? process.argv[3] : null;
 // порт websocket
-var uccelloPortWs = process.argv[4]&&process.argv[4]!='-'?process.argv[4]:null;
+var uccelloPortWs = process.argv[4] && process.argv[4][0] != '-' ? process.argv[4] : null;
+
+var chTraceFlag = false;
+for (var _cnt = 0; _cnt < process.argv.length; _cnt++) {
+    var _arg = process.argv[_cnt];
+    if (_arg==="-chTrace") {
+        chTraceFlag = true;
+        console.log("Low-level channel tracing is enabled.");
+        break;
+    };
+};
 
 // Модули nodejs
 var http = require('http');
@@ -152,6 +162,9 @@ if (fs.existsSync(UCCELLO_CONFIG.masaccioPath + 'engineSingleton.js'))
     EngineSingleton = require(UCCELLO_CONFIG.masaccioPath + 'engineSingleton');
 
 // комуникационный модуль
+UCCELLO_CONFIG.webSocketServer = UCCELLO_CONFIG.webSocketServer ? UCCELLO_CONFIG.webSocketServer : {};
+UCCELLO_CONFIG.webSocketServer.io_log_flag = chTraceFlag;
+
 var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocketServer);
 var uccelloServ = new UccelloServ({
     authenticate: fakeAuthenticate,
