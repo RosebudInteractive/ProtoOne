@@ -494,7 +494,7 @@ $(document).ready( function() {
                         that.vNavigator.level = function(val){if(val !== undefined) that.vNavigator.level=val; return that.vNavigator.level;};
                         that.vNavigator.dataBase = function(val){if(val !== undefined) that.vNavigator.database=val; return that.vNavigator.database;};
                         that.vNavigator.rootElem = function(val){if(val !== undefined) that.vNavigator.rootelem=val; return that.vNavigator.rootelem;};
-                        that.vNavigator.getControlMgr = function(){ return uccelloClt.getContextCM(); };
+                        that.vNavigator.getControlMgr = function(){ return uccelloClt.getContext()? uccelloClt.getContextCM(): uccelloClt.getSysCM(); };
                         that.vNavigator.params = {};
 
                         that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
