@@ -20,7 +20,7 @@ define(
             var contentItem = item.find('.content');
             //var btnsItem = item.find('.buttons');
             var iAdded = 0;
-            var tabNumber = this.tabNumber()? this.tabNumber(): 0;
+            var tabNumber = this.tabNumber()!==undefined? this.tabNumber(): -1;
             for(var i=0; i<childs.count();i++) {
                 var child = this.getControlMgr().get(childs.get(i).getGuid());
                 if (!child.left) continue;
