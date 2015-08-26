@@ -53,7 +53,10 @@ $(document).ready( function() {
                 {className:'DataCombo', viewset:true},
                 {className:'DataCheckbox', viewset:true},
                 {className:'Edit', viewset:true},
-                {className:'Label', viewset:true}
+                {className:'Label', viewset:true},
+                {className:'Toolbar', viewset:true},
+                {className:'ToolbarButton', viewset:true},
+                {className:'LayersContainer', viewset:true}
             ],
             
             classGuids: {
