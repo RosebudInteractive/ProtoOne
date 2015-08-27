@@ -52,9 +52,11 @@ define(
                     var child = toolbar.getControlMgr().get(childGuid);
                     if (child.buttonKind() == 'Radio') {
                         if (buttonGuid == childGuid) {
-                            $('#'+child.getLid()).addClass('active');
+                            child.pressed(true);
+                            //$('#'+child.getLid()).addClass('active');
                         } else {
-                            $('#'+child.getLid()).removeClass('active');
+                            child.pressed(false);
+                            //$('#'+child.getLid()).removeClass('active');
                         }
                     }
                 }

@@ -13,6 +13,10 @@ define(
                 if ("onClick" in this) {
                     item.click(function(e){
                         that.getControlMgr().userEventHandler(that, function(){
+                            if (that.buttonKind() == 'Radio' && !that.pressed())
+                                that.pressed(true);
+                            if (that.buttonKind() == 'Toggle')
+                                that.pressed(!that.pressed());
                             that.onClick.apply(that);
                         });
                     });

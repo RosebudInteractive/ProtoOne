@@ -14,6 +14,10 @@ define(
                     item.click(function(e){
                        // console.log(that.getParent().clickButton(that));
                         that.getControlMgr().userEventHandler(that, function(){
+                            if (that.buttonKind() == 'Radio' && !that.pressed())
+                                that.pressed(true);
+                            if (that.buttonKind() == 'Toggle')
+                                that.pressed(!that.pressed());
                             that.onClick.apply(that);
                             vButton._genEventsForParent.call(that);
                         });
@@ -35,6 +39,11 @@ define(
 
             item.val(this.caption());
             item.attr('disabled', this.enabled()===false? true: false);
+
+            if (this.pressed())
+                item.addClass('active');
+            else
+                item.removeClass('active');
         }
 
         /**
