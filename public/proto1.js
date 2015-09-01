@@ -481,6 +481,7 @@ $(document).ready( function() {
             }
 
             that.vNavigator = null;
+            //that.vNavigator.database = null;
             window.viewNavigator = function() {
                 //if (!that.vNavigator){
                     require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
@@ -491,7 +492,7 @@ $(document).ready( function() {
                         that.vNavigator.top = function(){return 5;};
                         that.vNavigator.left = function(){return 3;};
                         that.vNavigator.nlevels = function(){return 3;};
-                        that.vNavigator.database = null;
+                        //that.vNavigator.database = null;
                         that.vNavigator.level = null;
                         that.vNavigator.rootelem = null;
                         that.vNavigator.level = function(val){if(val !== undefined) that.vNavigator.level=val; return that.vNavigator.level;};
