@@ -95,6 +95,12 @@ define(
                     //var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
 					var root = rootElem ? db: db.getRoot(i).obj;
                     var name = 'name' in root? root.name(): null;
+
+                    // читаемые названия для рутов данных
+                    if ('getObjType' in root &&  root.getObjType() && 'getRtype' in root.getObjType() && root.getObjType().getRtype() == "data") {
+                        name = root.getObjType().get(0);
+                    }
+
                     if (!name)
                         name = root.getGuid();
 
