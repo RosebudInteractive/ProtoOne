@@ -39,9 +39,10 @@ define(
                 dbSelector.change(function(){
                     var val = $(this).val();
                     var db = that.getControlMgr().getController().getDB(val);
-                    editor.find('.dbVersionSpan').html('DB versions valid:'+db.getVersion('valid')+
-                                ' sent:'+db.getVersion('sent')+
-                                ' draft:'+db.getVersion('draft')+
+                    editor.find('.dbVersionSpan').html(
+                                //'DB versions valid:'+db.getVersion('valid')+
+                                //' sent:'+db.getVersion('sent')+
+                                //' draft:'+db.getVersion('draft')+
                                 ' guid:'+db.getGuid()
                     );
                     for(var i=0, len=that.params.dbSelector.length; i<len; i++) {
