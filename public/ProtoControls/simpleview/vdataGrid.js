@@ -92,9 +92,10 @@ define(
                             var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
                             var width = columnsArr[j].width;
                             cells += '<div class="cell" style="width:'+(width?width:'10%')+'%;">' + (text ? text : '&nbsp;') + '</div>';
-                            if (idIndex == columnsArr[j].field)
-                                id = text;
+                            //if (idIndex == columnsArr[j].field)
+                              //  id = text;
                         }
+                        id = obj.id();
                         rows += '<div class="row data" data-id="' + id + '">' + cells + '</div>';
 
                         // запоминаем текущий курсор
