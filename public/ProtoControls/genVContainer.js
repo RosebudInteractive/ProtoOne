@@ -12,7 +12,8 @@ define(
             classGuid: "b75474ef-26d0-4298-9dad-4133edaa8a9c",
             metaFields: [
                 {fname:"Background", ftype:"string"},
-                {fname:"HasPadding", ftype:"boolean"}
+                {fname:"HasPadding", ftype:"boolean"},
+                {fname:"SeparateChildren", ftype:"boolean"}
             ],
 
             init: function(cm, params) {
@@ -25,6 +26,9 @@ define(
             },
             hasPadding: function(value) {
                 return this._genericSetter("HasPadding", value);
+            },
+            separateChildren: function(value) {
+                return this._genericSetter("SeparateChildren", value);
             }
         });
         return GenVContainer;
