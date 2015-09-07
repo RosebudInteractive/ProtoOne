@@ -5,7 +5,8 @@ requirejs.config({
         text       : '/public/uccello/uses/text',
         underscore : '/public/uccello/uses/underscore'
     }
-}); 
+});
+
 
 var uccelloClt = null, $u=null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
@@ -34,7 +35,7 @@ $(document).ready( function() {
                 {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
                 {className:'RootOpportunity', component:'../DataControls/rootOpportunity', guid:'3fe7cd6f-b146-8898-7215-e89a2d8ea702'},
-                {className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
+                //{className:'DbNavigator', component:'dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
                 {className:'MatrixGrid', component:'matrixGrid', viewset:true, guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
                 {className:'PropEditor', component:'propEditor', viewset:true, guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
                 {className:'GenLabel', component:'genLabel', viewset:true, guid:'151c0d05-4236-4732-b0bd-ddcf69a35e25'},
@@ -488,7 +489,7 @@ $(document).ready( function() {
             //that.vNavigator.database = null;
             window.viewNavigator = function() {
                 //if (!that.vNavigator){
-                    require(['./ProtoControls/simpleview/vdbNavigator'], function(VDbNavigator){
+                    require(['./uccello/lib/simpleview/vdbNavigator'], function(VDbNavigator){
                         $('#clientNav').remove();
                         that.vNavigator = VDbNavigator;
                         that.vNavigator.getLid = function(){return 'clientNav';};
