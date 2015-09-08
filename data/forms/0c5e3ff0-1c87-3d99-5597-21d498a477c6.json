@@ -157,10 +157,10 @@
               "fields": {
                 "Id": 22,
                 "Name": "DataGridCompany",
-                "Top": "67",
+                "Top": "10",
                 "Left": "10",
                 "Width": 380,
-                "Height": 120,
+                "Height": 395,
                 "Dataset": "31b8aeb7-2a4f-f803-6eed-bc1193d223f9"
               },
               "collections": {
