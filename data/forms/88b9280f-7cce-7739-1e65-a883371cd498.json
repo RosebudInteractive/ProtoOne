@@ -519,23 +519,7 @@
               "collections": {
               }
             },
-            {
-              "$sys": {
-                "guid": "996934a2-7b67-b6a4-a01c-398ee08709bb",
-                "typeGuid": "38aec981-30ae-ec1d-8f8f-5004958b4cfa"
-              },
-              "fields": {
-                "Id": 55,
-                "Name": "DbNavigator",
-                "Top": "520",
-                "Left": "20",
-                "Nlevels": 3,
-                "RootElem": "fc13e2b8-3600-b537-f9e5-654b7418c156",
-                "Level": 0
-              },
-              "collections": {
-              }
-            },
+
             {
               "$sys": {
                 "guid": "b99e85e6-8774-2449-00c0-bcbce0128351",
