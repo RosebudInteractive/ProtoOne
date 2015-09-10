@@ -32,7 +32,7 @@ $(document).ready( function() {
                 {className:'RootTstContact', component:'../DataControls/rootTstContact', guid:'de984440-10bd-f1fd-2d50-9af312e1cd4f'},
                 {className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
                 {className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
-                {className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
+                //{className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
                 {className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
                 {className:'RootOpportunity', component:'../DataControls/rootOpportunity', guid:'3fe7cd6f-b146-8898-7215-e89a2d8ea702'},
               //  {className:'DbNavigator', component:'../uccello/lib/dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
@@ -65,7 +65,8 @@ $(document).ready( function() {
             ],
             
             classGuids: {
-                'DataLead': "86c611ee-ed58-10be-66f0-dfbb60ab8907"
+                'DataLead': "86c611ee-ed58-10be-66f0-dfbb60ab8907",
+                'RootLead': "31c99003-c0fc-fbe6-55eb-72479c255556"
             },
             
             controlsPath: 'ProtoControls/',
