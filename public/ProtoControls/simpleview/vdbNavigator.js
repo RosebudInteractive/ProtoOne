@@ -1,13 +1,13 @@
 define(
-    ['/public/uccello/uses/template.js', 'text!./templates/dbNavigator.html'],
+    ['../../uses/template', 'text!./templates/dbNavigator.html'],
     function(template, tpl) {
         var vDBNavigator = {};
         vDBNavigator._templates = template.parseTemplate(tpl);
         vDBNavigator.render = function (options) {
             var that = this;
-            var editor = $('#' + that.getLid());
-            if (editor.length == 0) {
-                editor = $(vDBNavigator._templates['navigator']).attr('id', that.getLid());
+            var editor = $('#' + that.getLid()), dbSelector = null;
+            if (editor.length === 0) {
+                editor = $(vDBNavigator._templates.navigator).attr('id', that.getLid());
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
@@ -24,12 +24,12 @@ define(
                     that.getControlMgr().userEventHandler(that);
                 });
 
-                var dbSelector = editor.find('.dbSelector');
+                dbSelector = editor.find('.dbSelector');
                 dbSelector.append('<option />');
                 if (!this.params.dbSelector){ // если базы не указаны берем из контроллера
                     this.params.dbSelector = [];
-					var dbList = that.getControlMgr().getController().getDbList();
-                    for(var i=0; i<dbList.length; i++)
+                    var dbList = that.getControlMgr().getController().getDbList();
+                    for(i=0; i<dbList.length; i++)
                         this.params.dbSelector.push({name:dbList[i].db.getName(), guid:dbList[i].db.getGuid()});
                 }
                 for(var i=0, len=this.params.dbSelector.length; i<len; i++) {
@@ -40,10 +40,10 @@ define(
                     var val = $(this).val();
                     var db = that.getControlMgr().getController().getDB(val);
                     editor.find('.dbVersionSpan').html(
-                                //'DB versions valid:'+db.getVersion('valid')+
-                                //' sent:'+db.getVersion('sent')+
-                                //' draft:'+db.getVersion('draft')+
-                                ' guid:'+db.getGuid()
+                        //'DB versions valid:'+db.getVersion('valid')+
+                        //' sent:'+db.getVersion('sent')+
+                        //' draft:'+db.getVersion('draft')+
+                        ' guid:'+db.getGuid()
                     );
                     for(var i=0, len=that.params.dbSelector.length; i<len; i++) {
                         if (val == that.params.dbSelector[i].guid) {
@@ -61,7 +61,7 @@ define(
             var centerTop = editor.find('.centerTop');
             var centerBottom = editor.find('.centerBottom');
             var right = editor.find('.right');
-            var dbSelector = editor.find('.dbSelector');
+            dbSelector = editor.find('.dbSelector');
             left.empty();
             centerTop.empty();
             centerBottom.empty();
@@ -71,7 +71,7 @@ define(
             var levels = editor.find('.levels');
             levels.empty();
             for(var i=0, len=this.nlevels(); i<len; i++) {
-                var levelCol = $(vDBNavigator._templates['levelCol']);
+                var levelCol = $(vDBNavigator._templates.levelCol);
                 levelCol.find('.centerTop').addClass('level'+i);
                 levelCol.find('.centerBottom').addClass('level'+i);
                 levels.append(levelCol);
@@ -84,16 +84,16 @@ define(
             // отображаем слева рут элементы
             dbSelector.val(that.dataBase());
             //var controller = that.getControlMgr().getDB().getController();
-			var controller = that.getControlMgr().getController();
+            var controller = that.getControlMgr().getController();
             var db = that.dataBase()? controller.getDB(that.dataBase()): null;
             if (db) {
                 var rootElemLink = null;
-                var rootElem = this.level()==0? null: this.rootElem();
+                var rootElem = this.level()===0? null: this.rootElem();
                 var cnt = rootElem? 1: db.countRoot();
 
                 for (var i = 0; i < cnt; i++) {
                     //var root = rootElem? db.getObj(rootElem): db.getRoot(i).obj;
-					var root = rootElem ? db: db.getRoot(i).obj;
+                    var root = rootElem ? db: db.getRoot(i).obj;
                     var name = 'name' in root? root.name(): null;
 
                     // читаемые названия для рутов данных
@@ -104,7 +104,7 @@ define(
                     if (!name)
                         name = root.getGuid();
 
-                    var leftTpl = $(vDBNavigator._templates['left']);
+                    var leftTpl = $(vDBNavigator._templates.left);
                     var link = leftTpl.find('a')
                         .data('obj', root)
                         .html(name)
@@ -310,9 +310,11 @@ define(
                     right.append('<p><span class="name" style="width: 54px;vertical-align: top;">Guid</span> <textarea style="width: 157px;height: 30px;" class="value"  >'+obj.getGuid()+'</textarea> <input style="vertical-align: top;" class="save" type="button" value="c" title="copy" onclick="$(this).prev().select(); document.execCommand(\'copy\');"></p>');
                 if ("getTypeGuid" in obj)
                     right.append('<p><span class="name" style="width: 54px;vertical-align: top;">TypeGuid</span> <textarea style="width: 157px;height: 30px;" class="value"  >'+obj.getTypeGuid()+'</textarea> <input style="vertical-align: top;" class="save" type="button" value="c" title="copy" onclick="$(this).prev().select(); document.execCommand(\'copy\');"></p>');
+                if ('getRootVersion' in obj)
+                    right.append('<p><span class="name" style="width: 100%;vertical-align: top;">Root versions valid:'+obj.getRootVersion('valid')+' sent:'+obj.getRootVersion('sent')+' draft:'+obj.getRootVersion('draft')+'</span></p>');
                 for (var i = 0, len = obj.count(); i < len; i++) {
                     if (obj.getFieldType) {
-                        var rightTpl = $(vDBNavigator._templates['right']);
+                        var rightTpl = $(vDBNavigator._templates.right);
                         rightTpl.find('.name').html(obj.getFieldName(i));
                         rightTpl.find('.type').html(obj.getFieldType(i));
                         rightTpl.find('.value').attr('name', obj.getFieldName(i)).data('obj', obj).val(obj.get(i));
@@ -325,7 +327,7 @@ define(
                     }
                 }
             }
-        }
+        };
 
 
         vDBNavigator.selectFirst = function (num) {
@@ -333,10 +335,10 @@ define(
             var left = editor.find('.left');
             var centerTop = editor.find('.centerTop');
             var centerBottom = editor.find('.centerBottom');
-            var f1, f2, f3;
+            var f1, f2, f3, links;
 
             if (!num) {
-                var links = left.find('a');
+                links = left.find('a');
                 if (this._activeRoot) {
                     for(var i= 0, len=links.length; i<len; i++) {
                         if (this._activeRoot == $(links[i]).data('obj'))
@@ -347,7 +349,7 @@ define(
                 if (f1) f1.click();
             }
 
-            var links = centerTop.find('a');
+            links = centerTop.find('a');
             if (this._activeCol) {
                 for(var i= 0, len=links.length; i<len; i++) {
                     if (this._activeCol == $(links[i]).data('obj'))
@@ -357,7 +359,7 @@ define(
                 f2 = links.length>0 ? $(links[0]) : null;
             if (f2) f2.click();
 
-            var links = centerBottom.find('a');
+            links = centerBottom.find('a');
             if (this._activeObj) {
                 for(var i= 0, len=links.length; i<len; i++) {
                     if (this._activeObj == $(links[i]).data('obj'))
@@ -368,4 +370,4 @@ define(
             if (f3) f3.click();
         };
         return vDBNavigator;
-});
+    });

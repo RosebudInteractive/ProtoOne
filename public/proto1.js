@@ -1,3 +1,5 @@
+'use strict';
+
 requirejs.config({
     baseUrl: 'public',
     nodeRequire: require,
@@ -8,7 +10,7 @@ requirejs.config({
 });
 
 
-var uccelloClt = null, $u=null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var $leadEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -61,7 +63,8 @@ $(document).ready( function() {
                 {className:'Label', viewset:true},
                 {className:'Toolbar', viewset:true},
                 {className:'ToolbarButton', viewset:true},
-                {className:'LayersContainer', viewset:true}
+                {className:'LayersContainer', viewset:true}//,
+              //  {className:'DbNavigator', viewset:true}
             ],
             
             classGuids: {
@@ -917,7 +920,7 @@ $(document).ready( function() {
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
 
             // высота окошка результатов
-            fixHeight = function() {
+            window.fixHeight = function() {
                 var h = $(window).height();
                 $('.tabs-page').height(h-140);
                 $('#editor').height(h-160);
