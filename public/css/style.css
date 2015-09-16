@@ -164,3 +164,24 @@ textarea {
     height: 36px;
 }
 
+.tranDiv {
+
+}
+.tranDiv table {
+    /*background-color: #ddd;*/
+    border-collapse: collapse; /* Отображать только одинарные линии */
+}.tranDiv td {
+    white-space: nowrap;
+    padding:1px;
+     border: 1px solid #ddd; /* Граница вокруг ячеек */
+}
+.tranDiv tr {
+    vertical-align: top;
+}
+.tranDiv th {
+    white-space: nowrap;
+    padding:0; margin: 0px;
+    text-align: left;
+    font-weight: normal;
+    border: 1px solid #ddd; /* Граница вокруг ячеек */
+}
