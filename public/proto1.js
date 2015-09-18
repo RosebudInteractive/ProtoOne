@@ -1033,7 +1033,7 @@ $(document).ready( function() {
             $('#dbNavigatorForm').dialog({
                 title: "Database Navigator",
                 resizable: true,
-                width:900,
+                width:1290,
                 height:600,
                 modal: true,
                 autoOpen: false,
