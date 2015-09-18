@@ -364,7 +364,7 @@
                 "Top": "67",
                 "Left": "10",
                 "Width": 380,
-                "Height": 120,
+                "Height": 240,
                 "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf"
               },
               "collections": {
@@ -406,7 +406,7 @@
               "fields": {
                 "Id": 320,
                 "Name": "DataEditId",
-                "Top": "200",
+                "Top": "320",
                 "Left": "10",
                 "Width": 190,
                 "Height": 23,
@@ -424,7 +424,7 @@
               "fields": {
                 "Id": 321,
                 "Name": "DataEdit1",
-                "Top": "230",
+                "Top": "350",
                 "Left": "10",
                 "Width": 190,
                 "Height": 23,
@@ -442,7 +442,7 @@
               "fields": {
                 "Id": 322,
                 "Name": "DataEditCountry",
-                "Top": "260",
+                "Top": "380",
                 "Left": "10",
                 "Width": 190,
                 "Height": 23,
@@ -460,7 +460,7 @@
               "fields": {
                 "Id": 322,
                 "Name": "DataEditCity",
-                "Top": "290",
+                "Top": "410",
                 "Left": "10",
                 "Width": 190,
                 "Height": 23,
@@ -478,7 +478,7 @@
               "fields": {
                 "Id": 322,
                 "Name": "DataEditAddress",
-                "Top": "320",
+                "Top": "440",
                 "Left": "10",
                 "Width": 190,
                 "Height": 23,
@@ -499,7 +499,7 @@
                 "Top": "67",
                 "Left": "390",
                 "Width": 660,
-                "Height": 120,
+                "Height": 240,
                 "Dataset": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
               },
               "collections": {
@@ -513,7 +513,7 @@
               "fields": {
                 "Id": 44,
                 "Name": "PropEditor",
-                "Top": "193",
+                "Top": "313",
                 "Left": "1055"
               },
               "collections": {
@@ -624,7 +624,7 @@
               "fields": {
                 "Id": 224,
                 "Name": "DataGridContact2",
-                "Top": "311",
+                "Top": "431",
                 "Left": "390",
                 "Width": 660,
                 "Height": 120,
@@ -641,7 +641,7 @@
               "fields": {
                 "Id": 225,
                 "Name": "DataGridContact",
-                "Top": "189",
+                "Top": "309",
                 "Left": "390",
                 "Width": 660,
                 "Height": 120,
@@ -661,7 +661,7 @@
                 "Top": "67",
                 "Left": "1052",
                 "Width": 450,
-                "Height": 120,
+                "Height": 240,
                 "Dataset": "92720532-a58f-68bb-6e5a-02b28239e312"
               },
               "collections": {
