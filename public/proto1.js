@@ -519,12 +519,13 @@ $(document).ready( function() {
                         that.vNavigator.top = function(){return 5;};
                         that.vNavigator.left = function(){return 3;};
                         that.vNavigator.nlevels = function(){return 3;};
-                        //that.vNavigator.database = null;
                         that.vNavigator.level = null;
                         that.vNavigator.rootelem = null;
+                        that.vNavigator.tabnumber = 0;
                         that.vNavigator.level = function(val){if(val !== undefined) that.vNavigator.level=val; return that.vNavigator.level;};
                         that.vNavigator.dataBase = function(val){if(val !== undefined) that.vNavigator.database=val; return that.vNavigator.database;};
                         that.vNavigator.rootElem = function(val){if(val !== undefined) that.vNavigator.rootelem=val; return that.vNavigator.rootelem;};
+                        that.vNavigator.tabNum = function(val){if(val !== undefined) that.vNavigator.tabnumber=val; return that.vNavigator.tabnumber;};
                         that.vNavigator.getControlMgr = function(){ return uccelloClt.getContext()? uccelloClt.getContextCM(): uccelloClt.getSysCM(); };
                         that.vNavigator.params = {};
 
