@@ -508,7 +508,6 @@ $(document).ready( function() {
             }
 
             that.vNavigator = null;
-            //that.vNavigator.database = null;
             window.viewNavigator = function() {
                 if (!that.vNavigator){
                     require(['./uccello/lib/simpleview/vdbNavigator'], function(VDbNavigator){
@@ -526,8 +525,8 @@ $(document).ready( function() {
                         that.vNavigator.dataBase = function(val){if(val !== undefined) that.vNavigator.database=val; return that.vNavigator.database;};
                         that.vNavigator.rootElem = function(val){if(val !== undefined) that.vNavigator.rootelem=val; return that.vNavigator.rootelem;};
                         that.vNavigator.tabNum = function(val){if(val !== undefined) that.vNavigator.tabnumber=val; return that.vNavigator.tabnumber;};
-                        that.vNavigator.getControlMgr = function(){ return uccelloClt.getContext()? uccelloClt.getContextCM(): uccelloClt.getSysCM(); };
-                        that.vNavigator.params = {};
+                        that.vNavigator.getControlMgr = function(){ return uccelloClt.getSysCM(); };
+                        that.vNavigator.params = {noEvent:true};
 
                         that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                         $('#clientNav').find('.dbSelector').change(function(){
