@@ -10,7 +10,7 @@ requirejs.config({
 });
 
 
-var $leadEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = true, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var $leadEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
