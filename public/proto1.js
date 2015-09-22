@@ -510,7 +510,7 @@ $(document).ready( function() {
             that.vNavigator = null;
             //that.vNavigator.database = null;
             window.viewNavigator = function() {
-                //if (!that.vNavigator){
+                if (!that.vNavigator){
                     require(['./uccello/lib/simpleview/vdbNavigator'], function(VDbNavigator){
                         $('#clientNav').remove();
                         that.vNavigator = VDbNavigator;
@@ -536,10 +536,10 @@ $(document).ready( function() {
                         });
                         $('#dbNavigatorForm').dialog('open');
                     });
-                /*} else {
+                } else {
                     that.vNavigator.render({rootContainer:'#dbNavigatorForm'});
                     $('#dbNavigatorForm').dialog('open');
-                }*/
+                }
             }
 
 
