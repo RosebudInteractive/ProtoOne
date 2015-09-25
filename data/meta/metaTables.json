@@ -1278,7 +1278,7 @@
                             "fields": {
                                 "Name": "Title", 
                                 "FieldType": {
-                                    "type": "date"
+                                    "type": "string"
                                 }, 
                                 "Order": 4
                             }, 

@@ -15,7 +15,7 @@ define(
                 {fname:"CompanyId",ftype:"int"},
                 {fname:"FirstName",ftype:"string"},
                 {fname:"LastName",ftype:"string"},
-                {fname:"Title",ftype:"date"},
+                {fname:"Title",ftype:"string"},
                 {fname:"MobilePhone",ftype:"string"},
                 {fname:"WorkPhone",ftype:"string"},
                 {fname:"Email",ftype:"string"}
