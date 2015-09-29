@@ -850,7 +850,7 @@
                             }, 
                             "ver": 0, 
                             "fields": {
-                                "Name": "leadId", 
+                                "Name": "LeadId", 
                                 "FieldType": {
                                     "type": "int"
                                 }, 

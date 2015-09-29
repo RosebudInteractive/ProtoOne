@@ -157,6 +157,31 @@ var config = {
         processStorage  : __dirname + '/../ProtoOne/data/wfeData/',
         scriptsPath     : __dirname + '/../ProtoOne/data/wfeUserScripts/',
         idleTimeout     : 10000
+    },
+
+    dataman: {
+        //connection: {
+        //    host: "localhost",
+        //    username: "sa",
+        //    password: "system",
+        //    database: "genetix_test",
+        //    provider: "mysql",
+        //    connection_options: {},
+        //    provider_options: {},
+        //    pool: {
+        //        max: 5,
+        //        min: 0,
+        //        idle: 10000
+        //    },
+        //},
+        //importData: {
+        //    autoimport: false,
+        //    dir: "../ProtoOne/data/tables"
+        //},
+        //trace: {
+        //    sqlCommands: true,
+        //    importDir: true
+        //}
     }
 };
 
