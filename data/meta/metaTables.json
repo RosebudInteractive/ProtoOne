@@ -9,7 +9,7 @@
         "Models": {
             "0": {
                 "$sys": {
-                    "guid": "f610e536-1811-155a-13d0-37c482caa416@2009", 
+                    "guid": "1617ef9e-a306-b215-7a69-b270ce91adb1@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -23,7 +23,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "6acd806d-0214-7963-7417-7f8f1e8dd1fe@2009", 
+                                "guid": "20a96f77-4632-9606-95d8-d8acf6f3337c@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -38,14 +38,15 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "0bc27d0f-8ef6-8814-4370-c361018e2f48@2009", 
+                                "guid": "2ad7ead2-4383-2b1c-2c6f-ab146af7384a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Source", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 1
                             }, 
@@ -53,14 +54,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "e2b7b585-e99b-b357-5619-c07adc3b0505@2009", 
+                                "guid": "f7dd456e-15ca-5ae6-4139-9ef12280bed1@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "State", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -68,14 +70,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "874da093-c26c-cbb1-7b46-585110109eb0@2009", 
+                                "guid": "4dcf19a3-0175-077b-f303-eb38ebf9b9ee@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Content", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -83,7 +86,7 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "f52ab728-c283-3bb4-c170-6c15fce42c86@2009", 
+                                "guid": "b6f99730-cc34-f5db-1dea-8037de2e152d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -98,7 +101,7 @@
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "4f495613-f84e-cf8d-04a8-95871a731444@2009", 
+                                "guid": "bf0064e7-81c8-c0ea-22d9-9903d8dacb43@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -113,7 +116,7 @@
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "9124004a-ca82-c956-5c0c-6cafd0f95ba6@2009", 
+                                "guid": "d5d96ee5-c365-2b30-e3ab-bcd5df2fce75@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -128,7 +131,7 @@
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "fe2a0d77-61f5-1496-8226-e023c68c4d8a@2009", 
+                                "guid": "eb8f23bf-c60d-afe4-189c-c827aea39891@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -143,14 +146,15 @@
                         }, 
                         "8": {
                             "$sys": {
-                                "guid": "dea67c84-0818-dbd0-fc11-76bad8c2109c@2009", 
+                                "guid": "36a2cbec-c7a7-3022-e28d-ffd81802ee18@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "FirstName", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 8
                             }, 
@@ -158,14 +162,15 @@
                         }, 
                         "9": {
                             "$sys": {
-                                "guid": "cb8cf8ad-6d4d-0a83-6f1d-27eb6c06a367@2009", 
+                                "guid": "e5c9128b-d3bd-aac8-68d1-ddcf91a80680@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "LastName", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 9
                             }, 
@@ -173,14 +178,15 @@
                         }, 
                         "10": {
                             "$sys": {
-                                "guid": "99257794-85c7-02be-e14b-2b2e5d3fd9e9@2009", 
+                                "guid": "1f1dd6cd-4759-f39d-ed61-1cad1abd949c@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Title", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 10
                             }, 
@@ -188,14 +194,15 @@
                         }, 
                         "11": {
                             "$sys": {
-                                "guid": "4a485a0a-f880-c19a-56a3-3ebe902639e4@2009", 
+                                "guid": "9a90a9ff-4db7-62bd-ea48-d8cfd0c1dc94@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "MobilePhone", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 11
                             }, 
@@ -203,14 +210,15 @@
                         }, 
                         "12": {
                             "$sys": {
-                                "guid": "53950e99-0e47-1df9-6e54-222f1b92f9da@2009", 
+                                "guid": "da48eac8-aaa4-659a-64ee-5c8237666171@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "WorkPhone", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 12
                             }, 
@@ -218,14 +226,15 @@
                         }, 
                         "13": {
                             "$sys": {
-                                "guid": "29492953-b8f6-5abb-716d-4e99569954e3@2009", 
+                                "guid": "5243db8e-a9bd-f8d4-43a7-38a822850731@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Email", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 13
                             }, 
@@ -233,7 +242,7 @@
                         }, 
                         "14": {
                             "$sys": {
-                                "guid": "372815d3-d954-aae9-9de1-68e843ed950d@2009", 
+                                "guid": "5a31c592-7377-f82d-a43e-b2b0b27bef6d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -248,14 +257,15 @@
                         }, 
                         "15": {
                             "$sys": {
-                                "guid": "27dd8f4c-6ae9-493d-c8ec-a9d7337c1557@2009", 
+                                "guid": "2510bdd2-34e7-5174-17b4-fdea224565f1@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Company", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 15
                             }, 
@@ -263,14 +273,15 @@
                         }, 
                         "16": {
                             "$sys": {
-                                "guid": "45520805-8039-66d5-2d75-c9017d0d34f8@2009", 
+                                "guid": "80dfc9eb-d2f9-37a5-1358-cbdc47c0a897@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Industry", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 16
                             }, 
@@ -278,7 +289,7 @@
                         }, 
                         "17": {
                             "$sys": {
-                                "guid": "fcd635da-2419-ab7d-af6d-e31d49e60979@2009", 
+                                "guid": "d638e239-c253-e586-57f4-3f730819122a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -293,14 +304,15 @@
                         }, 
                         "18": {
                             "$sys": {
-                                "guid": "3a745498-45e4-cefa-d636-5e2bd705f626@2009", 
+                                "guid": "8a2c93bc-44c2-04b3-7fff-39ee18de0e45@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "City", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 18
                             }, 
@@ -308,14 +320,15 @@
                         }, 
                         "19": {
                             "$sys": {
-                                "guid": "0a59df5b-e15d-6d83-1279-ad62e548089f@2009", 
+                                "guid": "9214e98e-0988-95a7-07ef-744950df9deb@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Address", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 19
                             }, 
@@ -323,14 +336,15 @@
                         }, 
                         "20": {
                             "$sys": {
-                                "guid": "9d2d0b74-aec7-6d98-df53-c20107a5de9d@2009", 
+                                "guid": "1997bf3f-f701-13b3-60b2-06f04be68e15@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "PostalCode", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 20
                             }, 
@@ -341,7 +355,7 @@
             }, 
             "1": {
                 "$sys": {
-                    "guid": "e69e71ef-b4dc-ab20-e98d-c9232c61efd6@2009", 
+                    "guid": "be1e82fb-731d-cd82-0c5a-dd6778782b33@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -355,7 +369,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "46756834-fb59-08c6-831b-2cad0d1b80b0@2009", 
+                                "guid": "a4ea6eb5-5390-b86e-7afa-22269cb03835@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -370,14 +384,15 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "96573bd8-bec3-6d92-3782-34cf7ae94002@2009", 
+                                "guid": "2ac5e751-289d-2efc-bccf-0088202dac33@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Name", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 1
                             }, 
@@ -385,14 +400,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "f107567f-4253-3e91-fe6f-4280f971ed5b@2009", 
+                                "guid": "6d4b666e-7027-6c56-05db-133096d268eb@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "country", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -400,14 +416,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "720767d5-8a80-1773-ee31-de1aa0438c50@2009", 
+                                "guid": "1818e659-fd70-57a9-5cb3-dd44cc9c08cd@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "city", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -415,14 +432,15 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "86ff06be-65a2-7243-fcb9-30f47eeb51b1@2009", 
+                                "guid": "69baa7ee-c0a8-c67a-3ff1-48a8317c383e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "address", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 4
                             }, 
@@ -433,7 +451,7 @@
             }, 
             "2": {
                 "$sys": {
-                    "guid": "2e74dcbb-8cce-b999-e93b-f01a70e16f33@2009", 
+                    "guid": "8f4ae0b8-55ab-2173-a976-f9090aa8e718@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -447,7 +465,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "66cca64d-7ad6-1374-ad34-1220ee6b0898@2009", 
+                                "guid": "3b10117f-ea97-c917-d41f-30d069f52671@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -462,7 +480,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "ac123337-d8d1-2c78-5dec-16d2fdc2fade@2009", 
+                                "guid": "055c9694-1b92-1a4e-a13e-51d3b2e838b8@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -477,14 +495,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "e6de5210-c86f-d1f0-53d2-3b1bf99a59d4@2009", 
+                                "guid": "b79a572a-e01b-7f88-4904-ea130a8ea312@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "firstname", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -492,14 +511,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "1aecc078-3cf9-5f03-e623-02c08aebd0cf@2009", 
+                                "guid": "cac3165a-a6a3-5efe-9eb4-28b066f09c48@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "lastname", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -507,7 +527,7 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "ae2ade22-c971-e8c0-a8ea-278fd548d34f@2009", 
+                                "guid": "4bfb92ae-eb1d-49e2-ee30-a4c97192b444@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -522,14 +542,15 @@
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "3566c091-3cd4-0e05-c3db-f6e3b79ea9b4@2009", 
+                                "guid": "496e86f1-0cca-042a-3d7b-69c480689ce5@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "country", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 5
                             }, 
@@ -537,14 +558,15 @@
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "6c668bf7-a7d0-6cd6-c5e0-38380c647d91@2009", 
+                                "guid": "19925a11-de92-ec6e-55bc-e228e10faebd@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "city", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 6
                             }, 
@@ -552,14 +574,15 @@
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "ce655a47-1f73-e8bf-3223-f5280a22893d@2009", 
+                                "guid": "df5d9df5-0b1c-25a7-9860-66dffdfbf5c9@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "address", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 7
                             }, 
@@ -570,7 +593,7 @@
             }, 
             "3": {
                 "$sys": {
-                    "guid": "edf0de33-98aa-3c5e-1c2f-c7a428ff7949@2009", 
+                    "guid": "26f917e1-7e1f-6967-a431-eaf4e03b94dd@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -584,7 +607,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "3f176a88-271f-8973-047b-f5ee326d9adf@2009", 
+                                "guid": "f142e183-0ae7-7168-d372-dbd034c4978e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -599,7 +622,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "958e37fc-442f-ee6b-168d-e8e756d0d5c0@2009", 
+                                "guid": "dd84b545-0fe8-9173-0602-fd502cfc361d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -614,14 +637,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "55f4790d-90e4-4424-f60a-12c921c3e520@2009", 
+                                "guid": "9888929e-8a65-9c26-dafc-09050af4d4f8@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "number", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -629,14 +653,16 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "ba89eccb-39ed-efd3-7419-2f57315698c9@2009", 
+                                "guid": "7d05fd46-8461-565f-37e8-9efd7873b4e7@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "total", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "decimal", 
+                                    "precision": 12, 
+                                    "scale": 4
                                 }, 
                                 "Order": 3
                             }, 
@@ -647,7 +673,7 @@
             }, 
             "4": {
                 "$sys": {
-                    "guid": "b0ea1943-58b7-6562-b0de-b262f67230ee@2009", 
+                    "guid": "be1cff0c-2c8d-438a-e9b6-1aca6db484ac@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -661,7 +687,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "d0e5b769-d807-feca-ccc5-80af8467dfe8@2009", 
+                                "guid": "17c2f380-ca1f-72a3-dd1e-3a54a37b1ede@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -676,7 +702,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "53d23f00-f65f-c48f-67e0-b2ae12e49636@2009", 
+                                "guid": "71b3c26e-4d61-6ef7-a22a-36da6bd1e07c@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -691,14 +717,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "e9ba4f5b-8fa6-8e06-a253-ae0c73ce3395@2009", 
+                                "guid": "910b40c2-7ff3-f221-092d-3890611f7584@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "country", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -706,14 +733,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "febf8dc0-3cc7-5fed-24bf-001e679dcd85@2009", 
+                                "guid": "3e184fdc-57ac-0270-14e2-9850ec221159@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "city", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -721,14 +749,15 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "df48cb95-b4b6-2bb9-127c-712d6234c142@2009", 
+                                "guid": "8390ce66-a354-6860-59ea-14c453567360@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "address", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 4
                             }, 
@@ -739,7 +768,7 @@
             }, 
             "5": {
                 "$sys": {
-                    "guid": "a3639365-09d3-670c-6249-9964f64b4a2f@2009", 
+                    "guid": "6e9c4d47-17be-c68a-86e8-ad436100f14f@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -753,7 +782,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "697b294a-4873-6416-1a89-28d175977a98@2009", 
+                                "guid": "72fa2a02-98d1-e9e7-dc22-18194ddafc52@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -768,7 +797,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "bc6169ef-a115-f97e-a7a7-1cd7bd36b380@2009", 
+                                "guid": "6ec62960-6c43-a5ec-709b-d5fea6a3946d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -783,7 +812,7 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "b84109ad-d8ed-ef7f-349a-e721c92b66bc@2009", 
+                                "guid": "a6c36e45-19a4-51e3-0329-a85ede7fb610@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -798,14 +827,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "4953ea18-6f89-832e-9587-3dba232b5181@2009", 
+                                "guid": "aa19953c-5f29-9725-a28d-dc91f74382e2@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Content", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -816,7 +846,7 @@
             }, 
             "6": {
                 "$sys": {
-                    "guid": "b2af5408-40da-2008-6d1d-6beb2f771b2e@2009", 
+                    "guid": "8a936b31-5b34-1897-4ba5-73606c773a42@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -830,7 +860,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "1baaa8fe-81f4-1892-f18e-efa762a00172@2009", 
+                                "guid": "7f40077e-ec39-52af-1f2c-1ababf2b63be@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -845,7 +875,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "45b2c6d9-9aa7-21b8-f9d7-54ddb866404f@2009", 
+                                "guid": "b24b773a-74b0-27ee-43b7-7479c3badff3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -860,7 +890,7 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "7a591ca7-4e64-77e1-e91c-39081507f88e@2009", 
+                                "guid": "76a5f5f6-8d4a-539e-a843-6db364bdb533@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -875,14 +905,16 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "95aa20b7-5012-5df1-85a4-395571785674@2009", 
+                                "guid": "e969c24e-82a2-a38f-c69b-6b557595fe62@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "amount", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "decimal", 
+                                    "precision": 12, 
+                                    "scale": 4
                                 }, 
                                 "Order": 3
                             }, 
@@ -890,14 +922,15 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "0d971f52-9fdc-9f17-d549-3c0414fce838@2009", 
+                                "guid": "b1ea9697-21d2-388f-209d-f642a6192322@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "comment", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 4
                             }, 
@@ -908,7 +941,7 @@
             }, 
             "7": {
                 "$sys": {
-                    "guid": "8b11a930-91f6-b762-d2d4-e1751b1d8fda@2009", 
+                    "guid": "ec3266bd-9a78-ec1d-ad0e-b623e883a16b@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -922,7 +955,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "ff2935a4-1649-bf9e-7314-5c014377aabe@2009", 
+                                "guid": "175f6101-0ee5-42d1-4c58-67f989a2315f@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -937,14 +970,15 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "76cd0e48-8268-4563-e3df-43d7950087ea@2009", 
+                                "guid": "345f3ec3-eb7d-f6dc-cf04-d158f410246e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "State", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 1
                             }, 
@@ -952,7 +986,7 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "8f351bfa-17a8-9675-7bed-d9c0e44d18e3@2009", 
+                                "guid": "93bbe103-4053-a330-371f-a93fa93d3a4d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -967,7 +1001,7 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "a2ab16bb-a736-5bcc-8aeb-e9a3e27e04e2@2009", 
+                                "guid": "a15dff7e-edbb-3817-e400-73a34555f873@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -982,7 +1016,7 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "c6c91285-1ed2-f0bc-63d3-9b12dba7b683@2009", 
+                                "guid": "1be7e8cd-1874-b0dd-558e-fe1eb338b712@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -997,14 +1031,15 @@
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "b9e10824-4578-9cbd-e1fb-68ce17104a49@2009", 
+                                "guid": "8dcaf295-64fd-b280-3ea8-876d9cc52f67@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Description", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 5
                             }, 
@@ -1012,7 +1047,7 @@
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "6b17096d-eb29-7c29-ac1a-8e78737412ad@2009", 
+                                "guid": "b2bd31d4-df2a-42ce-b047-8e87a34d62ea@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1027,14 +1062,16 @@
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "2ebe6d33-925b-cfed-ac9b-9db4dd5454cc@2009", 
+                                "guid": "8e32da86-1e6b-7079-3554-a030110e84f8@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Amount", 
                                 "FieldType": {
-                                    "type": "float"
+                                    "type": "decimal", 
+                                    "precision": 12, 
+                                    "scale": 4
                                 }, 
                                 "Order": 7
                             }, 
@@ -1042,7 +1079,7 @@
                         }, 
                         "8": {
                             "$sys": {
-                                "guid": "f302b966-cd67-98b8-1efd-137204d63482@2009", 
+                                "guid": "2eb9282c-79b3-cd06-7b34-53de7b7827da@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1060,7 +1097,7 @@
             }, 
             "8": {
                 "$sys": {
-                    "guid": "f49bba5e-f3d1-8d27-90c2-ceddd519e726@2009", 
+                    "guid": "b20770c3-0086-7c37-51fc-171e2b3a7d6c@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -1074,7 +1111,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "5ad05943-80b5-1078-a95b-6d12810ac933@2009", 
+                                "guid": "85f9f551-900b-e591-5b1a-fadc2ac24774@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1089,7 +1126,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "854d1546-9eb1-3dff-62de-19674c9834ad@2009", 
+                                "guid": "4ae092cc-482c-b59a-9979-e87b5e650817@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1104,14 +1141,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "05e8a398-263d-95ba-5c23-c802707270f6@2009", 
+                                "guid": "8c0990aa-1d75-c4ab-fa01-38368c2b18f7@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Company", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -1119,14 +1157,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "2690ac0f-656f-6808-bf50-ca515508a871@2009", 
+                                "guid": "1dacf922-dc27-813d-207f-ad28bd37231e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Industry", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -1134,7 +1173,7 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "41862cbd-70e2-801b-26b4-b9ecf136934c@2009", 
+                                "guid": "d520aaea-e416-b5fd-5f75-d11397d0701b@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1149,14 +1188,15 @@
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "270d8fff-5382-da68-b0b0-ff955bb80ffb@2009", 
+                                "guid": "218f7f71-aa2c-d234-4126-740294ec01c4@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "City", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 5
                             }, 
@@ -1164,14 +1204,15 @@
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "c4aecc62-d5f8-13f4-771d-328d63a303db@2009", 
+                                "guid": "30ca8308-eba2-5aea-9a5d-6196bee08e15@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Address", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 6
                             }, 
@@ -1179,14 +1220,15 @@
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "4ec3edf6-7a2b-79a4-b534-369eb664e71e@2009", 
+                                "guid": "de2dd1aa-d55c-9651-a72e-445734940b22@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "PostalCode", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 7
                             }, 
@@ -1197,7 +1239,7 @@
             }, 
             "9": {
                 "$sys": {
-                    "guid": "173894a9-3982-01b5-e89e-f657b8d28a41@2009", 
+                    "guid": "b48bf8c5-17fb-f878-7427-190e80b1e10d@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -1211,7 +1253,7 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "9d291215-d8c7-5971-7742-96f270f213c8@2009", 
+                                "guid": "04ce32ce-6365-ba6f-88c5-a9a0cbc231cd@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1226,7 +1268,7 @@
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "1646e00a-afff-a716-9a68-87fe244bb356@2009", 
+                                "guid": "f27d9a3f-2e7b-e49d-3772-dff0796540b5@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1241,14 +1283,15 @@
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "d7b4d934-f4d8-ea67-a64b-10c673647991@2009", 
+                                "guid": "d96ef6b8-c057-46c1-8bc2-d63cf7b3bb8e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "FirstName", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 2
                             }, 
@@ -1256,14 +1299,15 @@
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "671d3ee2-9e62-42aa-9493-2349c716932c@2009", 
+                                "guid": "b7de7169-4b0d-2a8c-07f9-203630af044a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "LastName", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 3
                             }, 
@@ -1271,14 +1315,15 @@
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "2f2ecb77-263e-e839-d742-1ec16a26caf9@2009", 
+                                "guid": "339d1aaf-b3b3-c343-c37d-f3ceb98f3c29@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Title", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 4
                             }, 
@@ -1286,14 +1331,15 @@
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "14f1fee9-3b1f-46d2-240e-9f0de8fac912@2009", 
+                                "guid": "5e46334c-9e15-c742-fa15-cc83185d3f43@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "MobilePhone", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 5
                             }, 
@@ -1301,14 +1347,15 @@
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "6ec76277-6efa-7e2e-b05f-502d0d3a2f55@2009", 
+                                "guid": "942ef911-3fc1-f493-8279-430a512bc0fc@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "WorkPhone", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 6
                             }, 
@@ -1316,14 +1363,15 @@
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "85e54bf7-6eec-909a-9f47-33381ca18e49@2009", 
+                                "guid": "1a1d25cc-ed94-1b9d-43bb-8e8e78b0b26f@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Email", 
                                 "FieldType": {
-                                    "type": "string"
+                                    "type": "string", 
+                                    "length": 255
                                 }, 
                                 "Order": 7
                             }, 
@@ -1335,3 +1383,4 @@
         }
     }
 }
+
