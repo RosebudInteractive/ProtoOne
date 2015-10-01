@@ -9,7 +9,7 @@
         "Models": {
             "0": {
                 "$sys": {
-                    "guid": "1617ef9e-a306-b215-7a69-b270ce91adb1@2009", 
+                    "guid": "de5d1363-0b83-b70b-6b60-8269a6b99f75@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -23,22 +23,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "20a96f77-4632-9606-95d8-d8acf6f3337c@2009", 
+                                "guid": "0cd1fea7-d1d9-f939-781b-44b833352d3e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "2ad7ead2-4383-2b1c-2c6f-ab146af7384a@2009", 
+                                "guid": "64c5de42-a11a-7ed2-787d-75b90bb1a5e4@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -48,13 +50,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "f7dd456e-15ca-5ae6-4139-9ef12280bed1@2009", 
+                                "guid": "1aa65127-9835-75b5-f705-1cb69fd6f217@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -64,13 +67,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "4dcf19a3-0175-077b-f303-eb38ebf9b9ee@2009", 
+                                "guid": "48475767-c32e-cecc-25b7-45002f84b041@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -80,13 +84,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "b6f99730-cc34-f5db-1dea-8037de2e152d@2009", 
+                                "guid": "dce00204-1d1a-3d6a-b347-b0068e426616@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -95,13 +100,14 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "bf0064e7-81c8-c0ea-22d9-9903d8dacb43@2009", 
+                                "guid": "f0000c76-b5a1-7c7a-32de-fad39d21f670@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -110,13 +116,14 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 5
+                                "Order": 5, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "d5d96ee5-c365-2b30-e3ab-bcd5df2fce75@2009", 
+                                "guid": "9c3ff195-0805-b041-d1dd-00e1f6c523e3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -125,13 +132,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 6
+                                "Order": 6, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "eb8f23bf-c60d-afe4-189c-c827aea39891@2009", 
+                                "guid": "d2d1e232-cdb9-812a-d046-7889e4fb81b6@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -140,13 +148,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 7
+                                "Order": 7, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "8": {
                             "$sys": {
-                                "guid": "36a2cbec-c7a7-3022-e28d-ffd81802ee18@2009", 
+                                "guid": "dfce1338-0e9f-a89b-e3ce-a21017942844@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -156,13 +165,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 8
+                                "Order": 8, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "9": {
                             "$sys": {
-                                "guid": "e5c9128b-d3bd-aac8-68d1-ddcf91a80680@2009", 
+                                "guid": "2457f131-04b2-68b2-0ac1-b7523711c78e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -172,13 +182,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 9
+                                "Order": 9, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "10": {
                             "$sys": {
-                                "guid": "1f1dd6cd-4759-f39d-ed61-1cad1abd949c@2009", 
+                                "guid": "0e28accc-113e-eaac-a3fa-b9286de0f580@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -188,13 +199,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 10
+                                "Order": 10, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "11": {
                             "$sys": {
-                                "guid": "9a90a9ff-4db7-62bd-ea48-d8cfd0c1dc94@2009", 
+                                "guid": "a422e355-e3f8-685a-bfaa-e28216b2369a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -204,13 +216,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 11
+                                "Order": 11, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "12": {
                             "$sys": {
-                                "guid": "da48eac8-aaa4-659a-64ee-5c8237666171@2009", 
+                                "guid": "6cae7f27-1d14-b408-7723-0b75eb8d5e9e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -220,13 +233,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 12
+                                "Order": 12, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "13": {
                             "$sys": {
-                                "guid": "5243db8e-a9bd-f8d4-43a7-38a822850731@2009", 
+                                "guid": "ed8ba90c-a3c7-6e89-0e93-6985e2755ec0@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -236,13 +250,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 13
+                                "Order": 13, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "14": {
                             "$sys": {
-                                "guid": "5a31c592-7377-f82d-a43e-b2b0b27bef6d@2009", 
+                                "guid": "65e4f1cf-24d7-d9e3-8e48-1e08c0b4f893@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -251,13 +266,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 14
+                                "Order": 14, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "15": {
                             "$sys": {
-                                "guid": "2510bdd2-34e7-5174-17b4-fdea224565f1@2009", 
+                                "guid": "2a6d939c-3df0-3118-535d-6eedda0bca18@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -267,13 +283,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 15
+                                "Order": 15, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "16": {
                             "$sys": {
-                                "guid": "80dfc9eb-d2f9-37a5-1358-cbdc47c0a897@2009", 
+                                "guid": "77e39a5c-2249-67b3-f962-c90b7fb33fe1@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -283,13 +300,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 16
+                                "Order": 16, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "17": {
                             "$sys": {
-                                "guid": "d638e239-c253-e586-57f4-3f730819122a@2009", 
+                                "guid": "bedc672b-3982-f506-914e-f4dfca025d08@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -298,13 +316,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 17
+                                "Order": 17, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "18": {
                             "$sys": {
-                                "guid": "8a2c93bc-44c2-04b3-7fff-39ee18de0e45@2009", 
+                                "guid": "b05b296b-8fb7-40e3-b315-c00c4a7a43c6@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -314,13 +333,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 18
+                                "Order": 18, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "19": {
                             "$sys": {
-                                "guid": "9214e98e-0988-95a7-07ef-744950df9deb@2009", 
+                                "guid": "acca916f-143c-7749-774d-b06fc4525243@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -330,13 +350,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 19
+                                "Order": 19, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "20": {
                             "$sys": {
-                                "guid": "1997bf3f-f701-13b3-60b2-06f04be68e15@2009", 
+                                "guid": "f7209a0f-cd96-aaca-f5dc-5bfa7447d98c@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -346,7 +367,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 20
+                                "Order": 20, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -355,7 +377,7 @@
             }, 
             "1": {
                 "$sys": {
-                    "guid": "be1e82fb-731d-cd82-0c5a-dd6778782b33@2009", 
+                    "guid": "62778cbf-68d3-6431-aacb-1fdab739447a@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -369,22 +391,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "a4ea6eb5-5390-b86e-7afa-22269cb03835@2009", 
+                                "guid": "fb507c67-fa19-d528-21e3-077279a5dc98@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "2ac5e751-289d-2efc-bccf-0088202dac33@2009", 
+                                "guid": "df82fbc3-b834-7de6-b182-735c6b5ac344@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -394,13 +418,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "6d4b666e-7027-6c56-05db-133096d268eb@2009", 
+                                "guid": "f6b20de3-7ccc-e12b-6116-221e5a705df3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -410,13 +435,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "1818e659-fd70-57a9-5cb3-dd44cc9c08cd@2009", 
+                                "guid": "174a733c-543a-201b-beb7-0d4ac4379d8b@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -426,13 +452,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "69baa7ee-c0a8-c67a-3ff1-48a8317c383e@2009", 
+                                "guid": "7560454d-bde7-18d9-ce2c-59999b757350@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -442,7 +469,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -451,7 +479,7 @@
             }, 
             "2": {
                 "$sys": {
-                    "guid": "8f4ae0b8-55ab-2173-a976-f9090aa8e718@2009", 
+                    "guid": "0ca883cf-5df6-f8f6-a968-4dd2e9cecec0@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -465,22 +493,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "3b10117f-ea97-c917-d41f-30d069f52671@2009", 
+                                "guid": "d7f09b95-82aa-d3cb-b159-1cc6027986df@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "055c9694-1b92-1a4e-a13e-51d3b2e838b8@2009", 
+                                "guid": "f42fb469-bede-166b-60c3-c523823d7b14@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -489,13 +519,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "b79a572a-e01b-7f88-4904-ea130a8ea312@2009", 
+                                "guid": "52e4c6b5-94b1-a578-23ed-85f059f4e6cc@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -505,13 +536,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "cac3165a-a6a3-5efe-9eb4-28b066f09c48@2009", 
+                                "guid": "206024ba-8981-eb1e-8eb4-3fc21e4ca093@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -521,13 +553,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "4bfb92ae-eb1d-49e2-ee30-a4c97192b444@2009", 
+                                "guid": "a52502ca-4296-d59d-8e0d-a97cc3972c78@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -536,13 +569,14 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "496e86f1-0cca-042a-3d7b-69c480689ce5@2009", 
+                                "guid": "5801abc7-5ff0-19d5-f775-3d884d87e24f@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -552,13 +586,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 5
+                                "Order": 5, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "19925a11-de92-ec6e-55bc-e228e10faebd@2009", 
+                                "guid": "be8c4625-0c26-37f5-2a38-96d26f577b04@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -568,13 +603,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 6
+                                "Order": 6, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "df5d9df5-0b1c-25a7-9860-66dffdfbf5c9@2009", 
+                                "guid": "d78f787b-ffb5-382c-c3f8-18a132a5fa63@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -584,7 +620,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 7
+                                "Order": 7, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -593,7 +630,7 @@
             }, 
             "3": {
                 "$sys": {
-                    "guid": "26f917e1-7e1f-6967-a431-eaf4e03b94dd@2009", 
+                    "guid": "62a14bd1-ccb1-bb34-93c6-1c38626c46ca@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -607,22 +644,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "f142e183-0ae7-7168-d372-dbd034c4978e@2009", 
+                                "guid": "f3fb22d7-187e-4375-0929-ea5835e5301c@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "dd84b545-0fe8-9173-0602-fd502cfc361d@2009", 
+                                "guid": "0da36d2d-dcda-430a-6a5e-724f5697d016@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -631,13 +670,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "9888929e-8a65-9c26-dafc-09050af4d4f8@2009", 
+                                "guid": "0a7a083f-9bcb-5737-7847-5c389ac143d7@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -647,13 +687,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "7d05fd46-8461-565f-37e8-9efd7873b4e7@2009", 
+                                "guid": "809d5967-94e3-77f0-2b73-7d0486a1ccdc@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -664,7 +705,8 @@
                                     "precision": 12, 
                                     "scale": 4
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -673,7 +715,7 @@
             }, 
             "4": {
                 "$sys": {
-                    "guid": "be1cff0c-2c8d-438a-e9b6-1aca6db484ac@2009", 
+                    "guid": "c8e5dae3-1d06-e64e-eda5-0ebbb41e9579@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -687,22 +729,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "17c2f380-ca1f-72a3-dd1e-3a54a37b1ede@2009", 
+                                "guid": "6411cb1e-6444-1266-5e9b-dadc0bbcd342@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "71b3c26e-4d61-6ef7-a22a-36da6bd1e07c@2009", 
+                                "guid": "5d4743ce-ed10-55f7-55b0-5fa8ee8c51b7@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -711,13 +755,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "910b40c2-7ff3-f221-092d-3890611f7584@2009", 
+                                "guid": "f9da3862-d0cc-c104-78bb-d1ac47d5852b@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -727,13 +772,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "3e184fdc-57ac-0270-14e2-9850ec221159@2009", 
+                                "guid": "7652b833-1150-f2ac-abff-28486b3d9858@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -743,13 +789,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "8390ce66-a354-6860-59ea-14c453567360@2009", 
+                                "guid": "3f3e52f8-499a-b07c-5781-20165abc8e2e@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -759,7 +806,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -768,7 +816,7 @@
             }, 
             "5": {
                 "$sys": {
-                    "guid": "6e9c4d47-17be-c68a-86e8-ad436100f14f@2009", 
+                    "guid": "baba7e1e-4f6e-bdd8-ecfd-2bcb26ff8bd5@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -782,22 +830,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "72fa2a02-98d1-e9e7-dc22-18194ddafc52@2009", 
+                                "guid": "1994e411-2892-1ce9-9e99-8f089640d621@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "6ec62960-6c43-a5ec-709b-d5fea6a3946d@2009", 
+                                "guid": "7365f7f9-2485-fe89-7b17-4baf58a1511b@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -806,13 +856,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "a6c36e45-19a4-51e3-0329-a85ede7fb610@2009", 
+                                "guid": "50f198ee-0abf-3603-4f22-78f1c061ed79@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -821,13 +872,14 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "aa19953c-5f29-9725-a28d-dc91f74382e2@2009", 
+                                "guid": "bf7c3432-da56-a323-c223-71bf48801837@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -837,7 +889,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -846,7 +899,7 @@
             }, 
             "6": {
                 "$sys": {
-                    "guid": "8a936b31-5b34-1897-4ba5-73606c773a42@2009", 
+                    "guid": "820e300e-3b91-d657-6892-5915b11d3fd3@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -860,22 +913,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "7f40077e-ec39-52af-1f2c-1ababf2b63be@2009", 
+                                "guid": "e5558a00-89f1-41cb-6161-df19929fe573@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "b24b773a-74b0-27ee-43b7-7479c3badff3@2009", 
+                                "guid": "fe74d5ed-10bf-8d05-d690-63e17b144a6d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -884,13 +939,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "76a5f5f6-8d4a-539e-a843-6db364bdb533@2009", 
+                                "guid": "909eb29e-a830-3bfd-14c2-bc3cfc85c5e0@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -899,13 +955,14 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "e969c24e-82a2-a38f-c69b-6b557595fe62@2009", 
+                                "guid": "6048aa74-dccc-6cd2-b722-f03907a8c1a3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -916,13 +973,14 @@
                                     "precision": 12, 
                                     "scale": 4
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "b1ea9697-21d2-388f-209d-f642a6192322@2009", 
+                                "guid": "95e584c2-454d-c231-3ee3-ff28d7b0d0d4@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -932,7 +990,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -941,7 +1000,7 @@
             }, 
             "7": {
                 "$sys": {
-                    "guid": "ec3266bd-9a78-ec1d-ad0e-b623e883a16b@2009", 
+                    "guid": "28779051-30f9-c596-857d-7674332cb8b3@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -955,22 +1014,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "175f6101-0ee5-42d1-4c58-67f989a2315f@2009", 
+                                "guid": "af17ec36-ab47-d8c3-66a4-9c947cb2c91a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "345f3ec3-eb7d-f6dc-cf04-d158f410246e@2009", 
+                                "guid": "8b9ef0f0-01dd-42eb-8890-c138e44b834a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -980,13 +1041,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "93bbe103-4053-a330-371f-a93fa93d3a4d@2009", 
+                                "guid": "84b182ac-5c2b-fdba-d32c-7e6a870b5b6a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -995,13 +1057,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "a15dff7e-edbb-3817-e400-73a34555f873@2009", 
+                                "guid": "2ed1cdae-3dfb-5274-7b3c-6cb9a37580a5@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1010,13 +1073,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "1be7e8cd-1874-b0dd-558e-fe1eb338b712@2009", 
+                                "guid": "af1823f6-0b08-700f-a1c2-37c08cdae425@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1025,13 +1089,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "8dcaf295-64fd-b280-3ea8-876d9cc52f67@2009", 
+                                "guid": "dc4a3da6-a352-b142-a58b-78170fdffdfb@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1041,13 +1106,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 5
+                                "Order": 5, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "b2bd31d4-df2a-42ce-b047-8e87a34d62ea@2009", 
+                                "guid": "dd87a7f7-635b-1150-db04-1d577c083f36@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1056,13 +1122,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 6
+                                "Order": 6, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "8e32da86-1e6b-7079-3554-a030110e84f8@2009", 
+                                "guid": "100b32cb-9064-800d-482f-868360c3e464@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1073,13 +1140,14 @@
                                     "precision": 12, 
                                     "scale": 4
                                 }, 
-                                "Order": 7
+                                "Order": 7, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "8": {
                             "$sys": {
-                                "guid": "2eb9282c-79b3-cd06-7b34-53de7b7827da@2009", 
+                                "guid": "60de85cc-614e-a5dc-f77d-9f9bbbbc72bc@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1088,7 +1156,8 @@
                                 "FieldType": {
                                     "type": "datetime"
                                 }, 
-                                "Order": 8
+                                "Order": 8, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -1097,7 +1166,7 @@
             }, 
             "8": {
                 "$sys": {
-                    "guid": "b20770c3-0086-7c37-51fc-171e2b3a7d6c@2009", 
+                    "guid": "d1949511-6ce0-8a70-a2cb-2284dd68c607@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -1111,22 +1180,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "85f9f551-900b-e591-5b1a-fadc2ac24774@2009", 
+                                "guid": "37626159-a12a-d20e-a63d-22ae944830f3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "4ae092cc-482c-b59a-9979-e87b5e650817@2009", 
+                                "guid": "1a6bbd31-4dee-bdee-0ee8-32dd94e5fbf3@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1135,13 +1206,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "8c0990aa-1d75-c4ab-fa01-38368c2b18f7@2009", 
+                                "guid": "0596fe16-61e4-9a3c-3007-4ea8730c017a@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1151,13 +1223,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "1dacf922-dc27-813d-207f-ad28bd37231e@2009", 
+                                "guid": "854e24f7-a7c2-68d0-9596-650f9d647b11@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1167,13 +1240,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "d520aaea-e416-b5fd-5f75-d11397d0701b@2009", 
+                                "guid": "84534ac3-8dc8-45a0-e928-839151f396c2@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1182,13 +1256,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "218f7f71-aa2c-d234-4126-740294ec01c4@2009", 
+                                "guid": "045b0d84-bc3b-b31f-ac3a-89eb9f10db84@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1198,13 +1273,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 5
+                                "Order": 5, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "30ca8308-eba2-5aea-9a5d-6196bee08e15@2009", 
+                                "guid": "f55d0071-c63b-797a-147f-1efe35f56d79@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1214,13 +1290,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 6
+                                "Order": 6, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "de2dd1aa-d55c-9651-a72e-445734940b22@2009", 
+                                "guid": "18e4c8ea-0d9a-155f-75ca-ad7f16f61d96@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1230,7 +1307,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 7
+                                "Order": 7, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -1239,7 +1317,7 @@
             }, 
             "9": {
                 "$sys": {
-                    "guid": "b48bf8c5-17fb-f878-7427-190e80b1e10d@2009", 
+                    "guid": "d63d205c-0298-2c9e-ba97-a0a7644d88f8@2009", 
                     "typeGuid": "183f6fb9-9f17-4955-a22c-4f03c4273413"
                 }, 
                 "ver": 0, 
@@ -1253,22 +1331,24 @@
                     "Fields": {
                         "0": {
                             "$sys": {
-                                "guid": "04ce32ce-6365-ba6f-88c5-a9a0cbc231cd@2009", 
+                                "guid": "c9eff2bf-2bac-83db-bf28-aaeb2557769f@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
                             "fields": {
                                 "Name": "Id", 
                                 "FieldType": {
-                                    "type": "int"
+                                    "type": "int", 
+                                    "allowNull": false
                                 }, 
-                                "Order": 0
+                                "Order": 0, 
+                                "Flags": 3
                             }, 
                             "collections": { }
                         }, 
                         "1": {
                             "$sys": {
-                                "guid": "f27d9a3f-2e7b-e49d-3772-dff0796540b5@2009", 
+                                "guid": "15a8edbb-f6e4-0aac-0403-5d1d541b7531@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1277,13 +1357,14 @@
                                 "FieldType": {
                                     "type": "int"
                                 }, 
-                                "Order": 1
+                                "Order": 1, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "2": {
                             "$sys": {
-                                "guid": "d96ef6b8-c057-46c1-8bc2-d63cf7b3bb8e@2009", 
+                                "guid": "16049431-c3b4-3c85-07f6-4f16138ee0db@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1293,13 +1374,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 2
+                                "Order": 2, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "3": {
                             "$sys": {
-                                "guid": "b7de7169-4b0d-2a8c-07f9-203630af044a@2009", 
+                                "guid": "f56ebf5f-206d-b9a9-4113-20f710bc846d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1309,13 +1391,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 3
+                                "Order": 3, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "4": {
                             "$sys": {
-                                "guid": "339d1aaf-b3b3-c343-c37d-f3ceb98f3c29@2009", 
+                                "guid": "6cf7ef83-3404-144c-d34d-70d50e9fc2b5@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1325,13 +1408,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 4
+                                "Order": 4, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "5": {
                             "$sys": {
-                                "guid": "5e46334c-9e15-c742-fa15-cc83185d3f43@2009", 
+                                "guid": "fda8eaf1-230a-4e4c-c891-4bc590911311@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1341,13 +1425,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 5
+                                "Order": 5, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "6": {
                             "$sys": {
-                                "guid": "942ef911-3fc1-f493-8279-430a512bc0fc@2009", 
+                                "guid": "18c0a611-aa57-da44-bf42-02dd9611943d@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1357,13 +1442,14 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 6
+                                "Order": 6, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }, 
                         "7": {
                             "$sys": {
-                                "guid": "1a1d25cc-ed94-1b9d-43bb-8e8e78b0b26f@2009", 
+                                "guid": "3ff410c9-2cfe-82ec-1bf7-3e1836e419b4@2009", 
                                 "typeGuid": "0997ccff-09ec-4978-b120-3ef7d6668bc2"
                             }, 
                             "ver": 0, 
@@ -1373,7 +1459,8 @@
                                     "type": "string", 
                                     "length": 255
                                 }, 
-                                "Order": 7
+                                "Order": 7, 
+                                "Flags": 0
                             }, 
                             "collections": { }
                         }
@@ -1383,4 +1470,3 @@
         }
     }
 }
-
