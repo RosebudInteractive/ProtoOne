@@ -31,6 +31,15 @@ define(
                 }
             }
 
+            // выставляем фокус
+            var currentControl = this.currentControl();
+            if (currentControl) {
+                if (currentControl.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
+                    $('#ch_'+currentControl.getLid()).find('input').focus();
+                else
+                    $('#ch_'+currentControl.getLid()).focus();
+            }
+
             // убираем удаленные объекты
 			var del = this.getLogCol('Children') && 'del' in this.getLogCol('Children')? this.getLogCol('Children').del: {};
             for (var guid in del)
