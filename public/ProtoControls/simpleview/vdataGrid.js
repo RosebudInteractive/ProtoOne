@@ -144,7 +144,11 @@ define(
                 }
             }
 
-
+            // выставляем фокус
+            var currentControl = this.getRoot().currentControl();
+            if (currentControl && currentControl==this) {
+                $('#ch_'+currentControl.getLid()).focus();
+            }
 
             //if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }

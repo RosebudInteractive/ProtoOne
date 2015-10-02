@@ -30,6 +30,12 @@ define(
 
             item.val(this.caption());
             item.attr('disabled', this.enabled()===false? true: false);
+
+            // выставляем фокус
+            var currentControl = this.getRoot().currentControl();
+            if (currentControl && currentControl==this) {
+                $('#ch_'+currentControl.getLid()).focus();
+            }
         }
         return vButton;
     }
