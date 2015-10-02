@@ -1051,15 +1051,12 @@ $(document).ready( function() {
             }, url('#timeout')?url('#timeout'):10);
 
             // обработка tab и shift+tab
-            var focusControl = null;
             $(window).keydown(function(e) {
                 var keyCode = e.keyCode || e.which, control;
                 if (keyCode == 9) {
                     e.preventDefault();
-                    if (!focusControl) {
-                        var form = uccelloClt.getContextCM().getByName('MainForm');
-                        focusControl = form.currentControl()?form.currentControl():form;
-                    }
+                    var form = uccelloClt.getContextCM().getByName('MainForm');
+                    var focusControl = form.currentControl()?form.currentControl():form;
                     if (e.shiftKey) {
                         control = focusControl.prev(true);
                     } else {
@@ -1071,7 +1068,6 @@ $(document).ready( function() {
 
             window.setFocus = function(control){
                 console.log('set focus: '+control.name());
-                focusControl = control;
                 if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
                     $('#ch_'+control.getLid()).find('input').focus();
                 else
