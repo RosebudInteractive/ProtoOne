@@ -1050,22 +1050,38 @@ $(document).ready( function() {
 
             }, url('#timeout')?url('#timeout'):10);
 
+            // обработка tab и shift+tab
             var focusControl = null;
             $(window).keydown(function(e) {
-                var keyCode = e.keyCode || e.which;
+                var keyCode = e.keyCode || e.which, control;
                 if (keyCode == 9) {
                     e.preventDefault();
-                    if (!focusControl)
-                        focusControl = uccelloClt.getContextCM().getByName('MainForm');
-
-                    if (e.shiftKey) {
-                        focusControl = focusControl.prev(true);
-                    } else {
-                        focusControl = focusControl.next(true);
+                    if (!focusControl) {
+                        var form = uccelloClt.getContextCM().getByName('MainForm');
+                        focusControl = form.currentControl()?form.currentControl():form;
                     }
-                    $('#ch_'+focusControl.getLid()).focus();
+                    if (e.shiftKey) {
+                        control = focusControl.prev(true);
+                    } else {
+                        control = focusControl.next(true);
+                    }
+                    setFocus(control);
                 }
             });
+
+            window.setFocus = function(control){
+                console.log('set focus: '+control.name());
+                focusControl = control;
+                if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
+                    $('#ch_'+control.getLid()).find('input').focus();
+                else
+                    $('#ch_'+control.getLid()).focus();
+
+                var cm = uccelloClt.getContextCM();
+                cm.userEventHandler(control, function () {
+                    control.setFocused();
+                });
+            }
 
             // ----------------------------------------------------------------------------------------------------
 

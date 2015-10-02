@@ -19,10 +19,16 @@ define(
             for(var i=0; i<childs.count();i++) {
                 var child = this.getControlMgr().get(childs.get(i).getGuid());
                 if (!child.left) continue;
-                var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
-                var height=child.height();
-                div.css({flex: height+' 0 auto',  '-webkit-flex': height+' 0 auto', '-ms-flex': height+' 0 auto'});
-                item.append(div);
+                if ($('#ch_'+child.getLid()).length == 0) {
+                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_' + child.getLid());
+                    var height = child.height();
+                    div.css({
+                        flex: height + ' 0 auto',
+                        '-webkit-flex': height + ' 0 auto',
+                        '-ms-flex': height + ' 0 auto'
+                    });
+                    item.append(div);
+                }
             }
 
             // убираем удаленные объекты

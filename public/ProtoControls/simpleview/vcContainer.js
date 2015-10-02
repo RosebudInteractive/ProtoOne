@@ -4,6 +4,7 @@ define(
         var vCContainer = {};
         vCContainer._templates = template.parseTemplate(tpl);
         vCContainer.render = function(options) {
+            var that = this;
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 // объект контейнера
@@ -27,10 +28,21 @@ define(
                     if ($.isNumeric(width)) width += 'px';
                     if ($.isNumeric(height)) height += 'px';
                     div.css({top:top, left:left, width:width, height:height});
+                    (function(child){div.click(function(){
+                        setFocus(child);
+                    });})(child);
                     item.append(div);
                 }
             }
 
+            // выставляем фокус
+            var currentControl = this.getRoot().currentControl();
+            if (currentControl) {
+                if (currentControl.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
+                    $('#ch_'+currentControl.getLid()).find('input').focus();
+                else
+                    $('#ch_'+currentControl.getLid()).focus();
+            }
 
             // убираем удаленные объекты
 			var del = this.getLogCol('Children') && 'del' in this.getLogCol('Children')? this.getLogCol('Children').del: {};
@@ -38,6 +50,8 @@ define(
                 $('#ch_' + del[guid].getLid()).remove();
 
         }
+
+
 
         return vCContainer;
     }

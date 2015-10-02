@@ -31,7 +31,7 @@ define(
                 table.click(function(e){
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
-                        e.stopPropagation();
+                        //e.stopPropagation();
                         that.getControlMgr().userEventHandler(that, function(){
                             vDataGrid.saveRow.apply(that);
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
