@@ -931,6 +931,13 @@ $(document).ready( function() {
 
             }
 
+            window.fastClick = function(){
+                $($('.table .row.data')[1]).click();
+                setTimeout(function(){
+                    $($('.table .row.data')[0]).click();
+                }, 10);
+            }
+
             // переменная для формы crm-edit
             $leadEdit = new LeadEdit(uccelloClt);
 
@@ -1043,6 +1050,22 @@ $(document).ready( function() {
 
             }, url('#timeout')?url('#timeout'):10);
 
+            var focusControl = null;
+            $(window).keydown(function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode == 9) {
+                    e.preventDefault();
+                    if (!focusControl)
+                        focusControl = uccelloClt.getContextCM().getByName('MainForm');
+
+                    if (e.shiftKey) {
+                        focusControl = focusControl.prev(true);
+                    } else {
+                        focusControl = focusControl.next(true);
+                    }
+                    $('#ch_'+focusControl.getLid()).focus();
+                }
+            });
 
             // ----------------------------------------------------------------------------------------------------
 

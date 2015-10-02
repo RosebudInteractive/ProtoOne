@@ -20,7 +20,7 @@ define(
                 var child = this.getControlMgr().get(childs.get(i).getGuid());
                 if (!child.left) continue;
                 if ($('#ch_'+child.getLid()).length == 0) {
-                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
+                    var div = $('<div class="control-wrapper" tabindex="1"></div>').attr('id', 'ch_'+child.getLid());
                     var left=child.left(), top=child.top(), width=child.width(), height=child.height();
                     if ($.isNumeric(left)) left += 'px';
                     if ($.isNumeric(top)) top += 'px';
