@@ -28,9 +28,9 @@ define(
                     if ($.isNumeric(width)) width += 'px';
                     if ($.isNumeric(height)) height += 'px';
                     div.css({top:top, left:left, width:width, height:height});
-                   /* (function(child){div.click(function(){
+                    (function(child){div.click(function(){
                         vCContainer.setFocus.apply(that, [child]);
-                    });})(child);*/
+                    });})(child);
                     item.append(div);
                 }
             }
