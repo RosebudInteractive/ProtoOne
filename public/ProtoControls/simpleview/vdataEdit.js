@@ -33,10 +33,8 @@ define(
             item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
-            var currentControl = this.getRoot().currentControl();
-            if (currentControl && currentControl==this) {
-                $('#ch_'+currentControl.getLid()).find('input').focus();
-            }
+            if (this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).find('input').focus();
         }
         return vDataEdit;
     }

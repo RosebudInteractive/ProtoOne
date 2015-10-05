@@ -145,10 +145,8 @@ define(
             }
 
             // выставляем фокус
-            var currentControl = this.getRoot().currentControl();
-            if (currentControl && currentControl==this) {
-                $('#ch_'+currentControl.getLid()).focus();
-            }
+            if (this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).find('input').focus();
 
             //if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }

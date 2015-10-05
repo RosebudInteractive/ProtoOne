@@ -29,7 +29,7 @@ define(
                     if ($.isNumeric(height)) height += 'px';
                     div.css({top:top, left:left, width:width, height:height});
                     (function(child){div.click(function(){
-                        setFocus(child);
+                        vCContainer.setFocus.apply(that, [child]);
                     });})(child);
                     item.append(div);
                 }
@@ -42,6 +42,17 @@ define(
 
         }
 
+        vCContainer.setFocus = function(control) {
+            if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
+                $('#ch_'+control.getLid()).find('input').focus();
+            else
+                $('#ch_'+control.getLid()).focus();
+
+            var cm = this.getControlMgr();
+            cm.userEventHandler(control, function () {
+                control.setFocused();
+            });
+        }
 
 
         return vCContainer;

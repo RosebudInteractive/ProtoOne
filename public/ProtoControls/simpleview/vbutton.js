@@ -32,10 +32,8 @@ define(
             item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
-            var currentControl = this.getRoot().currentControl();
-            if (currentControl && currentControl==this) {
-                $('#ch_'+currentControl.getLid()).focus();
-            }
+            if (this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).focus();
         }
         return vButton;
     }
