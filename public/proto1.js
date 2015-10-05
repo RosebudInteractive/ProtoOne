@@ -1055,7 +1055,7 @@ $(document).ready( function() {
                 var keyCode = e.keyCode || e.which, control;
                 if (keyCode == 9) {
                     e.preventDefault();
-                    var form = uccelloClt.getContextCM().getByName('MainForm');
+                    var cm=uccelloClt.getContextCM(), form = cm.getRoot(cm.getRootGuids("res")[0]).obj;
                     var focusControl = form.currentControl()?form.currentControl():form;
                     if (e.shiftKey) {
                         control = focusControl.prev(true);
