@@ -29,6 +29,7 @@ define(
 
                 // клик на таблицу
                 table.click(function(e){
+                    that.setFocused();
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         //e.stopPropagation();
@@ -38,6 +39,11 @@ define(
                             that.dataset().cursor(rowTr.attr('data-id'));
                         });
                     }
+                });
+
+                // клик на грид фокус
+                grid.click(function(){
+                    that.setFocused();
                 });
 
             } else {
@@ -146,7 +152,7 @@ define(
 
             // выставляем фокус
             if (this.getRoot().currentControl() == this)
-                $('#ch_'+this.getLid()).find('input').focus();
+                $(grid).focus();
 
             //if (DEBUG) console.timeEnd('renderGrid '+this.name());
         }

@@ -12,6 +12,7 @@ define(
                 item = $(vButton._templates['button']).attr('id', this.getLid());
                 
                 if ("onClick" in this) {
+
                     item.click(function(e){
                         that.getControlMgr().userEventHandler(that, function(){
                             if (that.buttonKind() == 'Radio' && !that.pressed())
@@ -22,6 +23,10 @@ define(
                         });
                     });
                 }
+
+                item.click(function(){
+                    that.setFocused();
+                });
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
@@ -34,7 +39,7 @@ define(
 
             // выставляем фокус
             if (this.getRoot().currentControl() == this)
-                $('#ch_'+this.getLid()).focus();
+                $('#ch_'+this.getLid()).find('input').focus();
         }
         return vButton;
     }

@@ -21,16 +21,13 @@ define(
                 var child = this.getControlMgr().get(childs.get(i).getGuid());
                 if (!child.left) continue;
                 if ($('#ch_'+child.getLid()).length == 0) {
-                    var div = $('<div class="control-wrapper" tabindex="1"></div>').attr('id', 'ch_'+child.getLid());
+                    var div = $('<div class="control-wrapper"></div>').attr('id', 'ch_'+child.getLid());
                     var left=child.left(), top=child.top(), width=child.width(), height=child.height();
                     if ($.isNumeric(left)) left += 'px';
                     if ($.isNumeric(top)) top += 'px';
                     if ($.isNumeric(width)) width += 'px';
                     if ($.isNumeric(height)) height += 'px';
                     div.css({top:top, left:left, width:width, height:height});
-                    (function(child){div.click(function(){
-                        vCContainer.setFocus.apply(that, [child]);
-                    });})(child);
                     item.append(div);
                 }
             }
@@ -41,20 +38,6 @@ define(
                 $('#ch_' + del[guid].getLid()).remove();
 
         }
-
-        vCContainer.setFocus = function(control) {
-            if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
-                $('#ch_'+control.getLid()).find('input').focus();
-            else
-                $('#ch_'+control.getLid()).focus();
-
-            var cm = this.getControlMgr();
-            cm.userEventHandler(control, function () {
-                control.setFocused();
-            });
-        }
-
-
         return vCContainer;
     }
 );

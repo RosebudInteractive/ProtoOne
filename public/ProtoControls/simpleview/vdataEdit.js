@@ -22,6 +22,10 @@ define(
                         });
                     }
                 });
+
+                item.click(function(){
+                    that.setFocused();
+                });
             }
 
             // устанавливаем значение

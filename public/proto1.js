@@ -1062,13 +1062,15 @@ $(document).ready( function() {
                     } else {
                         control = focusControl.next(true);
                     }
-                    setFocus(control);
+                    control.setFocused();
                 }
             });
 
             window.setFocus = function(control){
                 console.log('set focus: '+control.name());
-                if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit))
+                if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit) ||
+                    control.isInstanceOf(UCCELLO_CONFIG.classGuids.Edit) ||
+                    control.isInstanceOf(UCCELLO_CONFIG.classGuids.Button))
                     $('#ch_'+control.getLid()).find('input').focus();
                 else
                     $('#ch_'+control.getLid()).focus();
