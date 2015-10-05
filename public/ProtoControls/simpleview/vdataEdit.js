@@ -4,6 +4,7 @@ define(
         var vDataEdit = {};
         vDataEdit._templates = template.parseTemplate(tpl);
         vDataEdit.render = function(options) {
+            console.log('render '+this.name());
             var that = this;
             var item = $('#' + this.getLid());
             if (item.length == 0) {

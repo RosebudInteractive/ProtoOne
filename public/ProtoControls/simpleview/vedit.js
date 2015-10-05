@@ -4,6 +4,7 @@ define(
         var vEdit = {};
         vEdit._templates = template.parseTemplate(tpl);
         vEdit.render = function(options) {
+            console.log('render '+this.name());
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vEdit._templates['edit']).attr('id', this.getLid());

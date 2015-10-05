@@ -4,6 +4,7 @@ define(
         var vButton = {};
         vButton._templates = template.parseTemplate(tpl);
         vButton.render = function(options) {
+            console.log('render '+this.name());
             var item = $('#' + this.getLid());
             var that = this;
 

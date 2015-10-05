@@ -5,7 +5,7 @@
   },
   "fields":{
     "Id":536,
-    "Name":"MainFormControls",
+    "Name":"MainForm",
     "Title": "controls",
     "dbgName": "FormControls"
   },

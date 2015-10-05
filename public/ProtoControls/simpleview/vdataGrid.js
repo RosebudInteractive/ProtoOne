@@ -10,7 +10,7 @@ define(
          */
         vDataGrid.render = function(options) {
             //if (DEBUG) console.time('renderGrid '+this.name());
-
+            console.log('render '+this.name());
             var that = this;
             var grid = $('#' + this.getLid());
             var table = grid.find('.table');
