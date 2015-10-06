@@ -1,4 +1,7 @@
 html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-serif;font-size: 12px;}
+.control:focus {
+    border: 1px solid #29B0D9; /* Параметры рамки */
+}
 p {padding:0;margin: 4px 0;}
 #tabs {padding:0 10px 10px;}
 #container {}

@@ -29,7 +29,6 @@ define(
 
                 // клик на таблицу
                 table.click(function(e){
-                    that.setFocused();
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         //e.stopPropagation();
@@ -39,11 +38,31 @@ define(
                             that.dataset().cursor(rowTr.attr('data-id'));
                         });
                     }
+                    that.setFocused();
                 });
 
                 // клик на грид фокус
                 grid.click(function(){
                     that.setFocused();
+                });
+
+                grid.keydown(function(e) {
+                    var keyCode = e.keyCode || e.which, control;
+                    switch (keyCode) {
+                        case 38:     // up
+                            e.preventDefault();
+                            that.getControlMgr().userEventHandler(that, function() {
+                                that.dataset().prev();
+                            });
+                            break;
+                        case 40:     // down
+                            e.preventDefault();
+                            that.getControlMgr().userEventHandler(that, function() {
+                                that.dataset().next();
+                            });
+
+                            break;
+                    }
                 });
 
             } else {
@@ -298,7 +317,6 @@ define(
                 }
             }
         }
-
 
         return vDataGrid;
     }
