@@ -46,6 +46,7 @@ define(
                     that.setFocused();
                 });
 
+                // обработка нажатий стрелочек
                 grid.keydown(function(e) {
                     var keyCode = e.keyCode || e.which, control;
                     switch (keyCode) {

@@ -1,6 +1,6 @@
 html, body, table,tr, td {padding:0;margin: 0; font-family: 'Open Sans', sans-serif;font-size: 12px;}
 .control:focus {
-    border: 1px solid #29B0D9; /* Параметры рамки */
+    border: 2px solid #29B0D9;
 }
 p {padding:0;margin: 4px 0;}
 #tabs {padding:0 10px 10px;}
@@ -21,7 +21,8 @@ p {padding:0;margin: 4px 0;}
 .control.label{background-color: #fff;}
 .control.container{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}
 .control.form{overflow: auto;background-color: #fff;border:1px solid #999;position:relative;width: 100%;height: 100%;box-sizing: border-box;}
-.control.prop-editor{padding:10px; border: 1px solid #aaa;background-color: #fff;}
+.control.prop-editor:focus{}
+.control.prop-editor{box-sizing: border-box;padding:10px; border: 1px solid #aaa;background-color: #fff;}
 .control.prop-editor input{position: relative;}
 .control.prop-editor .props .name {width:100px;display: inline-block;}
 .control.prop-editor .parents .name {width:100px;display: inline-block;}
@@ -89,6 +90,7 @@ p {padding:0;margin: 4px 0;}
 
 .divCell textarea {min-width:50px;min-height: 20px;}
 
+.grid:focus {padding: 1px;}
 .grid {position: absolute;border:1px solid  #666666;border-spacing:0px;overflow: auto;box-sizing: border-box;width: 100%;}
 .grid .table {display: table;box-sizing: border-box;width:100%;}
 .grid .row .cell:last-child {border-right:1px solid  #666666;}

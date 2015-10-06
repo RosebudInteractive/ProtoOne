@@ -37,6 +37,9 @@ define(
                 editor.append(delbtn);
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
+                editor.click(function(){
+                    that.setFocused();
+                });
             } else {
                 controls = editor.find('.controls');
                 controls.empty();
@@ -67,6 +70,10 @@ define(
                 controls.val(this.control());
                 vPropEditor.renderProps.apply(this);
             }
+
+            // выставляем фокус
+            if (this.getRoot().currentControl() == this)
+                editor.focus();
         }
 
         /**
