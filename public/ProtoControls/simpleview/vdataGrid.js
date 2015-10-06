@@ -291,8 +291,6 @@ define(
             }
         }
 
-
-
         vDataGrid.saveRow = function() {
             if (this.editable()) {
                 var cm = this.getControlMgr();
@@ -317,6 +315,11 @@ define(
                     }
                 }
             }
+        }
+
+        vDataGrid.setFocus = function() {
+            var grid = $('#' + this.getLid());
+            $(grid).focus();
         }
 
         return vDataGrid;
