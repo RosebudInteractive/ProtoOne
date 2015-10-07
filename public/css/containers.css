@@ -98,7 +98,7 @@ td.container-title {
 }
 .control-wrapper {
   position: relative;
-  overflow: hidden;
+ /* overflow: hidden;*/
   box-sizing: border-box;
 }
 .control-wrapper > div.mid-wrapper {
