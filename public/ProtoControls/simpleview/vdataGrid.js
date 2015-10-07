@@ -36,14 +36,11 @@ define(
                             vDataGrid.saveRow.apply(that);
                             vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                             that.dataset().cursor(rowTr.attr('data-id'));
+                            that.setFocused(true);
                         });
-                    }
-                    that.setFocused();
-                });
+                    } else
+                        that.setFocused();
 
-                // клик на грид фокус
-                grid.click(function(){
-                    that.setFocused();
                 });
 
                 // обработка нажатий стрелочек
