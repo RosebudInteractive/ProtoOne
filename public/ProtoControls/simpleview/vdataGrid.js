@@ -28,7 +28,7 @@ define(
                 });
 
                 // клик на таблицу
-                table.click(function(e){
+                grid.click(function(e){
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         //e.stopPropagation();
@@ -168,6 +168,8 @@ define(
             }
 
             // выставляем фокус
+            if (this.getRoot().currentControl())
+                console.log('currentControl: '+this.getRoot().currentControl().name());
             if (this.getRoot().currentControl() == this)
                 $(grid).focus();
 
