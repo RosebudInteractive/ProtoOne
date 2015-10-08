@@ -1062,11 +1062,12 @@ $(document).ready( function() {
                     } else {
                         control = focusControl.next(true);
                     }
+                    console.log('focus '+control.name());
                     control.setFocused();
                 }
             });
 
-            window.setFocus = function(control){
+            /*window.setFocus = function(control){
                 console.log('set focus: '+control.name());
                 if (control.isInstanceOf(UCCELLO_CONFIG.classGuids.DataEdit) ||
                     control.isInstanceOf(UCCELLO_CONFIG.classGuids.Edit) ||
@@ -1079,7 +1080,7 @@ $(document).ready( function() {
                 cm.userEventHandler(control, function () {
                     control.setFocused();
                 });
-            }
+            }*/
 
             // ----------------------------------------------------------------------------------------------------
 
