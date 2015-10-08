@@ -1065,6 +1065,10 @@ $(document).ready( function() {
                     console.log('focus '+control.name());
                     control.setFocused();
                 }
+
+                if (keyCode == 88 && e.altKey) {
+                    viewNavigator();
+                }
             });
 
             /*window.setFocus = function(control){
