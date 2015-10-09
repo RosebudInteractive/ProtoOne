@@ -1063,7 +1063,9 @@ $(document).ready( function() {
                         control = focusControl.next(true);
                     }
                     console.log('focus '+control.name());
-                    control.setFocused();
+                    cm.userEventHandler(control, function(){
+                        control.setFocused();
+                    });
                 }
 
                 if (keyCode == 88 && e.altKey) {

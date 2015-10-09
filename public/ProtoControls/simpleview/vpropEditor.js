@@ -38,7 +38,9 @@ define(
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
                 editor.click(function(){
-                    that.setFocused();
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
                 });
             } else {
                 controls = editor.find('.controls');

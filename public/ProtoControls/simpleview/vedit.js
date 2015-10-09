@@ -9,7 +9,9 @@ define(
             if (item.length == 0) {
                 item = $(vEdit._templates['edit']).attr('id', this.getLid());
                 item.click(function(){
-                    that.setFocused();
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
                 });
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);

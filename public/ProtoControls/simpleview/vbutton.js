@@ -25,7 +25,9 @@ define(
                 }
 
                 item.click(function(){
-                    that.setFocused();
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
                 });
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;

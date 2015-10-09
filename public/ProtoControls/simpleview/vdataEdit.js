@@ -14,7 +14,9 @@ define(
 
                 // установить фокус по клику
                 item.click(function(){
-                    that.setFocused();
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
                 });
 
                 // сохранять при потере фокуса
