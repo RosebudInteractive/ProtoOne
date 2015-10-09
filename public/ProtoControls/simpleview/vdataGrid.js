@@ -321,6 +321,11 @@ define(
             $(grid).focus();
         }
 
+        vDataGrid.isCreated = function() {
+            var grid = $('#' + this.getLid());
+            return grid.length != 0;
+        }
+
         return vDataGrid;
     }
 );
