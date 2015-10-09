@@ -168,8 +168,6 @@ define(
             }
 
             // выставляем фокус
-            if (this.getRoot().currentControl())
-                console.log('currentControl: '+this.getRoot().currentControl().name());
             if (this.getRoot().currentControl() == this)
                 $(grid).focus();
 
@@ -319,11 +317,6 @@ define(
         vDataGrid.setFocus = function() {
             var grid = $('#' + this.getLid());
             $(grid).focus();
-        }
-
-        vDataGrid.isCreated = function() {
-            var grid = $('#' + this.getLid());
-            return grid.length != 0;
         }
 
         return vDataGrid;
