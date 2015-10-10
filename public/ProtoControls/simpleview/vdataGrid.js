@@ -32,9 +32,9 @@ define(
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         //e.stopPropagation();
+                        vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
                         that.getControlMgr().userEventHandler(that, function(){
-                            vDataGrid.saveRow.apply(that);
-                            vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
+                           // vDataGrid.saveRow.apply(that);
                             that.dataset().cursor(rowTr.attr('data-id'));
                             that.setFocused();
                         });

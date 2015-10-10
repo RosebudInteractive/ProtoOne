@@ -12,8 +12,10 @@ define(
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
+
                 // установить фокус по клику
-                item.click(function(){
+                item.focus(function(){
+                    console.log('TEST focus '+that.name());
                     that.getControlMgr().userEventHandler(that, function(){
                         that.setFocused();
                     });
@@ -22,11 +24,13 @@ define(
                 // сохранять при потере фокуса
                 item.blur(function () {
                     if (that.dataset() && that.dataField()) {
+                        console.log('TEST blur '+that.name());
                         that.getControlMgr().userEventHandler(that, function () {
                             //var dataset = that.getControlMgr().get(that.dataset());
                             var dataset = that.dataset();
                             dataset.setField(that.dataField(), item.val());
                             that.isChanged = false;
+                            that.getRoot().currentControl(null);
                         });
                     }
                 });
