@@ -30,7 +30,7 @@ define(
                             var dataset = that.dataset();
                             dataset.setField(that.dataField(), item.val());
                             that.isChanged = false;
-                            that.getRoot().currentControl(null);
+                            //that.getRoot().currentControl(null);
                         });
                     }
                 });
@@ -52,7 +52,7 @@ define(
             item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
-            if (this.getRoot().currentControl() == this)
+            if (this.getRoot().isFldModified("CurrentControl") && (this.getRoot().currentControl() == this))
                 $('#ch_'+this.getLid()).find('input').focus();
         }
         return vDataEdit;
