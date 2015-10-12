@@ -374,7 +374,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Id"
+                "Label": "Id",
+                "TabStop": false
               }
             },
             {
@@ -406,7 +407,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Source"
+                "Label": "Source",
+                "TabStop": false
               }
             },
             {
@@ -438,7 +440,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "State"
+                "Label": "State",
+                "TabStop": false
               }
             },
             {
@@ -471,7 +474,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Content"
+                "Label": "Content",
+                "TabStop": false
               }
             },
             {
@@ -503,7 +507,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Creation"
+                "Label": "Creation",
+                "TabStop": false
               }
             },
             {
@@ -535,7 +540,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "Closed"
+                "Label": "Closed",
+                "TabStop": false
               }
             },
             {
@@ -567,7 +573,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "OpportunityId"
+                "Label": "OpportunityId",
+                "TabStop": false
               }
             },
             {
@@ -599,7 +606,8 @@
                 "Left": 10,
                 "Width": 190,
                 "Height": 23,
-                "Label": "<b>Lead Edit Form</b>"
+                "Label": "<b>Lead Edit Form</b>",
+                "TabStop": false
               }
             },
             {
@@ -614,7 +622,8 @@
                 "Left": 300,
                 "Width": 190,
                 "Height": 23,
-                "Label": "<b>Incomeplan</b>"
+                "Label": "<b>Incomeplan</b>",
+                "TabStop": false
               }
             },
             {

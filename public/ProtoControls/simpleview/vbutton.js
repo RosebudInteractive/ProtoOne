@@ -24,7 +24,7 @@ define(
                     });
                 }
 
-                item.click(function(){
+                item.focus(function(){
                     that.getControlMgr().userEventHandler(that, function(){
                         that.setFocused();
                     });
@@ -40,7 +40,7 @@ define(
             item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
-            if (this.getRoot().currentControl() == this)
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 $('#ch_'+this.getLid()).find('input').focus();
         }
         return vButton;

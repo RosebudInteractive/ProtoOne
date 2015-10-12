@@ -11,7 +11,7 @@ define(
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
-                // сохранять при потере фокуса
+                // сохранять по клику
                 item.click(function () {
                     var checkbox = $(this);
                     if (that.dataset() && that.dataField()) {
@@ -20,6 +20,12 @@ define(
                             dataset.setField(that.dataField(), checkbox.prop('checked')?that.checkValue():that.uncheckValue());
                         });
                     }
+                });
+
+                item.focus(function(){
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
                 });
             }
 
@@ -30,6 +36,10 @@ define(
                 item.attr('checked', that.checkValue()==item.val());
             }
             item.attr('disabled', this.enabled()===false? true: false);
+
+            // выставляем фокус
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).find('input').focus();
         }
         return vDataEdit;
     }

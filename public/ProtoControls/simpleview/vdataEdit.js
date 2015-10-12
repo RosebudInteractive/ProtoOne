@@ -4,7 +4,6 @@ define(
         var vDataEdit = {};
         vDataEdit._templates = template.parseTemplate(tpl);
         vDataEdit.render = function(options) {
-            if (this.isChanged) return;
             var that = this;
             var item = $('#' + this.getLid());
             if (item.length == 0) {
@@ -12,12 +11,9 @@ define(
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
-
                 // установить фокус
                 item.focus(function(){
-                    console.log('TEST focus1 '+that.name());
                     that.getControlMgr().userEventHandler(that, function(){
-                        console.log('TEST focus2 '+that.name());
                         that.setFocused();
                     });
                 });
@@ -25,28 +21,16 @@ define(
                 // сохранять при потере фокуса
                 item.blur(function () {
                     if (that.dataset() && that.dataField()) {
-                        console.log('TEST blur1 '+that.name());
                         that.getControlMgr().userEventHandler(that, function () {
-                            console.log('TEST blur2 '+that.name());
-                            //var dataset = that.getControlMgr().get(that.dataset());
                             var dataset = that.dataset();
                             dataset.setField(that.dataField(), item.val());
-                            that.isChanged = false;
-                            //that.getRoot().currentControl(null);
                         });
                     }
                 });
-
-                // при изменении значения
-                item.keydown(function () {
-                    that.isChanged = true;
-                });
-
             }
 
             // устанавливаем значение
             if (this.dataset() && this.dataField()) {
-                //var dataset = that.getControlMgr().get(that.dataset());
                 var dataset = that.dataset();
                 item.attr('disabled', false);
                 item.val(dataset? dataset.getField(this.dataField()): '');

@@ -44,6 +44,10 @@ define(
                 item.addClass('active');
             else
                 item.removeClass('active');
+
+            // выставляем фокус
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).find('input').focus();
         }
 
         /**

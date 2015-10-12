@@ -28,6 +28,12 @@ define(
                         });
                     }
                 });
+
+                item.focus(function(){
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
+                });
             }
 
             // устанавливаем значение
@@ -36,6 +42,10 @@ define(
                 item.val(dataset? dataset.getField(this.dataField()): '');
             }
             item.attr('disabled', this.enabled()===false? true: false);
+
+            // выставляем фокус
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+                $('#ch_'+this.getLid()).find('select').focus();
         }
         return vDataCombo;
     }

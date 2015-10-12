@@ -37,7 +37,7 @@ define(
                 editor.append(delbtn);
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
-                editor.click(function(){
+                editor.focus(function(){
                     that.getControlMgr().userEventHandler(that, function(){
                         that.setFocused();
                     });
@@ -74,7 +74,7 @@ define(
             }
 
             // выставляем фокус
-            if (this.getRoot().currentControl() == this)
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 editor.focus();
         }
 
