@@ -13,10 +13,11 @@ define(
                 $(parent).append(item);
 
 
-                // установить фокус по клику
+                // установить фокус
                 item.focus(function(){
-                    console.log('TEST focus '+that.name());
+                    console.log('TEST focus1 '+that.name());
                     that.getControlMgr().userEventHandler(that, function(){
+                        console.log('TEST focus2 '+that.name());
                         that.setFocused();
                     });
                 });
@@ -24,8 +25,9 @@ define(
                 // сохранять при потере фокуса
                 item.blur(function () {
                     if (that.dataset() && that.dataField()) {
-                        console.log('TEST blur '+that.name());
+                        console.log('TEST blur1 '+that.name());
                         that.getControlMgr().userEventHandler(that, function () {
+                            console.log('TEST blur2 '+that.name());
                             //var dataset = that.getControlMgr().get(that.dataset());
                             var dataset = that.dataset();
                             dataset.setField(that.dataField(), item.val());

@@ -27,8 +27,17 @@ define(
                     vDataGrid.render.apply(that);
                 });
 
+                // установить фокус
+                grid.focus(function(){
+                    console.log('TEST focus '+that.name());
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.setFocused();
+                    });
+                });
+
                 // клик на таблицу
                 grid.click(function(e){
+                    console.log('TEST click '+that.name());
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')){
                         //e.stopPropagation();
@@ -38,10 +47,10 @@ define(
                             that.dataset().cursor(rowTr.attr('data-id'));
                             that.setFocused();
                         });
-                    } else
+                    }/* else
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
-                        });
+                        });*/
                 });
 
                 // обработка нажатий стрелочек
@@ -169,7 +178,7 @@ define(
             }
 
             // выставляем фокус
-            if (this.getRoot().currentControl() == this)
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 $(grid).focus();
 
             //if (DEBUG) console.timeEnd('renderGrid '+this.name());
