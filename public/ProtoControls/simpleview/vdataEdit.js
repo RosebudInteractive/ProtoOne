@@ -13,7 +13,7 @@ define(
                 $(parent).append(item);
 
 
-                // установить фокус по клику
+                // установить фокус
                 item.focus(function(){
                     console.log('TEST focus '+that.name());
                     that.getControlMgr().userEventHandler(that, function(){
