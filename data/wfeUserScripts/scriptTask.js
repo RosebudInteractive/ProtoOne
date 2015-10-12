@@ -72,7 +72,7 @@ define(
                 return result;
             },
             
-            _setDone : function (clearContext) {
+            _setDone : function (clearContext, obj_to_save) {
                 if (this.scriptObject) {
                     var result = false;
                     var param = this.scriptObject.processFacade.findParameter("CurrentObj");
@@ -81,8 +81,11 @@ define(
                         if (obj && (obj instanceof ProcessObject)) {
                             var state = obj._genericSetter("State");
                             result = ((state == "Converted") || (state == "Archieved"));
-                            if (result && clearContext)
-                                obj.currentProcess("");
+                            if (result && clearContext) {
+                                obj.currentProcess(null);
+                                if (obj_to_save)
+                                    obj_to_save.obj = obj;
+                            }
                             param = this.scriptObject.processFacade.findParameter("IsDone");
                             if (param && result)
                                 param.value(result);
@@ -131,6 +134,7 @@ define(
                     function callback(result) {
                         
                         var res = result;
+                        var obj_to_save = {};
                         if (result && result.newObject && db) {
                             var newObject = db.getObj(result.newObject);
                             
@@ -138,17 +142,24 @@ define(
                                 
                                 var processID = that.scriptObject.processFacade.get("ProcessID");
                                 newObject.currentProcess(processID);
-                                
+                                obj_to_save.obj = newObject;
+
                                 var param = that.scriptObject.processFacade.findParameter("CurrentObj");
                                 if (param)
                                     param.value("memdb://" + db.getGuid() + "." + result.newObject);
                             };
                         } else {
-                            that._setDone(true);
+                            that._setDone(true, obj_to_save);
                         };
                         
-                        that.scriptObject.returnResult(res);
-                        console.log("<== [execObjMethod] finished!");
+                        function finalize(result) {
+                            that.scriptObject.returnResult(res);
+                            console.log("<== [execObjMethod] finished!");
+                        };
+                        if (obj_to_save.obj)
+                            obj_to_save.obj._$local_save(finalize) // Если вызвать просто save - страшно представить, что будет !
+                        else
+                            finalize({ result: "OK" });
                     };
                     
                     args.push(callback);
