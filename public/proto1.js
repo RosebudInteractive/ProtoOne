@@ -1053,7 +1053,7 @@ $(document).ready( function() {
             // обработка tab и shift+tab
             $(window).keydown(function(e) {
                 var keyCode = e.keyCode || e.which, control;
-                /*if (keyCode == 9) {
+                if (keyCode == 9) {
                     e.preventDefault();
                     var cm=uccelloClt.getContextCM(), form = cm.getRoot(cm.getRootGuids("res")[0]).obj;
                     var focusControl = form.currentControl()?form.currentControl():form;
@@ -1062,12 +1062,12 @@ $(document).ready( function() {
                     } else {
                         control = focusControl.next(true);
                     }
-                    console.log('focus '+control.name());
-                    $('#'+focusControl.getLid()).blur();
-                    cm.userEventHandler(control, function(){
+                    console.log('focus '+control.name(), 'currentControl '+focusControl.name());
+                    $('#'+control.getLid()).focus();
+                   /* cm.userEventHandler(control, function(){
                         control.setFocused();
-                    });
-                }*/
+                    });*/
+                }
 
                 if (keyCode == 88 && e.altKey) {
                     viewNavigator();
