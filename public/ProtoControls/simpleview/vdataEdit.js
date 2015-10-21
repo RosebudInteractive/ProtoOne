@@ -13,16 +13,18 @@ define(
 
                 // установить фокус
                 item.focus(function(){
-                    that.getControlMgr().userEventHandler(that, function(){
-                        that.setFocused();
-                    });
+                    if (that.getRoot().currentControl() != that) {
+                        that.getControlMgr().userEventHandler(that, function(){
+                            that.setFocused();
+                        });
+                    }
                 });
 
                 // сохранять при потере фокуса
                 item.blur(function () {
-                    if (that.dataset() && that.dataField()) {
+                    var dataset = that.dataset();
+                    if (dataset && that.dataField() && dataset.getField(that.dataField()) != item.val()) {
                         that.getControlMgr().userEventHandler(that, function () {
-                            var dataset = that.dataset();
                             dataset.setField(that.dataField(), item.val());
                         });
                     }

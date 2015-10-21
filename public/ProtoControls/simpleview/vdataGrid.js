@@ -29,10 +29,11 @@ define(
 
                 // установить фокус
                 grid.focus(function(){
-                    console.log('TEST focus '+that.name());
-                    that.getControlMgr().userEventHandler(that, function(){
-                        that.setFocused();
-                    });
+                    if (that.getRoot().currentControl() != that) {
+                        that.getControlMgr().userEventHandler(that, function(){
+                            that.setFocused();
+                        });
+                    }
                 });
 
                 // клик на таблицу

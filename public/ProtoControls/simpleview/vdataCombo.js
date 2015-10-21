@@ -30,9 +30,11 @@ define(
                 });
 
                 item.focus(function(){
-                    that.getControlMgr().userEventHandler(that, function(){
-                        that.setFocused();
-                    });
+                    if (that.getRoot().currentControl() != that) {
+                        that.getControlMgr().userEventHandler(that, function(){
+                            that.setFocused();
+                        });
+                    }
                 });
             }
 

@@ -25,10 +25,13 @@ define(
                 }
 
                 item.focus(function(){
-                    that.getControlMgr().userEventHandler(that, function(){
-                        that.setFocused();
-                    });
+                    if (that.getRoot().currentControl() != that) {
+                        that.getControlMgr().userEventHandler(that, function(){
+                            that.setFocused();
+                        });
+                    }
                 });
+
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
