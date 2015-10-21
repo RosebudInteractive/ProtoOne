@@ -40,18 +40,15 @@ define(
                 grid.click(function(e){
                     console.log('TEST click '+that.name());
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
-                    if (rowTr.hasClass('data')){
-                        //e.stopPropagation();
-                        vDataGrid.renderCursor.apply(that, [rowTr.attr('data-id')]);
-                        that.getControlMgr().userEventHandler(that, function(){
-                           // vDataGrid.saveRow.apply(that);
-                            that.dataset().cursor(rowTr.attr('data-id'));
-                            that.setFocused();
-                        });
-                    }/* else
-                        that.getControlMgr().userEventHandler(that, function(){
-                            that.setFocused();
-                        });*/
+                    if (rowTr.hasClass('data')) {
+                        var cursor = rowTr.attr('data-id');
+                        if (that.dataset().cursor() != cursor) {
+                            vDataGrid.renderCursor.apply(that, [cursor]);
+                            that.getControlMgr().userEventHandler(that, function(){
+                                that.dataset().cursor(cursor);
+                            });
+                        }
+                    }
                 });
 
                 // обработка нажатий стрелочек
