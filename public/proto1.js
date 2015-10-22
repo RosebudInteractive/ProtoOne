@@ -671,7 +671,7 @@ $(document).ready( function() {
                             "fields": {
                                 "Id": Utils.id(),
                                 "Name": 'Dataset'+dsName,
-                                "Root": dsRoot,
+                                "ObjType": dsRoot,
                                 "Active": true
                             },
                             "collections": {
@@ -682,7 +682,7 @@ $(document).ready( function() {
                             dataset.fields.Master = dsParentGuid;
 
                         // добавляем датасет
-                        var dsInitFields = {Id: dataset.fields.Id, Name:dataset.fields.Name, Root:dataset.fields.Root, Active:true};
+                        var dsInitFields = {Id: dataset.fields.Id, Name:dataset.fields.Name, ObjType:dataset.fields.ObjType, Active:true};
                         if ("Master" in dataset.fields) dsInitFields.Master = dsGuids[dsParentGuid];
                         $u.add('Dataset', dataset.fields.Name, dsInitFields, 'DataModelParse', 'Datasets');
 
