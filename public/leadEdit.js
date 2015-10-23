@@ -60,7 +60,7 @@ define(
                         fields: {
                             Id: recordid,
                             Name: 'Record ' + recordid,
-                            State: 'Opened',
+                            State: 'Open',
                             Source: 'Source ' + recordid,
                             Content: 'Content ' + recordid,
                             Creation: new Date().toISOString().slice(0, 19).replace('T', ' '),
