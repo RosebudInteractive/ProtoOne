@@ -76,7 +76,7 @@ define(
             }
 
             // выставляем фокус
-            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 editor.focus();
         }
 
