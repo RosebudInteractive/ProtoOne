@@ -413,7 +413,9 @@ $(document).ready( function() {
              * @param formGuids массив гуидов ресурсов, который загружается в контекст
              */
             window.createContext = function(formGuids) {
-                if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498']; // по умолчанию "test"
+                //if (!formGuids) formGuids = ['88b9280f-7cce-7739-1e65-a883371cd498']; // по умолчанию "test"
+                $.cookie('formGuids', JSON.stringify(formGuids));
+
                 uccelloClt.createContext('server', formGuids, function(result){
                     that.selectContext({vc:result.vc, side:result.side, formGuids:result.roots, urlFormGuids:'all'});
                 });
@@ -1088,6 +1090,9 @@ $(document).ready( function() {
                     control.setFocused();
                 });
             }*/
+
+            if ($.cookie('formGuids'))
+                $('#selForm').val(JSON.parse($.cookie('formGuids')));
 
             // ----------------------------------------------------------------------------------------------------
 
