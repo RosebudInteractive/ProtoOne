@@ -727,8 +727,8 @@ $(document).ready( function() {
                                             "Dataset": genDsGuid,
                                             Width: 70*dsFields.length,
                                             Height: 200,
-                                            Top:posY,
-                                            Left:posX
+                                            Top:posY//,
+                                            //Left:posX
                                     };
                                     for(var p=0;p<params.length; p++) {
                                         var pname=params[p].split(':')[0];
