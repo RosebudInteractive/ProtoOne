@@ -512,7 +512,7 @@ $(document).ready( function() {
             that.vNavigator = null;
             window.viewNavigator = function() {
                 if (!that.vNavigator){
-                    require(['./uccello/lib/simpleview/vdbNavigator'], function(VDbNavigator){
+                    require(['./uccello/lib/simpleview/vdbTreeNavigator'], function(VDbNavigator){
                         $('#clientNav').remove();
                         that.vNavigator = VDbNavigator;
                         that.vNavigator.getLid = function(){return 'clientNav';};
