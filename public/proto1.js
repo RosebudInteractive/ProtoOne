@@ -1047,6 +1047,9 @@ $(document).ready( function() {
                 modal: true,
                 autoOpen: false,
                 buttons: {
+                },
+                resize: function( event, ui ) {
+                  $('.navigator .ui-tabs .ui-tabs-panel').height(ui.size.height-113);
                 }
             });
 
