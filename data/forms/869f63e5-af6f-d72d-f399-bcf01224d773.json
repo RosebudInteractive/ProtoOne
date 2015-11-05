@@ -1,0 +1,41 @@
+{
+  "$sys":{
+    "guid":"869f63e5-af6f-d72d-f399-bcf01224d773",
+    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  },
+  "fields":{
+    "Id":5544,
+    "Name":"TreeViewForm",
+    "Title": "TreeViewForm",
+    "dbgName": "TreeViewForm"
+  },
+  "collections": {
+    "Children": [
+      {
+        "$sys": {
+          "guid": "5698ec7b-56ac-86f7-9ffa-3e8d9a9954f3",
+          "typeGuid": "35400d0c-5465-00e8-c770-a1b04b4b8180"
+        },
+        "fields": {
+          "Id": 20000,
+          "Name": "TreeView"
+        },
+        "collections": {
+          "Items": [
+            {
+              "$sys": {
+                "guid": "fd172ab1-03af-7af1-ba91-f220fd1332c6",
+                "typeGuid": "16eb3a02-7f2a-3001-096a-14c1b38586db"
+              },
+              "fields": {
+                "Id": 10000,
+                "Name": "Root",
+                "Kind": "item"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -17,27 +17,6 @@ $(document).ready( function() {
     require(['./uccello/config/config', './uccello/system/utils'], function(Config, Utils){
         var config = {
             controls: [
-                //{className:'DataContact', component:'../DataControls/dataContact', guid:'73596fd8-6901-2f90-12d7-d1ba12bae8f4'},
-                //{className:'DataTstContact', component:'../DataControls/dataTstContact', guid:'27ce7537-7295-1a45-472c-a422e63035c7'},
-                //{className:'DataContract', component:'../DataControls/dataContract', guid:'08a0fad1-d788-3604-9a16-3544a6f97721'},
-                //{className:'DataCompany', component:'../DataControls/dataCompany', guid:'59583572-20fa-1f58-8d3f-5114af0f2c51'},
-                //{className:'DataTstCompany', component:'../DataControls/dataTstCompany', guid:'34c6f03d-f6ba-2203-b32b-c7d54cd0185a'},
-                //{className:'DataAddress', component:'../DataControls/dataAddress', guid:'16ec0891-1144-4577-f437-f98699464948'},
-                //{className:'DataLead', component:'../DataControls/dataLead', guid:'86c611ee-ed58-10be-66f0-dfbb60ab8907'},
-                //{className:'DataLeadLog', component:'../DataControls/dataLeadLog', guid:'c4fa07b5-03f7-4041-6305-fbd301e7408a'},
-                //{className:'DataOpportunity', component: '../DataControls/dataOpportunity', guid: '5b64caea-45b0-4973-1496-f0a9a44742b7' },
-                //{className:'DataIncomeplan', component:'../DataControls/dataIncomeplan', guid:'56cc264c-5489-d367-1783-2673fde2edaf'},
-                //{className:'RootAddress', component:'../DataControls/rootAddress', guid:'07e64ce0-4a6c-978e-077d-8f6810bf9386'},
-                //{className:'RootCompany', component:'../DataControls/rootCompany', guid:'0c2f3ec8-ad4a-c311-a6fa-511609647747'},
-                //{className:'RootTstCompany', component:'../DataControls/rootTstCompany', guid:'c4d626bf-1639-2d27-16df-da3ec0ee364e'},
-                //{className:'RootContact', component:'../DataControls/rootContact', guid:'ad17cab2-f41a-36ef-37da-aac967bbe356'},
-                //{className:'RootTstContact', component:'../DataControls/rootTstContact', guid:'de984440-10bd-f1fd-2d50-9af312e1cd4f'},
-                //{className:'RootContract', component:'../DataControls/rootContract', guid:'4f7d9441-8fcc-ba71-2a1d-39c1a284fc9b'},
-                //{className:'RootIncomeplan', component:'../DataControls/rootIncomeplan', guid:'194fbf71-2f84-b763-eb9c-177bf9ac565d'},
-                //{className:'RootLead', component:'../DataControls/rootLead', guid:'31c99003-c0fc-fbe6-55eb-72479c255556'},
-                //{className:'RootLeadLog', component:'../DataControls/rootLeadLog', guid:'bedf1851-cd51-657e-48a0-10ac45e31e20'},
-                //{className:'RootOpportunity', component:'../DataControls/rootOpportunity', guid:'3fe7cd6f-b146-8898-7215-e89a2d8ea702'},
-              //  {className:'DbNavigator', component:'../uccello/lib/dbNavigator', viewset:true, guid:'38aec981-30ae-ec1d-8f8f-5004958b4cfa'},
                 {className:'MatrixGrid', component:'matrixGrid', viewset:true, guid:'827a5cb3-e934-e28c-ec11-689be18dae97'},
                 {className:'PropEditor', component:'propEditor', viewset:true, guid:'a0e02c45-1600-6258-b17a-30a56301d7f1'},
                 {className:'GenLabel', component:'genLabel', viewset:true, guid:'151c0d05-4236-4732-b0bd-ddcf69a35e25'},
@@ -63,8 +42,8 @@ $(document).ready( function() {
                 {className:'Label', viewset:true},
                 {className:'Toolbar', viewset:true},
                 {className:'ToolbarButton', viewset:true},
-                {className:'LayersContainer', viewset:true}//,
-              //  {className:'DbNavigator', viewset:true}
+                {className:'LayersContainer', viewset:true},
+                {className:'TreeView', viewset:true}
             ],
             
             classGuids: {
@@ -1025,14 +1004,14 @@ $(document).ready( function() {
 
             $('#DataColumnContact30').click(function(){
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
-                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
+                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataGridLeadCreation');
                 cm.userEventHandler(obj, function () {
                     obj.width(30);
                 });
             });
             $('#DataColumnContact20').click(function(){
                 var cm = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8');
-                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataColumnContact');
+                var obj = uccelloClt.getContextCM('89f42efa-b160-842c-03b4-f3b536ca09d8').getByName('DataGridLeadCreation');
                 cm.userEventHandler(obj, function () {
                     obj.width(20);
                 });
