@@ -43,7 +43,8 @@ $(document).ready( function() {
                 {className:'Toolbar', viewset:true},
                 {className:'ToolbarButton', viewset:true},
                 {className:'LayersContainer', viewset:true},
-                {className:'TreeView', viewset:true}
+                {className:'TreeView', viewset:true},
+                {className:'DbTreeView', viewset:true}
             ],
             
             classGuids: {

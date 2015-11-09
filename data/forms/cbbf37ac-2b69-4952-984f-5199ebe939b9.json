@@ -341,6 +341,67 @@
                   }
                 ]
               }
+            },
+            {
+              "$sys": {
+                "guid": "5698ec7b-56ac-86f7-9ffa-3e8d9a9954f3",
+                "typeGuid": "f91349d1-2254-cc67-07b3-792674725650"
+              },
+              "fields": {
+                "Id": 200001,
+                "Name": "DbTreeView"
+              },
+              "collections": {
+                "Datasets": [
+                  {
+                    "$sys": {
+                      "guid": "fd172ab1-03af-7af1-ba91-f220fd1332c6",
+                      "typeGuid": "024cdaa7-9e63-5cb1-65a1-caaec6b93140"
+                    },
+                    "fields": {
+                      "Id": 100001,
+                      "Name": "Company",
+                      "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "6a8f0a52-c4c8-0aa8-d886-37be0d5deac8",
+                      "typeGuid": "024cdaa7-9e63-5cb1-65a1-caaec6b93140"
+                    },
+                    "fields": {
+                      "Id": 100002,
+                      "Name": "Contact",
+                      "Dataset": "eefbcccf-743a-66a4-c3a2-4751d2a334f5",
+                      "Parent": "061b1347-18a2-a829-fcce-ba59058b4bdf"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "b2c4acbc-d1f6-ab39-6241-2d09eae6df37",
+                      "typeGuid": "024cdaa7-9e63-5cb1-65a1-caaec6b93140"
+                    },
+                    "fields": {
+                      "Id": 100003,
+                      "Name": "Contract",
+                      "Dataset": "e559320d-d80d-48f7-ed4e-0ac63587e606",
+                      "Parent": "061b1347-18a2-a829-fcce-ba59058b4bdf"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "e79b02bc-d480-4fc0-fef6-e7a4a69c7ec2",
+                      "typeGuid": "024cdaa7-9e63-5cb1-65a1-caaec6b93140"
+                    },
+                    "fields": {
+                      "Id": 100004,
+                      "Name": "Address",
+                      "Dataset": "92720532-a58f-68bb-6e5a-02b28239e312",
+                      "Parent": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
