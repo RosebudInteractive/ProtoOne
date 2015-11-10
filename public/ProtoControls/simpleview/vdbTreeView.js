@@ -5,6 +5,9 @@ define(
         vDbTreeView._templates = template.parseTemplate(tpl);
         vDbTreeView.render = function(options) {
             var item = $('#' + this.getLid()), that=this, tree = item.find('.tree');
+            this.elemId = 0;
+
+
             if (item.length == 0) {
                 item = $(vDbTreeView._templates['dbTreeView']).attr('id', this.getLid());
                 item.focus(function(){
@@ -19,10 +22,13 @@ define(
                     'core' : {
                         'data' : function (node, cb) {
                             if(node.id === "#") {
-                                cb(vDbTreeView.getItemsRoot.apply(that, [null]));
+                                cb(vDbTreeView.getDatasets.apply(that, [null]));
                             }
                             else {
-                                cb(vDbTreeView.getItems.apply(that, [node.data]));
+                                if (node.data.type == 'dataset')
+                                    cb(vDbTreeView.getItems.apply(that, [node.data.ds]));
+                                else
+                                    cb(vDbTreeView.getDatasets.apply(that, [node.data.ds]));
                             }
                         }
                     }
@@ -30,7 +36,7 @@ define(
 
                 tree.on('changed.jstree', function (e, data) {
                     var node = data.selected && data.selected.length>0 ? data.instance.get_node(data.selected[0]) : null;
-                    if (node) {
+                    if (node && node.data.type == 'item') {
                         that.getControlMgr().userEventHandler(that, function(){
                             node.data.ds.cursor(node.data.obj.id());
                         });
@@ -47,41 +53,32 @@ define(
                 $('#ch_'+this.getLid()).focus();
         }
 
-        vDbTreeView.getItemsRoot = function(parent) {
-            var items = this.getCol('Datasets'), itemsTree=[];
-            for (var i = 0, len = items.count(); i < len; i++) {
-                var item = items.get(i), ds = item.dataset(), col = ds.root().getCol('DataElements'),
-                    isChildren = vDbTreeView.isChildren.apply(this, [ds]);
-                if (item.parent() == null) {
-                    for (var j = 0, len2 = col.count(); j < len2; j++) {
-                        var obj = col.get(j);
-                        itemsTree.push({
-                            text : obj.name(),
-                            id :  obj.getGuid(),
-                            children : isChildren,
-                            data:{ds:ds, obj:obj}
-                        });
-                    }
-               }
+        vDbTreeView.getDatasets = function(parent) {
+            var items = this.getCol('Datasets'), childs = [];
+            for (var i = 0, len = items.count(); i < len; i++){
+                var item = items.get(i), ds = item.dataset();
+                if (parent == item.parent())
+                    childs.push({
+                        text: ds.name(),
+                        id: 't'+(++this.elemId),
+                        children: true,
+                        data: {type: 'dataset', ds: ds}
+                    });
             }
-            return itemsTree;
+            return childs;
         }
 
-        vDbTreeView.getItems = function(parent) {
-            var childs = vDbTreeView.getChildren.apply(this, [parent.ds]), itemsTree=[],
-                names = {'DatasetContact':'firstname', 'DatasetContract':'number', 'DatasetCompany':'name', 'DatasetAddress':'country'};
-            for (var i = 0, len = childs.length; i < len; i++) {
-                var item = childs[i], ds = item.dataset(), col = ds.root().getCol('DataElements'),
-                    isChildren = vDbTreeView.isChildren.apply(this, [ds]);
-                for (var j = 0, len2 = col.count(); j < len2; j++) {
-                    var obj = col.get(j);
-                    itemsTree.push({
-                        text : obj[names[ds.name()]](),
-                        id :  obj.getGuid(),
-                        children : isChildren,
-                        data:{ds:ds, obj:obj}
-                    });
-                }
+        vDbTreeView.getItems = function(dataset) {
+            var itemsTree=[], names = {'DatasetContact':'firstname', 'DatasetContract':'number', 'DatasetCompany':'name', 'DatasetAddress':'country'};
+            var col = dataset.root().getCol('DataElements'), isChildren = vDbTreeView.isChildren.apply(this, [dataset]);
+            for (var i = 0, len2 = col.count(); i < len2; i++) {
+                var obj = col.get(i);
+                itemsTree.push({
+                    text : obj[names[dataset.name()]](),
+                    id : 't'+(++this.elemId),
+                    children : isChildren,
+                    data:{type: 'item', ds:dataset, obj:obj}
+                });
             }
             return itemsTree;
         }

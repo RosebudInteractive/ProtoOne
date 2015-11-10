@@ -54,6 +54,9 @@ p {padding:0;margin: 4px 0;}
 .control.g-container table td{
     border: 1px solid #bbb;
 }
+.control.dbtreeview{
+    overflow: auto;
+}
 
 
 

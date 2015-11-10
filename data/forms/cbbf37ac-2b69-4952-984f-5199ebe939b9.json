@@ -349,7 +349,9 @@
               },
               "fields": {
                 "Id": 200001,
-                "Name": "DbTreeView"
+                "Name": "DbTreeView",
+                "Height":600,
+                "Width":500
               },
               "collections": {
                 "Datasets": [
@@ -401,6 +403,102 @@
                     }
                   }
                 ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "6077a56c-d1c2-cea8-9bdc-ae796e54462e",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 22,
+                "Name": "DataGridCompany",
+                "Top": 0,
+                "Left": 500,
+                "Width": 380,
+                "Height": 150,
+                "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf"
+              },
+              "collections": {
+                "Columns": [
+                  {
+                    "$sys": {
+                      "guid": "248c23d2-da4a-11a6-3562-c0f782d190e4",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
+                      "Name": "DataColumnId",
+                      "Label": "ID",
+                      "Width": 10,
+                      "Field": "fa866d8f-725e-f688-3de6-c0a782c95d5e"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
+                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                    },
+                    "fields": {
+                      "Id": 8001,
+                      "Name": "DataColumnName",
+                      "Label": "NAME",
+                      "Width": 90,
+                      "Field": "3e9600e8-e4e8-cbef-39ab-c195fbe382cb"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "$sys": {
+                "guid": "af9d1e98-73a6-4b35-b91c-edd498a749fc",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 24,
+                "Name": "DataGridContact",
+                "Top": "150",
+                "Left": "500",
+                "Width": 660,
+                "Height": 150,
+                "Dataset": "eefbcccf-743a-66a4-c3a2-4751d2a334f5"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "5029499d-3a2d-e81f-1281-6a00cb779a59",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 226,
+                "Name": "DataGridAddress",
+                "Top": "300",
+                "Left": "500",
+                "Width": 450,
+                "Height": 150,
+                "Dataset": "92720532-a58f-68bb-6e5a-02b28239e312"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "d25f0f38-b0bd-d505-a332-f26f3c6cf8d5",
+                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+              },
+              "fields": {
+                "Id": 224,
+                "Name": "DataGridContract",
+                "Top": "450",
+                "Left": "500",
+                "Width": 660,
+                "Height": 150,
+                "Dataset": "e559320d-d80d-48f7-ed4e-0ac63587e606"
+              },
+              "collections": {
               }
             }
           ]
