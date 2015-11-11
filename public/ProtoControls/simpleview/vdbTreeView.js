@@ -37,13 +37,17 @@ define(
                 });
 
                 tree.on('changed.jstree', function (e, data) {
-                    var node = data.selected && data.selected.length>0 ? data.instance.get_node(data.selected[0]) : null;
-                    if (node && node.data.type == 'item') {
-                        that.getControlMgr().userEventHandler(that, function(){
-                            vDbTreeView._setDatasetCursor.call(that, node)
-                        });
+                    var val = data.selected && data.selected.length>0 ? data.selected[0] : null;
+                    var node = val ? data.instance.get_node(val) : null;
+                    if (data.action == 'select_node') {
+                        if (node.data.type == 'item') {
+                            that.getControlMgr().userEventHandler(that, function(){
+                                vDbTreeView._setDatasetCursor.call(that, node);
+                                that.cursor(val);
+                            });
+                        }
                     }
-                }).on("select_node.jstree", function(e, data) {
+                })/*.on("select_node.jstree", function(e, data) {
                     var d = data;
                     var val = null;
                     if (data.selected.length > 0) {
@@ -52,14 +56,14 @@ define(
                     that.getControlMgr().userEventHandler(that, function(){
                         that.cursor(val);
                     });
-                });
+                })*/;
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
 
             if (this.cursor()) {
-                var n = tree.jstree("get_node",  this.cursor())
+                var n = tree.jstree("get_node",  this.cursor());
                 tree.jstree("select_node", n);
             }
             tree.jstree("refresh", false);
