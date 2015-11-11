@@ -58,6 +58,10 @@ define(
                 $(parent).append(item);
             }
 
+            if (this.cursor()) {
+                var n = tree.jstree("get_node",  this.cursor())
+                tree.jstree("select_node", n);
+            }
             tree.jstree("refresh", false);
 
 
