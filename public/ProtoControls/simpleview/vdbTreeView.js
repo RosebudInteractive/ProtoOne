@@ -40,12 +40,12 @@ define(
                     var val = data.selected && data.selected.length>0 ? data.selected[0] : null;
                     var node = val ? data.instance.get_node(val) : null;
                     if (data.action == 'select_node') {
-                        if (node.data.type == 'item') {
                             that.getControlMgr().userEventHandler(that, function(){
-                                vDbTreeView._setDatasetCursor.call(that, node);
+                                if (node.data.type == 'item') {
+                                    vDbTreeView._setDatasetCursor.call(that, node);
+                                }
                                 that.cursor(val);
                             });
-                        }
                     }
                 })/*.on("select_node.jstree", function(e, data) {
                     var d = data;
