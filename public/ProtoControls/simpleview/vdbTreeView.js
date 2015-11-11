@@ -25,9 +25,11 @@ define(
                                 cb(vDbTreeView.getDatasets.apply(that, [null]));
                             }
                             else {
-                                if (node.data.type == 'dataset')
-                                    cb(vDbTreeView.getItems.apply(that, [node.data.ds]));
-                                else
+                                if (node.data.type == 'dataset') {
+                                    vDbTreeView._setDatasetCursor.call(that, node, function() {
+                                        cb(vDbTreeView.getItems.apply(that, [node.data.ds]));
+                                    });
+                                } else
                                     cb(vDbTreeView.getDatasets.apply(that, [node.data.ds]));
                             }
                         }
@@ -38,19 +40,89 @@ define(
                     var node = data.selected && data.selected.length>0 ? data.instance.get_node(data.selected[0]) : null;
                     if (node && node.data.type == 'item') {
                         that.getControlMgr().userEventHandler(that, function(){
-                            node.data.ds.cursor(node.data.obj.id());
+                            vDbTreeView._setDatasetCursor.call(that, node)
                         });
                     }
+                }).on("select_node.jstree", function(e, data) {
+                    var d = data;
+                    var val = null;
+                    if (data.selected.length > 0) {
+                        val = data.selected[0];
+                    }
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.cursor(val);
+                    });
                 });
 
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
-            tree.jstree("refresh");
+
+            tree.jstree("refresh", false);
+
 
             // выставляем фокус
             if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 $('#ch_'+this.getLid()).focus();
+        }
+
+        vDbTreeView._setDatasetCursor = function(node, cb) {
+            var item = $('#' + this.getLid()),
+                that=this,
+                tree = item.find('.tree');
+            if (node.data.obj && node.data.obj.id() == node.data.ds.cursor()) {
+                if (cb) cb();
+                return;
+            }
+            var pars = [];
+            if (node.parents.length > 0) {
+                for (var i = node.parents.length - 1; i >= 0; i--) {
+                    var parentNode = tree.jstree("get_node", node.parents[i]);
+                    if (parentNode.data && parentNode.data.type == "item" && parentNode.data.ds.cursor() != parentNode.data.obj.id()) {
+                        pars.push({
+                            ds: parentNode.data.ds,
+                            id: parentNode.data.obj.id()
+                        });
+                    }
+                }
+            }
+            pars.push({
+                ds: node.data.ds,
+                id: node.data.obj ? node.data.obj.id() : null
+            });
+
+            function bind(func, context, data) {
+                return function () {
+                    return func.call(context, data);
+                };
+            }
+
+            if (pars.length > 1) {
+                for (var i = 1; i < pars.length; i++) {
+                    var p = pars[i];
+                    var callback = bind(function(data){
+                        var dt = data;
+                        if (dt.id)
+                            dt.ds.cursor(dt.id);
+                        else
+                            dt.ds.first();
+                        dt.ds.event.off(dt.handler);
+                        if (node.data.ds == dt.ds && cb) cb();
+                    }, this, p);
+
+                    var handler = {
+                        type: 'moveCursor',
+                        subscriber: this,
+                        callback: callback
+                    };
+                    p.handler = handler;
+                    p.ds.event.on(handler);
+                }
+            }
+
+            //node.data.ds.cursor(node.data.obj.id());
+            pars[0].ds.cursor(pars[0].id);
+            if (pars[0].ds == node.data.ds && cb) cb();
         }
 
         vDbTreeView.getDatasets = function(parent) {
@@ -69,7 +141,11 @@ define(
         }
 
         vDbTreeView.getItems = function(dataset) {
-            var itemsTree=[], names = {'DatasetContact':'firstname', 'DatasetContract':'number', 'DatasetCompany':'name', 'DatasetAddress':'country'};
+            var itemsTree=[],
+                names = {'DatasetContact':'firstname',
+                    'DatasetContract':'number',
+                    'DatasetCompany':'name',
+                    'DatasetAddress':'country'};
             var col = dataset.root().getCol('DataElements'), isChildren = vDbTreeView.isChildren.apply(this, [dataset]);
             for (var i = 0, len2 = col.count(); i < len2; i++) {
                 var obj = col.get(i);
