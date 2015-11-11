@@ -153,13 +153,13 @@ define(
                         };
                         
                         function finalize(result) {
-                            that.scriptObject.returnResult(res);
+                            that.scriptObject.returnResult(result);
                             console.log("<== [execObjMethod] finished!");
                         };
                         if (obj_to_save.obj)
                             obj_to_save.obj._$local_save(finalize) // Если вызвать просто save - страшно представить, что будет !
                         else
-                            finalize({ result: "OK" });
+                            finalize(result);
                     };
                     
                     args.push(callback);
