@@ -70,7 +70,7 @@ define(
                 var n = tree.jstree("get_node",  this.cursor());
                 if(n) tree.jstree("select_node", n.id);
             }
-            tree.jstree("refresh", false);
+            //tree.jstree("refresh", false);
 
 
             // выставляем фокус
