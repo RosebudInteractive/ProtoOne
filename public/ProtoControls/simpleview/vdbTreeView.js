@@ -12,11 +12,9 @@ define(
                 item = $(vDbTreeView._templates['dbTreeView']).attr('id', this.getLid());
                 item.focus(function(){
                     if (that.getRoot().currentControl() != that) {
-                        console.log("!!!!!!!!!!!!!!!!!START!!!!!!!!!!!!!!!!!!!!");
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
-                        console.log("!!!!!!!!!!!!!!!!!COMMIT!!!!!!!!!!!!!!!!!!!!");
                     }
                 });
 
@@ -28,8 +26,10 @@ define(
                             }
                             else {
                                 if (node.data.type == 'dataset') {
-                                    vDbTreeView._setDatasetCursor.call(that, node, function() {
-                                        cb(vDbTreeView.getItems.apply(that, [node.data.ds]));
+                                    that.getControlMgr().userEventHandler(that, function(){
+                                        vDbTreeView._setDatasetCursor.call(that, node, function() {
+                                            cb(vDbTreeView.getItems.apply(that, [node.data.ds]));
+                                        });
                                     });
                                 } else
                                     cb(vDbTreeView.getDatasets.apply(that, [node.data.ds]));
@@ -42,14 +42,12 @@ define(
                     var val = data.selected && data.selected.length>0 ? data.selected[0] : null;
                     var node = val ? data.instance.get_node(val) : null;
                     if (data.action == 'select_node') {
-                        console.log("!!!!!!!!!!!!!!!!!START!!!!!!!!!!!!!!!!!!!!");
                             that.getControlMgr().userEventHandler(that, function(){
                                 if (node.data.type == 'item') {
                                     vDbTreeView._setDatasetCursor.call(that, node);
                                 }
                                 that.cursor(val);
                             });
-                        console.log("!!!!!!!!!!!!!!!!!END!!!!!!!!!!!!!!!!!!!!");
                     }
                 })/*.on("select_node.jstree", function(e, data) {
                     var d = data;
@@ -68,6 +66,9 @@ define(
 
             if (this.cursor()) {
                 var n = tree.jstree("get_node",  this.cursor());
+                var selectedNodes = tree.jstree("get_selected", false);
+                if (n.id != selectedNodes[0])
+                    tree.jstree("deselect_all", false);
                 if(n) tree.jstree("select_node", n.id);
             }
             //tree.jstree("refresh", false);
