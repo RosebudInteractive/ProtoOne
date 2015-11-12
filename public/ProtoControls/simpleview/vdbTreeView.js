@@ -5,10 +5,10 @@ define(
         vDbTreeView._templates = template.parseTemplate(tpl);
         vDbTreeView.render = function(options) {
             var item = $('#' + this.getLid()), that=this, tree = item.find('.tree');
-            this.elemId = 0;
 
 
             if (item.length == 0) {
+                this.elemId = 0;
                 item = $(vDbTreeView._templates['dbTreeView']).attr('id', this.getLid());
                 item.focus(function(){
                     if (that.getRoot().currentControl() != that) {
