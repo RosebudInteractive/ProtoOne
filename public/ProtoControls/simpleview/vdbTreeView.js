@@ -68,7 +68,7 @@ define(
 
             if (this.cursor()) {
                 var n = tree.jstree("get_node",  this.cursor());
-                tree.jstree("select_node", n);
+                if(n) tree.jstree("select_node", n.id);
             }
             tree.jstree("refresh", false);
 
