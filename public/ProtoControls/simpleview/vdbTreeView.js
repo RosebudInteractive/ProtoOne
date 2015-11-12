@@ -12,9 +12,11 @@ define(
                 item = $(vDbTreeView._templates['dbTreeView']).attr('id', this.getLid());
                 item.focus(function(){
                     if (that.getRoot().currentControl() != that) {
+                        console.log("!!!!!!!!!!!!!!!!!START!!!!!!!!!!!!!!!!!!!!");
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
+                        console.log("!!!!!!!!!!!!!!!!!COMMIT!!!!!!!!!!!!!!!!!!!!");
                     }
                 });
 
@@ -40,12 +42,14 @@ define(
                     var val = data.selected && data.selected.length>0 ? data.selected[0] : null;
                     var node = val ? data.instance.get_node(val) : null;
                     if (data.action == 'select_node') {
+                        console.log("!!!!!!!!!!!!!!!!!START!!!!!!!!!!!!!!!!!!!!");
                             that.getControlMgr().userEventHandler(that, function(){
                                 if (node.data.type == 'item') {
                                     vDbTreeView._setDatasetCursor.call(that, node);
                                 }
                                 that.cursor(val);
                             });
+                        console.log("!!!!!!!!!!!!!!!!!END!!!!!!!!!!!!!!!!!!!!");
                     }
                 })/*.on("select_node.jstree", function(e, data) {
                     var d = data;
@@ -129,7 +133,10 @@ define(
             }
 
             //node.data.ds.cursor(node.data.obj.id());
-            pars[0].ds.cursor(pars[0].id);
+            if (pars[0].id)
+                pars[0].ds.cursor(pars[0].id);
+            else
+                pars[0].ds.first();
             if (pars[0].ds == node.data.ds && cb) cb();
         }
 
@@ -161,7 +168,8 @@ define(
                     text : obj[names[dataset.name()]](),
                     id : 't'+(++this.elemId),
                     children : isChildren,
-                    data:{type: 'item', ds:dataset, obj:obj}
+                    data:{type: 'item', ds:dataset, obj:obj},
+                    guid: obj.getGuid()
                 });
             }
             return itemsTree;
