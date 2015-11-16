@@ -27,10 +27,11 @@ define(
                     vDataGrid.render.apply(that);
                 });
 
-                // установить фокус
-                grid.focus(function(){
+                grid.focus(function(e) {
+                    // установить фокус
                     if (that.getRoot().currentControl() != that) {
-                        that.getControlMgr().userEventHandler(that, function(){
+                        grid.find('[tabIndex=1]').focus();
+                        that.getControlMgr().userEventHandler(that, function () {
                             that.setFocused();
                         });
                     }
@@ -38,7 +39,6 @@ define(
 
                 // клик на таблицу
                 grid.click(function(e){
-                    console.log('TEST click '+that.name());
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')) {
                         var cursor = rowTr.attr('data-id');
@@ -66,7 +66,6 @@ define(
                             that.getControlMgr().userEventHandler(that, function() {
                                 that.dataset().next();
                             });
-
                             break;
                     }
                 });
@@ -176,10 +175,8 @@ define(
             }
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
-                $(grid).focus();
-
-            //if (DEBUG) console.timeEnd('renderGrid '+this.name());
+            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+                $(grid).find('[tabIndex=1]').focus();
         }
 
         /**
@@ -190,8 +187,11 @@ define(
             var table = $('#' + this.getLid()).find('.table');
             var rowTr = table.find('.row.data[data-id='+id+']');
             var that = this;
-            table.find('.row.active').removeClass('active');
-            rowTr.addClass('active');
+            table.find('.row.active').removeClass('active').attr('tabindex', null);
+            rowTr.addClass('active').attr('tabindex', 1);
+            // выставляем фокус
+            if (this.getRoot().currentControl() == this)
+                rowTr.focus();
         }
 
         /**
@@ -324,7 +324,7 @@ define(
 
         vDataGrid.setFocus = function() {
             var grid = $('#' + this.getLid());
-            $(grid).focus();
+            $(grid).find('tr[tabIndex=1]').focus();
         }
 
         return vDataGrid;

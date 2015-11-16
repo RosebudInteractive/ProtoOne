@@ -93,7 +93,7 @@ p {padding:0;margin: 4px 0;}
 
 .divCell textarea {min-width:50px;min-height: 20px;}
 
-.grid:focus {padding: 1px;}
+.grid:focus {border:1px solid  #666666;outline: 0;}
 .grid {position: absolute;border:1px solid  #666666;border-spacing:0px;overflow: auto;box-sizing: border-box;width: 100%;}
 .grid .table {display: table;box-sizing: border-box;width:100%;}
 .grid .row .cell:last-child {border-right:1px solid  #666666;}
