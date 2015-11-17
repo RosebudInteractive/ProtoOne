@@ -170,8 +170,7 @@ define(
                     var activeTr = table.find('.row.data:eq(' + cursorIndex + ')'), wrapper = table.parent();
                     if (activeTr.length > 0) {
                         activeTr.addClass('active').attr('tabindex', 1);
-                        if (!vDataGrid.isScrolledIntoView(activeTr, wrapper))
-                            wrapper.scrollTop(activeTr.offset().top - wrapper.offset().top + wrapper.scrollTop());
+                        vDataGrid.scrollTo(activeTr, wrapper);
                     }
                     // если надо отобразить редактирование
                     if (this.editable())
@@ -184,18 +183,35 @@ define(
                 $(grid).find('[tabIndex=1]').focus();
         }
 
+        vDataGrid.scrollTo = function(elem, div)
+        {
+            if (elem.length > 0  && div.length>0) {
+                if (!vDataGrid.isScrolledIntoView(elem, div)) {
+                    var currScroll = div.scrollTop(), newScroll = elem.offset().top - div.offset().top + currScroll;
+                    if (newScroll > currScroll)
+                        div.scrollTop(newScroll - div.height() + elem.height() + 20);
+                    else
+                        div.scrollTop(newScroll - 20);
+                }
+            }
+            return null;
+        }
+
         vDataGrid.isScrolledIntoView = function(elem, div)
         {
             var $elem = $(elem);
             var $window = $(div);
 
-            var docViewTop = $window.scrollTop();
-            var docViewBottom = docViewTop + $window.height();
+            if ($elem.length > 0  && $window.length>0) {
+                var docViewTop = $window.scrollTop();
+                var docViewBottom = docViewTop + $window.height();
 
-            var elemTop = $elem.position().top;
-            var elemBottom = elemTop + $elem.height();
+                var elemTop = $elem.position().top;
+                var elemBottom = elemTop + $elem.height();
 
-            return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+                return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+            }
+            return null;
         }
 
         /**
@@ -209,11 +225,11 @@ define(
             table.find('.row.active').removeClass('active').attr('tabindex', null);
             rowTr.addClass('active').attr('tabindex', 1);
 
+            vDataGrid.scrollTo(rowTr, wrapper);
+
             // выставляем фокус
             if (this.getRoot().currentControl() == this)
                 rowTr.focus();
-            else if (rowTr.length>0 && wrapper.length>0 && !vDataGrid.isScrolledIntoView(rowTr, wrapper))
-                wrapper.scrollTop(rowTr.offset().top - wrapper.offset().top + wrapper.scrollTop());
         }
 
         /**
