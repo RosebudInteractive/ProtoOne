@@ -6,6 +6,11 @@ define(
         vDbTreeView.render = function(options) {
             var item = $('#' + this.getLid()), that=this, tree = item.find('.tree');
 
+            var curMode = this.сursorSyncMode();
+            if (curMode === undefined || curMode == null)
+                curMode = "OneWay";
+            curMode = "TWOWays"
+            curMode = curMode.toUpperCase();
 
             if (item.length == 0) {
                 this.elemId = 0;
@@ -14,6 +19,12 @@ define(
                 item.focus(function(){
                     if (that.getRoot().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
+                            var selectedNodes = tree.jstree("get_selected", false);
+                            if (selectedNodes.length > 0) {
+                                var toFocus = "#" + selectedNodes[0] + "_anchor";
+                                toFocus = toFocus.replace("@", "\\@");
+                                $(toFocus).focus();
+                            }
                             that.setFocused();
                         });
                     }
@@ -42,7 +53,8 @@ define(
                                         cb(vDbTreeView.getDatasets.apply(that, [node]));
                                 });
                             }
-                        }
+                        },
+                        'animation': 0
                     }
                 });
 
@@ -69,8 +81,18 @@ define(
                         that.getControlMgr().userEventHandler(that, function(){
                             node.data.treeItem.isOpen(false);
                         });
+                }).bind("select_node.jstree", function (event, data) {
+                    var el = document.getElementById( data.node.id );
+                    //if (!elementInViewport(el))
+                    if (!el.isVisible())
+                        el.scrollIntoView();
                 });
 
+                if (curMode == "TWOWAYS")
+                    vDbTreeView._subscribeOnDatasets.call(this, true);
+            } else {
+                if (this.isFldModified("CursorSyncMode"))
+                    vDbTreeView._subscribeOnDatasets.call(this, curMode == "TWOWAYS");
             }
 
             var itemsCol = this.getCol("Items");
@@ -87,10 +109,13 @@ define(
 
             if (this.cursor()) {
                 var n = tree.jstree("get_node",  this.cursor());
-                var selectedNodes = tree.jstree("get_selected", false);
-                if (n.id != selectedNodes[0])
-                    tree.jstree("deselect_all", false);
-                if(n) tree.jstree("select_node", n.id);
+                if (n) {
+                    var selectedNodes = tree.jstree("get_selected", false);
+                    if (n.id != selectedNodes[0])
+                        tree.jstree("deselect_all", false);
+                    tree.jstree("select_node", n.id);
+
+                }
             }
             //tree.jstree("refresh", false);
 
@@ -98,6 +123,46 @@ define(
             // выставляем фокус
             if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 $('#ch_'+this.getLid()).focus();
+        }
+
+        vDbTreeView._subscribeOnDatasets = function(on) {
+            var dsItems = this.getCol('Datasets');
+            for (var i = 0; i < dsItems.count(); i++) {
+                var ds = dsItems.get(i).dataset();
+                var handler = {
+                    type: 'moveCursor',
+                    subscriber: this,
+                    callback: vDbTreeView._moveDatasetHandler
+                };
+                if (on)
+                    ds.event.on(handler);
+                else
+                    ds.event.off(handler);
+            }
+        }
+
+        vDbTreeView._moveDatasetHandler = function(data) {
+            var neededItem = null;
+            var itemsCol = this.getCol("Items");
+            for (var i = 0, len = itemsCol.count(); i < len; i++) {
+                var item = itemsCol.get(i);
+                if (data.target.getCurrentDataObject() &&
+                    data.target.getCurrentDataObject().getGuid() == item.objectGuid()) {
+                    neededItem = item;
+                    break;
+                }
+            }
+
+            var that = this;
+            if (neededItem) {
+                that.getControlMgr().userEventHandler(that, function(){
+                    that.cursor(neededItem.getGuid());
+                    var el = document.getElementById(neededItem.getGuid());
+                    //if (!elementInViewport(el))
+                    if (!el.isVisible())
+                        el.scrollIntoView();
+                });
+            }
         }
 
         vDbTreeView._isNodeDataLoaded = function(node) {
@@ -302,5 +367,26 @@ define(
         }
 
         return vDbTreeView;
+
+
+        function elementInViewport(el) {
+            var top = el.offsetTop;
+            var left = el.offsetLeft;
+            var width = el.offsetWidth;
+            var height = el.offsetHeight;
+
+            while(el.offsetParent) {
+                el = el.offsetParent;
+                top += el.offsetTop;
+                left += el.offsetLeft;
+            }
+
+            return (
+                top >= window.pageYOffset &&
+                left >= window.pageXOffset &&
+                (top + height) <= (window.pageYOffset + window.innerHeight) &&
+                (left + width) <= (window.pageXOffset + window.innerWidth)
+            );
+        }
     }
 );
