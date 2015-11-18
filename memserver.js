@@ -140,7 +140,22 @@ var config = {
     },
 
     dataman: {
-        //connection: {
+        //connection: { //MSSQL
+        //    host: "10.1.1.3", // "SQL-SERVER"
+        //    //port: 1435, //instanceName: "SQL2008R2"
+        //    username: "sa",
+        //    password: "system",
+        //    database: "genetix_test",
+        //    provider: "mssql",
+        //    connection_options: { instanceName: "SQL2008R2" },
+        //    provider_options: {},
+        //    pool: {
+        //        max: 5,
+        //        min: 0,
+        //        idle: 10000
+        //    },
+        //},
+        //connection: { //MySql
         //    host: "localhost",
         //    username: "sa",
         //    password: "system",
