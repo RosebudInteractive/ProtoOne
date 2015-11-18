@@ -134,10 +134,12 @@ define(
                     function callback(result) {
                         
                         var res = result;
+                        var is_new_object = false;
                         var obj_to_save = {};
                         if (result && result.newObject && db) {
                             var newObject = db.getObj(result.newObject);
-                            
+                            is_new_object = true;
+
                             if (newObject instanceof ProcessObject) {
                                 
                                 var processID = that.scriptObject.processFacade.get("ProcessID");
@@ -153,7 +155,7 @@ define(
                         };
                         
                         function finalize(result) {
-                            that.scriptObject.returnResult(result);
+                            that.scriptObject.returnResult(is_new_object ? res : result);
                             console.log("<== [execObjMethod] finished!");
                         };
                         if (obj_to_save.obj)
