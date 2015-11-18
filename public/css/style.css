@@ -156,3 +156,7 @@ textarea {
     word-wrap: break-word;
     height: 36px;
 }
+
+.control.dbtreeview.treeview .jstree-anchor:focus {
+    border: 1px solid #29B0D9;outline: 0;
+}
