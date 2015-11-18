@@ -6,8 +6,8 @@
   "fields":{
     "Id":1456,
     "Name":"MainForm",
-    "Title": "test",
-    "dbgName": "FormTest"
+    "Title": "treeView-test",
+    "dbgName": "FormTreeViewTest"
   },
   "collections": {
     "Params": [
