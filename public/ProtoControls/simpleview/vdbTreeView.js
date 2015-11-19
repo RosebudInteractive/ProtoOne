@@ -6,10 +6,9 @@ define(
         vDbTreeView.render = function(options) {
             var item = $('#' + this.getLid()), that=this, tree = item.find('.tree');
 
-            var curMode = this.сursorSyncMode();
+            var curMode = this.cursorSyncMode();
             if (curMode === undefined || curMode == null)
                 curMode = "OneWay";
-            curMode = "TWOWays"
             curMode = curMode.toUpperCase();
 
             if (item.length == 0) {
@@ -117,8 +116,6 @@ define(
 
                 }
             }
-            //tree.jstree("refresh", false);
-
 
             // выставляем фокус
             if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
