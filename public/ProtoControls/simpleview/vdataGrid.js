@@ -170,7 +170,7 @@ define(
                     var activeTr = table.find('.row.data:eq(' + cursorIndex + ')'), wrapper = table.parent();
                     if (activeTr.length > 0) {
                         activeTr.addClass('active').attr('tabindex', 1);
-                        // vDataGrid.scrollTo(activeTr, wrapper);
+                        vDataGrid.scrollTo(activeTr, wrapper);
                     }
                     // если надо отобразить редактирование
                     if (this.editable())
@@ -204,9 +204,9 @@ define(
 
             if ($elem.length > 0  && $window.length>0) {
                 var docViewTop = $window.scrollTop();
-                var docViewBottom = docViewTop + $window.height();
+                var docViewBottom = docViewTop + $window.height() - 20;
 
-                var elemTop = $elem.position().top;
+                var elemTop = $elem.position().top + docViewTop;
                 var elemBottom = elemTop + $elem.height();
 
                 return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
@@ -225,7 +225,7 @@ define(
             table.find('.row.active').removeClass('active').attr('tabindex', null);
             rowTr.addClass('active').attr('tabindex', 1);
 
-           // vDataGrid.scrollTo(rowTr, wrapper);
+            vDataGrid.scrollTo(rowTr, wrapper);
 
             // выставляем фокус
             if (this.getRoot().currentControl() == this)
