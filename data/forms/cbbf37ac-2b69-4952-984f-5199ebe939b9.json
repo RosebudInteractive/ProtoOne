@@ -407,13 +407,45 @@
             },
             {
               "$sys": {
+                "guid": "016cd4de-58aa-4225-9c26-41094540f94f",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1045,
+                "Name": "OnButton",
+                "Top": "5",
+                "Left": "510",
+                "Caption": "On Sync",
+                "OnClick": " { var cm=this.getControlMgr(), that = this, tree = cm.getByName('DbTreeView'); cm.userEventHandler(that, function(){tree.cursorSyncMode('TwoWays')})}"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
+                "guid": "94ae05cd-5cf9-4e97-8c15-f15a7d98f3dd",
+                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+              },
+              "fields": {
+                "Id": 1045,
+                "Name": "OffButton",
+                "Top": "5",
+                "Left": "590",
+                "Caption": "Sync Off",
+                "OnClick": " { var cm=this.getControlMgr(), that = this, tree = cm.getByName('DbTreeView'); cm.userEventHandler(that, function(){tree.cursorSyncMode('OneWay')})}"
+              },
+              "collections": {
+              }
+            },
+            {
+              "$sys": {
                 "guid": "6077a56c-d1c2-cea8-9bdc-ae796e54462e",
                 "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
               },
               "fields": {
                 "Id": 22,
                 "Name": "DataGridCompany",
-                "Top": 0,
+                "Top": 40,
                 "Left": 500,
                 "Width": 380,
                 "Height": 150,
@@ -458,7 +490,7 @@
               "fields": {
                 "Id": 24,
                 "Name": "DataGridContact",
-                "Top": "150",
+                "Top": "190",
                 "Left": "500",
                 "Width": 660,
                 "Height": 150,
@@ -475,7 +507,7 @@
               "fields": {
                 "Id": 226,
                 "Name": "DataGridAddress",
-                "Top": "300",
+                "Top": "340",
                 "Left": "500",
                 "Width": 450,
                 "Height": 150,
@@ -492,7 +524,7 @@
               "fields": {
                 "Id": 224,
                 "Name": "DataGridContract",
-                "Top": "450",
+                "Top": "490",
                 "Left": "500",
                 "Width": 660,
                 "Height": 150,
