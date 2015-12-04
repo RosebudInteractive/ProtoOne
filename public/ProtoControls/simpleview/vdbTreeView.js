@@ -34,6 +34,7 @@ define(
 
                 tree = item.find('.tree').jstree({
                     'core' : {
+                        'themes' : { 'dots' : false },
                         'data' : function (node, cb) {
                             var treeItem = null;
                             if(node.id != "#")
@@ -67,6 +68,9 @@ define(
                     var val = data.selected && data.selected.length>0 ? data.selected[0] : null;
                     var node = val ? data.instance.get_node(val) : null;
                     if (data.action == 'select_node') {
+                        // если и то и другое не определено
+                        if ((!node || !node.data || !node.data.treeItem) && !that.cursor()) return;
+                        if (node && node.data && that.cursor() != node.data.treeItem)
                             that.getControlMgr().userEventHandler(that, function(){
                                 if (node.data.type == 'item') {
                                     that._setDatasetCursor(node.data.treeItem);
