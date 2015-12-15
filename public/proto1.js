@@ -101,12 +101,21 @@ $(document).ready( function() {
                 $('#container').empty();
             }
 
-            this.setContextUrl = function(context, formGuids, change) {
+            this.setContextUrl = function (context, result, change) {
                 if (!change)
                     window.isHashchange = false;
+                        
+                var formGuids = [];
+                if (result.guids) {
+                    for (var i = 0; i < result.guids.length; i++)
+                        if (result.types[i] === UCCELLO_CONFIG.classGuids.Form)
+                            formGuids.push(result.guids[i]);
+                }
+                else
+                    formGuids = result;
+                        
                 document.location = that.getContextUrl(context, formGuids);
-
-            }
+            };
 
             this.getContextUrl = function(context, formGuids, timeout) {
                 var location = document.location.href;
@@ -129,7 +138,7 @@ $(document).ready( function() {
                     that.setAutoSendDeltas(true);
                     that.getContexts();
                     that.getDatasets();
-                    if (cb) cb(result);
+                    if (cb) cb(result && result.guids ? result.guids : null);
                 }, that.renderRoot);
             }
 
