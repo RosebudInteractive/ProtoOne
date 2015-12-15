@@ -93,8 +93,13 @@ define(
                 }).bind("select_node.jstree", function (event, data) {
                     var el = document.getElementById( data.node.id );
                     //if (!elementInViewport(el))
-                    if (!el.isVisible())
-                        el.scrollIntoView();
+                    if (el) {
+                        var offset = el.offsetTop;
+                        var scrollPos = el.offsetParent.children[0].scrollTop;
+                        var height = el.offsetParent.children[0].offsetHeight;
+                        if (offset < scrollPos && offset > (scrollPos + height - el.offsetHeight))
+                            el.scrollIntoView();
+                    }
                 });
 
                 //if (curMode == "TWOWAYS")
@@ -125,9 +130,13 @@ define(
                     tree.jstree("select_node", n.id);
 
                     var el = document.getElementById(this.cursor().getGuid());
-                    //if (!elementInViewport(el))
-                    if (!el.isVisible())
-                        el.scrollIntoView();
+                    if (el) {
+                        var offset = el.offsetTop;
+                        var scrollPos = el.offsetParent.children[0].scrollTop;
+                        var height = el.offsetParent.children[0].offsetHeight;
+                        if (offset < scrollPos && offset > (scrollPos + height - el.offsetHeight))
+                            el.scrollIntoView();
+                    }
                 }
             }
 
