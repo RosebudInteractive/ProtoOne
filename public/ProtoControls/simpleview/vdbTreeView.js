@@ -18,12 +18,12 @@ define(
                 item.focus(function(){
                     if (that.getRoot().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
-                            var selectedNodes = tree.jstree("get_selected", false);
+                            /*var selectedNodes = tree.jstree("get_selected", false);
                             if (selectedNodes.length > 0) {
                                 var toFocus = "#" + selectedNodes[0] + "_anchor";
                                 toFocus = toFocus.replace("@", "\\@");
                                 $(toFocus).focus();
-                            }
+                            }*/
                             that.setFocused();
                         });
                     }
@@ -32,6 +32,86 @@ define(
                 var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
+                tree = item.find('.tree');
+                tree.css({width: "100%", height: "100%"});
+                setTimeout(function() {
+                    that.getControlMgr().userEventHandler(that, function(){
+                        that.getData(null, function(data) {
+                            var treeData = data;
+                            for (var i = 0; i < treeData.length; i++)
+                                treeData[i].webix_kids = treeData[i].children;
+
+                            //treeTable.define("width", 600);
+                            //grid.resize();
+                            that._treeTable = webix.ui ({
+                                container:tree[0],
+                                view:"treetable",
+                                select: "row",
+                                columns:[
+                                    { id:"text", header:"Name", template:"{common.treetable()} #text#", fillspace:true}
+                                ],
+                                data: treeData,
+                                on: {
+                                    onDataRequest: function (id) {
+                                        webix.message("Getting children of " + id);
+                                        var cntx = this;
+                                        that.getControlMgr().userEventHandler(that, function(){
+                                            var col = that.getCol("Items");
+                                            var idx = col.indexOfGuid(id);
+                                            that.getData(col.get(idx), function(data) {
+                                                for (var i = 0; i < data.length; i++)
+                                                    data[i].webix_kids = data[i].children;
+                                                cntx.parse({
+                                                    parent: id,
+                                                    data: data
+                                                });
+                                            });
+                                        });
+                                        // cancelling default behaviour
+                                        return false;
+                                    },
+                                    onAfterSelect: function(data, preserve) {
+                                        var col = that.getCol("Items");
+                                        var idx = col.indexOfGuid(data.id);
+                                        var treeItem = col.get(idx);
+                                        // если и то и другое не определено
+
+                                        if (!treeItem && !that.cursor()) return;
+                                        if (that.cursor() != treeItem)
+                                            that.getControlMgr().userEventHandler(that, function(){
+                                                if (treeItem.kind() == 'item') {
+                                                    that._setDatasetCursor(treeItem);
+                                                }
+                                                that.cursor(treeItem);
+                                            });
+                                    },
+                                    onBeforeOpen: function(id) {
+                                        var col = that.getCol("Items");
+                                        var idx = col.indexOfGuid(id);
+                                        var treeItem = col.get(idx);
+                                        if (!(treeItem.isOpen()))
+                                            that.getControlMgr().userEventHandler(that, function() {
+                                                treeItem.isOpen(true);
+                                            });
+                                    },
+                                    onBeforeClose: function(id) {
+                                        var col = that.getCol("Items");
+                                        var idx = col.indexOfGuid(id);
+                                        var treeItem = col.get(idx);
+                                        if (treeItem.isOpen())
+                                            that.getControlMgr().userEventHandler(that, function(){
+                                                treeItem.isOpen(false);
+                                            });
+                                    }
+                                }
+                            });
+                        });
+                    });
+
+                    vDbTreeView._restoreNodeStates.call(that);
+                    vDbTreeView._restoreCursor.call(that);
+                }, 0);
+/*
                 tree = item.find('.tree').jstree({
                     'core' : {
                         'themes' : { 'dots' : false },
@@ -42,23 +122,23 @@ define(
                             that.getControlMgr().userEventHandler(that, function(){
                                 that.getData(treeItem, cb);
                             });
-                            /*if(node.id === "#") {
-                                that.getControlMgr().userEventHandler(that, function(){
-                                    cb(that.getDatasets(null));
-                                });
-                            } else {
-                                that.getControlMgr().userEventHandler(that, function(){
-                                    if (node.data.type == 'dataset') {
-                                        if (vDbTreeView._isNodeDataLoaded.call(that, node))
-                                            cb(vDbTreeView.getItems.apply(that, [node]));
-                                        else
-                                            vDbTreeView._setDatasetCursor.call(that, node, function() {
-                                                cb(vDbTreeView.getItems.apply(that, [node]));
-                                            });
-                                    } else
-                                        cb(vDbTreeView.getDatasets.apply(that, [node]));
-                                });
-                            }*/
+                            //if(node.id === "#") {
+                            //    that.getControlMgr().userEventHandler(that, function(){
+                            //        cb(that.getDatasets(null));
+                            //    });
+                            //} else {
+                            //    that.getControlMgr().userEventHandler(that, function(){
+                            //        if (node.data.type == 'dataset') {
+                            //            if (vDbTreeView._isNodeDataLoaded.call(that, node))
+                            //                cb(vDbTreeView.getItems.apply(that, [node]));
+                            //            else
+                            //                vDbTreeView._setDatasetCursor.call(that, node, function() {
+                            //                    cb(vDbTreeView.getItems.apply(that, [node]));
+                            //                });
+                            //        } else
+                            //            cb(vDbTreeView.getDatasets.apply(that, [node]));
+                            //    });
+                            //}
                         },
                         'animation': 0
                     }
@@ -101,14 +181,16 @@ define(
                             el.scrollIntoView();
                     }
                 });
-
+*/
                 //if (curMode == "TWOWAYS")
                 //    vDbTreeView._subscribeOnDatasets.call(this, true);
             } else {
+                vDbTreeView._restoreNodeStates.call(that);
+                vDbTreeView._restoreCursor.call(that);
                 //if (this.isFldModified("CursorSyncMode"))
                 //    vDbTreeView._subscribeOnDatasets.call(this, curMode == "TWOWAYS");
             }
-
+/*
             var itemsCol = this.getCol("Items");
             for (var i = 0, len = itemsCol.count(); i < len; i++) {
                 var item = itemsCol.get(i);
@@ -139,7 +221,7 @@ define(
                     }
                 }
             }
-
+*/
             // выставляем фокус
             if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
                 $('#ch_'+this.getLid()).focus();
@@ -307,6 +389,28 @@ define(
             }
             return children;
         }*/
+        vDbTreeView._restoreCursor = function() {
+            if (this.cursor()) {
+                this._treeTable.select(this.cursor().getGuid());
+                this._treeTable.showItem(this.cursor().getGuid());
+            }
+        }
+
+        vDbTreeView._restoreNodeStates = function() {
+            var itemsCol = this.getCol("Items");
+            for (var i = 0, len = itemsCol.count(); i < len; i++) {
+                var item = itemsCol.get(i);
+                var treeNode = this._treeTable.getItem(item.getGuid());
+                if (!treeNode) continue;
+                if (item.isOpen()) {
+                    if (!this._treeTable.isBranchOpen(item.getGuid()))
+                        this._treeTable.open(item.getGuid());
+                } else {
+                    if (this._treeTable.isBranchOpen(item.getGuid()))
+                        this._treeTable.close(item.getGuid());
+                }
+            }
+        };
 
         return vDbTreeView;
 
