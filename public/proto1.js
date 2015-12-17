@@ -106,13 +106,13 @@ $(document).ready( function() {
                     window.isHashchange = false;
                         
                 var formGuids = [];
-                if (result.guids) {
-                    for (var i = 0; i < result.guids.length; i++)
-                        if (result.types[i] === UCCELLO_CONFIG.classGuids.Form)
-                            formGuids.push(result.guids[i]);
-                }
-                else
-                    formGuids = result;
+                if (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var obj = uccelloClt.getContextCM().getObj(result[i]);
+                        if (obj && obj.isInstanceOf(UCCELLO_CONFIG.classGuids.Form))
+                            formGuids.push(result[i]);
+                    }
+                };
                         
                 document.location = that.getContextUrl(context, formGuids);
             };
@@ -138,7 +138,7 @@ $(document).ready( function() {
                     that.setAutoSendDeltas(true);
                     that.getContexts();
                     that.getDatasets();
-                    if (cb) cb(result && result.guids ? result.guids : null);
+                    if (cb) cb(result);
                 }, that.renderRoot);
             }
 
