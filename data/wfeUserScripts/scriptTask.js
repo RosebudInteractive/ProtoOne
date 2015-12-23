@@ -72,7 +72,24 @@ define(
                 return result;
             },
             
-            _setDone : function (clearContext, obj_to_save) {
+            _objArchive : function (obj, args) {
+                var callback = args[args.length - 1];
+                obj.modify(function () {
+                    obj._genericSetter("State", "Archieved");
+                    obj.currentProcess(null);
+                }, callback);
+            },
+            
+            _objConvert : function (obj, args) {
+                var callback = args[args.length - 1];
+                obj.modify(function () {
+                    obj._genericSetter("State", "Converted");
+                    obj.currentProcess(null);
+                }, callback);
+            },
+            
+            _setDone : function (callback) {
+                var result = { result: "OK" };
                 if (this.scriptObject) {
                     var result = false;
                     var param = this.scriptObject.processFacade.findParameter("CurrentObj");
@@ -81,19 +98,21 @@ define(
                         if (obj && (obj instanceof ProcessObject)) {
                             var state = obj._genericSetter("State");
                             result = ((state == "Converted") || (state == "Archieved"));
-                            if (result && clearContext) {
-                                obj.currentProcess(null);
-                                if (obj_to_save)
-                                    obj_to_save.obj = obj;
-                            }
+                                
                             param = this.scriptObject.processFacade.findParameter("IsDone");
                             if (param && result)
                                 param.value(result);
                         };
                     };
                 } else {
-                    throw 'scriptObject не определен'
+                    result.result = "ERROR";
+                    result.message = "scriptObject не определен";
                 };
+
+                if (callback)
+                    setTimeout(function () {
+                        callback(result);
+                    }, 0);
             },
             
             _locateObj : function (uri) {
@@ -135,7 +154,6 @@ define(
                         
                         var res = result;
                         var is_new_object = false;
-                        var obj_to_save = {};
                         if (result && result.newObject && db) {
                             var newObject = db.getObj(result.newObject);
                             is_new_object = true;
@@ -143,29 +161,41 @@ define(
                             if (newObject instanceof ProcessObject) {
                                 
                                 var processID = that.scriptObject.processFacade.get("ProcessID");
-                                newObject.currentProcess(processID);
-                                obj_to_save.obj = newObject;
 
                                 var param = that.scriptObject.processFacade.findParameter("CurrentObj");
                                 if (param)
                                     param.value("memdb://" + db.getGuid() + "." + result.newObject);
+                                
+                                newObject.modify(function () {
+                                    newObject.currentProcess(processID);
+                                }, finalize);
                             };
                         } else {
-                            that._setDone(true, obj_to_save);
+                            that._setDone(finalize);
                         };
                         
                         function finalize(result) {
                             that.scriptObject.returnResult(is_new_object ? res : result);
                             console.log("<== [execObjMethod] finished!");
                         };
-                        if (obj_to_save.obj)
-                            obj_to_save.obj._$local_save(finalize) // Если вызвать просто save - страшно представить, что будет !
-                        else
-                            finalize(result);
                     };
-                    
+                   
                     args.push(callback);
-                    obj[func].apply(obj, args);
+                    
+                    switch (func) {
+
+                        case "_$local_archive":
+                            this._objArchive(obj, args);
+                            break;
+
+                        case "_$local_convert":
+                            this._objConvert(obj, args);
+                            break;
+
+                        default:
+                            obj[func].apply(obj, args);
+                            break;
+                    };
 
                 } else {
                     throw 'scriptObject не определен'
