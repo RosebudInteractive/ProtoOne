@@ -1,0 +1,42 @@
+{
+  "$sys": {
+    "guid": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+    "typeGuid": "ef57a0f7-ab93-4c08-9503-c58bff321672"
+  },
+  "fields": {
+    "Id": 1000,
+    "Name": "RootSysProduct"
+  },
+  "collections": {
+    "DataElements": [
+      {
+        "$sys": {
+          "guid": "e0c3a094-de74-e2bc-9172-6dbfe82cd8d6",
+          "typeGuid": "846ff96f-c85e-4ae3-afad-7d4fd7e78144"
+        },
+        "fields": {
+          "Id": 1,
+          "Code": "Uccello",
+          "Name": "Uccello",
+          "Description": "проект Uccello",
+          "CurrVerId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "d4764c1b-8a30-6b47-7924-67570d390042",
+          "typeGuid": "846ff96f-c85e-4ae3-afad-7d4fd7e78144"
+        },
+        "fields": {
+          "Id": 2,
+          "Code": "ProtoOne",
+          "Name": "ProtoOne",
+          "Description": "проект ProtoOne",
+          "CurrVerId": 2
+        },
+        "collections": {}
+      }
+    ]
+  }
+}

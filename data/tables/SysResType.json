@@ -1,0 +1,29 @@
+{
+  "$sys": {
+    "guid": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+    "typeGuid": "db56d8c4-d0e9-4cee-88b8-3038de6eee31"
+  },
+  "fields": {
+    "Id": 1000,
+    "Name": "RootSysResType"
+  },
+  "collections": {
+    "DataElements": [
+      {
+        "$sys": {
+          "guid": "e0c3a094-de74-e2bc-9172-6dbfe82cd8d6",
+          "typeGuid": "44df18c7-646e-45ed-91ba-6b99acedf40b"
+        },
+        "fields": {
+          "Id": 1,
+          "Code": "FRM",
+		  "Name" : "User Forms",
+		  "ClassName" : "Form",
+		  "ResTypeGuid" : "7f93991a-4da9-4892-79c2-35fe44e69083",
+          "Description": "Пользовательские формы"
+        },
+        "collections": {}
+      }
+    ]
+  }
+}

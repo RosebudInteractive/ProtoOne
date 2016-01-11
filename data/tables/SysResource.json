@@ -1,0 +1,382 @@
+{
+  "$sys": {
+    "guid": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+    "typeGuid": "866db0f5-d312-4c10-9313-07d1c3fd352b"
+  },
+  "fields": {
+    "Id": 1000,
+    "Name": "RootSysResource"
+  },
+  "collections": {
+    "DataElements": [
+      {
+        "$sys": {
+          "guid": "e0c3a094-de74-e2bc-9172-6dbfe82cd8d6",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 1,
+          "ResGuid": "0c5e3ff0-1c87-3d99-5597-21d498a477c6",
+          "Code": "FRMCMP",
+          "Name": "FormCompany",
+          "Description": "форма FormCompany",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 2,
+          "ResGuid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "Code": "TABCNTRFRM",
+          "Name": "TabContainerForm",
+          "Description": "форма TabContainerForm",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 3,
+          "ResGuid": "0d1013d5-c71e-c858-5c97-4a00e579c459",
+          "Code": "FRMHCNTR",
+          "Name": "FormHContainers",
+          "Description": "форма FormHContainers",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 4,
+          "ResGuid": "0fab9989-3047-26b6-326c-19b78d66e4d1",
+          "Code": "MNCNTRCONT",
+          "Name": "MainContainerContact",
+          "Description": "форма MainContainerContact",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 5,
+          "ResGuid": "1bf3b1a3-edba-32ca-5033-75e3cf9a709a",
+          "Code": "FRMFCNTR",
+          "Name": "FormFContainer",
+          "Description": "форма FormFContainer",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 6,
+          "ResGuid": "1dc61b46-e445-fb26-8d20-a8d8c3a3d07d",
+          "Code": "OPRTNT",
+          "Name": "Opportunity",
+          "Description": "форма Opportunity",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 7,
+          "ResGuid": "02fad346-dc0b-7d02-b395-729186589611",
+          "Code": "CMPNFRM",
+          "Name": "CompanyForm",
+          "Description": "форма CompanyForm",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 8,
+          "ResGuid": "4a4abdb4-3e3b-85a7-09b9-5f15b4b187f9",
+          "Code": "FRMCRMEDT",
+          "Name": "FormCrmEdit",
+          "Description": "форма FormCrmEdit",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 9,
+          "ResGuid": "4c9cc20d-04a9-6c01-afb6-61ea3ee3327a",
+          "Code": "FRMGRDDS",
+          "Name": "FormGridDatasets",
+          "Description": "форма FormGridDatasets",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 10,
+          "ResGuid": "4c050ec3-beb4-2d67-e0b9-31fb59ade416",
+          "Code": "VCNTRS",
+          "Name": "v-containers",
+          "Description": "форма v-containers",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 11,
+          "ResGuid": "4f301ecb-030f-4751-99d0-b19d2d7ce2de",
+          "Code": "VCNTRS",
+          "Name": "v-containers",
+          "Description": "форма v-containers",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 12,
+          "ResGuid": "4f301ecb-030f-4751-99d0-b19d2d7ce2de",
+          "Code": "LFRM",
+          "Name": "LeadsForm",
+          "Description": "форма LeadsForm",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 13,
+          "ResGuid": "1ddec396-16ab-b549-e19a-3e0be8cb9a4b",
+          "Code": "FRMCTRLS",
+          "Name": "FormControls",
+          "Description": "форма FormControls",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 14,
+          "ResGuid": "88b9280f-7cce-7739-1e65-a883371cd498",
+          "Code": "FRMTST",
+          "Name": "FormTest",
+          "Description": "форма FormTest",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 15,
+          "ResGuid": "89f42efa-b160-842c-03b4-f3b536ca09d8",
+          "Code": "FRMCRMLST",
+          "Name": "FormCrmList",
+          "Description": "форма FormCrmList",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 16,
+          "ResGuid": "95a99d2b-73a6-4091-841f-5115b95fb720",
+          "Code": "EMPTFRM",
+          "Name": "EmptyForm",
+          "Description": "форма EmptyForm",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 17,
+          "ResGuid": "869f63e5-af6f-d72d-f399-bcf01224d773",
+          "Code": "TRVWFRM",
+          "Name": "TreeViewForm",
+          "Description": "форма TreeViewForm",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 18,
+          "ResGuid": "e0321687-d5b0-f7d2-2305-ae54e9ba79e1",
+          "Code": "FRM298832",
+          "Name": "Form298832",
+          "Description": "форма Form298832",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 19,
+          "ResGuid": "9827216d-54b2-19ae-b411-0c5e35ee43ab",
+          "Code": "FRMCMPN",
+          "Name": "FormCompany",
+          "Description": "форма FormCompany",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 20,
+          "ResGuid": "75140894-47ce-30e0-5401-6be0b15c7b35",
+          "Code": "FRMCRTBTNS",
+          "Name": "FormCreateButtons",
+          "Description": "форма FormCreateButtons",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 21,
+          "ResGuid": "ae4ceae0-5c33-d088-e3cd-2974c684701f",
+          "Code": "FRMNVGR",
+          "Name": "FormNavigator",
+          "Description": "форма FormNavigator",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 22,
+          "ResGuid": "cbbf37ac-2b69-4952-984f-5199ebe939b9",
+          "Code": "FRMTRVWTST",
+          "Name": "FormTreeViewTest",
+          "Description": "форма FormTreeViewTest",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+          "typeGuid": "dc156f00-52bd-46ca-98e8-0ac6967ffd44"
+        },
+        "fields": {
+          "Id": 22,
+          "ResGuid": "cf07df23-abfe-9887-a353-09a00faf99d8",
+          "Code": "FRMHCNTRS",
+          "Name": "FormHContainers",
+          "Description": "форма FormHContainers",
+          "ProdId": 2,
+          "ResTypId": 1
+        },
+        "collections": {}
+      }
+    ]
+  }
+}

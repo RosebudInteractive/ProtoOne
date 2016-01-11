@@ -1,0 +1,42 @@
+{
+  "$sys": {
+    "guid": "c170c217-e519-7c23-2811-ff75cd4bfe81",
+    "typeGuid": "ad66eb4b-6e18-41b7-bc43-e31346fea859"
+  },
+  "fields": {
+    "Id": 1000,
+    "Name": "RootSysBuild"
+  },
+  "collections": {
+    "DataElements": [
+      {
+        "$sys": {
+          "guid": "e0c3a094-de74-e2bc-9172-6dbfe82cd8d6",
+          "typeGuid": "7099d28d-1d32-425a-b95f-5c8e793d9763"
+        },
+        "fields": {
+          "Id": 1,
+          "BuildNum": 1,
+          "IsConfirmed": true,
+          "Description": "первая сборка Uccello",
+          "VersionId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "d4764c1b-8a30-6b47-7924-67570d390042",
+          "typeGuid": "7099d28d-1d32-425a-b95f-5c8e793d9763"
+        },
+        "fields": {
+          "Id": 2,
+          "BuildNum": 1,
+          "IsConfirmed": true,
+          "Description": "первая сборка ProtoOne",
+          "VersionId": 2
+        },
+        "collections": {}
+      }
+    ]
+  }
+}
