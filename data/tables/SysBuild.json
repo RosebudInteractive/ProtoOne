@@ -11,7 +11,7 @@
     "DataElements": [
       {
         "$sys": {
-          "guid": "e0c3a094-de74-e2bc-9172-6dbfe82cd8d6",
+          "guid": "387caa7b-89a3-42e8-af25-e565a91447ea",
           "typeGuid": "7099d28d-1d32-425a-b95f-5c8e793d9763"
         },
         "fields": {
@@ -25,7 +25,7 @@
       },
       {
         "$sys": {
-          "guid": "d4764c1b-8a30-6b47-7924-67570d390042",
+          "guid": "e01e17fe-29b0-4d43-9045-d271a3ab614a",
           "typeGuid": "7099d28d-1d32-425a-b95f-5c8e793d9763"
         },
         "fields": {
