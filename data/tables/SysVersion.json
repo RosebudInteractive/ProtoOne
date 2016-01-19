@@ -18,7 +18,7 @@
           "Id": 1,
           "Code": "1.0.0.1",
           "Name": "Uccello v.1.0.0.1",
-          "Description": "первая сборка Uccello",
+          "Description": "первая версия Uccello",
           "ProdId": 1,
 		  "CurrBuildId" : 1
         },
@@ -33,7 +33,7 @@
           "Id": 2,
           "Code": "1.0.0.1",
           "Name": "ProtoOne v.1.0.0.1",
-          "Description": "первая сборка ProtoOne",
+          "Description": "первая версия ProtoOne",
           "ProdId": 2,
 		  "CurrBuildId" : 2
         },
