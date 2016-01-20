@@ -21,7 +21,7 @@
           "Name": "FormCompany",
           "Description": "форма FormCompany",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -37,7 +37,7 @@
           "Name": "TabContainerForm",
           "Description": "форма TabContainerForm",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -53,7 +53,7 @@
           "Name": "FormHContainers",
           "Description": "форма FormHContainers",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -69,7 +69,7 @@
           "Name": "MainContainerContact",
           "Description": "форма MainContainerContact",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -85,7 +85,7 @@
           "Name": "FormFContainer",
           "Description": "форма FormFContainer",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -101,7 +101,7 @@
           "Name": "Opportunity",
           "Description": "форма Opportunity",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -117,7 +117,7 @@
           "Name": "CompanyForm",
           "Description": "форма CompanyForm",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -133,7 +133,7 @@
           "Name": "FormCrmEdit",
           "Description": "форма FormCrmEdit",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -149,7 +149,7 @@
           "Name": "FormGridDatasets",
           "Description": "форма FormGridDatasets",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -165,7 +165,7 @@
           "Name": "v-containers",
           "Description": "форма v-containers",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -181,7 +181,7 @@
           "Name": "v-containers",
           "Description": "форма v-containers",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -197,7 +197,7 @@
           "Name": "LeadsForm",
           "Description": "форма LeadsForm",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -213,7 +213,7 @@
           "Name": "FormControls",
           "Description": "форма FormControls",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -229,7 +229,7 @@
           "Name": "FormTest",
           "Description": "форма FormTest",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -245,7 +245,7 @@
           "Name": "FormCrmList",
           "Description": "форма FormCrmList",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -261,7 +261,7 @@
           "Name": "EmptyForm",
           "Description": "форма EmptyForm",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -277,7 +277,7 @@
           "Name": "TreeViewForm",
           "Description": "форма TreeViewForm",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -293,7 +293,7 @@
           "Name": "Form298832",
           "Description": "форма Form298832",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -309,7 +309,7 @@
           "Name": "FormCompany",
           "Description": "форма FormCompany",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -325,7 +325,7 @@
           "Name": "FormCreateButtons",
           "Description": "форма FormCreateButtons",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -341,7 +341,7 @@
           "Name": "FormNavigator",
           "Description": "форма FormNavigator",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -357,7 +357,7 @@
           "Name": "FormTreeViewTest",
           "Description": "форма FormTreeViewTest",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       },
@@ -373,7 +373,7 @@
           "Name": "FormHContainers",
           "Description": "форма FormHContainers",
           "ProdId": 2,
-          "ResTypId": 1
+          "ResTypeId": 1
         },
         "collections": {}
       }

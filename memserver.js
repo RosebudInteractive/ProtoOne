@@ -145,7 +145,8 @@ var config = {
             //port: 1435, //instanceName: "SQL2008R2"
             username: "sa",
             password: "",
-            database: "genetix_test",
+            //database: "genetix_test",
+            database: 'resmanager_test',
             provider: "mssql",
             connection_options: { instanceName: "SQLEXPRESS" },
             provider_options: {},
@@ -170,8 +171,9 @@ var config = {
         //    },
         //},
         importData: {
-            autoimport: false,
-            dir: "../ProtoOne/data/tables"
+            autoimport: true,
+            //dir: "../ProtoOne/data/tables"
+            dir: "./data/tables"
         },
         trace: {
             sqlCommands: true,
