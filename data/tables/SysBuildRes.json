@@ -1,0 +1,278 @@
+{
+  "$sys": {
+    "guid": "85dfcac5-e37a-4dd7-8f22-957c77251870",
+    "typeGuid": "e610fea3-5b38-44b5-aeab-e2d5fa084759"
+  },
+  "fields": {
+    "Id": 1000,
+    "Name": "RootSysBuildRes"
+  },
+  "collections": {
+    "DataElements": [
+      {
+        "$sys": {
+          "guid": "9d8be4d1-a904-4a91-bec4-b3d0dd57175a",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 1,
+          "BuildId": 2,
+          "ResVerId": 1
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "5e4dc51c-1387-4114-b5b7-5b616c02cde3",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 2,
+          "BuildId": 2,
+          "ResVerId": 2
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "aa1fd1db-1e3c-40c0-945e-5efbfbdc9f56",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 3,
+          "BuildId": 2,
+          "ResVerId": 3
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "bfb9bec2-8fd1-4b9e-81e8-37297ba28cb9",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 4,
+          "BuildId": 2,
+          "ResVerId": 4
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "5b23abe7-7b69-4319-89b0-22eef5724948",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 5,
+          "BuildId": 2,
+          "ResVerId": 5
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "7f79ef8d-0ae4-45bf-9e0c-599119c85ac7",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 6,
+          "BuildId": 2,
+          "ResVerId": 6
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "ed5cd445-5f32-42b0-bab4-7a01c6b771b3",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 7,
+          "BuildId": 2,
+          "ResVerId": 7
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "2d1a101d-2609-4621-a341-5fd76743aa94",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 8,
+          "BuildId": 2,
+          "ResVerId": 8
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "88633b55-2e28-40b1-a502-b79b389b5c53",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 9,
+          "BuildId": 2,
+          "ResVerId": 9
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "5049d6f9-8592-4055-a477-5509048cebc4",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 10,
+          "BuildId": 2,
+          "ResVerId": 10
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "ef0de989-57e0-44e1-90ef-2f8589437d5d",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 11,
+          "BuildId": 2,
+          "ResVerId": 11
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "7f4fa9e7-00ad-4ecc-a88f-fbca0ca6cfd2",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 12,
+          "BuildId": 2,
+          "ResVerId": 12
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "553846c3-d07b-4c18-882d-15fd570fd2e1",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 13,
+          "BuildId": 2,
+          "ResVerId": 13
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "8b339a54-b247-4733-8f86-1733332c38d9",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 14,
+          "BuildId": 2,
+          "ResVerId": 14
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "1d08e10c-f325-4940-9590-029855aa96b5",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 15,
+          "BuildId": 2,
+          "ResVerId": 15
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "ac764fd3-ba77-4c58-8ffc-ff9f1974883d",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 16,
+          "BuildId": 2,
+          "ResVerId": 16
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "a70d8a5d-468b-49b8-8cb2-4b0c1bd1c89f",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 17,
+          "BuildId": 2,
+          "ResVerId": 17
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "37eac25b-bb72-4f00-91ca-97ec439a0d3c",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 18,
+          "BuildId": 2,
+          "ResVerId": 18
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "ba3c3d32-0681-406c-9f57-8ea2d00b6f36",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 19,
+          "BuildId": 2,
+          "ResVerId": 19
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "16caf6b7-d09e-43fc-98a5-2e6159c88b99",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 20,
+          "BuildId": 2,
+          "ResVerId": 20
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "d0471733-ed98-448c-b4ac-c7e660a7edce",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 21,
+          "BuildId": 2,
+          "ResVerId": 21
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "a8e7d2a1-33bc-4320-8182-22cf4bddf6f8",
+          "typeGuid": "039c1cb9-0fdf-49e9-8bb9-e720aa9fe9d1"
+        },
+        "fields": {
+          "Id": 22,
+          "BuildId": 2,
+          "ResVerId": 22
+        },
+        "collections": {}
+      }
+    ]
+  }
+}
