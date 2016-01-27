@@ -140,22 +140,21 @@ var config = {
     },
 
     dataman: {
-        connection: { //MSSQL
-            host: "GALLO", // "SQL-SERVER"
-            //port: 1435, //instanceName: "SQL2008R2"
-            username: "sa",
-            password: "",
-            //database: "genetix_test",
-            database: 'resmanager_test',
-            provider: "mssql",
-            connection_options: { instanceName: "SQLEXPRESS" },
-            provider_options: {},
-            pool: {
-                max: 5,
-                min: 0,
-                idle: 10000
-            }
-        },
+        //connection: { //MSSQL
+        //    host: "10.1.1.3", // "SQL-SERVER"
+        //    //port: 1435, //instanceName: "SQL2008R2"
+        //    username: "sa",
+        //    password: "system",
+        //    database: "genetix_test",
+        //    provider: "mssql",
+        //    connection_options: { instanceName: "SQL2008R2" },
+        //    provider_options: {},
+        //    pool: {
+        //        max: 5,
+        //        min: 0,
+        //        idle: 10000
+        //    },
+        //},
         //connection: { //MySql
         //    host: "localhost",
         //    username: "sa",
@@ -170,18 +169,17 @@ var config = {
         //        idle: 10000
         //    },
         //},
-        importData: {
-            autoimport: true,
-            //dir: "../ProtoOne/data/tables"
-            dir: "./data/tables"
-        },
-        trace: {
-            sqlCommands: true,
-            importDir: true
-        }
+        //importData: {
+        //    autoimport: false,
+        //    dir: "../ProtoOne/data/tables"
+        //},
+        //trace: {
+        //    sqlCommands: true,
+        //    importDir: true
+        //}
     },
-    resman : {
-        useDb : true
+    resman: {
+        //useDb: true
     }
 };
 
