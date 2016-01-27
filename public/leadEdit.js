@@ -41,7 +41,7 @@ define(
 
             clickSave: function(edit) {
                 var self = this;
-                this._invokeObjMethod("save", function () {
+                this._invokeObjMethod("save", {}, function () {
                     self.setEditForm(false);
                 });
             },
@@ -111,27 +111,37 @@ define(
             _invokeObjMethod: function (method_name, callback) {
                 var obj = this._currentObj();
                 var isDone = true;
-                if (obj)
-                    obj[method_name](function (result) {
-                        if (DEBUG)
-                            console.log('"' + method_name + '" finished with result: ' + JSON.stringify(result));
-                        if (result && result.result) {
-                            if (result.result !== "OK") {
-                                var msg = result.message ? ": \"" + result.message + "\"" : ".";
-                                alert("Error occured" + msg);
-                                isDone = false;
+                if (arguments.length >= 1) {
+                    var method_name = arguments[0];
+                    var callback = (arguments.length > 1) &&
+                        (typeof (arguments[arguments.length - 1]) === "function") ? arguments[arguments.length - 1] : null;
+                    var args = [];
+                    for (var i = 1; i < (arguments.length - 1) ; i++)
+                        args[i - 1] = arguments[i];
+                    if (obj) {
+                        args.push(function (result) {
+                            if (DEBUG)
+                                console.log('"' + method_name + '" finished with result: ' + JSON.stringify(result));
+                            if (result && result.result) {
+                                if (result.result !== "OK") {
+                                    var msg = result.message ? ": \"" + result.message + "\"" : ".";
+                                    alert("Error occured" + msg);
+                                    isDone = false;
+                                };
                             };
-                        };
-                        if (isDone && callback)
+                            if (isDone && callback)
+                                setTimeout(function () {
+                                    callback();
+                                }, 0);
+                        });
+                        obj[method_name].apply(obj, args);
+                    }
+                    else {
+                        if (callback)
                             setTimeout(function () {
                                 callback();
                             }, 0);
-                    })
-                else {
-                    if (callback)
-                        setTimeout(function () {
-                            callback();
-                        }, 0);
+                    };
                 };
             }
         });

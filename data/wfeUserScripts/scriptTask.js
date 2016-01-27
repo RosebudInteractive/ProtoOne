@@ -77,7 +77,7 @@ define(
                 obj.modify(function () {
                     obj._genericSetter("State", "Archieved");
                     obj.currentProcess(null);
-                }, callback);
+                }, {}, callback);
             },
             
             _objConvert : function (obj, args) {
@@ -85,7 +85,7 @@ define(
                 obj.modify(function () {
                     obj._genericSetter("State", "Converted");
                     obj.currentProcess(null);
-                }, callback);
+                }, {}, callback);
             },
             
             _setDone : function (callback) {
@@ -168,7 +168,7 @@ define(
                                 
                                 newObject.modify(function () {
                                     newObject.currentProcess(processID);
-                                }, finalize);
+                                }, {}, finalize);
                             };
                         } else {
                             that._setDone(finalize);
