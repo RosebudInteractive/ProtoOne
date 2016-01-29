@@ -58,7 +58,6 @@ define(
                 this._dataset().addObject(
                     {
                         fields: {
-                            Id: recordid,
                             Name: 'Record ' + recordid,
                             State: 'Open',
                             Source: 'Source ' + recordid,
