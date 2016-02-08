@@ -179,7 +179,7 @@ var config = {
         //}
     }
     ,resman: {
-        useDb: true,
+        //useDb: true,
         defaultProduct : 'ProtoOne'
     }
     //,resourceBuilder : {
