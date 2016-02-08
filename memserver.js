@@ -177,10 +177,18 @@ var config = {
         //    sqlCommands: true,
         //    importDir: true
         //}
-    },
-    resman: {
-        //useDb: true
     }
+    ,resman: {
+        useDb: true,
+        defaultProduct : 'ProtoOne'
+    }
+    //,resourceBuilder : {
+    //    sourceDir : './../../../ProtoOne/data/forms/',
+    //    destDir : './testFiles/',
+    //    formResTypeId : 1,
+    //    productId : 2,
+    //    currBuildId : 2
+    //}
 };
 
 // модуль настроек
