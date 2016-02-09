@@ -12,6 +12,6 @@ define(
 
             }
         });
-        return LeadEdit;
+        return GenForm;
     }
 );
