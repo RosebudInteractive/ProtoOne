@@ -171,24 +171,24 @@ var config = {
         //},
         //importData: {
         //    autoimport: false,
-        //    dir: "../ProtoOne/data/tables"
+        //    dir: "./data/tables"
         //},
         trace: {
             sqlCommands: true,
             importDir: true
         }
-    }
-    ,resman: {
+    },
+    resman: {
         //useDb: true,
-        defaultProduct : 'ProtoOne'
+        defaultProduct : "ProtoOne"
+    },
+    resourceBuilder : {
+        sourceDir : "./data/forms/",
+        destDir : "./data/tables/",
+        formResTypeId : 1,
+        productId : 2,
+        currBuildId : 2
     }
-    //,resourceBuilder : {
-    //    sourceDir : './../../../ProtoOne/data/forms/',
-    //    destDir : './testFiles/',
-    //    formResTypeId : 1,
-    //    productId : 2,
-    //    currBuildId : 2
-    //}
 };
 
 // модуль настроек
