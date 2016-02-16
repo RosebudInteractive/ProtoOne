@@ -1,6 +1,7 @@
 define(
-    ['/public/uccello/uses/template.js', 'text!./templates/dataGrid.html'],
-    function(template, tpl) {
+    ['/public/uccello/uses/template.js', 'text!./templates/dataGrid.html',
+        '../../uccello/metaData/metaDefs'],
+    function(template, tpl, Meta) {
         var vDataGrid = {};
         vDataGrid._templates = template.parseTemplate(tpl);
 
@@ -42,7 +43,11 @@ define(
                     var rowTr = $(e.target).hasClass('data')? $(e.target): $(e.target).parent();
                     if (rowTr.hasClass('data')) {
                         var cursor = rowTr.attr('data-id');
-                        if (that.dataset().cursor() != cursor) {
+                        var ds = that.dataset();
+                        var dsState = !ds ? Meta.State.Unknown : ds.getState();
+                        if (ds.cursor() != cursor &&
+                            (ds.getState() == Meta.State.Browse ||
+                            (dsState != Meta.State.Unknown && dsState != Meta.State.Pending && ds.cachedUpdates()))) {
                             vDataGrid.renderCursor.apply(that, [cursor]);
                             that.getControlMgr().userEventHandler(that, function(){
                                 that.dataset().cursor(cursor);

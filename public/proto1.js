@@ -10,7 +10,7 @@ requirejs.config({
 });
 
 
-var $leadEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var $leadEdit, $leadEdit2, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -78,8 +78,9 @@ $(document).ready( function() {
         UCCELLO_CONFIG = new Config(config);
 
     require(
-        ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr', './leadEdit'],
-        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit){
+        ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr',
+            './leadEdit', './leadEditDataset'],
+        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2){
 
             setTimeout(function(){
 
@@ -931,6 +932,7 @@ $(document).ready( function() {
 
             // переменная для формы crm-edit
             $leadEdit = new LeadEdit(uccelloClt);
+            $leadEdit2 = new LeadEdit2(uccelloClt);
 
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------
