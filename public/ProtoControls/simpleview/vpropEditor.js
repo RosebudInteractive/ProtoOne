@@ -35,10 +35,10 @@ define(
                 editor.append(props);
                 editor.append(change);
                 editor.append(delbtn);
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
                 editor.focus(function(){
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
@@ -76,7 +76,7 @@ define(
             }
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 editor.focus();
         }
 
@@ -110,7 +110,7 @@ define(
                 return;
             }
 
-            parents.find('select').val(comp.getParent()?comp.getParent().getGuid():'');
+            parents.find('select').val(comp.getParentComp()?comp.getParentComp().getGuid():'');
             var countProps = comp.countProps();
             for (var i = 0; i < countProps; i++) {
                 var propName = comp.getPropName(i);

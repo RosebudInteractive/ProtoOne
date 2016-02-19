@@ -1,276 +1,307 @@
 {
-  "$sys":{
-    "guid":"0d6f3891-f800-9f8f-edac-53cd51792f0c",
-    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  "$sys": {
+    "guid": "0d6f3891-f800-9f8f-edac-53cd51792f0c",
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
   },
-  "fields":{
-    "Id":1456,
-    "Name":"TabContainerForm",
-    "Title": "TabContainerForm",
-    "dbgName": "TabContainerForm"
+  "fields": {
+    "Id": 1,
+    "ResName": "TabContainerForm"
   },
   "collections": {
-    "Params": [
+    "Form": [
       {
         "$sys": {
-          "guid": "c512baaf-4769-987a-f411-af4010a5751d",
-          "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
+          "guid": "3de7f332-3c83-1532-d822-3070ab96cbc7",
+          "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 1457,
-          "Name": "FormParam1",
-          "Type": "param",
-          "Kind": "out",
-          "Value": ""
-        },
-        "collections": {}
-      }
-    ],
-    "Children": [
-      {
-        "$sys": {
-          "guid": "450a8684-f7b6-5935-16ec-79f3deb8249c",
-          "typeGuid": "3fd621ab-4b0a-038f-b617-88dc28a05a67"
-        },
-        "fields": {
-          "Id": 11,
-          "Name": "MainContainer"
+          "Id": 1456,
+          "Name": "TabContainerForm",
+          "Title": "TabContainerForm",
+          "dbgName": "TabContainerForm",
+          "ResElemName": "1"
         },
         "collections": {
+          "Params": [
+            {
+              "$sys": {
+                "guid": "c512baaf-4769-987a-f411-af4010a5751d",
+                "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
+              },
+              "fields": {
+                "Id": 1457,
+                "Name": "FormParam1",
+                "Type": "param",
+                "Kind": "out",
+                "Value": "",
+                "ResElemName": "2"
+              },
+              "collections": {}
+            }
+          ],
           "Children": [
             {
               "$sys": {
-                "guid": "fe4544e3-f17e-4b17-d052-03e43d480602",
-                "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
+                "guid": "450a8684-f7b6-5935-16ec-79f3deb8249c",
+                "typeGuid": "3fd621ab-4b0a-038f-b617-88dc28a05a67"
               },
               "fields": {
-                "Id": 127,
-                "Name": "DataModel"
-              },
-              "collections": {
-                "Datasets": [
-                  {
-                    "$sys": {
-                      "guid": "31b8aeb7-2a4f-f803-6eed-bc1193d223f9",
-                      "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
-                    },
-                    "fields": {
-                      "Id": 122,
-                      "Name": "DatasetCompany",
-                      "ObjType": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
-                      "Active": true,
-                      "OnMoveCursor" : " { this.getControlMgr().getByName('FormParam1').value(newVal); } "
-                    },
-                    "collections": {
-                      "Fields": [
-                        {
-                          "$sys": {
-                            "guid": "c1f02d7a-1bc7-6605-3bca-08dd4d69fb8e",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6002,
-                            "Name": "Id"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "14026604-f339-348e-abee-02b9f0cbf9f9",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6001,
-                            "Name": "CompanyId"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id":6003,
-                            "Name": "Company"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "d1950452-80e5-0196-d5ea-e6fb1cb38676",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6004,
-                            "Name": "Industry"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "1299f8bc-4de5-5ad4-1486-8e91edf3d7a2",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6005,
-                            "Name": "NbEmpl"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "3512f50f-750b-9025-2e19-cc66c4823417",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6006,
-                            "Name": "City"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "b91eea9e-36d1-f45a-a9c0-b3b9fe31d07f",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6007,
-                            "Name": "Address"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "9680e45c-70ef-1f85-0838-e0bcfb0ad81f",
-                            "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
-                          },
-                          "fields": {
-                            "Id": 6008,
-                            "Name": "PostalCode"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "$sys": {
-                "guid": "db5e3b98-67aa-1771-1513-469d4b4275c9",
-                "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
-              },
-              "fields": {
-                "Id": 22,
-                "Name": "DataGridCompany",
-                "Top": "67",
-                "Left": "10",
-                "Width": 380,
-                "Height": 120,
-                "Dataset": "31b8aeb7-2a4f-f803-6eed-bc1193d223f9"
-              },
-              "collections": {
-                "Columns": [
-                  {
-                    "$sys": {
-                      "guid": "a712d623-c300-04e9-07c4-ef92dedeb94c",
-                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
-                    },
-                    "fields": {
-                      "Id": 8001,
-                      "Name": "DataColumnId",
-                      "Label": "ID",
-                      "Width": 10,
-                      "Field": "c1f02d7a-1bc7-6605-3bca-08dd4d69fb8e"
-                    }
-                  },
-                  {
-                    "$sys": {
-                      "guid": "3d55afef-0391-5eb5-30c1-d2fc9db16219",
-                      "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
-                    },
-                    "fields": {
-                      "Id": 8001,
-                      "Name": "DataColumnName",
-                      "Label": "NAME",
-                      "Width": 90,
-                      "Field": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8"
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              "$sys": {
-                "guid": "0e452a19-f0ab-370e-be3a-a81111a35447",
-                "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
-              },
-              "fields": {
-                "Id": 537,
-                "Name": "MainContainerControls"
+                "Id": 11,
+                "Name": "MainContainer",
+                "ResElemName": "3"
               },
               "collections": {
                 "Children": [
                   {
                     "$sys": {
-                      "guid": "a55c4cb7-2e20-a6db-a0ca-80b36b2691bc",
-                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                      "guid": "fe4544e3-f17e-4b17-d052-03e43d480602",
+                      "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
                     },
                     "fields": {
-                      "Id": 538,
-                      "Name": "ButtonControls1",
-                      "Top": "10",
-                      "Left": "200",
-                      "Caption": "Button1",
-                      "Width": 190,
-                      "Height": 23
+                      "Id": 127,
+                      "Name": "DataModel",
+                      "ResElemName": "4"
                     },
                     "collections": {
+                      "Datasets": [
+                        {
+                          "$sys": {
+                            "guid": "31b8aeb7-2a4f-f803-6eed-bc1193d223f9",
+                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                          },
+                          "fields": {
+                            "Id": 122,
+                            "Name": "DatasetCompany",
+                            "ObjType": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
+                            "Active": true,
+                            "OnMoveCursor": " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
+                            "ResElemName": "5"
+                          },
+                          "collections": {
+                            "Fields": [
+                              {
+                                "$sys": {
+                                  "guid": "c1f02d7a-1bc7-6605-3bca-08dd4d69fb8e",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6002,
+                                  "Name": "Id",
+                                  "ResElemName": "6"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "14026604-f339-348e-abee-02b9f0cbf9f9",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6001,
+                                  "Name": "CompanyId",
+                                  "ResElemName": "7"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6003,
+                                  "Name": "Company",
+                                  "ResElemName": "8"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "d1950452-80e5-0196-d5ea-e6fb1cb38676",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6004,
+                                  "Name": "Industry",
+                                  "ResElemName": "9"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "1299f8bc-4de5-5ad4-1486-8e91edf3d7a2",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6005,
+                                  "Name": "NbEmpl",
+                                  "ResElemName": "10"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "3512f50f-750b-9025-2e19-cc66c4823417",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6006,
+                                  "Name": "City",
+                                  "ResElemName": "11"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "b91eea9e-36d1-f45a-a9c0-b3b9fe31d07f",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6007,
+                                  "Name": "Address",
+                                  "ResElemName": "12"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "9680e45c-70ef-1f85-0838-e0bcfb0ad81f",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": 6008,
+                                  "Name": "PostalCode",
+                                  "ResElemName": "13"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
                     }
                   },
                   {
                     "$sys": {
-                      "guid": "33be359e-4c20-8480-03f1-bc0255f10747",
-                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                      "guid": "db5e3b98-67aa-1771-1513-469d4b4275c9",
+                      "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                     },
                     "fields": {
-                      "Id": 539,
-                      "Name": "ButtonControls2",
-                      "Top": "40",
-                      "Left": "200",
-                      "Caption": "Button2",
-                      "Width": 190,
-                      "Height": 23
-                    },
-                    "collections": {
-                    }
-                  },
-                  {
-                    "$sys": {
-                      "guid": "2442c874-e3d1-40f3-9917-23c0069e15ba",
-                      "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
-                    },
-                    "fields": {
-                      "Id": 540,
-                      "Name": "EditControl1",
-                      "Top": "10",
+                      "Id": 22,
+                      "Name": "DataGridCompany",
+                      "Top": "67",
                       "Left": "10",
-                      "Width": 190,
-                      "Height": 23,
-                      "Value": "Value1"
+                      "Width": 380,
+                      "Height": 120,
+                      "Dataset": "31b8aeb7-2a4f-f803-6eed-bc1193d223f9",
+                      "ResElemName": "14"
                     },
                     "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "a712d623-c300-04e9-07c4-ef92dedeb94c",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": 8001,
+                            "Name": "DataColumnId",
+                            "Label": "ID",
+                            "Width": 10,
+                            "Field": "c1f02d7a-1bc7-6605-3bca-08dd4d69fb8e",
+                            "ResElemName": "15"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3d55afef-0391-5eb5-30c1-d2fc9db16219",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": 8001,
+                            "Name": "DataColumnName",
+                            "Label": "NAME",
+                            "Width": 90,
+                            "Field": "b3a97283-37b7-1a23-dc5e-6b94ee38c9a8",
+                            "ResElemName": "16"
+                          }
+                        }
+                      ]
                     }
                   },
                   {
                     "$sys": {
-                      "guid": "a22758c2-5bf8-6cfb-8f27-4abdf298e1df",
-                      "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                      "guid": "0e452a19-f0ab-370e-be3a-a81111a35447",
+                      "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
                     },
                     "fields": {
-                      "Id": 541,
-                      "Name": "EditControl2",
-                      "Top": "40",
-                      "Left": "10",
-                      "Width": 190,
-                      "Height": 23,
-                      "Value": "Value2"
+                      "Id": 537,
+                      "Name": "MainContainerControls",
+                      "ResElemName": "17"
                     },
                     "collections": {
+                      "Children": [
+                        {
+                          "$sys": {
+                            "guid": "a55c4cb7-2e20-a6db-a0ca-80b36b2691bc",
+                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                          },
+                          "fields": {
+                            "Id": 538,
+                            "Name": "ButtonControls1",
+                            "Top": "10",
+                            "Left": "200",
+                            "Caption": "Button1",
+                            "Width": 190,
+                            "Height": 23,
+                            "ResElemName": "18"
+                          },
+                          "collections": {}
+                        },
+                        {
+                          "$sys": {
+                            "guid": "33be359e-4c20-8480-03f1-bc0255f10747",
+                            "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                          },
+                          "fields": {
+                            "Id": 539,
+                            "Name": "ButtonControls2",
+                            "Top": "40",
+                            "Left": "200",
+                            "Caption": "Button2",
+                            "Width": 190,
+                            "Height": 23,
+                            "ResElemName": "19"
+                          },
+                          "collections": {}
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2442c874-e3d1-40f3-9917-23c0069e15ba",
+                            "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                          },
+                          "fields": {
+                            "Id": 540,
+                            "Name": "EditControl1",
+                            "Top": "10",
+                            "Left": "10",
+                            "Width": 190,
+                            "Height": 23,
+                            "Value": "Value1",
+                            "ResElemName": "20"
+                          },
+                          "collections": {}
+                        },
+                        {
+                          "$sys": {
+                            "guid": "a22758c2-5bf8-6cfb-8f27-4abdf298e1df",
+                            "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                          },
+                          "fields": {
+                            "Id": 541,
+                            "Name": "EditControl2",
+                            "Top": "40",
+                            "Left": "10",
+                            "Width": 190,
+                            "Height": 23,
+                            "Value": "Value2",
+                            "ResElemName": "21"
+                          },
+                          "collections": {}
+                        }
+                      ]
                     }
                   }
                 ]

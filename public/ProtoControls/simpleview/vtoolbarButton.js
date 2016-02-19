@@ -24,12 +24,12 @@ define(
                     });
                 }
 
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 // подсвечиваем выбранные слой
                 if (this.buttonKind() == 'Radio' ) {
-                    var lc = this.getParent().layersContainer();
+                    var lc = this.getParentComp().layersContainer();
                     if (lc && lc.tabNumber() == this.tabNumber())
                         item.addClass('active');
                 }
@@ -46,7 +46,7 @@ define(
                 item.removeClass('active');
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $('#ch_'+this.getLid()).find('input').focus();
         }
 

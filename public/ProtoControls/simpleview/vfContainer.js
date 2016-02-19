@@ -48,7 +48,7 @@ define(
                 }
 
                 // добавляем в парент
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 var that = this;
@@ -105,14 +105,14 @@ define(
 
         vFContainer.isRootFlex = function() {
             var result = true;
-            var parent = this.getParent();
+            var parent = this.getParentComp();
             while (parent && result) {
                 if (parent.className != "FContainer") {
                     result = true;
                     break;
                 }
                 else if (parent.hasGrid()) result = false;
-                parent = parent.getParent();
+                parent = parent.getParentComp();
             }
 
             return result;
@@ -120,7 +120,7 @@ define(
 
         vFContainer.getParentFlex = function() {
             var result = this;
-            var parent = this.getParent();
+            var parent = this.getParentComp();
             while (parent) {
                 if (parent.className != "FContainer") {
                     break;
@@ -129,7 +129,7 @@ define(
                     result = parent;
                     break;
                 }
-                parent = parent.getParent();
+                parent = parent.getParentComp();
             }
 
             return result;
@@ -139,11 +139,11 @@ define(
             var result = null;
             if (this.hasGrid()) result = this;
             else {
-                var parent = this.getParent();
+                var parent = this.getParentComp();
                 while (parent && !result) {
                     if (parent.className != "FContainer") break;
                     else if (parent.hasGrid()) result = parent;
-                    else parent = parent.getParent();
+                    else parent = parent.getParentComp();
                 }
             }
 

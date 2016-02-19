@@ -10,7 +10,7 @@ define(
                 item = $(vForm._templates['form']).attr('id', this.getLid());
 
                 // добавляем в парент
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
 

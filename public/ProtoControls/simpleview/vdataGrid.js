@@ -21,7 +21,7 @@ define(
             if (grid.length == 0) {
                 grid = $(vDataGrid._templates['grid']).attr('id', this.getLid());
                 table = grid.find('.table');
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(grid);
 
                 grid.find('.refresh').click(function () {
@@ -30,7 +30,7 @@ define(
 
                 grid.focus(function(e) {
                     // установить фокус
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         grid.find('[tabIndex=1]').focus();
                         that.getControlMgr().userEventHandler(that, function () {
                             that.setFocused();
@@ -184,7 +184,7 @@ define(
             }
 
             // выставляем фокус
-            if (this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if (this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $(grid).find('[tabIndex=1]').focus();
         }
 
@@ -233,7 +233,7 @@ define(
             vDataGrid.scrollTo(rowTr, wrapper);
 
             // выставляем фокус
-            if (this.getRoot().currentControl() == this)
+            if (this.getForm().currentControl() == this)
                 rowTr.focus();
         }
 

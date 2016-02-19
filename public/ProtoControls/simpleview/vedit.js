@@ -9,19 +9,19 @@ define(
             if (item.length == 0) {
                 item = $(vEdit._templates['edit']).attr('id', this.getLid());
                 item.focus(function(){
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
                     }
                 });
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
             item.val(this.value());
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $('#ch_'+this.getLid()).find('input').focus();
         }
         return vEdit;

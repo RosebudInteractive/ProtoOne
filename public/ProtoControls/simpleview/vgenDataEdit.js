@@ -8,7 +8,7 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vDataEdit._templates['edit']).attr('id', this.getLid());
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 // сохранять при потере фокуса

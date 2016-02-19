@@ -10,12 +10,12 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vDataEdit._templates['edit']).attr('id', this.getLid());
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 // установить фокус
                 item.focus(function(){
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
@@ -74,7 +74,7 @@ define(
             item.attr('disabled', disabled);
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $('#ch_'+this.getLid()).find('input').focus();
         }
         return vDataEdit;

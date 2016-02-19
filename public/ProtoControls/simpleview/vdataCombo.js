@@ -11,7 +11,7 @@ define(
 
             if (item.length == 0) {
                 item = $(vDataCombo._templates['combo']).attr('id', this.getLid());
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 var values = this.values().split('|');
@@ -30,7 +30,7 @@ define(
                 });
 
                 item.focus(function(){
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
@@ -46,7 +46,7 @@ define(
             item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $('#ch_'+this.getLid()).find('select').focus();
         }
         return vDataCombo;

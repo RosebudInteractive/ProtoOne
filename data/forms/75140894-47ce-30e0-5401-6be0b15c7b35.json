@@ -1,69 +1,86 @@
 {
-  "$sys":{
-    "guid":"75140894-47ce-30e0-5401-6be0b15c7b35",
-    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  "$sys": {
+    "guid": "75140894-47ce-30e0-5401-6be0b15c7b35",
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
   },
-  "fields":{
-    "Id":1456,
-    "Name":"MainForm",
-    "Title": "create buttons",
-    "dbgName": "FormCreateButtons"
+  "fields": {
+    "Id": 1,
+    "ResName": "create buttons"
   },
   "collections": {
-    "Children": [
+    "Form": [
       {
         "$sys": {
-          "guid": "9f915833-03d0-9ba4-b984-f989e1e77fe8",
-          "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+          "guid": "e17a6326-3c5c-32cf-7f8d-6a904cf7b973",
+          "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 11,
-          "Name": "MainContainer"
+          "Id": 1456,
+          "Name": "MainForm",
+          "Title": "create buttons",
+          "dbgName": "FormCreateButtons",
+          "ResElemName": "1"
         },
         "collections": {
           "Children": [
             {
               "$sys": {
-                "guid": "a3d60d24-aa8b-4d57-344d-9c5dac598f42",
+                "guid": "9f915833-03d0-9ba4-b984-f989e1e77fe8",
                 "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
               },
               "fields": {
                 "Id": 11,
-                "Name": "CreateButtonsContainer",
-                "Width": 800,
-                "Height": 400,
-                "Top": "30",
-                "Left": "10"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "c9c6fe7d-bf38-c013-eec5-ab7d1f669102",
-                "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
-              },
-              "fields": {
-                "Id": 1033,
-                "Name": "CreateButtonsEdit",
-                "Top": "5",
-                "Left": "10"
+                "Name": "MainContainer",
+                "ResElemName": "2"
               },
               "collections": {
-              }
-            },
-            {
-              "$sys": {
-                "guid": "e37fa276-514a-567e-b481-ed39b626e997",
-                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-              },
-              "fields": {
-                "Id": 1045,
-                "Name": "CreateButton",
-                "Top": "5",
-                "Left": "200",
-                "Caption": "CreateButtons",
-                "OnClick": " { var cm=this.getControlMgr(); var numButtons=$('#'+cm.getByName('CreateButtonsEdit').getLid()).val(); this.caption('CreateButtons:'+numButtons); cm.getByName('CreateButtonsContainer').createButtons(numButtons);  }"
-              },
-              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "a3d60d24-aa8b-4d57-344d-9c5dac598f42",
+                      "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+                    },
+                    "fields": {
+                      "Id": 11,
+                      "Name": "CreateButtonsContainer",
+                      "Width": 800,
+                      "Height": 400,
+                      "Top": "30",
+                      "Left": "10",
+                      "ResElemName": "3"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "c9c6fe7d-bf38-c013-eec5-ab7d1f669102",
+                      "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                    },
+                    "fields": {
+                      "Id": 1033,
+                      "Name": "CreateButtonsEdit",
+                      "Top": "5",
+                      "Left": "10",
+                      "ResElemName": "4"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "e37fa276-514a-567e-b481-ed39b626e997",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": 1045,
+                      "Name": "CreateButton",
+                      "Top": "5",
+                      "Left": "200",
+                      "Caption": "CreateButtons",
+                      "OnClick": " { var cm=this.getControlMgr(); var numButtons=$('#'+cm.getByName('CreateButtonsEdit').getLid()).val(); this.caption('CreateButtons:'+numButtons); cm.getByName('CreateButtonsContainer').createButtons(numButtons);  }",
+                      "ResElemName": "5"
+                    },
+                    "collections": {}
+                  }
+                ]
               }
             }
           ]

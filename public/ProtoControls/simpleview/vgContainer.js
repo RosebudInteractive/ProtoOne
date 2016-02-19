@@ -68,7 +68,7 @@ define(
                 item.append(tableEl);
 
                 // добавляем в парент
-                var parent = this.getParent()? '#ch_' + lid: options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + lid: options.rootContainer;
                 $(parent).append(item);
             }
 

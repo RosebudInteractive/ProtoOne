@@ -7,7 +7,7 @@ define(
             var item = $('#' + this.getLid());
             if (item.length == 0) {
                 item = $(vLabel._templates['label']).attr('id', this.getLid());
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
             item.html(this.label());

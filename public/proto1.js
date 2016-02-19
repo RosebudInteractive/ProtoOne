@@ -110,7 +110,7 @@ $(document).ready( function() {
                 if (result) {
                     for (var i = 0; i < result.length; i++) {
                         var obj = uccelloClt.getContextCM().getObj(result[i]);
-                        if (obj && obj.isInstanceOf(UCCELLO_CONFIG.classGuids.Form))
+                        if (obj && obj.isInstanceOf(UCCELLO_CONFIG.classGuids.ResForm))
                             formGuids.push(result[i]);
                     }
                 };

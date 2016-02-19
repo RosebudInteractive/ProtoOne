@@ -12,7 +12,7 @@ define(
                 item = pItem.children(".control").attr('id', this.getLid());
 
                 // добавляем в парент
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(pItem);
                 pItem.height($(parent).height());
             } else {
@@ -120,7 +120,7 @@ define(
                 $('#ext_' + del[guid].getLid()).remove();
 
             $(window).on("genetix:resize", function () {
-                var p = that.getParent()? '#ch_' + that.getLid(): options.rootContainer;
+                var p = that.getParentComp()? '#ch_' + that.getLid(): options.rootContainer;
                 var pp = $("#mid_" + that.getLid());
                 pp.css("height", "");
                 pp.css("height", $(p).height());

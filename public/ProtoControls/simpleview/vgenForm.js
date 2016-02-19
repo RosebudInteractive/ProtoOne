@@ -10,7 +10,7 @@ define(
                 var pItem = $(vForm._templates['form']).attr('id', "mid_" + this.getLid());
                 item = pItem.children(".control").attr('id', this.getLid());
 
-                var parent = (this.getParent()? '#ch_' + this.getParent().getLid(): options.rootContainer);
+                var parent = (this.getParentComp()? '#ch_' + this.getParentComp().getLid(): options.rootContainer);
                 var p = $(parent);
                 p.append(pItem);
 
@@ -82,7 +82,7 @@ define(
                 $('#ext_' + del[guid].getLid()).remove();
 
             $(window).on("genetix:resize", function () {
-                var p = that.getParent()? '#ch_' + that.getLid(): options.rootContainer;
+                var p = that.getParentComp()? '#ch_' + that.getLid(): options.rootContainer;
                 var pp = $("#mid_" + that.getLid());
                 pp.height($(p).height());
                 var childs = that.getCol('Children');

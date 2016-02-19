@@ -9,7 +9,7 @@ define(
             if (editor.length === 0) {
                 editor = $(vDBNavigator._templates.navigator).attr('id', that.getLid());
 
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(editor);
                 // перейти к паренту
                 editor.find('.dragRight').click(function () {
@@ -174,11 +174,11 @@ define(
         };
 
         vDBNavigator.toChild = function (vcomp) {
-            if (!this._activeRoot || !this._activeRoot.getParent()) return;
+            if (!this._activeRoot || !this._activeRoot.getParentComp()) return;
             var that = this;
 
             that.getControlMgr().userEventHandler(that, function(){
-                that.rootElem(that._activeRoot.getParent().getGuid());
+                that.rootElem(that._activeRoot.getParentComp().getGuid());
                 that.level(that.level()-1);
             });
 
@@ -187,7 +187,7 @@ define(
             var centerTop = editor.find('.centerTop');
             var centerBottom = editor.find('.centerBottom');
             var right = editor.find('.right');
-            var parent = this._activeRoot.getParent();
+            var parent = this._activeRoot.getParentComp();
             var name = 'name' in parent &&  parent.name() ? parent.name() : parent.getGuid();
             left.empty();
             centerTop.empty();

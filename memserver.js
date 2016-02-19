@@ -155,31 +155,31 @@ var config = {
         //        idle: 10000
         //    },
         //},
-        //connection: { //MySql
-        //    host: "localhost",
-        //    username: "sa",
-        //    password: "system",
-        //    database: "genetix_test",
-        //    provider: "mysql",
-        //    connection_options: {},
-        //    provider_options: {},
-        //    pool: {
-        //        max: 5,
-        //        min: 0,
-        //        idle: 10000
-        //    },
-        //},
-        //importData: {
-        //    autoimport: false,
-        //    dir: "./data/tables"
-        //},
+        connection: { //MySql
+            host: "localhost",
+            username: "root",
+            password: "masterkey",
+            database: "uccello",
+            provider: "mysql",
+            connection_options: {},
+            provider_options: {},
+            pool: {
+                max: 5,
+                min: 0,
+                idle: 10000
+            },
+        },
+        importData: {
+            autoimport: false,
+            dir: "./data/tables"
+        },
         trace: {
             sqlCommands: true,
             importDir: true
         }
     },
     resman: {
-        //useDb: true,
+        useDb: false,
         defaultProduct : "ProtoOne"
     },
     resourceBuilder : {

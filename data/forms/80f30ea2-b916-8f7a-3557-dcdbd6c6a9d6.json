@@ -1,93 +1,109 @@
 {
-  "$sys":{
-    "guid":"1ddec396-16ab-b549-e19a-3e0be8cb9a4b",
-    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  "$sys": {
+    "guid": "1ddec396-16ab-b549-e19a-3e0be8cb9a4b",
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
   },
-  "fields":{
-    "Id":536,
-    "Name":"MainForm",
-    "Title": "controls",
-    "dbgName": "FormControls"
+  "fields": {
+    "Id": 1,
+    "ResName": "controls"
   },
   "collections": {
-    "Children": [
+    "Form": [
       {
         "$sys": {
-          "guid": "0e452a19-f0ab-370e-be3a-a81111a35447",
-          "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+          "guid": "3696ab79-d302-6608-417d-6dc8edf4150b",
+          "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 537,
-          "Name": "MainContainerControls"
+          "Id": 536,
+          "Name": "MainForm",
+          "Title": "controls",
+          "dbgName": "FormControls",
+          "ResElemName": "1"
         },
         "collections": {
           "Children": [
             {
               "$sys": {
-                "guid": "a55c4cb7-2e20-a6db-a0ca-80b36b2691bc",
-                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                "guid": "0e452a19-f0ab-370e-be3a-a81111a35447",
+                "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
               },
               "fields": {
-                "Id": 538,
-                "Name": "ButtonControls1",
-                "Top": "10",
-                "Left": "200",
-                "Caption": "Button1",
-                "Width": 190,
-                "Height": 23
+                "Id": 537,
+                "Name": "MainContainerControls",
+                "ResElemName": "2"
               },
               "collections": {
-              }
-            },
-            {
-              "$sys": {
-                "guid": "33be359e-4c20-8480-03f1-bc0255f10747",
-                "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
-              },
-              "fields": {
-                "Id": 539,
-                "Name": "ButtonControls2",
-                "Top": "40",
-                "Left": "200",
-                "Caption": "Button2",
-                "Width": 190,
-                "Height": 23
-              },
-              "collections": {
-              }
-            },
-            {
-              "$sys": {
-                "guid": "2442c874-e3d1-40f3-9917-23c0069e15ba",
-                "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
-              },
-              "fields": {
-                "Id": 540,
-                "Name": "EditControl1",
-                "Top": "10",
-                "Left": "10",
-                "Width": 190,
-                "Height": 23,
-                "Value": "Value1"
-              },
-              "collections": {
-              }
-            },
-            {
-              "$sys": {
-                "guid": "a22758c2-5bf8-6cfb-8f27-4abdf298e1df",
-                "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
-              },
-              "fields": {
-                "Id": 541,
-                "Name": "EditControl2",
-                "Top": "40",
-                "Left": "10",
-                "Width": 190,
-                "Height": 23,
-                "Value": "Value2"
-              },
-              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "a55c4cb7-2e20-a6db-a0ca-80b36b2691bc",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": 538,
+                      "Name": "ButtonControls1",
+                      "Top": "10",
+                      "Left": "200",
+                      "Caption": "Button1",
+                      "Width": 190,
+                      "Height": 23,
+                      "ResElemName": "3"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "33be359e-4c20-8480-03f1-bc0255f10747",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": 539,
+                      "Name": "ButtonControls2",
+                      "Top": "40",
+                      "Left": "200",
+                      "Caption": "Button2",
+                      "Width": 190,
+                      "Height": 23,
+                      "ResElemName": "4"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "2442c874-e3d1-40f3-9917-23c0069e15ba",
+                      "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                    },
+                    "fields": {
+                      "Id": 540,
+                      "Name": "EditControl1",
+                      "Top": "10",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Value": "Value1",
+                      "ResElemName": "5"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "a22758c2-5bf8-6cfb-8f27-4abdf298e1df",
+                      "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
+                    },
+                    "fields": {
+                      "Id": 541,
+                      "Name": "EditControl2",
+                      "Top": "40",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Value": "Value2",
+                      "ResElemName": "6"
+                    },
+                    "collections": {}
+                  }
+                ]
               }
             }
           ]

@@ -1,89 +1,110 @@
 {
-  "$sys":{
-    "guid":"0d1013d5-c71e-c858-5c97-4a00e579c459",
-    "typeGuid":"7f93991a-4da9-4892-79c2-35fe44e69083"
+  "$sys": {
+    "guid": "0d1013d5-c71e-c858-5c97-4a00e579c459",
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
   },
-  "fields":{
-    "Id":1456,
-    "Name":"MainFormH",
-    "Title": "h-containers",
-    "dbgName": "FormHContainers"
+  "fields": {
+    "Id": 1,
+    "ResName": "h-containers"
   },
   "collections": {
-    "Children": [
+    "Form": [
       {
         "$sys": {
-          "guid": "f35fc2d6-7ee8-2d4a-d4b6-36a9ed238613",
-          "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
+          "guid": "0f14fc03-1f6f-2107-23a8-4b4685e3ae3f",
+          "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 900,
-          "Name": "ContainerH20",
-          "Height": 20
+          "Id": 1456,
+          "Name": "MainFormH",
+          "Title": "h-containers",
+          "dbgName": "FormHContainers",
+          "ResElemName": "1"
         },
         "collections": {
           "Children": [
             {
               "$sys": {
-                "guid": "c4d073d1-1ff3-4c47-394c-7ba4083bcd5e",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                "guid": "f35fc2d6-7ee8-2d4a-d4b6-36a9ed238613",
+                "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
               },
               "fields": {
-                "Id": 901,
-                "Name": "Label11",
-                "Width": "30%",
-                "Label": "Label11 W30%"
+                "Id": 900,
+                "Name": "ContainerH20",
+                "Height": 20,
+                "ResElemName": "2"
+              },
+              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "c4d073d1-1ff3-4c47-394c-7ba4083bcd5e",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 901,
+                      "Name": "Label11",
+                      "Width": "30%",
+                      "Label": "Label11 W30%",
+                      "ResElemName": "3"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "f4a70241-013d-36d5-cddd-f20b3b5cec1f",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 902,
+                      "Name": "Label12",
+                      "Width": "70%",
+                      "Label": "Label12 W70%",
+                      "ResElemName": "4"
+                    }
+                  }
+                ]
               }
             },
             {
               "$sys": {
-                "guid": "f4a70241-013d-36d5-cddd-f20b3b5cec1f",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                "guid": "ade29a20-2996-0cdb-738b-ab4308931048",
+                "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
               },
               "fields": {
-                "Id": 902,
-                "Name": "Label12",
-                "Width": "70%",
-                "Label": "Label12 W70%"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "$sys": {
-          "guid": "ade29a20-2996-0cdb-738b-ab4308931048",
-          "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
-        },
-        "fields": {
-          "Id": 1000,
-          "Name": "ContainerH80",
-          "Height": 80
-        },
-        "collections": {
-          "Children": [
-            {
-              "$sys": {
-                "guid": "ffa67e49-7fb3-f3a8-c551-31d6243d4dec",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                "Id": 1000,
+                "Name": "ContainerH80",
+                "Height": 80,
+                "ResElemName": "5"
               },
-              "fields": {
-                "Id": 1001,
-                "Name": "Label21",
-                "Width": "60%",
-                "Label": "Label21 W60%"
-              }
-            },
-            {
-              "$sys": {
-                "guid": "c7382c7c-3c17-281f-c7da-86b596c1b1fdf",
-                "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
-              },
-              "fields": {
-                "Id": 1002,
-                "Name": "Label22",
-                "Width": "40%",
-                "Label": "Labe22 W40%"
+              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "ffa67e49-7fb3-f3a8-c551-31d6243d4dec",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 1001,
+                      "Name": "Label21",
+                      "Width": "60%",
+                      "Label": "Label21 W60%",
+                      "ResElemName": "6"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "c7382c7c-3c17-281f-c7da-86b596c1b1fdf",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": 1002,
+                      "Name": "Label22",
+                      "Width": "40%",
+                      "Label": "Labe22 W40%",
+                      "ResElemName": "7"
+                    }
+                  }
+                ]
               }
             }
           ]

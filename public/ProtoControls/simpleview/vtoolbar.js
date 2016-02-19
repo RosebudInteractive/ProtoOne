@@ -11,7 +11,7 @@ define(
                 item = $(vToolbar._templates['container']).attr('id', this.getLid());
 
                 // добавляем в парент
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
 
                 item.on("toolbar:clickButton", function(event, data) {
@@ -44,7 +44,7 @@ define(
             var button = data.control;
             var buttonKind = button.buttonKind();
             var buttonGuid = button.getGuid();
-            var toolbar = button.getParent();
+            var toolbar = button.getParentComp();
             if (buttonKind == 'Radio') {
                 var childs = toolbar.getCol('Children');
                 for(var i=0; i<childs.count();i++) {

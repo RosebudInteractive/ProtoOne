@@ -8,7 +8,7 @@ define(
             if (item.length == 0) {
                 item = $(vTreeView._templates['treeView']).attr('id', this.getLid());
                 item.focus(function(){
-                    if (that.getRoot().currentControl() != that) {
+                    if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){
                             that.setFocused();
                         });
@@ -34,13 +34,13 @@ define(
                     vTreeView.addItem.apply(that, [parent, node])
                 });
 
-                var parent = this.getParent()? '#ch_' + this.getLid(): options.rootContainer;
+                var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(item);
             }
             tree.jstree("refresh");
 
             // выставляем фокус
-            if ($(':focus').attr('id') != this.getLid() && this.getRoot().isFldModified("CurrentControl") && this.getRoot().currentControl() == this)
+            if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $('#ch_'+this.getLid()).focus();
         }
 
