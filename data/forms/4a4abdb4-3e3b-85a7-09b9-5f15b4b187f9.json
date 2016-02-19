@@ -142,7 +142,8 @@
                                 },
                                 "fields": {
                                   "Id": 5006,
-                                  "Name": "Closed"
+                                  "Name": "Closed",
+                                  "ResElemName": "57"
                                 }
                               },
                               {
