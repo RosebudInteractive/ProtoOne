@@ -183,7 +183,12 @@ var config = {
         defaultProduct : "ProtoOne"
     },
     //resourceBuilder : {
-    //    sourceDir : "./data/forms/",
+    //    types: [
+    //        {Code: "FRM", Name: "User Form", ClassName: "Form", Description: "Пользовательская форма", Guid : "7f93991a-4da9-4892-79c2-35fe44e69083"}
+    //    ],
+    //    sourceDir: [
+    //        {path: './data/forms/', type: 'FRM'}
+    //    ],
     //    destDir : "./data/tables/",
     //    formResTypeId : 1,
     //    productId : 2,
