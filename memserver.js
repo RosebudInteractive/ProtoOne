@@ -178,13 +178,13 @@ var config = {
             importDir: true
         }
     },
-    resman: {
-        //useDb: true,
-        defaultProduct : "ProtoOne"
-    },
+    //resman: {
+    //    useDb: true,
+    //    defaultProduct : "ProtoOne"
+    //},
     //resourceBuilder : {
     //    types: [
-    //        {Code: "FRM", Name: "User Form", ClassName: "Form", Description: "Пользовательская форма", Guid : "7f93991a-4da9-4892-79c2-35fe44e69083"}
+    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма", Guid: "10217b8e-b1f8-4221-a419-f20735219dd2" }
     //    ],
     //    sourceDir: [
     //        {path: './data/forms/', type: 'FRM'}
