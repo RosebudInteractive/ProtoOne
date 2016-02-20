@@ -1,7 +1,8 @@
 {
   "$sys": {
     "guid": "0fab9989-3047-26b6-326c-19b78d66e4d1",
-    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2",
+    "ResName": "edits"
   },
   "fields": {
     "Id": 1
