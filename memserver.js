@@ -184,7 +184,7 @@ var config = {
     //},
     //resourceBuilder : {
     //    types: [
-    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма", Guid: "10217b8e-b1f8-4221-a419-f20735219dd2" }
+    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма"}
     //    ],
     //    sourceDir: [
     //        {path: './data/forms/', type: 'FRM'}
