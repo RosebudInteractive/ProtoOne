@@ -85,6 +85,10 @@
                           },
                           "fields": {
                             "Id": 122,
+                            "ObjectTree": {
+                              "guidRes" : "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem" : "1b973ab6-05cb-0f61-2346-504f25a6a76c"
+                            },
                             "Name": "DatasetCompany",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
                             "Active": true,
@@ -158,6 +162,10 @@
                           },
                           "fields": {
                             "Id": 123,
+                            "ObjectTree": {
+                              "guidRes" : "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem" : "4c8c2fd2-0d4b-4562-9fc4-514e6f78cbee"
+                            },
                             "Name": "DatasetContact",
                             "ObjType": "3618f084-7f99-ebe9-3738-4af7cf53dc49",
                             "Active": true,
@@ -264,6 +272,10 @@
                           },
                           "fields": {
                             "Id": 125,
+                            "ObjectTree": {
+                              "guidRes" : "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem" : "d2eeee5e-5a6b-5d8e-1fe4-25b5ba8c7a87"
+                            },
                             "Name": "DatasetContract",
                             "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
                             "Active": true,
@@ -326,6 +338,10 @@
                           },
                           "fields": {
                             "Id": 226,
+                            "ObjectTree": {
+                              "guidRes" : "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem" : "c35407cd-9dd3-84cf-d65d-ae7fef8b1fbb"
+                            },
                             "Name": "DatasetAddress",
                             "ObjType": "edca46bc-3389-99a2-32c0-a59665fcb6a7",
                             "Active": true,
