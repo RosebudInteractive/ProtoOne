@@ -461,13 +461,115 @@
                   },
                   {
                     "$sys": {
+                      "guid": "933e4541-b070-832d-dbe0-de564971b1b9",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "48",
+                      "Name": "EditButton",
+                      "Top": 320,
+                      "Left": 10,
+                      "Caption": "EDIT",
+                      "OnClick": " { $testEdit.clickEdit(); }",
+                      "Enabled": true,
+                      "ResElemName": "EditButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "2d4c60e2-7992-4363-27fc-28d2013cfb03",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "54",
+                      "Name": "NextButton",
+                      "Top": 350,
+                      "Left": 66,
+                      "Caption": "NEXT",
+                      "OnClick": " { $testEdit.clickNext(); }",
+                      "Enabled": true,
+                      "ResElemName": "NextButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "ada09fce-2e48-bee7-3dfd-053b72689a20",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "55",
+                      "Name": "PrevButton",
+                      "Top": 350,
+                      "Left": 10,
+                      "Caption": "PREV",
+                      "OnClick": " { $testEdit.clickPrev(); }",
+                      "Enabled": true,
+                      "ResElemName": "PrevButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "07b22b61-2bcc-a597-7cee-efd29a9acc26",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "49",
+                      "Name": "SaveButton",
+                      "Top": 380,
+                      "Left": 10,
+                      "Caption": "SAVE",
+                      "OnClick": " { $testEdit.clickSave(); }",
+                      "Enabled": false,
+                      "ResElemName": "SaveButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "46dcd2b2-47fa-8363-9a57-3f876078550a",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "50",
+                      "Name": "CancelButton",
+                      "Top": 380,
+                      "Left": 65,
+                      "Caption": "CANCEL",
+                      "OnClick": " { $testEdit.clickCancel(); }",
+                      "Enabled": false,
+                      "ResElemName": "CancelButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "8fd4ba25-3753-4393-8332-483b7f6b9ee5",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "51",
+                      "Name": "NewButton",
+                      "Top": 410,
+                      "Left": 10,
+                      "Caption": "NEW",
+                      "OnClick": " { $testEdit.clickNew(); }",
+                      "Enabled": true,
+                      "ResElemName": "NewButton"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
                       "guid": "6a7cea85-dd15-d958-fffc-1f15e155fcdf",
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
                       "Id": "35",
                       "Name": "DataEditId",
-                      "Top": "320",
+                      "Top": "440",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
@@ -485,7 +587,7 @@
                     "fields": {
                       "Id": "36",
                       "Name": "DataEdit1",
-                      "Top": "350",
+                      "Top": "470",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
@@ -503,7 +605,7 @@
                     "fields": {
                       "Id": "37",
                       "Name": "DataEditCountry",
-                      "Top": "380",
+                      "Top": "500",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
@@ -521,7 +623,7 @@
                     "fields": {
                       "Id": "38",
                       "Name": "DataEditCity",
-                      "Top": "410",
+                      "Top": "530",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
@@ -539,7 +641,7 @@
                     "fields": {
                       "Id": "39",
                       "Name": "DataEditAddress",
-                      "Top": "440",
+                      "Top": "560",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
