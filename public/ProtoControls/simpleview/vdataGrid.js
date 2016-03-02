@@ -93,11 +93,32 @@ define(
                 }
             }
 
+            // header
+            var row = $(vDataGrid._templates['row']);
+            var columns = this.getCol('Columns');
+            var fields = dataset.getCol('Fields');
+            if (columns.count() != 0) {
+
+                var columnsArr = [];
+                for (var i = 0, len = columns.count(); i < len; i++) {
+                    var column = columns.get(i);
+                    var header = $(vDataGrid._templates['header']).html(column.label());
+                    header.css('width', column.width() + '%');
+                    row.append(header);
+                    columnsArr.push({field: column.field().getGuid(), width: column.width()});
+                }
+                table.append(row);
+            } else {
+                for (var i = 0, len = fields.count(); i < len; i++) {
+                    var cell = $(vDataGrid._templates['header']).html(fields.get(i).name()).addClass('w60');
+                    row.append(cell);
+                }
+                table.append(row);
+            }
+
             if (rootElem)
             {
                 var col = rootElem.getCol('DataElements');
-                var columns = this.getCol('Columns');
-                var fields = dataset.getCol('Fields');
                 var idIndex = null, cursor = dataset.cursor(), rows = '', cursorIndex = -1;
                 var fieldsArr = {};
                 for (var i = 0, len = fields.count(); i < len; i++) {
@@ -108,17 +129,6 @@ define(
                 }
 
                 if (columns.count() != 0) {
-                    // header
-                    var row = $(vDataGrid._templates['row']), columnsArr=[];
-                    for (var i = 0, len = columns.count(); i < len; i++) {
-                        var column = columns.get(i);
-                        var header = $(vDataGrid._templates['header']).html(column.label());
-                        header.css('width', column.width()+'%');
-                        row.append(header);
-                        columnsArr.push({ field: column.field().getGuid(), width: column.width() });
-                    }
-                    table.append(row);
-
                     // rows
                     var columnsArrLen=columnsArr.length;
                     for (var i = 0, len = col.count(); i < len; i++) {
@@ -142,15 +152,6 @@ define(
                     }
                 }
                 else {
-
-                    // header
-                    var row = $(vDataGrid._templates['row']);
-                    for (var i = 0, len = fields.count(); i < len; i++) {
-                        var cell = $(vDataGrid._templates['header']).html(fields.get(i).name()).addClass('w60');
-                        row.append(cell);
-                    }
-                    table.append(row);
-
                     // rows
                     for (var i = 0, len = col.count(); i < len; i++) {
                         var obj = col.get(i);
