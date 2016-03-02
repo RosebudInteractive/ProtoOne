@@ -8,18 +8,18 @@
     "ResName": "h-containers"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "7a2311da-6946-64fd-afac-9fb0edf422c6",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 1456,
+          "Id": "1",
           "Name": "MainFormH",
           "Title": "h-containers",
           "dbgName": "FormHContainers",
-          "ResElemName": "1"
+          "ResElemName": "Form9"
         },
         "collections": {
           "Children": [
@@ -29,11 +29,11 @@
                 "typeGuid": "26309035-7f47-422e-26c8-6c25a091c20e"
               },
               "fields": {
-                "Id": 1100,
+                "Id": "2",
                 "Name": "GContainer1",
                 "Width": 600,
                 "Height": 400,
-                "ResElemName": "2"
+                "ResElemName": "GContainer1"
               },
               "collections": {
                 "Children": [
@@ -43,12 +43,12 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 1108,
+                      "Id": "3",
                       "Name": "Label01",
                       "Label": "Label in cell 00",
                       "Left": 0,
                       "Top": 0,
-                      "ResElemName": "3"
+                      "ResElemName": "Label01"
                     }
                   },
                   {
@@ -57,12 +57,12 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 1109,
+                      "Id": "4",
                       "Name": "Label22",
                       "Label": "Label in cell 01",
                       "Left": 0,
                       "Top": 1,
-                      "ResElemName": "4"
+                      "ResElemName": "Label54"
                     }
                   },
                   {
@@ -71,11 +71,11 @@
                       "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
                     },
                     "fields": {
-                      "Id": 1108,
+                      "Id": "5",
                       "Name": "Edit1",
                       "Left": 1,
                       "Top": 0,
-                      "ResElemName": "5"
+                      "ResElemName": "Edit3"
                     }
                   },
                   {
@@ -84,11 +84,11 @@
                       "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
                     },
                     "fields": {
-                      "Id": 1109,
+                      "Id": "6",
                       "Name": "Edit2",
                       "Left": 1,
                       "Top": 1,
-                      "ResElemName": "6"
+                      "ResElemName": "Edit4"
                     }
                   },
                   {
@@ -97,12 +97,12 @@
                       "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
                     },
                     "fields": {
-                      "Id": 1111,
+                      "Id": "7",
                       "Name": "Button1",
                       "Left": 1,
                       "Top": 2,
                       "Caption": "Button1",
-                      "ResElemName": "7"
+                      "ResElemName": "Button8"
                     },
                     "collections": {}
                   }
@@ -114,10 +114,10 @@
                       "typeGuid": "9d00a857-4a93-6b7a-9ef0-08b14dc81e54"
                     },
                     "fields": {
-                      "Id": 1101,
+                      "Id": "8",
                       "Name": "Column1",
                       "Width": 100,
-                      "ResElemName": "8"
+                      "ResElemName": "Column1"
                     }
                   },
                   {
@@ -126,10 +126,10 @@
                       "typeGuid": "9d00a857-4a93-6b7a-9ef0-08b14dc81e54"
                     },
                     "fields": {
-                      "Id": 1102,
+                      "Id": "9",
                       "Name": "Column2",
                       "Width": 200,
-                      "ResElemName": "9"
+                      "ResElemName": "Column2"
                     }
                   },
                   {
@@ -138,10 +138,10 @@
                       "typeGuid": "9d00a857-4a93-6b7a-9ef0-08b14dc81e54"
                     },
                     "fields": {
-                      "Id": 1103,
+                      "Id": "10",
                       "Name": "Column3",
                       "Width": 300,
-                      "ResElemName": "10"
+                      "ResElemName": "Column3"
                     }
                   }
                 ],
@@ -152,10 +152,10 @@
                       "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
                     },
                     "fields": {
-                      "Id": 1112,
+                      "Id": "11",
                       "Name": "Row0",
                       "Height": 100,
-                      "ResElemName": "11"
+                      "ResElemName": "Row0"
                     }
                   },
                   {
@@ -164,10 +164,10 @@
                       "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
                     },
                     "fields": {
-                      "Id": 1104,
+                      "Id": "12",
                       "Name": "Row1",
                       "Height": 100,
-                      "ResElemName": "12"
+                      "ResElemName": "Row1"
                     }
                   },
                   {
@@ -176,9 +176,9 @@
                       "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
                     },
                     "fields": {
-                      "Id": 1105,
+                      "Id": "13",
                       "Name": "Row2",
-                      "ResElemName": "13"
+                      "ResElemName": "Row2"
                     }
                   },
                   {
@@ -187,10 +187,10 @@
                       "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
                     },
                     "fields": {
-                      "Id": 1106,
+                      "Id": "14",
                       "Name": "Row3",
                       "Height": 100,
-                      "ResElemName": "14"
+                      "ResElemName": "Row3"
                     }
                   },
                   {
@@ -199,10 +199,10 @@
                       "typeGuid": "157eb87c-3331-97cf-e307-a0c5311ba7d5"
                     },
                     "fields": {
-                      "Id": 1107,
+                      "Id": "15",
                       "Name": "Row4",
                       "Height": 100,
-                      "ResElemName": "15"
+                      "ResElemName": "Row4"
                     }
                   }
                 ],
@@ -213,12 +213,12 @@
                       "typeGuid": "69087f9c-99ed-14f1-0fe7-05058a862af5"
                     },
                     "fields": {
-                      "Id": 1110,
+                      "Id": "16",
                       "Name": "Cell01",
                       "Left": 0,
                       "Top": 3,
                       "Width": 2,
-                      "ResElemName": "16"
+                      "ResElemName": "Cell01"
                     }
                   },
                   {
@@ -227,12 +227,12 @@
                       "typeGuid": "69087f9c-99ed-14f1-0fe7-05058a862af5"
                     },
                     "fields": {
-                      "Id": 1110,
+                      "Id": "17",
                       "Name": "Cell01",
                       "Left": 2,
                       "Top": 3,
                       "Height": 2,
-                      "ResElemName": "17"
+                      "ResElemName": "GCell1"
                     }
                   }
                 ]

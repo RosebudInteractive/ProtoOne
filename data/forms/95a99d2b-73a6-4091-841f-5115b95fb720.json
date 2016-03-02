@@ -8,18 +8,18 @@
     "ResName": "EmptyForm"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "228f26d1-dd50-030d-1a79-76d554cee535",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 1456,
+          "Id": "1",
           "Name": "EmptyForm",
           "Title": "EmptyForm",
           "dbgName": "EmptyForm",
-          "ResElemName": "1"
+          "ResElemName": "EmptyForm"
         },
         "collections": {
           "Children": []

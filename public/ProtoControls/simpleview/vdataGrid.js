@@ -58,20 +58,23 @@ define(
 
                 // обработка нажатий стрелочек
                 grid.keydown(function(e) {
-                    var keyCode = e.keyCode || e.which, control;
-                    switch (keyCode) {
-                        case 38:     // up
-                            e.preventDefault();
-                            that.getControlMgr().userEventHandler(that, function() {
-                                that.dataset().prev();
-                            });
-                            break;
-                        case 40:     // down
-                            e.preventDefault();
-                            that.getControlMgr().userEventHandler(that, function() {
-                                that.dataset().next();
-                            });
-                            break;
+                    var ds = that.dataset();
+                    if (ds.canMoveCursor()) {
+                        var keyCode = e.keyCode || e.which, control;
+                        switch (keyCode) {
+                            case 38:     // up
+                                e.preventDefault();
+                                that.getControlMgr().userEventHandler(that, function() {
+                                    that.dataset().prev();
+                                });
+                                break;
+                            case 40:     // down
+                                e.preventDefault();
+                                that.getControlMgr().userEventHandler(that, function() {
+                                    that.dataset().next();
+                                });
+                                break;
+                        }
                     }
                 });
 

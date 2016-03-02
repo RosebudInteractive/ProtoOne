@@ -8,18 +8,18 @@
     "ResName": "h-containers"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "0f14fc03-1f6f-2107-23a8-4b4685e3ae3f",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 1456,
+          "Id": "1",
           "Name": "MainFormH",
           "Title": "h-containers",
           "dbgName": "FormHContainers",
-          "ResElemName": "1"
+          "ResElemName": "MainFormH"
         },
         "collections": {
           "Children": [
@@ -29,10 +29,10 @@
                 "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
               },
               "fields": {
-                "Id": 900,
+                "Id": "2",
                 "Name": "ContainerH20",
                 "Height": 20,
-                "ResElemName": "2"
+                "ResElemName": "ContainerH20"
               },
               "collections": {
                 "Children": [
@@ -42,11 +42,11 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 901,
+                      "Id": "3",
                       "Name": "Label11",
                       "Width": "30%",
                       "Label": "Label11 W30%",
-                      "ResElemName": "3"
+                      "ResElemName": "Label11"
                     }
                   },
                   {
@@ -55,11 +55,11 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 902,
+                      "Id": "4",
                       "Name": "Label12",
                       "Width": "70%",
                       "Label": "Label12 W70%",
-                      "ResElemName": "4"
+                      "ResElemName": "Label12"
                     }
                   }
                 ]
@@ -71,10 +71,10 @@
                 "typeGuid": "638c1e37-2105-9676-f3c9-dfc2746d1265"
               },
               "fields": {
-                "Id": 1000,
+                "Id": "5",
                 "Name": "ContainerH80",
                 "Height": 80,
-                "ResElemName": "5"
+                "ResElemName": "ContainerH80"
               },
               "collections": {
                 "Children": [
@@ -84,11 +84,11 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 1001,
+                      "Id": "6",
                       "Name": "Label21",
                       "Width": "60%",
                       "Label": "Label21 W60%",
-                      "ResElemName": "6"
+                      "ResElemName": "Label21"
                     }
                   },
                   {
@@ -97,11 +97,11 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 1002,
+                      "Id": "7",
                       "Name": "Label22",
                       "Width": "40%",
                       "Label": "Labe22 W40%",
-                      "ResElemName": "7"
+                      "ResElemName": "Label22"
                     }
                   }
                 ]

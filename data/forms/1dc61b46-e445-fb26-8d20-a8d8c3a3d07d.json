@@ -8,18 +8,18 @@
     "ResName": "Opportunity"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "3a083493-d921-60a4-9a34-94ee3cb05c99",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 2000,
+          "Id": "1",
           "Name": "Opportunity",
           "Title": "Opportunity",
           "dbgName": "Opportunity",
-          "ResElemName": "1"
+          "ResElemName": "Opportunity"
         },
         "collections": {
           "Params": [
@@ -29,12 +29,12 @@
                 "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
               },
               "fields": {
-                "Id": 2001,
+                "Id": "2",
                 "Name": "FormParam1",
                 "Type": "param",
                 "Kind": "out",
                 "Value": "",
-                "ResElemName": "2"
+                "ResElemName": "FormParam5"
               },
               "collections": {}
             }
@@ -46,9 +46,9 @@
                 "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
               },
               "fields": {
-                "Id": 2002,
+                "Id": "3",
                 "Name": "MainContainerList",
-                "ResElemName": "3"
+                "ResElemName": "MainContainerList"
               },
               "collections": {
                 "Children": [
@@ -58,9 +58,9 @@
                       "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
                     },
                     "fields": {
-                      "Id": 2003,
+                      "Id": "4",
                       "Name": "DataModel",
-                      "ResElemName": "4"
+                      "ResElemName": "ADataModel5"
                     },
                     "collections": {
                       "Datasets": [
@@ -70,12 +70,12 @@
                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                           },
                           "fields": {
-                            "Id": 2004,
+                            "Id": "5",
                             "Name": "DatasetOpportunity",
                             "ObjType": "f988a1cb-4be0-06c3-4eaa-4ae8b554f6b3",
                             "Active": true,
                             "OnMoveCursor": " { this.getControlMgr().getByName('FormParam1').value(newVal);/* this.getControlMgr().getByName('DatasetOpportunityCompany').cursor(this.getField('CompanyId'));  this.getControlMgr().getByName('DatasetOpportunityLead').cursor(this.getField('LeadId'));*/ } ",
-                            "ResElemName": "5"
+                            "ResElemName": "DatasetOpportunity"
                           },
                           "collections": {
                             "Fields": [
@@ -85,9 +85,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5002,
+                                  "Id": "6",
                                   "Name": "Id",
-                                  "ResElemName": "6"
+                                  "ResElemName": "DataField32"
                                 }
                               },
                               {
@@ -96,9 +96,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5001,
+                                  "Id": "7",
                                   "Name": "State",
-                                  "ResElemName": "7"
+                                  "ResElemName": "State"
                                 }
                               },
                               {
@@ -107,9 +107,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5003,
+                                  "Id": "8",
                                   "Name": "CompanyId",
-                                  "ResElemName": "8"
+                                  "ResElemName": "DataField33"
                                 }
                               },
                               {
@@ -118,9 +118,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5004,
+                                  "Id": "9",
                                   "Name": "LeadId",
-                                  "ResElemName": "9"
+                                  "ResElemName": "LeadId"
                                 }
                               },
                               {
@@ -129,9 +129,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5005,
+                                  "Id": "10",
                                   "Name": "OwnerId",
-                                  "ResElemName": "10"
+                                  "ResElemName": "OwnerId"
                                 }
                               },
                               {
@@ -140,9 +140,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5006,
+                                  "Id": "11",
                                   "Name": "Description",
-                                  "ResElemName": "11"
+                                  "ResElemName": "Description"
                                 }
                               },
                               {
@@ -151,9 +151,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5007,
+                                  "Id": "12",
                                   "Name": "Probability",
-                                  "ResElemName": "12"
+                                  "ResElemName": "Probability"
                                 }
                               },
                               {
@@ -162,9 +162,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5008,
+                                  "Id": "13",
                                   "Name": "Amount",
-                                  "ResElemName": "13"
+                                  "ResElemName": "Amount"
                                 }
                               },
                               {
@@ -173,9 +173,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 5009,
+                                  "Id": "14",
                                   "Name": "CloseDate",
-                                  "ResElemName": "14"
+                                  "ResElemName": "CloseDate"
                                 }
                               }
                             ]
@@ -187,12 +187,12 @@
                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                           },
                           "fields": {
-                            "Id": 333004,
+                            "Id": "15",
                             "Name": "DatasetOpportunityCompany",
                             "ObjType": "ab573a02-b888-b3b4-36a7-38629a5fe6b7",
                             "Active": true,
                             "Master": "2e99e462-faed-deaa-6e14-01da85f58dc8",
-                            "ResElemName": "15"
+                            "ResElemName": "DatasetOpportunityCompany"
                           },
                           "collections": {
                             "Fields": [
@@ -202,9 +202,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6002,
+                                  "Id": "16",
                                   "Name": "Id",
-                                  "ResElemName": "16"
+                                  "ResElemName": "DataField34"
                                 }
                               },
                               {
@@ -213,9 +213,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6001,
+                                  "Id": "17",
                                   "Name": "CompanyId",
-                                  "ResElemName": "17"
+                                  "ResElemName": "DataField35"
                                 }
                               },
                               {
@@ -224,9 +224,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6003,
+                                  "Id": "18",
                                   "Name": "Company",
-                                  "ResElemName": "18"
+                                  "ResElemName": "DataField36"
                                 }
                               },
                               {
@@ -235,9 +235,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6004,
+                                  "Id": "19",
                                   "Name": "Industry",
-                                  "ResElemName": "19"
+                                  "ResElemName": "DataField37"
                                 }
                               },
                               {
@@ -246,9 +246,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6005,
+                                  "Id": "20",
                                   "Name": "NbEmpl",
-                                  "ResElemName": "20"
+                                  "ResElemName": "DataField38"
                                 }
                               },
                               {
@@ -257,9 +257,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6006,
+                                  "Id": "21",
                                   "Name": "City",
-                                  "ResElemName": "21"
+                                  "ResElemName": "DataField39"
                                 }
                               },
                               {
@@ -268,9 +268,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6007,
+                                  "Id": "22",
                                   "Name": "Address",
-                                  "ResElemName": "22"
+                                  "ResElemName": "DataField40"
                                 }
                               },
                               {
@@ -279,9 +279,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6008,
+                                  "Id": "23",
                                   "Name": "PostalCode",
-                                  "ResElemName": "23"
+                                  "ResElemName": "DataField41"
                                 }
                               }
                             ]
@@ -293,12 +293,12 @@
                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                           },
                           "fields": {
-                            "Id": 333004,
+                            "Id": "24",
                             "Name": "DatasetOpportunityLead",
                             "ObjType": "c170c217-e519-7c23-2811-ff75cd4bfe81",
                             "Active": true,
                             "Master": "2e99e462-faed-deaa-6e14-01da85f58dc8",
-                            "ResElemName": "24"
+                            "ResElemName": "DatasetOpportunityLead"
                           },
                           "collections": {
                             "Fields": [
@@ -308,9 +308,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6002,
+                                  "Id": "25",
                                   "Name": "Id",
-                                  "ResElemName": "25"
+                                  "ResElemName": "DataField42"
                                 }
                               },
                               {
@@ -319,9 +319,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6001,
+                                  "Id": "26",
                                   "Name": "CompanyId",
-                                  "ResElemName": "26"
+                                  "ResElemName": "DataField43"
                                 }
                               },
                               {
@@ -330,9 +330,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6003,
+                                  "Id": "27",
                                   "Name": "ContactId",
-                                  "ResElemName": "27"
+                                  "ResElemName": "ContactId"
                                 }
                               }
                             ]
@@ -344,12 +344,12 @@
                             "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
                           },
                           "fields": {
-                            "Id": 333004,
+                            "Id": "28",
                             "Name": "DatasetOpportunityContact",
                             "ObjType": "b49d39c9-b903-cccd-7d32-b84beb1b76dc",
                             "Active": true,
                             "Master": "46bd43e0-7db6-dae0-6ed5-19bddbb4a66c",
-                            "ResElemName": "28"
+                            "ResElemName": "DatasetOpportunityContact"
                           },
                           "collections": {
                             "Fields": [
@@ -359,9 +359,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6002,
+                                  "Id": "29",
                                   "Name": "Id",
-                                  "ResElemName": "29"
+                                  "ResElemName": "DataField44"
                                 }
                               },
                               {
@@ -370,9 +370,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6001,
+                                  "Id": "30",
                                   "Name": "CompanyId",
-                                  "ResElemName": "30"
+                                  "ResElemName": "DataField45"
                                 }
                               },
                               {
@@ -381,9 +381,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6003,
+                                  "Id": "31",
                                   "Name": "FirstName",
-                                  "ResElemName": "31"
+                                  "ResElemName": "FirstName"
                                 }
                               },
                               {
@@ -392,9 +392,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6004,
+                                  "Id": "32",
                                   "Name": "LastName",
-                                  "ResElemName": "32"
+                                  "ResElemName": "LastName"
                                 }
                               },
                               {
@@ -403,9 +403,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6005,
+                                  "Id": "33",
                                   "Name": "Title",
-                                  "ResElemName": "33"
+                                  "ResElemName": "Title"
                                 }
                               },
                               {
@@ -414,9 +414,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6006,
+                                  "Id": "34",
                                   "Name": "MobilePhone",
-                                  "ResElemName": "34"
+                                  "ResElemName": "MobilePhone"
                                 }
                               },
                               {
@@ -425,9 +425,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6007,
+                                  "Id": "35",
                                   "Name": "WorkPhone",
-                                  "ResElemName": "35"
+                                  "ResElemName": "WorkPhone"
                                 }
                               },
                               {
@@ -436,9 +436,9 @@
                                   "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
                                 },
                                 "fields": {
-                                  "Id": 6008,
+                                  "Id": "36",
                                   "Name": "Email",
-                                  "ResElemName": "36"
+                                  "ResElemName": "Email"
                                 }
                               }
                             ]
@@ -453,14 +453,14 @@
                       "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
                     },
                     "fields": {
-                      "Id": 2005,
+                      "Id": "37",
                       "Name": "DataGridOpportunity",
                       "Top": 10,
                       "Left": 10,
                       "Width": 1300,
                       "Height": 210,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
-                      "ResElemName": "37"
+                      "ResElemName": "DataGridOpportunity"
                     },
                     "collections": {
                       "Columns": [
@@ -470,11 +470,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5002,
+                            "Id": "38",
                             "Label": "Id",
                             "Width": 4,
                             "Field": "c0ca39cd-1920-9ba7-92ab-f24c0d011f17",
-                            "ResElemName": "38"
+                            "ResElemName": "DataColumn3"
                           }
                         },
                         {
@@ -483,11 +483,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5001,
+                            "Id": "39",
                             "Label": "State",
                             "Width": 5,
                             "Field": "a9761d41-868d-66a2-8aa0-6cfce26ba9f5",
-                            "ResElemName": "39"
+                            "ResElemName": "DataColumn4"
                           }
                         },
                         {
@@ -496,11 +496,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5003,
+                            "Id": "40",
                             "Label": "CompanyId",
                             "Width": 10,
                             "Field": "439096a2-1832-3aed-267e-0e5ad14340bc",
-                            "ResElemName": "40"
+                            "ResElemName": "DataColumn5"
                           }
                         },
                         {
@@ -509,11 +509,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5004,
+                            "Id": "41",
                             "Label": "LeadId",
                             "Width": 10,
                             "Field": "c11477fb-64f8-5392-f083-4147b8adba4b",
-                            "ResElemName": "41"
+                            "ResElemName": "DataColumn6"
                           }
                         },
                         {
@@ -522,11 +522,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5005,
+                            "Id": "42",
                             "Label": "OwnerId",
                             "Width": 10,
                             "Field": "c10854b0-b8bb-99a6-9c26-a69996b3e0bf",
-                            "ResElemName": "42"
+                            "ResElemName": "DataColumn7"
                           }
                         },
                         {
@@ -535,11 +535,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5006,
+                            "Id": "43",
                             "Label": "Description",
                             "Width": 37,
                             "Field": "f587a7d6-e580-cb2c-940b-d69fdb0ca233",
-                            "ResElemName": "43"
+                            "ResElemName": "DataColumn8"
                           }
                         },
                         {
@@ -548,11 +548,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5007,
+                            "Id": "44",
                             "Label": "Probability",
                             "Width": 8,
                             "Field": "e02dcdf5-baf2-b8a5-a854-7ee40c47d36b",
-                            "ResElemName": "44"
+                            "ResElemName": "DataColumn9"
                           }
                         },
                         {
@@ -561,11 +561,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5008,
+                            "Id": "45",
                             "Label": "Amount",
                             "Width": 8,
                             "Field": "1d5a72d6-e407-0499-0e7a-95b0759b13c8",
-                            "ResElemName": "45"
+                            "ResElemName": "DataColumn10"
                           }
                         },
                         {
@@ -574,11 +574,11 @@
                             "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
                           },
                           "fields": {
-                            "Id": 5009,
+                            "Id": "46",
                             "Label": "CloseDate",
                             "Width": 8,
                             "Field": "504b07ab-2391-f06a-5354-083c08b53e0a",
-                            "ResElemName": "46"
+                            "ResElemName": "DataColumn11"
                           }
                         }
                       ]
@@ -590,14 +590,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "47",
                       "Name": "Id",
                       "Top": 225,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Id",
-                      "ResElemName": "47"
+                      "ResElemName": "Label16"
                     }
                   },
                   {
@@ -606,7 +606,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "48",
                       "Name": "LabelId",
                       "Top": 220,
                       "Left": 100,
@@ -614,7 +614,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "Id",
-                      "ResElemName": "48"
+                      "ResElemName": "DataEdit15"
                     }
                   },
                   {
@@ -623,14 +623,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "49",
                       "Name": "LabelState",
                       "Top": 247,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "State",
-                      "ResElemName": "49"
+                      "ResElemName": "LabelState"
                     }
                   },
                   {
@@ -639,7 +639,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "50",
                       "Name": "State",
                       "Top": 242,
                       "Left": 100,
@@ -647,7 +647,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "State",
-                      "ResElemName": "50"
+                      "ResElemName": "DataEdit16"
                     }
                   },
                   {
@@ -656,14 +656,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "51",
                       "Name": "LabelCompanyId",
                       "Top": 269,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "CompanyId",
-                      "ResElemName": "51"
+                      "ResElemName": "LabelCompanyId"
                     }
                   },
                   {
@@ -672,7 +672,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "52",
                       "Name": "CompanyId",
                       "Top": 264,
                       "Left": 100,
@@ -680,7 +680,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "CompanyId",
-                      "ResElemName": "52"
+                      "ResElemName": "DataEdit17"
                     }
                   },
                   {
@@ -689,14 +689,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "53",
                       "Name": "LeadId",
                       "Top": 291,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "LeadId",
-                      "ResElemName": "53"
+                      "ResElemName": "Label17"
                     }
                   },
                   {
@@ -705,7 +705,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "54",
                       "Name": "LeadId",
                       "Top": 286,
                       "Left": 100,
@@ -713,7 +713,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "LeadId",
-                      "ResElemName": "54"
+                      "ResElemName": "DataEdit18"
                     }
                   },
                   {
@@ -722,14 +722,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "55",
                       "Name": "OwnerId",
                       "Top": 313,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "OwnerId",
-                      "ResElemName": "55"
+                      "ResElemName": "Label18"
                     }
                   },
                   {
@@ -738,7 +738,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "56",
                       "Name": "OwnerId",
                       "Top": 308,
                       "Left": 100,
@@ -746,7 +746,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "OwnerId",
-                      "ResElemName": "56"
+                      "ResElemName": "DataEdit19"
                     }
                   },
                   {
@@ -755,14 +755,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "57",
                       "Name": "Description",
                       "Top": 335,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Description",
-                      "ResElemName": "57"
+                      "ResElemName": "Label19"
                     }
                   },
                   {
@@ -771,7 +771,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "58",
                       "Name": "Description",
                       "Top": 330,
                       "Left": 100,
@@ -779,7 +779,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "Description",
-                      "ResElemName": "58"
+                      "ResElemName": "DataEdit20"
                     }
                   },
                   {
@@ -788,14 +788,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "59",
                       "Name": "Probability",
                       "Top": 357,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Probability",
-                      "ResElemName": "59"
+                      "ResElemName": "Label20"
                     }
                   },
                   {
@@ -804,7 +804,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "60",
                       "Name": "Probability",
                       "Top": 352,
                       "Left": 100,
@@ -812,7 +812,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "Probability",
-                      "ResElemName": "60"
+                      "ResElemName": "DataEdit21"
                     }
                   },
                   {
@@ -821,14 +821,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "61",
                       "Name": "Amount",
                       "Top": 379,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Amount",
-                      "ResElemName": "61"
+                      "ResElemName": "Label23"
                     }
                   },
                   {
@@ -837,7 +837,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "62",
                       "Name": "Amount",
                       "Top": 374,
                       "Left": 100,
@@ -845,7 +845,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "Amount",
-                      "ResElemName": "62"
+                      "ResElemName": "DataEdit22"
                     }
                   },
                   {
@@ -854,14 +854,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "63",
                       "Name": "CloseDate",
                       "Top": 401,
                       "Left": 10,
                       "Width": 190,
                       "Height": 23,
                       "Label": "CloseDate",
-                      "ResElemName": "63"
+                      "ResElemName": "Label24"
                     }
                   },
                   {
@@ -870,7 +870,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "64",
                       "Name": "CloseDate",
                       "Top": 395,
                       "Left": 100,
@@ -878,7 +878,7 @@
                       "Height": 23,
                       "Dataset": "2e99e462-faed-deaa-6e14-01da85f58dc8",
                       "DataField": "CloseDate",
-                      "ResElemName": "64"
+                      "ResElemName": "DataEdit23"
                     }
                   },
                   {
@@ -887,14 +887,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "65",
                       "Name": "Id",
                       "Top": 225,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Id",
-                      "ResElemName": "65"
+                      "ResElemName": "Label25"
                     }
                   },
                   {
@@ -903,7 +903,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "66",
                       "Name": "Id",
                       "Top": 220,
                       "Left": 400,
@@ -911,7 +911,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "Id",
-                      "ResElemName": "66"
+                      "ResElemName": "DataEdit24"
                     }
                   },
                   {
@@ -920,14 +920,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "67",
                       "Name": "CompanyId",
                       "Top": 242,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "CompanyId",
-                      "ResElemName": "67"
+                      "ResElemName": "Label26"
                     }
                   },
                   {
@@ -936,7 +936,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "68",
                       "Name": "CompanyId",
                       "Top": 242,
                       "Left": 400,
@@ -944,7 +944,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "CompanyId",
-                      "ResElemName": "68"
+                      "ResElemName": "DataEdit25"
                     }
                   },
                   {
@@ -953,14 +953,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "69",
                       "Name": "Company",
                       "Top": 269,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Company",
-                      "ResElemName": "69"
+                      "ResElemName": "Label27"
                     }
                   },
                   {
@@ -969,7 +969,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "70",
                       "Name": "Company",
                       "Top": 264,
                       "Left": 400,
@@ -977,7 +977,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "Company",
-                      "ResElemName": "70"
+                      "ResElemName": "DataEdit26"
                     }
                   },
                   {
@@ -986,14 +986,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "71",
                       "Name": "Industry",
                       "Top": 291,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Industry",
-                      "ResElemName": "71"
+                      "ResElemName": "Label28"
                     }
                   },
                   {
@@ -1002,7 +1002,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "72",
                       "Name": "Industry",
                       "Top": 286,
                       "Left": 400,
@@ -1010,7 +1010,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "Industry",
-                      "ResElemName": "72"
+                      "ResElemName": "DataEdit27"
                     }
                   },
                   {
@@ -1019,14 +1019,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "73",
                       "Name": "NbEmpl",
                       "Top": 313,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "NbEmpl",
-                      "ResElemName": "73"
+                      "ResElemName": "Label29"
                     }
                   },
                   {
@@ -1035,7 +1035,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "74",
                       "Name": "NbEmpl",
                       "Top": 308,
                       "Left": 400,
@@ -1043,7 +1043,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "NbEmpl",
-                      "ResElemName": "74"
+                      "ResElemName": "DataEdit28"
                     }
                   },
                   {
@@ -1052,14 +1052,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "75",
                       "Name": "City",
                       "Top": 335,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "City",
-                      "ResElemName": "75"
+                      "ResElemName": "Label30"
                     }
                   },
                   {
@@ -1068,7 +1068,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "76",
                       "Name": "City",
                       "Top": 330,
                       "Left": 400,
@@ -1076,7 +1076,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "City",
-                      "ResElemName": "76"
+                      "ResElemName": "DataEdit29"
                     }
                   },
                   {
@@ -1085,14 +1085,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "77",
                       "Name": "Address",
                       "Top": 357,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Address",
-                      "ResElemName": "77"
+                      "ResElemName": "Label31"
                     }
                   },
                   {
@@ -1101,7 +1101,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "78",
                       "Name": "Address",
                       "Top": 352,
                       "Left": 400,
@@ -1109,7 +1109,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "Address",
-                      "ResElemName": "78"
+                      "ResElemName": "DataEdit30"
                     }
                   },
                   {
@@ -1118,14 +1118,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "79",
                       "Name": "PostalCode",
                       "Top": 379,
                       "Left": 300,
                       "Width": 190,
                       "Height": 23,
                       "Label": "PostalCode",
-                      "ResElemName": "79"
+                      "ResElemName": "Label32"
                     }
                   },
                   {
@@ -1134,7 +1134,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "80",
                       "Name": "PostalCode",
                       "Top": 374,
                       "Left": 400,
@@ -1142,7 +1142,7 @@
                       "Height": 23,
                       "Dataset": "ad58b653-395a-72d5-a54d-34ad1dd0bdde",
                       "DataField": "PostalCode",
-                      "ResElemName": "80"
+                      "ResElemName": "DataEdit31"
                     }
                   },
                   {
@@ -1151,14 +1151,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "81",
                       "Name": "Id",
                       "Top": 225,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Id",
-                      "ResElemName": "81"
+                      "ResElemName": "Label33"
                     }
                   },
                   {
@@ -1167,7 +1167,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "82",
                       "Name": "LabelId",
                       "Top": 220,
                       "Left": 700,
@@ -1175,7 +1175,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "Id",
-                      "ResElemName": "82"
+                      "ResElemName": "DataEdit32"
                     }
                   },
                   {
@@ -1184,14 +1184,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "83",
                       "Name": "CompanyId",
                       "Top": 242,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "CompanyId",
-                      "ResElemName": "83"
+                      "ResElemName": "Label34"
                     }
                   },
                   {
@@ -1200,7 +1200,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "84",
                       "Name": "CompanyId",
                       "Top": 242,
                       "Left": 700,
@@ -1208,7 +1208,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "CompanyId",
-                      "ResElemName": "84"
+                      "ResElemName": "DataEdit33"
                     }
                   },
                   {
@@ -1217,14 +1217,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "85",
                       "Name": "FirstName",
                       "Top": 269,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "FirstName",
-                      "ResElemName": "85"
+                      "ResElemName": "Label35"
                     }
                   },
                   {
@@ -1233,7 +1233,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "86",
                       "Name": "FirstName",
                       "Top": 264,
                       "Left": 700,
@@ -1241,7 +1241,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "FirstName",
-                      "ResElemName": "86"
+                      "ResElemName": "DataEdit34"
                     }
                   },
                   {
@@ -1250,14 +1250,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "87",
                       "Name": "LastName",
                       "Top": 291,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "LastName",
-                      "ResElemName": "87"
+                      "ResElemName": "Label36"
                     }
                   },
                   {
@@ -1266,7 +1266,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "88",
                       "Name": "LastName",
                       "Top": 286,
                       "Left": 700,
@@ -1274,7 +1274,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "LastName",
-                      "ResElemName": "88"
+                      "ResElemName": "DataEdit35"
                     }
                   },
                   {
@@ -1283,14 +1283,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "89",
                       "Name": "Title",
                       "Top": 313,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Title",
-                      "ResElemName": "89"
+                      "ResElemName": "Label37"
                     }
                   },
                   {
@@ -1299,7 +1299,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "90",
                       "Name": "Title",
                       "Top": 308,
                       "Left": 700,
@@ -1307,7 +1307,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "Title",
-                      "ResElemName": "90"
+                      "ResElemName": "DataEdit36"
                     }
                   },
                   {
@@ -1316,14 +1316,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "91",
                       "Name": "MobilePhone",
                       "Top": 335,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "MobilePhone",
-                      "ResElemName": "91"
+                      "ResElemName": "Label38"
                     }
                   },
                   {
@@ -1332,7 +1332,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "92",
                       "Name": "MobilePhone",
                       "Top": 330,
                       "Left": 700,
@@ -1340,7 +1340,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "MobilePhone",
-                      "ResElemName": "92"
+                      "ResElemName": "DataEdit37"
                     }
                   },
                   {
@@ -1349,14 +1349,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "93",
                       "Name": "WorkPhone",
                       "Top": 357,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "WorkPhone",
-                      "ResElemName": "93"
+                      "ResElemName": "Label39"
                     }
                   },
                   {
@@ -1365,7 +1365,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "94",
                       "Name": "WorkPhone",
                       "Top": 352,
                       "Left": 700,
@@ -1373,7 +1373,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "WorkPhone",
-                      "ResElemName": "94"
+                      "ResElemName": "DataEdit38"
                     }
                   },
                   {
@@ -1382,14 +1382,14 @@
                       "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "95",
                       "Name": "Email",
                       "Top": 379,
                       "Left": 600,
                       "Width": 190,
                       "Height": 23,
                       "Label": "Email",
-                      "ResElemName": "95"
+                      "ResElemName": "Label40"
                     }
                   },
                   {
@@ -1398,7 +1398,7 @@
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": 3007,
+                      "Id": "96",
                       "Name": "Email",
                       "Top": 374,
                       "Left": 700,
@@ -1406,7 +1406,7 @@
                       "Height": 23,
                       "Dataset": "5710db4c-1a9b-0cef-f004-3d46ba1cb0e3",
                       "DataField": "Email",
-                      "ResElemName": "96"
+                      "ResElemName": "DataEdit39"
                     }
                   }
                 ]

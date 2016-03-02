@@ -8,18 +8,18 @@
     "ResName": "controls"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "3696ab79-d302-6608-417d-6dc8edf4150b",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 536,
+          "Id": "1",
           "Name": "MainForm",
           "Title": "controls",
           "dbgName": "FormControls",
-          "ResElemName": "1"
+          "ResElemName": "Form4"
         },
         "collections": {
           "Children": [
@@ -29,9 +29,9 @@
                 "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
               },
               "fields": {
-                "Id": 537,
+                "Id": "2",
                 "Name": "MainContainerControls",
-                "ResElemName": "2"
+                "ResElemName": "CContainer3"
               },
               "collections": {
                 "Children": [
@@ -41,14 +41,14 @@
                       "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
                     },
                     "fields": {
-                      "Id": 538,
+                      "Id": "3",
                       "Name": "ButtonControls1",
                       "Top": "10",
                       "Left": "200",
                       "Caption": "Button1",
                       "Width": 190,
                       "Height": 23,
-                      "ResElemName": "3"
+                      "ResElemName": "Button3"
                     },
                     "collections": {}
                   },
@@ -58,14 +58,14 @@
                       "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
                     },
                     "fields": {
-                      "Id": 539,
+                      "Id": "4",
                       "Name": "ButtonControls2",
                       "Top": "40",
                       "Left": "200",
                       "Caption": "Button2",
                       "Width": 190,
                       "Height": 23,
-                      "ResElemName": "4"
+                      "ResElemName": "Button4"
                     },
                     "collections": {}
                   },
@@ -75,14 +75,14 @@
                       "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
                     },
                     "fields": {
-                      "Id": 540,
+                      "Id": "5",
                       "Name": "EditControl1",
                       "Top": "10",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
                       "Value": "Value1",
-                      "ResElemName": "5"
+                      "ResElemName": "Edit1"
                     },
                     "collections": {}
                   },
@@ -92,14 +92,14 @@
                       "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
                     },
                     "fields": {
-                      "Id": 541,
+                      "Id": "6",
                       "Name": "EditControl2",
                       "Top": "40",
                       "Left": "10",
                       "Width": 190,
                       "Height": 23,
                       "Value": "Value2",
-                      "ResElemName": "6"
+                      "ResElemName": "Edit2"
                     },
                     "collections": {}
                   }

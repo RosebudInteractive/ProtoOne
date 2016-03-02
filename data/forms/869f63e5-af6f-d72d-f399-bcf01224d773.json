@@ -8,18 +8,18 @@
     "ResName": "TreeViewForm"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "4e3104d8-3a53-c2ff-939d-911be436fb1f",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 5544,
+          "Id": "1",
           "Name": "TreeViewForm",
           "Title": "TreeViewForm",
           "dbgName": "TreeViewForm",
-          "ResElemName": "1"
+          "ResElemName": "TreeViewForm"
         },
         "collections": {
           "Children": [
@@ -29,9 +29,9 @@
                 "typeGuid": "35400d0c-5465-00e8-c770-a1b04b4b8180"
               },
               "fields": {
-                "Id": 20000,
+                "Id": "2",
                 "Name": "TreeView",
-                "ResElemName": "2"
+                "ResElemName": "TreeView"
               },
               "collections": {
                 "Items": [
@@ -41,10 +41,10 @@
                       "typeGuid": "16eb3a02-7f2a-3001-096a-14c1b38586db"
                     },
                     "fields": {
-                      "Id": 10000,
+                      "Id": "3",
                       "Name": "Root",
                       "Kind": "item",
-                      "ResElemName": "3"
+                      "ResElemName": "Root"
                     }
                   }
                 ]

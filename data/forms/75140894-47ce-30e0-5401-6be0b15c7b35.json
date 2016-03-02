@@ -8,18 +8,18 @@
     "ResName": "create buttons"
   },
   "collections": {
-    "Form": [
+    "Children": [
       {
         "$sys": {
           "guid": "e17a6326-3c5c-32cf-7f8d-6a904cf7b973",
           "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
         },
         "fields": {
-          "Id": 1456,
+          "Id": "1",
           "Name": "MainForm",
           "Title": "create buttons",
           "dbgName": "FormCreateButtons",
-          "ResElemName": "1"
+          "ResElemName": "Form3"
         },
         "collections": {
           "Children": [
@@ -29,9 +29,9 @@
                 "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
               },
               "fields": {
-                "Id": 11,
+                "Id": "2",
                 "Name": "MainContainer",
-                "ResElemName": "2"
+                "ResElemName": "CContainer2"
               },
               "collections": {
                 "Children": [
@@ -41,13 +41,13 @@
                       "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
                     },
                     "fields": {
-                      "Id": 11,
+                      "Id": "3",
                       "Name": "CreateButtonsContainer",
                       "Width": 800,
                       "Height": 400,
                       "Top": "30",
                       "Left": "10",
-                      "ResElemName": "3"
+                      "ResElemName": "CreateButtonsContainer"
                     }
                   },
                   {
@@ -56,11 +56,11 @@
                       "typeGuid": "f79d78eb-4315-5fac-06e0-d58d07572482"
                     },
                     "fields": {
-                      "Id": 1033,
+                      "Id": "4",
                       "Name": "CreateButtonsEdit",
                       "Top": "5",
                       "Left": "10",
-                      "ResElemName": "4"
+                      "ResElemName": "CreateButtonsEdit"
                     },
                     "collections": {}
                   },
@@ -70,13 +70,13 @@
                       "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
                     },
                     "fields": {
-                      "Id": 1045,
+                      "Id": "5",
                       "Name": "CreateButton",
                       "Top": "5",
                       "Left": "200",
                       "Caption": "CreateButtons",
                       "OnClick": " { var cm=this.getControlMgr(); var numButtons=$('#'+cm.getByName('CreateButtonsEdit').getLid()).val(); this.caption('CreateButtons:'+numButtons); cm.getByName('CreateButtonsContainer').createButtons(numButtons);  }",
-                      "ResElemName": "5"
+                      "ResElemName": "CreateButton"
                     },
                     "collections": {}
                   }

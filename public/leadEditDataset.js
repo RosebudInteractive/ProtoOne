@@ -39,7 +39,7 @@ define(
             clickSave: function(edit) {
                 var self = this;
                 var ds = this._dataset();
-                ds.save(function (result) {
+                ds.save({}, function (result) {
                     if (result.result === "OK") {
                         self.setEditForm(false);
                     } else
