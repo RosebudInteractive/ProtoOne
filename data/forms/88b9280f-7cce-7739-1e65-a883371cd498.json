@@ -930,7 +930,66 @@
                       "ResElemName": "DataGrid1",
                       "Editable": true
                     },
-                    "collections": {}
+                    "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "61e0372f-a877-4547-b08c-069805955bd9",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "Cont2DataColumnId",
+                            "Label": "Id",
+                            "Width": 10,
+                            "Field": "2e2949ac-bc9b-80de-4747-2df61750f105",
+                            "ResElemName": "Cont2DataColumnId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "925ca99e-d3fb-4783-b840-c4554eb84924",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "Cont2DataColumnParent",
+                            "Label": "parent",
+                            "Width": 10,
+                            "Field": "f48f71c0-a3c8-2f3b-9a69-1c1ce683e605",
+                            "ResElemName": "Cont2DataColumnParent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "3f7e9ebb-e386-4fb9-90fe-26e1fea18f0d",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "Cont2DataColumnNumber",
+                            "Label": "country",
+                            "Width": 15,
+                            "Field": "73904728-a2fb-bd6d-5fac-58054a78e7c7",
+                            "ResElemName": "Cont2DataColumnNumber"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "e1f70fe6-2840-437c-9702-f5545edb03e4",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "Cont2DataColumnTotal",
+                            "Label": "city",
+                            "Width": 15,
+                            "Field": "15fe26e8-2dbd-5fea-3f21-409175aca9ab",
+                            "ResElemName": "Cont2DataColumnTotal"
+                          }
+                        }
+                      ]
+                    }
                   },
                   {
                     "$sys": {
