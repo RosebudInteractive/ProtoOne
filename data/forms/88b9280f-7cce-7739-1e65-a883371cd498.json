@@ -664,9 +664,125 @@
                       "Width": 660,
                       "Height": 240,
                       "Dataset": "eefbcccf-743a-66a4-c3a2-4751d2a334f5",
-                      "ResElemName": "DataGridContact"
+                      "ResElemName": "DataGridContact",
+                      "Editable": true
                     },
-                    "collections": {}
+                    "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "e4c17838-6254-49ca-a3ad-55dc8adf37cb",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "ContDataColumnId",
+                            "Label": "Id",
+                            "Width": 10,
+                            "Field": "439b8b9e-447d-c21f-f629-3105b1df754e",
+                            "ResElemName": "ContDataColumnId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2b124cba-24ba-4751-bc98-6257c58c4eca",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "ContDataColumnParent",
+                            "Label": "parent",
+                            "Width": 10,
+                            "Field": "ec732baf-e03f-a116-7925-583712f681f9",
+                            "ResElemName": "ContDataColumnParent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "d8615f14-4a9b-484c-9861-120115fbc704",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "ContDataColumnFirstName",
+                            "Label": "first name",
+                            "Width": 15,
+                            "Field": "f4359087-4731-24d1-0b64-471965e019cf",
+                            "ResElemName": "ContDataColumnFirstName"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "b83539d1-7b02-4842-a95b-5e57265b8259",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "ContDataColumnLastName",
+                            "Label": "last name",
+                            "Width": 15,
+                            "Field": "ccf93017-2c46-374f-6a20-68f7c15426f8",
+                            "ResElemName": "ContDataColumnLastName"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0e76c441-90ba-4b13-8f63-f05ddf704fab",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "ContDataColumnBirthDate",
+                            "Label": "birth date",
+                            "Width": 15,
+                            "Field": "c3c0a738-5fea-608d-24f9-138e4530e001",
+                            "ResElemName": "ContDataColumnBirthDate"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6302a5c6-6f28-43ed-b040-85b8b34e15aa",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnName",
+                            "Label": "country",
+                            "Width": 10,
+                            "Field": "99767254-4250-7dd4-1b56-659298414ddf",
+                            "ResElemName": "ContDataColumnCountry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "2c00a4e7-2ec8-4554-856c-5fa9a44be4a8",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "ContDataColumnCity",
+                            "Label": "city",
+                            "Width": 10,
+                            "Field": "99b59f32-3dc5-9472-05fa-1643e46f87d1",
+                            "ResElemName": "ContDataColumnCity"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "0a2994a7-817a-42e9-8929-a27d47cc2ce8",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "ContDataColumnAddress",
+                            "Label": "address",
+                            "Width": 15,
+                            "Field": "c0a650b1-470e-7237-312e-d530c827e568",
+                            "ResElemName": "ContDataColumnAddress"
+                          }
+                        }
+                      ]
+                    }
                   },
                   {
                     "$sys": {
@@ -793,7 +909,8 @@
                       "Width": 660,
                       "Height": 120,
                       "Dataset": "e559320d-d80d-48f7-ed4e-0ac63587e606",
-                      "ResElemName": "DataGridContact2"
+                      "ResElemName": "DataGridContact2",
+                      "Editable": true
                     },
                     "collections": {}
                   },
@@ -810,7 +927,8 @@
                       "Width": 660,
                       "Height": 120,
                       "Dataset": "e559320d-d80d-48f7-ed4e-0ac63587e606",
-                      "ResElemName": "DataGrid1"
+                      "ResElemName": "DataGrid1",
+                      "Editable": true
                     },
                     "collections": {}
                   },
@@ -827,9 +945,83 @@
                       "Width": 450,
                       "Height": 240,
                       "Dataset": "92720532-a58f-68bb-6e5a-02b28239e312",
-                      "ResElemName": "DataGridAddress"
+                      "ResElemName": "DataGridAddress",
+                      "Editable": true
                     },
-                    "collections": {}
+                    "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "51da8d97-4142-4efe-9fe2-267657bed8f9",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "AddDataColumnId",
+                            "Label": "Id",
+                            "Width": 10,
+                            "Field": "182024da-784f-5615-dc1f-2700fe8f862c",
+                            "ResElemName": "AddDataColumnId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "ee3b7ca7-7467-4ee3-856c-ffb9c1a27894",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "AddDataColumnParent",
+                            "Label": "parent",
+                            "Width": 10,
+                            "Field": "f4f00409-7541-290a-7e8e-404e1855c437",
+                            "ResElemName": "AddDataColumnParent"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "d27f6ec2-c156-495e-9f4f-c8005990abcb",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "AddDataColumnCountry",
+                            "Label": "country",
+                            "Width": 15,
+                            "Field": "60534ba5-b966-a2a3-a70b-f5787784b640",
+                            "ResElemName": "AddDataColumnCountry"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "689b5141-ffce-4b73-91f5-28d6b2d61cb2",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "AddDataColumnCity",
+                            "Label": "city",
+                            "Width": 15,
+                            "Field": "f06101d1-2ff0-39a0-8ff0-88fa5f0557d5",
+                            "ResElemName": "AddDataColumnCity"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "804de5bc-02d6-4075-9be0-55ef91574679",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "AddDataColumnAddress",
+                            "Label": "address",
+                            "Width": 15,
+                            "Field": "15aae336-6b29-8020-eb3b-5899287578a6",
+                            "ResElemName": "AddDataColumnAddress"
+                          }
+                        }
+                      ]
+                    }
                   }
                 ]
               }

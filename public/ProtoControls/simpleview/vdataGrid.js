@@ -182,7 +182,8 @@ define(
                         vDataGrid.scrollTo(activeTr, wrapper);
                     }
                     // если надо отобразить редактирование
-                    if (this.editable())
+                    var dsState = !dataset ? Meta.State.Unknown : dataset.getState();
+                    if (this.editable() && (dsState == Meta.State.Insert || dsState == Meta.State.Edit))
                         vDataGrid.renderEditMode.apply(this, [cursorIndex]);
                 }
             }
@@ -231,7 +232,15 @@ define(
             var table = $('#' + this.getLid()).find('.table'), wrapper = table.parent();
             var rowTr = table.find('.row.data[data-id='+id+']');
             var that = this;
-            table.find('.row.active').removeClass('active').attr('tabindex', null);
+            var dataset = this.dataset();
+            var dsState = !dataset ? Meta.State.Unknown : dataset.getState();
+
+            var oldTr = table.find('.row.active');
+            oldTr.removeClass('active').attr('tabindex', null);
+            var cursorIndex = oldTr.index();
+            if (this.editable() && (dsState == Meta.State.Insert || dsState == Meta.State.Edit))
+                vDataGrid.renderEditMode.apply(this, [cursorIndex - 1, false]);
+
             rowTr.addClass('active').attr('tabindex', 1);
 
             vDataGrid.scrollTo(rowTr, wrapper);
@@ -239,6 +248,10 @@ define(
             // выставляем фокус
             if (this.getForm().currentControl() == this)
                 rowTr.focus();
+
+            var cursorIndex = rowTr.index();
+            if (this.editable() && (dsState == Meta.State.Insert || dsState == Meta.State.Edit))
+                vDataGrid.renderEditMode.apply(this, [cursorIndex - 1]);
         }
 
         /**
@@ -295,7 +308,9 @@ define(
                 $($(rowsTr[i]).children()[index]).css('width', width+'%');
         }
 
-        vDataGrid.renderEditMode = function(cursorIndex) {
+        vDataGrid.renderEditMode = function(cursorIndex, add) {
+            var that = this;
+            add = add === undefined || add;
             this.pvt.cursorIndex = cursorIndex;
             var cm = this.getControlMgr();
             var rootElem = null, dataset = null;
@@ -317,27 +332,47 @@ define(
                             field = tFields.get(i),
                             name = columns.count()>0 ? field.field().name() : field.name(),
                             val = cursor[name.charAt(0).toLowerCase() + name.slice(1)]();
-
-                        if (columns.count()>0 && field.values()) {
-                            var input = $('<select class="editField"/>')
-                                .width(child.width()-4)
-                                .attr('name', name);
+                        if (add) {
+                            if (columns.count() > 0 && field.values()) {
+                                var input = $('<select class="editField"/>')
+                                    .width(child.width() - 4)
+                                    .attr('name', name);
 
                                 var values = field.values().split('|');
-                                for(var v = 0; v < values.length; v++) {
+                                for (var v = 0; v < values.length; v++) {
                                     var option = $('<option/>').attr('value', values[v]).html(values[v]);
                                     input.append(option);
                                 }
                                 input.val(val);
-                        } else {
-                            var input = $('<input class="editField"/>')
-                                .width(child.width()-4)
-                                .attr('name', name)
-                                .val(val);
-                        }
+                            } else {
+                                var input = $('<input class="editField"/>')
+                                    .width(child.width() - 4)
+                                    .attr('name', name)
+                                    .val(val);
+                            }
 
-                        child.empty();
-                        child.append(input);
+                            child.empty();
+                            child.append(input);
+
+                            input.blur(function () {
+                                var ds = that.dataset();
+                                var dsState = !ds ? Meta.State.Unknown : ds.getState();
+                                var fieldName = $(this).attr("name");
+                                if (ds && fieldName &&
+                                    ds.getField(fieldName) != $(this).val() &&
+                                    (dsState == Meta.State.Edit || dsState == Meta.State.Insert)) {
+                                    var inpt = $(this);
+                                    that.getControlMgr().userEventHandler(that, function () {
+                                        ds.setField(fieldName, inpt.val());
+                                    });
+                                }
+                            });
+
+                        } else {
+                            child.empty();
+                            if (val) child.text(val)
+                            else child.html("&nbsp;");
+                        }
                     }
                 }
             }
