@@ -968,7 +968,7 @@
                           "fields": {
                             "Id": "33",
                             "Name": "Cont2DataColumnNumber",
-                            "Label": "country",
+                            "Label": "number",
                             "Width": 15,
                             "Field": "73904728-a2fb-bd6d-5fac-58054a78e7c7",
                             "ResElemName": "Cont2DataColumnNumber"
@@ -982,7 +982,7 @@
                           "fields": {
                             "Id": "34",
                             "Name": "Cont2DataColumnTotal",
-                            "Label": "city",
+                            "Label": "total",
                             "Width": 15,
                             "Field": "15fe26e8-2dbd-5fea-3f21-409175aca9ab",
                             "ResElemName": "Cont2DataColumnTotal"

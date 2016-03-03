@@ -363,7 +363,11 @@ define(
                                     (dsState == Meta.State.Edit || dsState == Meta.State.Insert)) {
                                     var inpt = $(this);
                                     that.getControlMgr().userEventHandler(that, function () {
-                                        ds.setField(fieldName, inpt.val());
+                                        try {
+                                            ds.setField(fieldName, inpt.val());
+                                        } catch (ex) {
+                                            alert(ex);
+                                        }
                                     });
                                 }
                             });
