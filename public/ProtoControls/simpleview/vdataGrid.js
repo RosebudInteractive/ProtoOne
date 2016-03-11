@@ -43,9 +43,7 @@ define(
                         var cursor = rowTr.attr('data-id');
                         var ds = that.dataset();
                         var dsState = !ds ? Meta.State.Unknown : ds.getState();
-                        if (ds.cursor() != cursor && ds.canMoveCursor()/*&&
-                            (ds.getState() == Meta.State.Browse ||
-                            (dsState != Meta.State.Unknown && dsState != Meta.State.Pending && ds.cachedUpdates()))*/) {
+                        if (ds.cursor() != cursor && that.canMoveCursor()) {
                             vDataGrid.renderCursor.apply(that, [cursor]);
                             that.getControlMgr().userEventHandler(that, function(){
                                 that.dataset().cursor(cursor);
