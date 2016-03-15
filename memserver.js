@@ -180,14 +180,16 @@ var config = {
     },
     //resman: {
     //    useDb: true,
-    //    defaultProduct : "ProtoOne"
+    //    defaultProduct : "ProtoOne",
+    //    sourceDir: [
+    //        {path: __dirname + '/data/forms/', type: 'FRM'},
+    //        {path: __dirname + '/data/processDefinitions/', type: 'PR_DEF'}
+    //    ]
     //},
     //resourceBuilder : {
     //    types: [
-    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма"}
-    //    ],
-    //    sourceDir: [
-    //        {path: './data/forms/', type: 'FRM'}
+    //        {Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма"},
+    //        {Code: "PR_DEF", Name: "Process Definition", ClassName: "ProcessDefinition", Description: "Определение процесса"}
     //    ],
     //    destDir : "./data/tables/",
     //    formResTypeId : 1,
