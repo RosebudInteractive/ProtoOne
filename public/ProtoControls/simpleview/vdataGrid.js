@@ -24,9 +24,7 @@ define(
                 var parent = this.getParentComp()? '#ch_' + this.getLid(): options.rootContainer;
                 $(parent).append(grid);
 
-                grid.find('.refresh').click(function () {
-                    vDataGrid.render.apply(that);
-                });
+                vDataGrid._setButtonsClicks.call(this);
 
                 grid.focus(function(e) {
                     // установить фокус
@@ -45,9 +43,7 @@ define(
                         var cursor = rowTr.attr('data-id');
                         var ds = that.dataset();
                         var dsState = !ds ? Meta.State.Unknown : ds.getState();
-                        if (ds.cursor() != cursor && ds.canMoveCursor()/*&&
-                            (ds.getState() == Meta.State.Browse ||
-                            (dsState != Meta.State.Unknown && dsState != Meta.State.Pending && ds.cachedUpdates()))*/) {
+                        if (ds.cursor() != cursor && that.canMoveCursor()) {
                             vDataGrid.renderCursor.apply(that, [cursor]);
                             that.getControlMgr().userEventHandler(that, function(){
                                 that.dataset().cursor(cursor);
@@ -188,9 +184,109 @@ define(
                 }
             }
 
+            vDataGrid._setButtonsState.call(this);
+
             // выставляем фокус
             if (this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
                 $(grid).find('[tabIndex=1]').focus();
+        }
+
+        vDataGrid._setButtonsClicks = function() {
+            var that = this;
+            var grid = $("#" + this.getLid());
+            grid.find('.refresh').click(function () {
+                vDataGrid.render.apply(that);
+            });
+
+            grid.find('.insert').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().addObject({}, function(result) {
+                            if (result && result.result != "OK") {
+                                alert("Error occured: \"" + result.message + "\"");
+                            }
+                        })
+                    });
+            });
+
+            grid.find('.update').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().edit(function(result) {
+                            if (result && result.result != "OK") {
+                                alert("Error occured: \"" + result.message + "\"");
+                            }
+                        })
+                    });
+            });
+
+            grid.find('.delete').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().deleteObject({}, function(result) {
+                            if (result && result.result != "OK") {
+                                alert("Error occured: \"" + result.message + "\"");
+                            }
+                        })
+                    });
+            });
+
+            grid.find('.save').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().save({}, function(result) {
+                            if (result && result.result != "OK") {
+                                alert("Error occured: \"" + result.message + "\"");
+                            }
+                        })
+                    });
+            });
+
+            grid.find('.cancel').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().cancel(function(result) {
+                            if (result && result.result != "OK") {
+                                alert("Error occured: \"" + result.message + "\"");
+                            }
+                        })
+                    });
+            });
+
+        }
+
+        vDataGrid._setButtonsState = function() {
+            var ds = this.dataset();
+            var isMaster = ds && ds.master() ? false : true;
+            var dsState = ds ? ds.getState() :  Meta.State.Unknown;
+            var dsMasterState = ds && ds.master() ? ds.master().getState() : Meta.State.Unknown;
+            var grid = $("#" + this.getLid());
+
+            // insert
+            var enabled = dsState !=  Meta.State.Unknown &&
+                ((isMaster && dsState == Meta.State.Browse) || (!isMaster && dsMasterState <= Meta.State.Edit));
+            grid.find('.insert').prop('disabled', !enabled);
+            // update
+            enabled = dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+                (!isMaster && dsMasterState <= Meta.State.Edit)) &&
+                ds.cursor();
+            grid.find('.update').prop('disabled', !enabled);
+
+            // delete
+            enabled = dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+                (!isMaster && dsMasterState <= Meta.State.Edit)) &&
+                ds.cursor();
+            grid.find('.delete').prop('disabled', !enabled);
+
+            //save & cancel
+            enabled = dsState !=  Meta.State.Unknown &&
+                (
+                    (isMaster && (dsState == Meta.State.Edit || dsState == Meta.State.Insert)) ||
+                    (!isMaster && dsMasterState == Meta.State.Browse && (dsState == Meta.State.Edit || dsState == Meta.State.Insert))
+                ) &&
+                ds.cursor();
+            grid.find('.save').prop('disabled', !enabled);
+            grid.find('.cancel').prop('disabled', !enabled);
         }
 
         vDataGrid.scrollTo = function(elem, div)
