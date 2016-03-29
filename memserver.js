@@ -183,7 +183,7 @@ var config = {
     //    defaultProduct : "ProtoOne",
     //    sourceDir: [
     //        {path: __dirname + '/data/forms/', type: 'FRM'},
-    //        {path: __dirname + '/data/processDefinitions/', type: 'PR_DEF'}
+    //        {path: __dirname + '/data/processDefinitions/', type: 'PR_DEF', generator: uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'}
     //    ]
     //},
     //resourceBuilder : {
