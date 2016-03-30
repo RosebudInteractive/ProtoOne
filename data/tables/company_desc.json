@@ -1,0 +1,150 @@
+{
+    "$sys": {
+        "guid": "e66afa2b-e593-498d-80ef-a9418a42b0ee", 
+        "typeGuid": "c4d626bf-1639-2d27-16df-da3ec0ee364e"
+    }, 
+    "fields": {
+        "Id": 1000, 
+        "Name": "DataRoot"
+    }, 
+    "collections": {
+        "DataElements": [
+            {
+                "$sys": {
+                    "guid": "c62691d8-25a5-47b1-a114-0a7b61bb9a6f", 
+                    "typeGuid": "37fe059f-4b9a-4bc1-ae7c-a1b047819f47"
+                }, 
+                "fields": {
+                    "Id": 1177, 
+                    "Name": "ГАЗПРОМ", 
+                    "country": "Россия", 
+                    "city": "Москва", 
+                    "address": "Тверская 13",
+                    "MainProduct": "Газ",
+                    "Revenue": 12345.22
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "2fc46439-fe58-4a2a-ac3b-c5f8f01c051f", 
+                    "typeGuid": "37fe059f-4b9a-4bc1-ae7c-a1b047819f47"
+                }, 
+                "fields": {
+                    "Id": 1178, 
+                    "Name": "НОРНИКЕЛЬ", 
+                    "country": "Россия", 
+                    "city": "Норильск", 
+                    "address": "Ленина 77",
+                    "MainProduct": "Никель",
+                    "Revenue": 987563.02
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "fcba6fc3-0bd3-414e-90e2-6a8a64e0a323", 
+                    "typeGuid": "7e0e4003-5e44-4f29-b4b9-ebcd6fdf78c7"
+                }, 
+                "fields": {
+                    "Id": 1179, 
+                    "Name": "Fine Life", 
+                    "country": "Россия", 
+                    "city": "Ижевск", 
+                    "address": "Азина 177",
+                    "MainProduct": "Молоко",
+                    "Revenue": 987563.02,
+                    "Category": "Молочные продукты",
+                    "NRetailers": 3000
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "715a12ad-a102-452c-a707-3bbbd02ed4ba", 
+                    "typeGuid": "7e0e4003-5e44-4f29-b4b9-ebcd6fdf78c7"
+                }, 
+                "fields": {
+                    "Id": 1180, 
+                    "Name": "Rich Russia", 
+                    "country": "Россия", 
+                    "city": "Щелково", 
+                    "address": "Фруктовая 177",
+                    "MainProduct": "Сок",
+                    "Revenue": 1987563.02,
+                    "Category": "Напитки",
+                    "NRetailers": 1200
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "8d3ca398-00d0-4778-98d0-c6f501f14027", 
+                    "typeGuid": "8005d322-bc8a-4762-a295-ddbce9505a7f"
+                }, 
+                "fields": {
+                    "Id": 1181, 
+                    "Name": "ТАЗ", 
+                    "country": "Россия", 
+                    "city": "Тольятти", 
+                    "address": "Автозаводская 1",
+                    "MainProduct": "Автомобили",
+                    "Revenue": 198750.02,
+                    "Brand": "LADA",
+                    "IsLocal": true
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "7054232b-2601-48d4-84de-ec6b461fb8c7", 
+                    "typeGuid": "8005d322-bc8a-4762-a295-ddbce9505a7f"
+                }, 
+                "fields": {
+                    "Id": 1182, 
+                    "Name": "АвтоТор", 
+                    "country": "Россия", 
+                    "city": "Калининград", 
+                    "address": "Приморская 23",
+                    "MainProduct": "Автомобили",
+                    "Revenue": 7198750.02,
+                    "Brand": "BMW",
+                    "IsLocal": false
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "9d3bce6a-9907-4f23-b59e-2d938f9b5598", 
+                    "typeGuid": "279c2d99-20f3-484b-9c51-e67c6a13bf45"
+                }, 
+                "fields": {
+                    "Id": 1183, 
+                    "Name": "Пятерочка", 
+                    "country": "Россия", 
+                    "city": "СПБ", 
+                    "address": "Невский 223",
+                    "Region": "Север",
+                    "MarketShare": 0.33
+                }, 
+                "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "e3352a74-6a29-430e-b630-73e5fdfbf2b2", 
+                    "typeGuid": "279c2d99-20f3-484b-9c51-e67c6a13bf45"
+                }, 
+                "fields": {
+                    "Id": 1184, 
+                    "Name": "Перекресток", 
+                    "country": "Россия", 
+                    "city": "Москва", 
+                    "address": "Ленинский 213",
+                    "Region": "Центральный",
+                    "MarketShare": 0.21
+                }, 
+                "collections": { }
+            }
+        ]
+    }
+}
