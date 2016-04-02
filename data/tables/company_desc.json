@@ -144,6 +144,160 @@
                     "MarketShare": 0.21
                 }, 
                 "collections": { }
+            },
+            {
+                "$sys": {
+                    "guid": "a44ffa5c-e2d8-4c82-ae11-2c1753f6bed2", 
+                    "typeGuid": "e1b82325-a429-4cd8-a876-8e87b5a546ce"
+                }, 
+                "fields": {
+                    "Id": 10994, 
+                    "parent": 1177, 
+                    "firstname": "Иван", 
+                    "lastname": "Тургенев", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Северо-Запад"
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "33227928-f888-4806-93bf-33fde2ce81c6", 
+                    "typeGuid": "e1b82325-a429-4cd8-a876-8e87b5a546ce"
+                }, 
+                "fields": {
+                    "Id": 10995, 
+                    "parent": 1178, 
+                    "firstname": "Николай", 
+                    "lastname": "Гоголь", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Запад"
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "4b974ce4-49db-44d8-95ad-d68a11281009", 
+                    "typeGuid": "771170fe-4d21-44d9-ab51-7c10e89d9ab6"
+                }, 
+                "fields": {
+                    "Id": 10996, 
+                    "parent": 1179, 
+                    "firstname": "Лев", 
+                    "lastname": "Толстой", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Север",
+                    "Product": "Металл",
+                    "OfficeNo": 22
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "4d3a898f-0d4f-4805-8f8a-613496cb64d3", 
+                    "typeGuid": "771170fe-4d21-44d9-ab51-7c10e89d9ab6"
+                }, 
+                "fields": {
+                    "Id": 10997, 
+                    "parent": 1180, 
+                    "firstname": "Джек", 
+                    "lastname": "Лондон", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Северо-Восток",
+                    "Product": "Электроника",
+                    "OfficeNo": 102
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "a6cac9d0-865e-4274-bcc1-4e32f9dd3159", 
+                    "typeGuid": "5792a222-ac42-491f-9fcf-00c5d3abf1bf"
+                }, 
+                "fields": {
+                    "Id": 10998, 
+                    "parent": 1181, 
+                    "firstname": "Марк", 
+                    "lastname": "Твен", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Восток",
+                    "Category": "VIP-клиенты",
+                    "MinDealSum": 102
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "7cedddc5-80fe-4860-947e-18eb737eeaa9", 
+                    "typeGuid": "5792a222-ac42-491f-9fcf-00c5d3abf1bf"
+                }, 
+                "fields": {
+                    "Id": 10999, 
+                    "parent": 1182, 
+                    "firstname": "Александр", 
+                    "lastname": "Блок", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Region": "Юго-Восток",
+                    "Category": "ГУП",
+                    "MinDealSum": 103
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "f90129fd-09c6-4cd4-ab04-6176f507a71e", 
+                    "typeGuid": "f42c40e5-e4ac-4f4c-986d-2e25ed0708ec"
+                }, 
+                "fields": {
+                    "Id": 11000, 
+                    "parent": 1183, 
+                    "firstname": "Сергей", 
+                    "lastname": "Есенин", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Specialty": "СХ",
+                    "Rating": 3.5
+                }, 
+                "collections": { }
+            }, 
+            {
+                "$sys": {
+                    "guid": "02f1bf04-2f75-41d8-9486-774d2886476d", 
+                    "typeGuid": "f42c40e5-e4ac-4f4c-986d-2e25ed0708ec"
+                }, 
+                "fields": {
+                    "Id": 11001, 
+                    "parent": 1184, 
+                    "firstname": "Владимир", 
+                    "lastname": "Маяковский", 
+                    "birthdate": "2005-07-31T21:00:00.000Z", 
+                    "country": "", 
+                    "city": "", 
+                    "address": "845-354-1082",
+                    "Specialty": "Промышленность",
+                    "Rating": 7.5
+                }, 
+                "collections": { }
             }
         ]
     }
