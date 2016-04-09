@@ -79,13 +79,13 @@ define(
             }
 
             var cm = this.getControlMgr();
-            var rootElem = null;
+            var dataCollection = null;
 
 
             if (this.dataset()) {
                 dataset = this.dataset();
                 if (dataset) {
-                    rootElem = dataset.root();
+                    dataCollection = dataset.getDataCollection();
                 }
             }
 
@@ -112,9 +112,9 @@ define(
                 table.append(row);
             }
 
-            if (rootElem)
+            if (dataCollection)
             {
-                var col = rootElem.getCol('DataElements');
+                var col = dataCollection;
                 var idIndex = null, cursor = dataset.cursor(), rows = '', cursorIndex = -1;
                 var fieldsArr = {};
                 for (var i = 0, len = fields.count(); i < len; i++) {
@@ -139,7 +139,11 @@ define(
                             //if (idIndex == columnsArr[j].field)
                               //  id = text;
                         }
-                        id = obj.id();
+                        
+                        id = obj.getGuid();
+                        if (dataset.getTypeGuid() === UCCELLO_CONFIG.classGuids.DatasetOld)
+                            id = obj.id(); // "Старый" вариант dataset-а
+                        
                         rows += '<div class="row data" data-id="' + id + '">' + cells + '</div>';
 
                         // запоминаем текущий курсор
@@ -326,7 +330,7 @@ define(
          */
         vDataGrid.renderCursor = function(id) {
             var table = $('#' + this.getLid()).find('.table'), wrapper = table.parent();
-            var rowTr = table.find('.row.data[data-id='+id+']');
+            var rowTr = table.find('.row.data[data-id="'+id+'"]');
             var that = this;
             var dataset = this.dataset();
             var dsState = !dataset ? Meta.State.Unknown : dataset.getState();
@@ -409,15 +413,15 @@ define(
             add = add === undefined || add;
             this.pvt.cursorIndex = cursorIndex;
             var cm = this.getControlMgr();
-            var rootElem = null, dataset = null;
+            var dataCollection = null, dataset = null;
             if (this.dataset()) {
                 dataset = this.dataset();
                 if (dataset)
-                    rootElem = dataset.root();
+                    dataCollection = dataset.getDataCollection();
             }
 
-            if (rootElem) {
-                var col = rootElem.getCol('DataElements'), columns = this.getCol('Columns'), fields = this.getCol('Fields');
+            if (dataCollection) {
+                var col = dataCollection, columns = this.getCol('Columns'), fields = this.getCol('Fields');
                 var cursor = col.get(cursorIndex);
                 var table = $('#' + this.getLid()).find('.table');
                 if (cursor) {
@@ -481,15 +485,15 @@ define(
         vDataGrid.saveRow = function() {
             if (this.editable()) {
                 var cm = this.getControlMgr();
-                var rootElem = null, dataset = null;
+                var dataCollection = null, dataset = null;
                 if (this.dataset()) {
                     dataset = this.dataset();
                     if (dataset)
-                        rootElem = dataset.root();
+                        dataCollection = dataset.getDataCollection();
                 }
 
-                if (rootElem) {
-                    var col = rootElem.getCol('DataElements'), columns = this.getCol('Columns'), fields = this.getCol('Fields');
+                if (dataCollection) {
+                    var col = dataCollection, columns = this.getCol('Columns'), fields = this.getCol('Fields');
                     var cursor = col.get(this.pvt.cursorIndex);
                     if (cursor) {
                         var table = $('#' + this.getLid()).find('.table');

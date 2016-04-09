@@ -81,7 +81,7 @@
                         {
                           "$sys": {
                             "guid": "061b1347-18a2-a829-fcce-ba59058b4bdf",
-                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
                           "fields": {
                             "Id": "6",
@@ -158,7 +158,7 @@
                         {
                           "$sys": {
                             "guid": "eefbcccf-743a-66a4-c3a2-4751d2a334f5",
-                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
                           "fields": {
                             "Id": "12",
@@ -268,7 +268,7 @@
                         {
                           "$sys": {
                             "guid": "e559320d-d80d-48f7-ed4e-0ac63587e606",
-                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
                           "fields": {
                             "Id": "21",
@@ -334,7 +334,7 @@
                         {
                           "$sys": {
                             "guid": "92720532-a58f-68bb-6e5a-02b28239e312",
-                            "typeGuid": "3f3341c7-2f06-8d9d-4099-1075c158aeee"
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
                           "fields": {
                             "Id": "26",
