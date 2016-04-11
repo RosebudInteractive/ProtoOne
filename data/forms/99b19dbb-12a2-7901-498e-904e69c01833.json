@@ -18,6 +18,7 @@
                 "ver": 0, 
                 "fields": {
                     "ResElemName": "RootDS", 
+                    "Alias": "DataTstCompany", 
                     "ModelRef": {
                         "guidRes": "f0135ac7-ad8e-7ffd-5c75-db7c50b7f504", 
                         "guidElem": "f0135ac7-ad8e-7ffd-5c75-db7c50b7f504", 

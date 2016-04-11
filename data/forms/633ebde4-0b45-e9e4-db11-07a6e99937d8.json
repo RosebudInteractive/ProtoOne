@@ -1,0 +1,81 @@
+{
+    "$sys": {
+        "guid": "633ebde4-0b45-e9e4-db11-07a6e99937d8", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 0, 
+    "fields": {
+        "ResName": "MemModelTest", 
+        "_Counter": 3
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "11cf789d-c65c-84b6-00c6-9d97011833ab", 
+                    "typeGuid": "570c6b33-4ca2-49f8-a3fc-e5743402a2a1"
+                }, 
+                "ver": 0, 
+                "fields": {
+                    "ResElemName": "MemCompanyTree", 
+                    "Alias": "MemCompanyTree", 
+                    "_CurrState": 0, 
+                    "RootClassGuid": "1821b56b-7446-4428-93b5-c121c265e4bc"
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "3dd08aec-4a69-d556-436c-bb194d4aa545", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 0, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "Contacts", 
+                                "_CurrState": 0, 
+                                "ParentCollection": "Contacts"
+                            }, 
+                            "collections": {
+                                "Childs": {
+                                    "0": {
+                                        "$sys": {
+                                            "guid": "ad5df3d2-5fed-48ea-6af0-a72fcd9d7574", 
+                                            "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                                        }, 
+                                        "ver": 0, 
+                                        "fields": {
+                                            "ResElemName": "DataSource3", 
+                                            "Alias": "Addresses", 
+                                            "_CurrState": 0, 
+                                            "ParentCollection": "Addresses"
+                                        }, 
+                                        "collections": {
+                                            "Childs": { }
+                                        }
+                                    }
+                                }
+                            }
+                        }, 
+                        "1": {
+                            "$sys": {
+                                "guid": "f6e9fb95-1bf3-b9a1-d0de-a675bdbc1c93", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 0, 
+                            "fields": {
+                                "ResElemName": "DataSource2", 
+                                "Alias": "Contracts", 
+                                "_CurrState": 0, 
+                                "ParentCollection": "Contracts"
+                            }, 
+                            "collections": {
+                                "Childs": { }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

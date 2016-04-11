@@ -94,18 +94,26 @@ function fakeAuthenticate(user, pass, done) {
 
 var config = {
     controls: [
+        { className: 'MemAddressTest', component: '../memTreeTest/memAddressTest' },
+        { className: 'MemContractTest', component: '../memTreeTest/memContractTest' },
+        { className: 'MemContactTest', component: '../memTreeTest/memContactTest' },
+        { className: 'MemCompanyTest', component: '../memTreeTest/memCompanyTest' },
         { className: 'DbNavigator', component: 'dbNavigator', guid: '38aec981-30ae-ec1d-8f8f-5004958b4cfa' },
         { className: 'MatrixGrid', component: 'matrixGrid', guid: '827a5cb3-e934-e28c-ec11-689be18dae97' },
         { className: 'PropEditor', component: 'propEditor', guid: 'a0e02c45-1600-6258-b17a-30a56301d7f1' },
-        { className: 'GenVContainer', component:'genVContainer', viewset:true, guid:'b75474ef-26d0-4298-9dad-4133edaa8a9c'},
-        { className: 'GenForm', component:'genForm', viewset:true, guid:'29bc7a01-2065-4664-b1ad-7cc86f92c177'},
-        {className:'GenLabel', component:'genLabel', viewset:true, guid:'151c0d05-4236-4732-b0bd-ddcf69a35e25'},
-        {className:'GenDataGrid', component:'genDataGrid', viewset:true, guid:'55d59ec4-77ac-4296-85e1-def78aa93d55'},
-        {className:'GenButton', component:'genButton', viewset:true, guid:'bf0b0b35-4025-48ff-962a-1761aa7b3a7b'},
-        {className:'GenDataEdit', component:'genDataEdit', viewset:true, guid:'567cadd5-7f9d-4cd8-a24d-7993f065f5f9'}
+        { className: 'GenVContainer', component: 'genVContainer', viewset: true, guid: 'b75474ef-26d0-4298-9dad-4133edaa8a9c' },
+        { className: 'GenForm', component: 'genForm', viewset: true, guid: '29bc7a01-2065-4664-b1ad-7cc86f92c177' },
+        { className: 'GenLabel', component: 'genLabel', viewset: true, guid: '151c0d05-4236-4732-b0bd-ddcf69a35e25' },
+        { className: 'GenDataGrid', component: 'genDataGrid', viewset: true, guid: '55d59ec4-77ac-4296-85e1-def78aa93d55' },
+        { className: 'GenButton', component: 'genButton', viewset: true, guid: 'bf0b0b35-4025-48ff-962a-1761aa7b3a7b' },
+        { className: 'GenDataEdit', component: 'genDataEdit', viewset: true, guid: '567cadd5-7f9d-4cd8-a24d-7993f065f5f9' }
     ],
     
     classGuids: {
+        "MemAddressTest": "14134cb5-7caa-44e2-84ac-9d4c208772f8",
+        "MemContractTest": "dd0addee-bf0f-458e-a360-dbfa1682e6a2",
+        "MemContactTest": "bcbd8862-7bdf-42c9-a4cb-634f8a6019a5",
+        "MemCompanyTest": "1821b56b-7446-4428-93b5-c121c265e4bc",
         "RootTstCompany": "c4d626bf-1639-2d27-16df-da3ec0ee364e",
         "DataTstCompany": "34c6f03d-f6ba-2203-b32b-c7d54cd0185a",
         "RootTstContact": "de984440-10bd-f1fd-2d50-9af312e1cd4f",
@@ -138,16 +146,16 @@ var config = {
         scriptsPath     : __dirname + '/../ProtoOne/data/wfeUserScripts/',
         idleTimeout     : 10000
     },
-
+    
     dataman: {
         //connection: { //MSSQL
         //    host: "10.1.1.3", // "SQL-SERVER"
-        //    //port: 1435, //instanceName: "SQL2008R2"
+        //    port: 1435, //instanceName: "SQL2008R2"
         //    username: "sa",
         //    password: "system",
         //    database: "genetix_test",
         //    provider: "mssql",
-        //    connection_options: { instanceName: "SQL2008R2" },
+        //    connection_options: { instanceName: "SQL2008R2", requestTimeout: 0 },
         //    provider_options: {},
         //    pool: {
         //        max: 5,
@@ -182,14 +190,17 @@ var config = {
     //    useDb: true,
     //    defaultProduct : "ProtoOne",
     //    sourceDir: [
-    //        {path: __dirname + '/data/forms/', type: 'FRM'},
-    //        {path: __dirname + '/data/processDefinitions/', type: 'PR_DEF', generator: __dirname + '/../' + uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'}
-    //    ]
+    //        { path: __dirname + "/data/forms/", type: "FRM" },
+    //        {
+    //            path: __dirname + "/data/processDefinitions/", type: "PR_DEF",
+    //            generator: __dirname + '/../' + uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'
+    //        }
+    //    ],
     //},
     //resourceBuilder : {
     //    types: [
-    //        {Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма"},
-    //        {Code: "PR_DEF", Name: "Process Definition", ClassName: "ProcessDefinition", Description: "Определение процесса"}
+    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма" },
+    //        { Code: "PR_DEF", Name: "Process Definition", ClassName: "ProcessDefinition", Description: "Определение процесса" }
     //    ],
     //    destDir : "./data/tables/",
     //    formResTypeId : 1,
