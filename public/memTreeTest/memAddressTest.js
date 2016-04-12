@@ -17,6 +17,18 @@ define(
                 { fname: "address", ftype: { "type": "string", "length": 255 } }
             ],
 
+            country: function (value) {
+                return this._genericSetter("country", value);
+            },
+            
+            city: function (value) {
+                return this._genericSetter("city", value);
+            },
+            
+            address: function (value) {
+                return this._genericSetter("address", value);
+            },
+            
             init: function(cm,params){
                 UccelloClass.super.apply(this, [cm, params]);
             }

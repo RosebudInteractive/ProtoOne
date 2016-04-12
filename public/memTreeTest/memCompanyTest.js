@@ -22,6 +22,22 @@ define(
 				{ "cname": "Contracts", "ctype": "MemContractTest" }
             ],
 
+            name: function (value) {
+                return this._genericSetter("Name", value);
+            },
+            
+            country: function (value) {
+                return this._genericSetter("country", value);
+            },
+            
+            city: function (value) {
+                return this._genericSetter("city", value);
+            },
+            
+            address: function (value) {
+                return this._genericSetter("address", value);
+            },
+            
             init: function(cm,params){
                 UccelloClass.super.apply(this, [cm, params]);
             }

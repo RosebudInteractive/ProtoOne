@@ -133,8 +133,7 @@ define(
 
                         // добавляем ячейку
                         for (var j = 0, len2 = columnsArrLen; j < len2; j++) {
-                            //var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
-                            var text = obj.get(fieldsArr[columnsArr[j].field]);
+                            var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
                             var width = columnsArr[j].width;
                             cells += '<div class="cell" style="width:'+(width?width:'10%')+'%;">' + (text ? text : '&nbsp;') + '</div>';
                             //if (idIndex == columnsArr[j].field)
@@ -160,8 +159,7 @@ define(
 
                         // добавляем ячейку
                         for (var j in fieldsArr) {
-                            //var text = obj[fieldsArr[j].charAt(0).toLowerCase() + fieldsArr[j].slice(1)]();
-                            var text = obj.get(fieldsArr[j]);
+                            var text = obj[fieldsArr[j].charAt(0).toLowerCase() + fieldsArr[j].slice(1)]();
                             cells += '<div class="cell w60">' + (text ? text : '&nbsp;') + '</div>';
                             if (idIndex == j)
                                 id = text;
