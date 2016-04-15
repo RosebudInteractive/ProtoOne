@@ -1,3 +1,6 @@
+// Использовать подключение к MSSQL, иначе к MySql
+var USE_MSSQL_SERVER = true;
+
 // дирректория где лежит Uccello
 var uccelloDir = process.argv[2]&&process.argv[2][0]!='-'?process.argv[2]:'Uccello';
 console.log('Using folder: '+uccelloDir);
@@ -91,6 +94,36 @@ function fakeAuthenticate(user, pass, done) {
     done(err, row);
 }
 
+var mssql_connection = { //MSSQL
+    host: "10.1.1.3", // "SQL-SERVER"
+    port: 1435,       // instanceName: "SQL2008R2"
+    username: "sa",
+    password: "system",
+    database: "genetix_test",
+    provider: "mssql",
+    connection_options: { instanceName: "SQL2008R2", requestTimeout: 0 },
+    provider_options: {},
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    },
+};
+
+var mysql_connection = { //MySql
+    host: "localhost",
+    username: "sa",
+    password: "system",
+    database: "genetix_test",
+    provider: "mysql",
+    connection_options: {},
+    provider_options: {},
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    },
+};
 
 var config = {
     controls: [
@@ -148,35 +181,8 @@ var config = {
     },
     
     dataman: {
-        //connection: { //MSSQL
-        //    host: "10.1.1.3", // "SQL-SERVER"
-        //    port: 1435, //instanceName: "SQL2008R2"
-        //    username: "sa",
-        //    password: "system",
-        //    database: "genetix_test",
-        //    provider: "mssql",
-        //    connection_options: { instanceName: "SQL2008R2", requestTimeout: 0 },
-        //    provider_options: {},
-        //    pool: {
-        //        max: 5,
-        //        min: 0,
-        //        idle: 10000
-        //    },
-        //},
-        //connection: { //MySql
-        //    host: "localhost",
-        //    username: "sa",
-        //    password: "system",
-        //    database: "genetix_test",
-        //    provider: "mysql",
-        //    connection_options: {},
-        //    provider_options: {},
-        //    pool: {
-        //        max: 5,
-        //        min: 0,
-        //        idle: 10000
-        //    },
-        //},
+        //connection: USE_MSSQL_SERVER ? mssql_connection : mysql_connection,
+
         //importData: {
         //    autoimport: false,
         //    dir: "./data/tables"
