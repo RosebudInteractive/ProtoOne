@@ -5,7 +5,7 @@
   },
   "fields": {
     "Id": 1,
-    "ResName": "test"
+    "ResName": "test-mem"
   },
   "collections": {
     "Children": [
