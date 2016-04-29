@@ -1,0 +1,34 @@
+{
+    "$sys": {
+        "guid": "235f5d5b-08d5-2335-a134-8607ad5b83f9", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 0, 
+    "fields": {
+        "ResName": "DMTaskList"
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "faafb580-41f7-1411-5774-515d7c05be88", 
+                    "typeGuid": "f0138eab-8a62-4cb8-b9f5-33917bec1f59"
+                }, 
+                "ver": 0, 
+                "fields": {
+                    "ResElemName": "TaskListTree", 
+                    "Alias": "TaskListTree", 
+                    "ModelRef": {
+                        "guidRes": "39419efc-4808-4f2d-6727-128acfad8f6f", 
+                        "guidElem": "39419efc-4808-4f2d-6727-128acfad8f6f", 
+                        "resName": "VirtualTaskList"
+                    }
+                }, 
+                "collections": {
+                    "Childs": { }, 
+                    "Filter": { }
+                }
+            }
+        }
+    }
+}
