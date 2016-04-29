@@ -17,7 +17,9 @@ $(document).ready( function() {
     require(['./uccello/config/config', './uccello/system/utils'], function(Config, Utils){
         var config = {
             controls: [
-                {className:'MemAddressTest', component:'../memTreeTest/memAddressTest'},
+                {className:'TaskParameter', component: '../processTypes/taskParameter'},
+                {className:'TaskStage', component: '../processTypes/taskStage'},
+                {className:'MemAddressTest', component: '../memTreeTest/memAddressTest'},
                 {className:'MemContractTest', component:'../memTreeTest/memContractTest'},
                 {className:'MemContactTest', component:'../memTreeTest/memContactTest'},
                 {className:'MemCompanyTest', component:'../memTreeTest/memCompanyTest'},
@@ -53,6 +55,8 @@ $(document).ready( function() {
             ],
             
             classGuids: {
+                "TaskParameter": "b3746562-946f-46f6-b74f-a50eaff7a771",
+                "TaskStage": "c2f02b7a-1204-4dca-9ece-3400b4550c8d",
                 "MemAddressTest": "14134cb5-7caa-44e2-84ac-9d4c208772f8",
                 "MemContractTest": "dd0addee-bf0f-458e-a360-dbfa1682e6a2",
                 "MemContactTest": "bcbd8862-7bdf-42c9-a4cb-634f8a6019a5",
