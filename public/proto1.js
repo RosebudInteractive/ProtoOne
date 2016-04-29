@@ -10,7 +10,7 @@ requirejs.config({
 });
 
 
-var $leadEdit, $leadEdit2, $testEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var $leadEdit, $leadEdit2, $testEdit, $tasksList, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -48,7 +48,8 @@ $(document).ready( function() {
                 {className:'ToolbarButton', viewset:true},
                 {className:'LayersContainer', viewset:true},
                 {className:'TreeView', viewset:true},
-                {className:'DbTreeView', viewset:true}
+                {className:'DbTreeView', viewset:true},
+                {className:'FormContainer', viewset:true}
             ],
             
             classGuids: {
@@ -87,8 +88,8 @@ $(document).ready( function() {
 
     require(
         ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr',
-            './leadEdit', './leadEditDataset', './testEdit'],
-        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2, TestEdit){
+            './leadEdit', './leadEditDataset', './testEdit', './tasksList'],
+        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2, TestEdit, TasksList){
 
             setTimeout(function(){
 
@@ -157,7 +158,8 @@ $(document).ready( function() {
              * @returns {object}
              */
             this.renderRoot = function(rootGuid){
-
+                var obj = uccelloClt.getContextCM().getObj(rootGuid);
+                var form = obj.getForm();
                 if (that.rootsContainers[rootGuid] !== undefined) {
                     return {rootContainer: "#result"+that.rootsContainers[rootGuid]};
                 }
@@ -942,6 +944,7 @@ $(document).ready( function() {
             $leadEdit = new LeadEdit(uccelloClt);
             $leadEdit2 = new LeadEdit2(uccelloClt);
             $testEdit = new TestEdit(uccelloClt);
+            $tasksList = new TasksList(uccelloClt);
 
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------

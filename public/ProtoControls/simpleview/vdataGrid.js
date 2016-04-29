@@ -133,7 +133,9 @@ define(
 
                         // добавляем ячейку
                         for (var j = 0, len2 = columnsArrLen; j < len2; j++) {
-                            var text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
+                            var text = "Field not found";
+                            if (typeof obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)] == "function")
+                                text = obj[fieldsArr[columnsArr[j].field].charAt(0).toLowerCase() + fieldsArr[columnsArr[j].field].slice(1)]();
                             var width = columnsArr[j].width;
                             cells += '<div class="cell" style="width:'+(width?width:'10%')+'%;">' + (text ? text : '&nbsp;') + '</div>';
                             //if (idIndex == columnsArr[j].field)
@@ -261,29 +263,30 @@ define(
 
         vDataGrid._setButtonsState = function() {
             var ds = this.dataset();
+            var dsCanEdit = !ds.canEdit || (ds && ds.canEdit());
             var isMaster = ds && ds.master() ? false : true;
             var dsState = ds ? ds.getState() :  Meta.State.Unknown;
             var dsMasterState = ds && ds.master() ? ds.master().getState() : Meta.State.Unknown;
             var grid = $("#" + this.getLid());
 
             // insert
-            var enabled = dsState !=  Meta.State.Unknown &&
+            var enabled = dsCanEdit && dsState !=  Meta.State.Unknown &&
                 ((isMaster && dsState == Meta.State.Browse) || (!isMaster && dsMasterState <= Meta.State.Edit));
             grid.find('.insert').prop('disabled', !enabled);
             // update
-            enabled = dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+            enabled = dsCanEdit && dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
                 (!isMaster && dsMasterState <= Meta.State.Edit)) &&
                 ds.cursor();
             grid.find('.update').prop('disabled', !enabled);
 
             // delete
-            enabled = dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+            enabled = dsCanEdit && dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
                 (!isMaster && dsMasterState <= Meta.State.Edit)) &&
                 ds.cursor();
             grid.find('.delete').prop('disabled', !enabled);
 
             //save & cancel
-            enabled = dsState !=  Meta.State.Unknown &&
+            enabled = dsCanEdit && dsState !=  Meta.State.Unknown &&
                 (
                     (isMaster && (dsState == Meta.State.Edit || dsState == Meta.State.Insert)) ||
                     (!isMaster && dsMasterState == Meta.State.Browse && (dsState == Meta.State.Edit || dsState == Meta.State.Insert))
@@ -293,8 +296,7 @@ define(
             grid.find('.cancel').prop('disabled', !enabled);
         }
 
-        vDataGrid.scrollTo = function(elem, div)
-        {
+        vDataGrid.scrollTo = function(elem, div) {
             if (elem.length > 0  && div.length>0) {
                 if (!vDataGrid.isScrolledIntoView(elem, div)) {
                     var currScroll = div.scrollTop(), newScroll = elem.offset().top - div.offset().top + currScroll;
@@ -307,8 +309,7 @@ define(
             return null;
         }
 
-        vDataGrid.isScrolledIntoView = function(elem, div)
-        {
+        vDataGrid.isScrolledIntoView = function(elem, div) {
             var $elem = $(elem);
             var $window = $(div);
 

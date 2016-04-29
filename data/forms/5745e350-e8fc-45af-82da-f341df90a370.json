@@ -1,0 +1,534 @@
+{
+  "$sys": {
+    "guid": "5745e350-e8fc-45af-82da-f341df90a370",
+    "typeGuid": "10217b8e-b1f8-4221-a419-f20735219dd2"
+  },
+  "fields": {
+    "Id": 1,
+    "ResName": "tasks-list"
+  },
+  "collections": {
+    "Children": [
+      {
+        "$sys": {
+          "guid": "a01a2c42-3c68-70dd-fd94-8ca48c3b8a0b",
+          "typeGuid": "7f93991a-4da9-4892-79c2-35fe44e69083"
+        },
+        "fields": {
+          "Id": "1",
+          "Name": "MainForm",
+          "Title": "test",
+          "dbgName": "FormTest",
+          "ResElemName": "MainForm"
+        },
+        "collections": {
+          "Params": [
+            {
+              "$sys": {
+                "guid": "a188cfcf-f2de-dc88-f51d-0f42a7e745a1",
+                "typeGuid": "4943ce3e-a6cb-65f7-8805-ec339555a981"
+              },
+              "fields": {
+                "Id": "2",
+                "Name": "FormParam1",
+                "Type": "param",
+                "Kind": "out",
+                "Value": "",
+                "ResElemName": "FormParam1"
+              },
+              "collections": {}
+            }
+          ],
+          "SubForms": [
+            {
+              "$sys": {
+                "guid": "9db40561-0111-1cc9-54a9-9e89ac2814cd",
+                "typeGuid": "d7785c24-0b96-76ee-46a7-b0103cda4aa0"
+              },
+              "fields": {
+                "Id": "3",
+                "Name": "CompanyForm",
+                "FormGuid": "02fad346-dc0b-7d02-b395-729186589611",
+                "ResElemName": "CompanyForm"
+              }
+            }
+          ],
+          "Children": [
+            {
+              "$sys": {
+                "guid": "15e8110a-1453-725a-c443-c63f9f10ef6a",
+                "typeGuid": "1d95ab61-df00-aec8-eff5-0f90187891cf"
+              },
+              "fields": {
+                "Id": "4",
+                "Name": "MainContainer",
+                "ResElemName": "MainContainer"
+              },
+              "collections": {
+                "Children": [
+                  {
+                    "$sys": {
+                      "guid": "f0ee9df0-314c-e22c-4c6e-64e76f65bb2d",
+                      "typeGuid": "5e89f6c7-ccc2-a850-2f67-b5f5f20c3d47"
+                    },
+                    "fields": {
+                      "Id": "5",
+                      "Name": "DataModel",
+                      "ResElemName": "DataModel"
+                    },
+                    "collections": {
+                      "Datasets": [
+                        {
+                          "$sys": {
+                            "guid": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
+                          },
+                          "fields": {
+                            "Id": "6",
+                            "ObjectTree": {
+                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem": "1b973ab6-05cb-0f61-2346-504f25a6a76c"
+                            },
+                            "Name": "DatasetTasks",
+                            "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
+                            "Active": true,
+                            "OnMoveCursor": " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
+                            "ResElemName": "DatasetTasks"
+                          },
+                          "collections": {
+                            "Fields": [
+                              {
+                                "$sys": {
+                                  "guid": "eb40d92e-aaca-45db-8236-2b37aba3d539",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "7",
+                                  "Name": "TaskId",
+                                  "ResElemName": "TaskId"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "52c4887f-1f90-4d24-aab8-396228fc6cfa",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "8",
+                                  "Name": "Number",
+                                  "ResElemName": "Number"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "7787491f-9337-4dc2-833c-3e7bc2f327d4",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "9",
+                                  "Name": "Name",
+                                  "ResElemName": "TaskName"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "550629a7-d575-4073-8ba6-879a0d9a07bf",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "10",
+                                  "Name": "Stage",
+                                  "ResElemName": "Stage"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "69a60446-4979-4b90-b246-624da9384f6a",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "11",
+                                  "Name": "RequestId",
+                                  "ResElemName": "RequestId"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "10e6b748-7c6b-4cfc-b598-cd91125ff769",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "11",
+                                  "Name": "ObjId",
+                                  "ResElemName": "ObjId"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "6077a56c-d1c2-cea8-9bdc-ae796e54462e",
+                      "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                    },
+                    "fields": {
+                      "Id": "32",
+                      "Name": "DataGridTasks",
+                      "Top": "67",
+                      "Left": "10",
+                      "Width": 680,
+                      "Height": 240,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "ResElemName": "DataGridTasks"
+                    },
+                    "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "248c23d2-da4a-11a6-3562-c0f782d190e4",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "DataColumnTaskId",
+                            "Label": "TaskId",
+                            "Width": 15,
+                            "Field": "eb40d92e-aaca-45db-8236-2b37aba3d539",
+                            "ResElemName": "DataColumnTaskId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnNumber",
+                            "Label": "Number",
+                            "Width": 15,
+                            "Field": "52c4887f-1f90-4d24-aab8-396228fc6cfa",
+                            "ResElemName": "DataColumnNumber"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "530eac21-e7f2-4efc-acf6-8c6f2930f64c",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnName",
+                            "Label": "Name",
+                            "Width": 15,
+                            "Field": "7787491f-9337-4dc2-833c-3e7bc2f327d4",
+                            "ResElemName": "DataColumnName"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "6b64522b-51cf-4509-9013-753c5895a513",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnStage",
+                            "Label": "Stage",
+                            "Width": 15,
+                            "Field": "550629a7-d575-4073-8ba6-879a0d9a07bf",
+                            "ResElemName": "DataColumnStage"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "39fd240a-d634-4c7f-baf2-951c191ee9d6",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnRequestId",
+                            "Label": "RequestId",
+                            "Width": 15,
+                            "Field": "69a60446-4979-4b90-b246-624da9384f6a",
+                            "ResElemName": "DataColumnRequestId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "4d7e6260-648a-4e99-a40e-0fffe83fa234",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "DataColumnObjectId",
+                            "Label": "ObjectId",
+                            "Width": 15,
+                            "Field": "10e6b748-7c6b-4cfc-b598-cd91125ff769",
+                            "ResElemName": "DataColumnObjectId"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "25da1515-d770-37ec-caad-73b840d26612",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelId",
+                      "Top": 325,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Id",
+                      "ResElemName": "Label43"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "d9913e62-d5f7-8b4b-9717-5c34ffe9c57b",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "46",
+                      "Name": "TaskId",
+                      "Top": 320,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "TaskId",
+                      "ResElemName": "DataEdit42"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "c341e242-7a13-e469-fcb3-c5c0be053a8d",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "47",
+                      "Name": "LabelSource",
+                      "Top": 347,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Source",
+                      "ResElemName": "Label44"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "eadd6911-0beb-7de2-e663-332bfddc4a9b",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "48",
+                      "Name": "Number",
+                      "Top": 342,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "Number",
+                      "ResElemName": "DataEdit43"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "80e4c4ea-bc01-449a-c9e5-7145c1318837",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "49",
+                      "Name": "LabelState",
+                      "Top": 369,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "State",
+                      "ResElemName": "Label45"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "c6c83f69-2bce-37f6-5bc1-42534ae8b1ef",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "50",
+                      "Name": "Name",
+                      "Top": 364,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "Name",
+                      "ResElemName": "DataCombo1"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "fda67e8e-7acc-ae79-2fc6-db14a7bcb70d",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "51",
+                      "Name": "LabelContent",
+                      "Top": 391,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Content",
+                      "ResElemName": "Label46"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "63bb2eb6-f1a4-b951-0948-dfecc1f592e0",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "52",
+                      "Name": "Stage",
+                      "Top": 386,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "Stage",
+                      "ResElemName": "DataEdit44"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "2fc59e34-3f7c-5ace-69fb-44d5eeae35b3",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "53",
+                      "Name": "LabelCreation",
+                      "Top": 413,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Creation",
+                      "ResElemName": "Label47"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "4694da5e-9bce-8297-91bf-fdff05aa30ed",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "54",
+                      "Name": "RequestId",
+                      "Top": 408,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "RequestId",
+                      "ResElemName": "DataEdit45"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "d5655cdb-02cf-e87e-5ae9-06142d9bfc46",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "55",
+                      "Name": "LabelClosed",
+                      "Top": 435,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Closed",
+                      "ResElemName": "Label48"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "969f77b9-30ee-3b34-b5ce-82cd741a2328",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "56",
+                      "Name": "ObjectId",
+                      "Top": 430,
+                      "Left": 100,
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "96d4e482-1d54-4d42-b0e8-08354feaef81",
+                      "DataField": "ObjectId",
+                      "ResElemName": "DataEdit46"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "ac20ecfb-a534-758a-6abf-3868ca0eb588",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "42",
+                      "Name": "Button7",
+                      "Top": 10,
+                      "Left": 10,
+                      "Width": 80,
+                      "Height": 30,
+                      "Caption": "New task1",
+                      "OnClick": " { $tasksList.clickNewTask1(); }",
+                      "ResElemName": "Button7"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "7199969d-1ca8-46c2-97af-b52861aaf9f7",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "43",
+                      "Name": "Button6",
+                      "Top": 10,
+                      "Left": 100,
+                      "Width": 80,
+                      "Height": 30,
+                      "Caption": "New task2",
+                      "OnClick": " { $tasksList.clickNewTask2(); }",
+                      "ResElemName": "Button6"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "b2a9ed66-4585-4523-b019-bd970e123b47",
+                      "typeGuid": "d65fcd5c-68a1-4c88-aabe-f093f228df10"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "SubForm",
+                      "ResElemName": "SubForm",
+                      "Top": "67",
+                      "Left": "700",
+                      "Width": 400,
+                      "Height": 540
+                    },
+                    "collections": {}
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
