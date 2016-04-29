@@ -177,7 +177,7 @@
                     "fields": {
                       "Id": "32",
                       "Name": "DataGridTasks",
-                      "Top": "67",
+                      "Top": "50",
                       "Left": "10",
                       "Width": 680,
                       "Height": 240,
@@ -516,10 +516,10 @@
                       "Id": "45",
                       "Name": "SubForm",
                       "ResElemName": "SubForm",
-                      "Top": "67",
+                      "Top": "50",
                       "Left": "700",
                       "Width": 400,
-                      "Height": 540
+                      "Height": 570
                     },
                     "collections": {}
                   }

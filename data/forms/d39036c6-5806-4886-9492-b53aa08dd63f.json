@@ -68,6 +68,148 @@
                       "Datasets": [
                         {
                           "$sys": {
+                            "guid": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
+                          },
+                          "fields": {
+                            "Id": "6",
+                            "ObjectTree": {
+                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem": "1b973ab6-05cb-0f61-2346-504f25a6a76c"
+                            },
+                            "Name": "DatasetTaskParameter",
+                            "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
+                            "Active": true,
+                            "ResElemName": "DatasetTaskParameter"
+                          },
+                          "collections": {
+                            "Fields": [
+                              {
+                                "$sys": {
+                                  "guid": "17f46cfd-f677-4d66-8e6c-2e996959b0d9",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "7",
+                                  "Name": "Name",
+                                  "ResElemName": "TaskName"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "bf4139c9-20f4-4a20-9e6b-02596c8c83b3",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "8",
+                                  "Name": "TaskNumber",
+                                  "ResElemName": "TaskNumber"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "e489d9b9-0238-4b9e-bd4e-d46eeddf0b4f",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "9",
+                                  "Name": "Specification",
+                                  "ResElemName": "Specification"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "478685bf-46a1-4d61-acd5-bf9f94c4b835",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "10",
+                                  "Name": "ObjId",
+                                  "ResElemName": "ObjId"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
+                          },
+                          "fields": {
+                            "Id": "21",
+                            "ObjectTree": {
+                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
+                              "guidElem": "d2eeee5e-5a6b-5d8e-1fe4-25b5ba8c7a87"
+                            },
+                            "Name": "DatasetTaskStage",
+                            "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
+                            "Active": true,
+                            "Master": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                            "ResElemName": "DatasetTaskStage"
+                          },
+                          "collections": {
+                            "Fields": [
+                              {
+                                "$sys": {
+                                  "guid": "ebfaf09a-6a0f-4567-bb01-eb5c738ca703",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "22",
+                                  "Name": "Id",
+                                  "ResElemName": "DataField_2_5"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "e1417f64-ec48-4b23-93b7-0785cddb55ec",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "23",
+                                  "Name": "TaskId",
+                                  "ResElemName": "DataField_2_6"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "3b02f634-5fda-40ed-9c5b-152daddaa65c",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "24",
+                                  "Name": "TaskDefStageId",
+                                  "ResElemName": "TaskDefStageId"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "224aba28-436b-4270-8536-fb0a03ef85ce",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "25",
+                                  "Name": "StageCode",
+                                  "ResElemName": "StageCode"
+                                }
+                              },
+                              {
+                                "$sys": {
+                                  "guid": "e42d4959-d6cd-42e4-965c-4e83bb7f2bce",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "25",
+                                  "Name": "StageState",
+                                  "ResElemName": "StageState"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "$sys": {
                             "guid": "061b1347-18a2-a829-fcce-ba59058b4bdf",
                             "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
@@ -214,51 +356,93 @@
                   },
                   {
                     "$sys": {
-                      "guid": "6077a56c-d1c2-cea8-9bdc-ae796e54462e",
-                      "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                      "guid": "6a7cea85-dd15-d958-fffc-1f15e155fcdf",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
                     "fields": {
-                      "Id": "32",
-                      "Name": "DataGridCompany",
+                      "Id": "35",
+                      "Name": "DataEditId",
                       "Top": "10",
                       "Left": "10",
-                      "Width": 380,
-                      "Height": 240,
+                      "Width": 190,
+                      "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
-                      "ResElemName": "DataGridCompany"
+                      "DataField": "Id",
+                      "ResElemName": "DataEditId"
                     },
-                    "collections": {
-                      "Columns": [
-                        {
-                          "$sys": {
-                            "guid": "248c23d2-da4a-11a6-3562-c0f782d190e4",
-                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
-                          },
-                          "fields": {
-                            "Id": "33",
-                            "Name": "DataColumnId",
-                            "Label": "ID",
-                            "Width": 10,
-                            "Field": "fa866d8f-725e-f688-3de6-c0a782c95d5e",
-                            "ResElemName": "DataColumnId"
-                          }
-                        },
-                        {
-                          "$sys": {
-                            "guid": "490cac8a-f364-1c6f-d4a8-5802975d902c",
-                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
-                          },
-                          "fields": {
-                            "Id": "34",
-                            "Name": "DataColumnName",
-                            "Label": "NAME",
-                            "Width": 90,
-                            "Field": "3e9600e8-e4e8-cbef-39ab-c195fbe382cb",
-                            "ResElemName": "DataColumnName"
-                          }
-                        }
-                      ]
-                    }
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "265802e9-d5d5-953c-2712-1f4d8fa0e948",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "36",
+                      "Name": "DataEdit1",
+                      "Top": "40",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
+                      "DataField": "Name",
+                      "ResElemName": "DataEdit1"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "dd28f133-8a15-1212-eb7b-1ebd8dfaaa4d",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "37",
+                      "Name": "DataEditCountry",
+                      "Top": "70",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
+                      "DataField": "country",
+                      "ResElemName": "DataEditCountry"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "a0a48c6f-0b42-ad7e-2008-799292f85595",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "38",
+                      "Name": "DataEditCity",
+                      "Top": "100",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
+                      "DataField": "city",
+                      "ResElemName": "DataEditCity"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "95384974-2a8f-ddaa-2f47-d8b55cc3774f",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "39",
+                      "Name": "DataEditAddress",
+                      "Top": "130",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
+                      "DataField": "address",
+                      "ResElemName": "DataEditAddress"
+                    },
+                    "collections": {}
                   },
                   {
                     "$sys": {
@@ -268,7 +452,7 @@
                     "fields": {
                       "Id": "49",
                       "Name": "DataGridContact",
-                      "Top": "250",
+                      "Top": "160",
                       "Left": "10",
                       "Width": 380,
                       "Height": 120,
@@ -332,6 +516,169 @@
                             "Width": 15,
                             "Field": "15fe26e8-2dbd-5fea-3f21-409175aca9ab",
                             "ResElemName": "Cont2DataColumnTotal"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "12bdf04d-b07e-4e26-a443-5a7ac1ce60c5",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "35",
+                      "Name": "DataEditName_2_1",
+                      "Top": "300",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                      "DataField": "Name",
+                      "ResElemName": "DataEditName_2_1"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "927d1543-0968-4e18-9e8e-47e182efe3f8",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "36",
+                      "Name": "DataEdit1",
+                      "Top": "330",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                      "DataField": "TaskNumber",
+                      "ResElemName": "DataEditTaskNumber"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "0cb3d5a1-539a-4e0c-876f-e4a9201fc5f8",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "37",
+                      "Name": "DataEditCountry",
+                      "Top": "360",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                      "DataField": "Specification",
+                      "ResElemName": "DataEditSpecification"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "968cc00a-9ea9-4593-9587-9e1cbe854b51",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "38",
+                      "Name": "DataEditCity",
+                      "Top": "390",
+                      "Left": "10",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
+                      "DataField": "ObjId",
+                      "ResElemName": "DataEditObjId"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "2836c660-10f2-4cb5-adf0-b6727bd5c97a",
+                      "typeGuid": "ff7830e2-7add-e65e-7ddf-caba8992d6d8"
+                    },
+                    "fields": {
+                      "Id": "49",
+                      "Name": "DataGridTaskStage",
+                      "Top": "420",
+                      "Left": "10",
+                      "Width": 380,
+                      "Height": 120,
+                      "Dataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
+                      "ResElemName": "DataGridTaskStage",
+                      "Editable": true
+                    },
+                    "collections": {
+                      "Columns": [
+                        {
+                          "$sys": {
+                            "guid": "5d954278-9a5d-40c1-b19a-feb35bcfeed4",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "TSColumnId",
+                            "Label": "Id",
+                            "Width": 20,
+                            "Field": "ebfaf09a-6a0f-4567-bb01-eb5c738ca703",
+                            "ResElemName": "TSColumnId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "683e3985-20ce-419d-9896-edfdc3fd1a29",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "TSTaskId",
+                            "Label": "TaskId",
+                            "Width": 20,
+                            "Field": "e1417f64-ec48-4b23-93b7-0785cddb55ec",
+                            "ResElemName": "TSTaskId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "c8a00ce6-607a-47cf-800f-1105ab23c707",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "33",
+                            "Name": "TSTaskDefStageId",
+                            "Label": "TaskDefStageId",
+                            "Width": 20,
+                            "Field": "3b02f634-5fda-40ed-9c5b-152daddaa65c",
+                            "ResElemName": "TSTaskDefStageId"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "f7965c45-a9b3-40dd-a29f-4eeb8ae08f36",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "TSStageCode",
+                            "Label": "StageCode",
+                            "Width": 20,
+                            "Field": "224aba28-436b-4270-8536-fb0a03ef85ce",
+                            "ResElemName": "TSStageCode"
+                          }
+                        },
+                        {
+                          "$sys": {
+                            "guid": "675f56c4-301d-4452-9e1b-bde087404ad1",
+                            "typeGuid": "100f774a-bd84-8c46-c55d-ba5981c09db5"
+                          },
+                          "fields": {
+                            "Id": "34",
+                            "Name": "TSStageState",
+                            "Label": "StageState",
+                            "Width": 20,
+                            "Field": "e42d4959-d6cd-42e4-965c-4e83bb7f2bce",
+                            "ResElemName": "TSStageState"
                           }
                         }
                       ]
