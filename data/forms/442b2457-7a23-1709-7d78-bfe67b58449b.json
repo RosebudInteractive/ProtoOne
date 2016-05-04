@@ -1,0 +1,73 @@
+{
+    "$sys": {
+        "guid": "442b2457-7a23-1709-7d78-bfe67b58449b", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 1, 
+    "fields": {
+        "ResName": "TaskParams", 
+        "_Counter": 1
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "eb44d573-6a23-67c3-04fd-6f42dbbbaaf5", 
+                    "typeGuid": "f0a067ed-365b-4af8-89f4-29f836ce79db"
+                }, 
+                "ver": 1, 
+                "fields": {
+                    "ResElemName": "TaskParamsTree", 
+                    "Alias": "TaskParamsTree", 
+                    "_EditSet": "", 
+                    "_ChildEdCnt": 0, 
+                    "_CurrState": 0, 
+                    "_PrevState": 0, 
+                    "RootClassGuid": "b3746562-946f-46f6-b74f-a50eaff7a771"
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "131fdd8b-38fc-a13b-7907-175d9942ecc9", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "TaskStages", 
+                                "_EditSet": "", 
+                                "_ChildEdCnt": 0, 
+                                "_CurrState": 0, 
+                                "_PrevState": 0, 
+                                "ParentCollection": "TaskStages"
+                            }, 
+                            "collections": {
+                                "Childs": { }
+                            }
+                        }
+                    }, 
+                    "Parameters": {
+                        "0": {
+                            "$sys": {
+                                "guid": "ce7910a7-0a90-ee75-772d-c4f05fe9224c", 
+                                "typeGuid": "7981dc4d-3c4d-496a-9c0f-979d86a19181"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "Name": "ProcessDef", 
+                                "Value": {
+                                    "type": {
+                                        "type": "guid"
+                                    }, 
+                                    "value": "eba3f2d2-030f-ad40-f257-1b0be366a144"
+                                }
+                            }, 
+                            "collections": { }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

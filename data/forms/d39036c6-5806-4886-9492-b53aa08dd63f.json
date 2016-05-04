@@ -74,8 +74,8 @@
                           "fields": {
                             "Id": "6",
                             "ObjectTree": {
-                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
-                              "guidElem": "1b973ab6-05cb-0f61-2346-504f25a6a76c"
+                              "guidRes": "442b2457-7a23-1709-7d78-bfe67b58449b",
+                              "guidElem": "eb44d573-6a23-67c3-04fd-6f42dbbbaaf5"
                             },
                             "Name": "DatasetTaskParameter",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
@@ -139,8 +139,8 @@
                           "fields": {
                             "Id": "21",
                             "ObjectTree": {
-                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
-                              "guidElem": "d2eeee5e-5a6b-5d8e-1fe4-25b5ba8c7a87"
+                              "guidRes": "442b2457-7a23-1709-7d78-bfe67b58449b",
+                              "guidElem": "131fdd8b-38fc-a13b-7907-175d9942ecc9"
                             },
                             "Name": "DatasetTaskStage",
                             "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
@@ -216,8 +216,8 @@
                           "fields": {
                             "Id": "6",
                             "ObjectTree": {
-                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
-                              "guidElem": "1b973ab6-05cb-0f61-2346-504f25a6a76c"
+                              "guidRes": "9f0b6229-8f5f-afd3-661b-71f92b156061",
+                              "guidElem": "fb885ef3-839d-9595-283b-9481207fd96d"
                             },
                             "Name": "DatasetCompany",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
@@ -293,8 +293,8 @@
                           "fields": {
                             "Id": "21",
                             "ObjectTree": {
-                              "guidRes": "99b19dbb-12a2-7901-498e-904e69c01833",
-                              "guidElem": "d2eeee5e-5a6b-5d8e-1fe4-25b5ba8c7a87"
+                              "guidRes": "9f0b6229-8f5f-afd3-661b-71f92b156061",
+                              "guidElem": "43c67ee5-370b-cba3-212e-0dca31ed45a1"
                             },
                             "Name": "DatasetContract",
                             "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
@@ -454,7 +454,7 @@
                       "Name": "DataGridContact",
                       "Top": "160",
                       "Left": "10",
-                      "Width": 380,
+                      "Width": 480,
                       "Height": 120,
                       "Dataset": "e559320d-d80d-48f7-ed4e-0ac63587e606",
                       "ResElemName": "DataGrid1",
@@ -603,7 +603,7 @@
                       "Name": "DataGridTaskStage",
                       "Top": "420",
                       "Left": "10",
-                      "Width": 380,
+                      "Width": 480,
                       "Height": 120,
                       "Dataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                       "ResElemName": "DataGridTaskStage",
