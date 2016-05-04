@@ -50,17 +50,17 @@
                     "Parameters": {
                         "0": {
                             "$sys": {
-                                "guid": "ce7910a7-0a90-ee75-772d-c4f05fe9224c", 
+                                "guid": "2b80c86c-b25f-d5f5-1e58-54adb8af4c7d", 
                                 "typeGuid": "7981dc4d-3c4d-496a-9c0f-979d86a19181"
                             }, 
                             "ver": 1, 
                             "fields": {
-                                "Name": "ProcessDef", 
+                                "Name": "ProcessDefName", 
                                 "Value": {
                                     "type": {
-                                        "type": "guid"
+                                        "type": "string"
                                     }, 
-                                    "value": "eba3f2d2-030f-ad40-f257-1b0be366a144"
+                                    "value": "Simple Task Definition"
                                 }
                             }, 
                             "collections": { }
