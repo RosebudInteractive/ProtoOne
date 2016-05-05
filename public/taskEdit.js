@@ -11,10 +11,10 @@ define(
                 this.pvt.uccelloClt = uccelloClt;
             },
 
-            paramModify: function (newVal) {
+            paramModify: function (parameter) {
                 var cm = this.pvt.uccelloClt.getContextCM();
                 cm.userEventHandler(this, function () {
-                    console.log("Param modify handler", newVal);
+                    console.log("Param modify handler", parameter);
                 });
 
             },

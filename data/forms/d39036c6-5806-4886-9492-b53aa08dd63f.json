@@ -35,7 +35,7 @@
                 "Kind": "in",
                 "Value": "",
                 "ResElemName": "FormParam1",
-                "OnModify": " { $taskEdit.paramModify(newVal); } "
+                "OnModify": " { $taskEdit.paramModify(this); } "
               },
               "collections": {}
             }
