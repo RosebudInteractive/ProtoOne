@@ -26,11 +26,11 @@ define(
                 });
             },
 
-            clickCancel: function() {
+            clickCancel: function(button) {
                 console.log ("Cancel clicked");
             },
 
-            clickCreate: function() {
+            clickCreate: function(button) {
                 console.log ("Create clicked");
             }
 
