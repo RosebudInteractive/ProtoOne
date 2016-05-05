@@ -30,11 +30,12 @@
               },
               "fields": {
                 "Id": "2",
-                "Name": "FormParam1",
+                "Name": "ProcessDefName",
                 "Type": "param",
-                "Kind": "out",
+                "Kind": "in",
                 "Value": "",
-                "ResElemName": "FormParam1"
+                "ResElemName": "FormParam1",
+                "OnModify": " { $taskEdit.paramModify(newVal); } "
               },
               "collections": {}
             }
@@ -62,7 +63,8 @@
                     "fields": {
                       "Id": "5",
                       "Name": "DataModel",
-                      "ResElemName": "DataModel"
+                      "ResElemName": "DataModel",
+                      "OnDataInit": "{ $taskEdit.onDataInit(this); }"
                     },
                     "collections": {
                       "Datasets": [
@@ -356,6 +358,86 @@
                   },
                   {
                     "$sys": {
+                      "guid": "25da1515-d770-37ec-caad-73b840d26612",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelId",
+                      "Top": 10,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Id",
+                      "ResElemName": "Label43"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "d22cd8a3-c75f-4130-b942-328c4a85e9da",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelName",
+                      "Top": 40,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Name",
+                      "ResElemName": "LabelName"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "c341e242-7a13-e469-fcb3-c5c0be053a8d",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "47",
+                      "Name": "LabelCountry",
+                      "Top": 70,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Country",
+                      "ResElemName": "LabelCountry"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "4f4a8bab-df4f-4edc-96e1-152b6ee2fa77",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "47",
+                      "Name": "LabelCity",
+                      "Top": 100,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "City",
+                      "ResElemName": "LabelCity"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "80e4c4ea-bc01-449a-c9e5-7145c1318837",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "49",
+                      "Name": "LabelAddress",
+                      "Top": 130,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Address",
+                      "ResElemName": "LabelAddress"
+                    }
+                  },
+                  {
+                    "$sys": {
                       "guid": "6a7cea85-dd15-d958-fffc-1f15e155fcdf",
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
@@ -363,7 +445,7 @@
                       "Id": "35",
                       "Name": "DataEditId",
                       "Top": "10",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
@@ -381,7 +463,7 @@
                       "Id": "36",
                       "Name": "DataEdit1",
                       "Top": "40",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
@@ -399,7 +481,7 @@
                       "Id": "37",
                       "Name": "DataEditCountry",
                       "Top": "70",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
@@ -417,7 +499,7 @@
                       "Id": "38",
                       "Name": "DataEditCity",
                       "Top": "100",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
@@ -435,7 +517,7 @@
                       "Id": "39",
                       "Name": "DataEditAddress",
                       "Top": "130",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "061b1347-18a2-a829-fcce-ba59058b4bdf",
@@ -523,6 +605,54 @@
                   },
                   {
                     "$sys": {
+                      "guid": "f96eaeeb-3e93-4aea-84ea-a00350e4470c",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelName2",
+                      "Top": 300,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Name",
+                      "ResElemName": "LabelName2"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "bc8b879b-f554-4078-9bff-d0a583032750",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelTaskNumber",
+                      "Top": 330,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Task Number",
+                      "ResElemName": "LabelTaskNumber"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "bb57e96e-9b9a-472f-a272-845b924f898d",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "47",
+                      "Name": "LabelObjId",
+                      "Top": 360,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "Obj Id",
+                      "ResElemName": "LabelObjId"
+                    }
+                  },
+                  {
+                    "$sys": {
                       "guid": "12bdf04d-b07e-4e26-a443-5a7ac1ce60c5",
                       "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
                     },
@@ -530,7 +660,7 @@
                       "Id": "35",
                       "Name": "DataEditName_2_1",
                       "Top": "300",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
@@ -548,7 +678,7 @@
                       "Id": "36",
                       "Name": "DataEdit1",
                       "Top": "330",
-                      "Left": "10",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
@@ -565,13 +695,14 @@
                     "fields": {
                       "Id": "37",
                       "Name": "DataEditCountry",
-                      "Top": "360",
-                      "Left": "10",
+                      "Top": "300",
+                      "Left": "300",
                       "Width": 190,
-                      "Height": 23,
+                      "Height": 80,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
                       "DataField": "Specification",
-                      "ResElemName": "DataEditSpecification"
+                      "ResElemName": "DataEditSpecification",
+                      "Multiline": true
                     },
                     "collections": {}
                   },
@@ -583,8 +714,8 @@
                     "fields": {
                       "Id": "38",
                       "Name": "DataEditCity",
-                      "Top": "390",
-                      "Left": "10",
+                      "Top": "360",
+                      "Left": "100",
                       "Width": 190,
                       "Height": 23,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
@@ -601,10 +732,10 @@
                     "fields": {
                       "Id": "49",
                       "Name": "DataGridTaskStage",
-                      "Top": "420",
+                      "Top": "390",
                       "Left": "10",
                       "Width": 480,
-                      "Height": 120,
+                      "Height": 150,
                       "Dataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                       "ResElemName": "DataGridTaskStage",
                       "Editable": true
@@ -683,6 +814,42 @@
                         }
                       ]
                     }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "ac20ecfb-a534-758a-6abf-3868ca0eb588",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "42",
+                      "Name": "ButtonCreate",
+                      "Top": 10,
+                      "Left": 200,
+                      "Width": 80,
+                      "Height": 30,
+                      "Caption": "Create",
+                      "OnClick": " { $taskEdit.clickCreate(); }",
+                      "ResElemName": "ButtonCreate"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "7199969d-1ca8-46c2-97af-b52861aaf9f7",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "43",
+                      "Name": "ButtonCancel",
+                      "Top": 10,
+                      "Left": 290,
+                      "Width": 80,
+                      "Height": 30,
+                      "Caption": "Cancel",
+                      "OnClick": " { $taskEdit.clickCancel(); }",
+                      "ResElemName": "ButtonCancel"
+                    },
+                    "collections": {}
                   }
                 ]
               }

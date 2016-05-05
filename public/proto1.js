@@ -10,7 +10,7 @@ requirejs.config({
 });
 
 
-var $leadEdit, $leadEdit2, $testEdit, $tasksList, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
+var $leadEdit, $leadEdit2, $testEdit, $tasksList, $taskEdit, UCCELLO_CONFIG = null, uccelloClt = null, $u=null, DEBUG = false, perfomance={now:function(){return Date.now();}}, logger = {info:function(msg){console.log(msg);}};
 
 // когда документ загружен
 $(document).ready( function() {
@@ -92,8 +92,8 @@ $(document).ready( function() {
 
     require(
         ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr',
-            './leadEdit', './leadEditDataset', './testEdit', './tasksList'],
-        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2, TestEdit, TasksList){
+            './leadEdit', './leadEditDataset', './testEdit', './tasksList', './taskEdit'],
+        function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2, TestEdit, TasksList, TaskEdit){
 
             setTimeout(function(){
 
@@ -949,6 +949,7 @@ $(document).ready( function() {
             $leadEdit2 = new LeadEdit2(uccelloClt);
             $testEdit = new TestEdit(uccelloClt);
             $tasksList = new TasksList(uccelloClt);
+            $taskEdit = new TaskEdit(uccelloClt);
 
             // ----------------------------------------------------------------------------------------------------
             // ---------------------- Функции обработчики хтмл объектов -------------------------------------------

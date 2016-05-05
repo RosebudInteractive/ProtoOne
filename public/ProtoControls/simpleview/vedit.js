@@ -7,7 +7,8 @@ define(
             console.log('render '+this.name());
             var item = $('#' + this.getLid()), that=this;
             if (item.length == 0) {
-                item = $(vEdit._templates['edit']).attr('id', this.getLid());
+                if (this.multiline()) item = $(vEdit._templates['area']).attr('id', this.getLid());
+                else item = $(vEdit._templates['edit']).attr('id', this.getLid());
                 item.focus(function(){
                     if (that.getForm().currentControl() != that) {
                         that.getControlMgr().userEventHandler(that, function(){

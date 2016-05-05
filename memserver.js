@@ -1,5 +1,5 @@
 // Использовать подключение к MSSQL, иначе к MySql
-var USE_MSSQL_SERVER = true;
+var USE_MSSQL_SERVER = false;
 
 // дирректория где лежит Uccello
 var uccelloDir = process.argv[2]&&process.argv[2][0]!='-'?process.argv[2]:'Uccello';
@@ -112,9 +112,9 @@ var mssql_connection = { //MSSQL
 
 var mysql_connection = { //MySql
     host: "localhost",
-    username: "sa",
-    password: "system",
-    database: "genetix_test",
+    username: "root",
+    password: "masterkey",
+    database: "uccello",
     provider: "mysql",
     connection_options: {},
     provider_options: {},
@@ -181,38 +181,38 @@ var config = {
     },
     
     dataman: {
-        //connection: USE_MSSQL_SERVER ? mssql_connection : mysql_connection,
+        connection: USE_MSSQL_SERVER ? mssql_connection : mysql_connection,
 
-        //importData: {
-        //    autoimport: false,
-        //    dir: "./data/tables"
-        //},
+        importData: {
+            autoimport: false,
+            dir: "./data/tables"
+        },
         trace: {
             sqlCommands: true,
             importDir: true
         }
     },
-    //resman: {
-    //    useDb: true,
-    //    defaultProduct : "ProtoOne",
-    //    sourceDir: [
-    //        { path: __dirname + "/data/forms/", type: "FRM" },
-    //        {
-    //            path: __dirname + "/data/processDefinitions/", type: "PR_DEF",
-    //            generator: __dirname + '/../' + uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'
-    //        }
-    //    ],
-    //},
-    //resourceBuilder : {
-    //    types: [
-    //        { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма" },
-    //        { Code: "PR_DEF", Name: "Process Definition", ClassName: "ProcessDefinition", Description: "Определение процесса" }
-    //    ],
-    //    destDir : "./data/tables/",
-    //    formResTypeId : 1,
-    //    productId : 2,
-    //    currBuildId : 2
-    //}
+    resman: {
+        useDb: true,
+        defaultProduct : "ProtoOne",
+        sourceDir: [
+            { path: __dirname + "/data/forms/", type: "FRM" },
+            {
+                path: __dirname + "/data/processDefinitions/", type: "PR_DEF",
+                generator: __dirname + '/../' + uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'
+            }
+        ],
+    },
+    resourceBuilder : {
+        types: [
+            { Code: "FRM", Name: "User Form", ClassName: "ResForm", Description: "Пользовательская форма" },
+            { Code: "PR_DEF", Name: "Process Definition", ClassName: "ProcessDefinition", Description: "Определение процесса" }
+        ],
+        destDir : "./data/tables/",
+        formResTypeId : 1,
+        productId : 2,
+        currBuildId : 2
+    }
 };
 
 // модуль настроек
