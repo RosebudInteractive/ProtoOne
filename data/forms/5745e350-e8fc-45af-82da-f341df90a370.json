@@ -501,7 +501,7 @@
                       "Left": 100,
                       "Width": 80,
                       "Height": 30,
-                      "Caption": "New task2",
+                      "Caption": "Edit task1",
                       "OnClick": " { $tasksList.clickNewTask2(); }",
                       "ResElemName": "Button6"
                     },
