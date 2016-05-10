@@ -34,7 +34,7 @@ define(
             }
 
             taskNumber(value) {
-                return this._genericSetter("taskNumber",value);
+                return this._genericSetter("TaskNumber",value);
             }
 
             specification(value) {
