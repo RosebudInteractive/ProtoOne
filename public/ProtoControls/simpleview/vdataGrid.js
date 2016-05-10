@@ -200,10 +200,17 @@ define(
         vDataGrid._setButtonsClicks = function() {
             var that = this;
             var grid = $("#" + this.getLid());
-            grid.find('.refresh').click(function () {
-                vDataGrid.render.apply(that);
-            });
+            //grid.find('.refresh').click(function () {
+            //    vDataGrid.render.apply(that);
+            //});
 
+            grid.find('.refresh').click(function () {
+                if (that.dataset())
+                    that.getControlMgr().userEventHandler(that, function () {
+                        that.dataset().refreshData();
+                    });
+            });
+            
             grid.find('.insert').click(function () {
                 if (that.dataset())
                     that.getControlMgr().userEventHandler(that, function () {
