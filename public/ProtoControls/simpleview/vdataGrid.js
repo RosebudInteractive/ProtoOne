@@ -301,6 +301,10 @@ define(
                 ds.cursor();
             grid.find('.save').prop('disabled', !enabled);
             grid.find('.cancel').prop('disabled', !enabled);
+
+            //refresh
+            enabled = !dsCanEdit || dsState == Meta.State.Browse;
+            grid.find('.refresh').prop('disabled', !enabled);
         }
 
         vDataGrid.scrollTo = function(elem, div) {

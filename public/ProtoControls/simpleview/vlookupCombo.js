@@ -24,7 +24,12 @@ define(
                     var col = dataset.getDataCollection();
                     for (var i = 0, len = col.count(); i < len; i++) {
                         var obj = col.get(i);
-                        var text = obj[this.displayField()] ? obj[this.displayField()]() : "Field not found";
+                        var funcName = "";
+                        if (this.displayField()) {
+                            funcName = this.displayField();
+                            funcName = funcName[0].toLowerCase() + funcName.slice(1);
+                        }
+                        var text = (typeof obj[funcName] == "function") ? obj[funcName]() : "Field not found";
                         var option = $('<option/>').attr('value', obj.getGuid()).html(text);
                         item.append(option);
                     }
