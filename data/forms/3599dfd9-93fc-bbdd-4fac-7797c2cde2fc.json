@@ -1,0 +1,73 @@
+{
+    "$sys": {
+        "guid": "3599dfd9-93fc-bbdd-4fac-7797c2cde2fc", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 1, 
+    "fields": {
+        "ResName": "RequestData", 
+        "_Counter": 1
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "a5df7e44-06da-b069-8500-568883074ed0", 
+                    "typeGuid": "fbcdc566-0f06-4c00-a562-4bf3a8316388"
+                }, 
+                "ver": 1, 
+                "fields": {
+                    "ResElemName": "RequestDataTree", 
+                    "Alias": "RequestDataTree", 
+                    "_EditSet": "", 
+                    "_ChildEdCnt": 0, 
+                    "_CurrState": 0, 
+                    "_PrevState": 0, 
+                    "RootClassGuid": "31809e1f-a2c2-4dbb-b653-51e8bdf950a2"
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "08112982-6414-8403-a6d2-3e8d9c7bf00f", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "AvailableNodes", 
+                                "_EditSet": "", 
+                                "_ChildEdCnt": 0, 
+                                "_CurrState": 0, 
+                                "_PrevState": 0, 
+                                "ParentCollection": "AvailableNodes"
+                            }, 
+                            "collections": {
+                                "Childs": { }
+                            }
+                        }
+                    }, 
+                    "Parameters": {
+                        "0": {
+                            "$sys": {
+                                "guid": "6b7ee62f-dfc4-fd8b-3149-691fb2e17f99", 
+                                "typeGuid": "7981dc4d-3c4d-496a-9c0f-979d86a19181"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "Name": "RequestId", 
+                                "Value": {
+                                    "type": {
+                                        "type": "int"
+                                    }, 
+                                    "value": -1
+                                }
+                            }, 
+                            "collections": { }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

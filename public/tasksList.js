@@ -21,9 +21,9 @@ define(
             clickNewTask2: function () {
                 var cm = this.pvt.uccelloClt.getContextCM();
                 cm.getByName('SubForm').loadForm("733af949-e0c7-465c-b736-ee232593c149", {
-                    ProcessId: "1",
-                    RequestId: "2",
-                    ObjId: "3"
+                    ProcessId: 1,
+                    RequestId: 1,
+                    ObjId: 1185
                 });
             }
         });

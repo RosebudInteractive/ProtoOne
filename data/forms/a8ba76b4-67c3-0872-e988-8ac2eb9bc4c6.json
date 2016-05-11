@@ -1,0 +1,73 @@
+{
+    "$sys": {
+        "guid": "a8ba76b4-67c3-0872-e988-8ac2eb9bc4c6", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 1, 
+    "fields": {
+        "ResName": "ProcessVars", 
+        "_Counter": 1
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "f1e5c488-e4fc-8259-973d-ce12a1575613", 
+                    "typeGuid": "72f85f50-6675-462c-834b-fc005df6d672"
+                }, 
+                "ver": 1, 
+                "fields": {
+                    "ResElemName": "ProcessVarsTree", 
+                    "Alias": "ProcessVarsTree", 
+                    "_EditSet": "", 
+                    "_ChildEdCnt": 0, 
+                    "_CurrState": 0, 
+                    "_PrevState": 0, 
+                    "RootClassGuid": "b8fd05dc-08de-479e-8557-dba372e2b4b6"
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "3d26b6d2-0b0e-c650-196a-1e1b5898a998", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "TaskStages", 
+                                "_EditSet": "", 
+                                "_ChildEdCnt": 0, 
+                                "_CurrState": 0, 
+                                "_PrevState": 0, 
+                                "ParentCollection": "TaskStages"
+                            }, 
+                            "collections": {
+                                "Childs": { }
+                            }
+                        }
+                    }, 
+                    "Parameters": {
+                        "0": {
+                            "$sys": {
+                                "guid": "87af55da-a500-fd9e-5b48-2eb6ef5107a7", 
+                                "typeGuid": "7981dc4d-3c4d-496a-9c0f-979d86a19181"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "Name": "ProcessId", 
+                                "Value": {
+                                    "type": {
+                                        "type": "int"
+                                    }, 
+                                    "value": -1
+                                }
+                            }, 
+                            "collections": { }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

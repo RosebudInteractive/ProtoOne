@@ -108,8 +108,8 @@
                           "fields": {
                             "Id": "6",
                             "ObjectTree": {
-                              "guidRes": "442b2457-7a23-1709-7d78-bfe67b58449b",
-                              "guidElem": "eb44d573-6a23-67c3-04fd-6f42dbbbaaf5"
+                              "guidRes": "a8ba76b4-67c3-0872-e988-8ac2eb9bc4c6",
+                              "guidElem": "f1e5c488-e4fc-8259-973d-ce12a1575613"
                             },
                             "Name": "DatasetTaskParameter",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
@@ -167,14 +167,46 @@
                         },
                         {
                           "$sys": {
+                            "guid": "58942a4a-9826-46cf-9b37-5c3902cc9764",
+                            "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
+                          },
+                          "fields": {
+                            "Id": "21",
+                            "ObjectTree": {
+                              "guidRes": "3599dfd9-93fc-bbdd-4fac-7797c2cde2fc",
+                              "guidElem": "a5df7e44-06da-b069-8500-568883074ed0"
+                            },
+                            "Name": "DatasetRequestData",
+                            "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
+                            "Active": true,
+                            "ResElemName": "DatasetRequestData"
+                          },
+                          "collections": {
+                            "Fields": [
+                              {
+                                "$sys": {
+                                  "guid": "7b1e3907-052c-439a-bf6c-8e3952d3d14b",
+                                  "typeGuid": "4bade3a6-4a25-3887-4868-9c3de4213729"
+                                },
+                                "fields": {
+                                  "Id": "22",
+                                  "Name": "SelectedNode",
+                                  "ResElemName": "DataField_500"
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "$sys": {
                             "guid": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                             "typeGuid": "4d862905-25d2-4bfd-bc1f-3e4d61f06008"
                           },
                           "fields": {
                             "Id": "21",
                             "ObjectTree": {
-                              "guidRes": "442b2457-7a23-1709-7d78-bfe67b58449b",
-                              "guidElem": "131fdd8b-38fc-a13b-7907-175d9942ecc9"
+                              "guidRes": "3599dfd9-93fc-bbdd-4fac-7797c2cde2fc",
+                              "guidElem": "08112982-6414-8403-a6d2-3e8d9c7bf00f"
                             },
                             "Name": "DatasetComboList",
                             "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",
@@ -190,7 +222,7 @@
                                 },
                                 "fields": {
                                   "Id": "22",
-                                  "Name": "Name",
+                                  "Name": "Value",
                                   "ResElemName": "DataField_2_5"
                                 }
                               }
@@ -671,7 +703,7 @@
                       "Width": 480,
                       "Height": 25,
                       "LookupDataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
-                      "DisplayField": "Name",
+                      "DisplayField": "Value",
                       "ResElemName": "ComboState"
                     },
                     "collections": {}
