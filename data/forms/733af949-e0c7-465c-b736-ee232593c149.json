@@ -702,6 +702,8 @@
                       "Left": "10",
                       "Width": 480,
                       "Height": 25,
+                      "Dataset": "58942a4a-9826-46cf-9b37-5c3902cc9764",
+                      "DataField": "SelectedNode",
                       "LookupDataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                       "DisplayField": "Value",
                       "ResElemName": "ComboState"

@@ -53,11 +53,45 @@ define(
             },
 
             clickCancel: function(button) {
-                console.log ("Cancel clicked");
+                console.log("Cancel clicked");
+                var self = this;
+                if (this._request_data_ds && this._object_ds) {
+                    this._object_ds.cancel(function (result) {
+                        if (result.result === "OK") {
+                            self._request_data_ds.cancel(function (result) {
+                                if (result.result === "OK") {
+                                }
+                                else
+                                    alert("ERROR: " + result.message);
+                            });
+                        }
+                        else
+                            alert("ERROR: " + result.message);
+                    });
+                }
+                else
+                    alert("ERROR: Missing Request or/and Object dataset(s)!");
             },
 
             clickEdit: function(button) {
-                console.log ("Edit clicked");
+                console.log("Edit clicked");
+                var self = this;
+                if (this._request_data_ds && this._object_ds) {
+                    this._object_ds.edit(function (result) {
+                        if (result.result === "OK") {
+                            self._request_data_ds.edit(function (result) {
+                                if (result.result === "OK") {
+                                }
+                                else
+                                    alert("ERROR: " + result.message);
+                            });
+                        }
+                        else
+                            alert("ERROR: " + result.message);
+                    });
+                }
+                else
+                    alert("ERROR: Missing Request or/and Object dataset(s)!");
             },
 
             _findDataModel: function (container) {
@@ -98,7 +132,24 @@ define(
             },
 
             clickSave: function(button) {
-                console.log ("Save clicked");
+                console.log("Save clicked");
+                var self = this;
+                if (this._request_data_ds && this._object_ds) {
+                    this._object_ds.save({}, function (result) {
+                        if (result.result === "OK") {
+                            self._request_data_ds.save({}, function (result) {
+                                if (result.result === "OK") {
+                                }
+                                else
+                                    alert("ERROR: " + result.message);
+                            });
+                        }
+                        else
+                            alert("ERROR: " + result.message);
+                    });
+                }
+                else
+                    alert("ERROR: Missing Request or/and Object dataset(s)!");
             }
 
         });
