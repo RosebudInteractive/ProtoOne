@@ -95,6 +95,10 @@ define(
                     this._process_data_ds = process_data_ds;
                     this._request_data_ds = request_data_ds;
                 };
+            },
+
+            clickSave: function(button) {
+                console.log ("Save clicked");
             }
 
         });

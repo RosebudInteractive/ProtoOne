@@ -720,8 +720,8 @@
                       "Left": 300,
                       "Width": 80,
                       "Height": 30,
-                      "Caption": "Create",
-                      "OnClick": " { $taskEdit2.clickCreate(this); }",
+                      "Caption": "Edit",
+                      "OnClick": " { $taskEdit2.clickEdit(this); }",
                       "ResElemName": "ButtonEdit"
                     },
                     "collections": {}
@@ -741,6 +741,24 @@
                       "Caption": "Cancel",
                       "OnClick": " { $taskEdit2.clickCancel(this); }",
                       "ResElemName": "ButtonCancel"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "a5fae08a-99fb-452f-ac51-56069e4e9838",
+                      "typeGuid": "af419748-7b25-1633-b0a9-d539cada8e0d"
+                    },
+                    "fields": {
+                      "Id": "43",
+                      "Name": "ButtonSave",
+                      "Top": 45,
+                      "Left": 300,
+                      "Width": 80,
+                      "Height": 30,
+                      "Caption": "Save",
+                      "OnClick": " { $taskEdit2.clickSave(this); }",
+                      "ResElemName": "ButtonSave"
                     },
                     "collections": {}
                   }
