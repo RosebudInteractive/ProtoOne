@@ -93,7 +93,7 @@ $(document).ready( function() {
 
     require(
         ['./uccello/uccelloClt', './uccello/connection/commClient', './uccello/controls/controlMgr',
-            './leadEdit', './leadEditDataset', './testEdit', './tasksList', './taskEdit2', './taskEdit2'],
+            './leadEdit', './leadEditDataset', './testEdit', './tasksList', './taskEdit', './taskEdit2'],
         function(UccelloClt, CommunicationClient, ControlMgr, LeadEdit, LeadEdit2, TestEdit,
                  TasksList, TaskEdit, TaskEdit2){
 
