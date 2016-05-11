@@ -706,6 +706,7 @@
                       "DataField": "SelectedNode",
                       "LookupDataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                       "DisplayField": "Value",
+                      "ValueField": "Value",
                       "ResElemName": "ComboState"
                     },
                     "collections": {}

@@ -3,8 +3,9 @@
  */
 
 define(
-    ['/public/uccello/uses/template.js', 'text!./templates/dataCombo.html'],
-    function(template, tpl) {
+    ['/public/uccello/uses/template.js', 'text!./templates/dataCombo.html',
+        '../../uccello/metaData/metaDefs'],
+    function(template, tpl, Meta) {
         var vDataCombo = {};
         vDataCombo._templates = template.parseTemplate(tpl);
         vDataCombo.render = function(options) {
@@ -38,13 +39,14 @@ define(
                 // сохранять при изменении
                 item.change(function () {
                     that.getControlMgr().userEventHandler(that, function () {
-                        if (that.dataset() && that.dataField()) {
-                            that.dataset().setField(that.dataField(), item.val());
-                        }
-
                         if (that.lookupDataset() && that.displayField()) {
                             that.lookupDataset().cursor(item.val());
                         }
+
+                        if (that.dataset() && that.dataField() && that.lookupDataset()) {
+                            that.dataset().setField(that.dataField(), that.lookupDataset().getField(that.valueField()));
+                        }
+
                     });
                 });
 
@@ -57,12 +59,24 @@ define(
                 });
             }
 
+            if (that.dataset() && that.dataField())
+                item.val(this.dataset().getField(that.dataField()));
+
             // устанавливаем значение
-            if (dataset && dataField) {
+            if (this.enabled() === false)
+                item.attr('disabled', true);
+            else if (that.dataset() && dataField) {
+                var ds = that.dataset();
+                var dsCanEdit = !ds.canEdit || (ds && ds.canEdit());
+                var dsState = ds ? ds.getState() :  Meta.State.Unknown;
+                var isMaster = ds && ds.master() ? false : true;
+                var dsMasterState = ds && ds.master() ? ds.master().getState() : Meta.State.Unknown;
+                var enabled = dsCanEdit && dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+                    (!isMaster && dsMasterState <= Meta.State.Edit)) &&
+                    ds.cursor();
+                item.attr('disabled', !enabled);
+            } else
                 item.attr('disabled', false);
-                item.val(dataset? dataset.getField(this.dataField()): '');
-            }
-            item.attr('disabled', this.enabled()===false? true: false);
 
             // выставляем фокус
             if ($(':focus').attr('id') != this.getLid() && this.getForm().isFldModified("CurrentControl") && this.getForm().currentControl() == this)
