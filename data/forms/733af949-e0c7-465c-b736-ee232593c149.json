@@ -664,7 +664,7 @@
                       "Name": "DataEditName_2_1",
                       "Top": "300",
                       "Left": "100",
-                      "Width": 190,
+                      "Width": 390,
                       "Height": 23,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
                       "DataField": "Name",
@@ -682,11 +682,46 @@
                       "Name": "DataEdit1",
                       "Top": "330",
                       "Left": "100",
-                      "Width": 190,
+                      "Width": 390,
                       "Height": 23,
                       "Dataset": "ca45b4b4-1dac-4ef4-a46a-0cf1e9486a62",
                       "DataField": "TaskNumber",
                       "ResElemName": "DataEditTaskNumber"
+                    },
+                    "collections": {}
+                  },
+                  {
+                    "$sys": {
+                      "guid": "6c425451-2a2b-4f2b-b6ff-f949ff92e11b",
+                      "typeGuid": "32932036-3c90-eb8b-dd8d-4f19253fabed"
+                    },
+                    "fields": {
+                      "Id": "45",
+                      "Name": "LabelState",
+                      "Top": 360,
+                      "Left": 10,
+                      "Width": 190,
+                      "Height": 23,
+                      "Label": "State",
+                      "ResElemName": "LabelState"
+                    }
+                  },
+                  {
+                    "$sys": {
+                      "guid": "749b1e39-af2d-4487-aeed-58d895565ba0",
+                      "typeGuid": "affff8b1-10b0-20a6-5bb5-a9d88334b48e"
+                    },
+                    "fields": {
+                      "Id": "36",
+                      "Name": "DataEditState",
+                      "Top": "360",
+                      "Left": "100",
+                      "Width": 190,
+                      "Height": 23,
+                      "Dataset": "58942a4a-9826-46cf-9b37-5c3902cc9764",
+                      "DataField": "SelectedNode",
+                      "Enabled": false,
+                      "ResElemName": "DataEditState"
                     },
                     "collections": {}
                   },
@@ -698,12 +733,10 @@
                     "fields": {
                       "Id": "49",
                       "Name": "ComboState",
-                      "Top": "390",
-                      "Left": "10",
-                      "Width": 480,
+                      "Top": "360",
+                      "Left": "300",
+                      "Width": 190,
                       "Height": 25,
-                      "Dataset": "58942a4a-9826-46cf-9b37-5c3902cc9764",
-                      "DataField": "SelectedNode",
                       "LookupDataset": "65d9f7bb-f56b-4efb-bb2a-31160efc6041",
                       "DisplayField": "Value",
                       "ValueField": "Value",

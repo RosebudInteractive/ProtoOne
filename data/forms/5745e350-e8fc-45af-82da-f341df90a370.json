@@ -92,7 +92,7 @@
                             "Name": "DatasetTasks",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
                             "Active": true,
-                            "OnMoveCursor": " { this.getControlMgr().getByName('FormParam1').value(newVal); } ",
+                            "OnMoveCursor": " { $tasksList.onMoveCursor(this, newVal); } ",
                             "ResElemName": "DatasetTasks"
                           },
                           "collections": {

@@ -19,12 +19,21 @@ define(
             },
 
             clickNewTask2: function () {
+                // редактирование
                 var cm = this.pvt.uccelloClt.getContextCM();
+                var dataset = cm.getByName('DatasetTasks');
+                if (!dataset.cursor()) return;
                 cm.getByName('SubForm').loadForm("733af949-e0c7-465c-b736-ee232593c149", {
-                    ProcessId: 1,
-                    RequestId: 1,
-                    ObjId: 1185
+                    ProcessId: dataset.getField("TaskId"),
+                    RequestId: dataset.getField("RequestId"),
+                    ObjId: dataset.getField("ObjId")
                 });
+            },
+
+            onMoveCursor: function(dataset, newVal) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                cm.getByName('FormParam1').value(newVal);
+                this.clickNewTask2();
             }
         });
         return TaskListScripts;
