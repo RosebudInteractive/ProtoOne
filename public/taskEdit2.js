@@ -135,6 +135,16 @@ define(
                 console.log("Save clicked");
                 var self = this;
                 if (this._request_data_ds && this._object_ds) {
+                    
+                    var res_form = button.getRoot();
+                    var next_stages_ds = res_form.getResElemByName("DatasetComboList");
+                    var curr_master = this._request_data_ds.getCurrentDataObject();
+                    if (curr_master && next_stages_ds) {
+                        var curr_next = next_stages_ds.getCurrentDataObject();
+                        if (curr_next)
+                            curr_master.selectedNode(curr_next.value());
+                    }
+
                     this._object_ds.save({}, function (result) {
                         if (result.result === "OK") {
                             self._request_data_ds.save({}, function (result) {
