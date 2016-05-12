@@ -45,6 +45,7 @@ define(
 
                         if (that.dataset() && that.dataField() && that.lookupDataset()) {
                             that.dataset().setField(that.dataField(), that.lookupDataset().getField(that.valueField()));
+                            that._isRendered(false);
                         }
 
                     });
@@ -59,10 +60,10 @@ define(
                 });
             }
 
-            if (that.dataset() && that.dataField())
-                item.val(this.dataset().getField(that.dataField()));
-
             // устанавливаем значение
+            if (that.dataset() && that.dataField())
+                item.val(this.lookupDataset().cursor());
+
             if (this.enabled() === false)
                 item.attr('disabled', true);
             else if (that.dataset() && dataField) {
@@ -71,7 +72,7 @@ define(
                 var dsState = ds ? ds.getState() :  Meta.State.Unknown;
                 var isMaster = ds && ds.master() ? false : true;
                 var dsMasterState = ds && ds.master() ? ds.master().getState() : Meta.State.Unknown;
-                var enabled = dsCanEdit && dsState !=  Meta.State.Unknown && ((isMaster && dsState == Meta.State.Browse) ||
+                var enabled = dsCanEdit && dsState !=  Meta.State.Unknown && ((isMaster && dsState !== Meta.State.Browse) ||
                     (!isMaster && dsMasterState <= Meta.State.Edit)) &&
                     ds.cursor();
                 item.attr('disabled', !enabled);
