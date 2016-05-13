@@ -4,16 +4,16 @@
 
 define(
     [],
-    function() {
-        var TaskEditScripts = Class.extend({
-            init: function(uccelloClt) {
+    function () {
+        var TaskEditScripts = Class.extend( {
+            init: function (uccelloClt) {
                 this.pvt = {};
                 this.pvt.uccelloClt = uccelloClt;
                 this._process_data_ds = null;
                 this._request_data_ds = null;
                 this._object_ds = null;
             },
-
+            
             paramModify: function (parameter) {
                 
                 function set_parameter(obj_tree) {
@@ -34,7 +34,7 @@ define(
                         var process_tree = process_data_ds ? process_data_ds.objectTree() : null;
                         if (process_tree)
                             set_parameter(process_tree);
-
+                        
                         var request_data_ds = this._request_data_ds;
                         var request_tree = request_data_ds ? request_data_ds.objectTree() : null;
                         if (request_tree)
@@ -47,22 +47,29 @@ define(
                     }
                 };
             },
-
-            onDataInit: function(model) {
+            
+            onDataInit: function (model) {
                 var cm = this.pvt.uccelloClt.getContextCM();
             },
-
-            clickCancel: function(button) {
+            
+            clickCancel: function (button) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                var self = this;
+                
                 console.log("Cancel clicked");
                 var self = this;
                 if (this._request_data_ds && this._object_ds) {
                     this._object_ds.cancel(function (result) {
                         if (result.result === "OK") {
-                            self._request_data_ds.cancel(function (result) {
-                                if (result.result === "OK") {
-                                }
-                                else
-                                    alert("ERROR: " + result.message);
+                            cm.userEventHandler(self, function () {
+                                console.log("START 1st userEventHandler");
+                                self._request_data_ds.cancel(function (result) {
+                                    if (result.result === "OK") {
+                                    }
+                                    else
+                                        alert("ERROR: " + result.message);
+                                });
+                                console.log("END 1st userEventHandler");
                             });
                         }
                         else
@@ -72,18 +79,25 @@ define(
                 else
                     alert("ERROR: Missing Request or/and Object dataset(s)!");
             },
-
-            clickEdit: function(button) {
+            
+            clickEdit: function (button) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                var self = this;
+                
                 console.log("Edit clicked");
                 var self = this;
                 if (this._request_data_ds && this._object_ds) {
                     this._object_ds.edit(function (result) {
                         if (result.result === "OK") {
-                            self._request_data_ds.edit(function (result) {
-                                if (result.result === "OK") {
-                                }
-                                else
-                                    alert("ERROR: " + result.message);
+                            cm.userEventHandler(self, function () {
+                                console.log("START 1st userEventHandler");
+                                self._request_data_ds.edit(function (result) {
+                                    if (result.result === "OK") {
+                                    }
+                                    else
+                                        alert("ERROR: " + result.message);
+                                });
+                                console.log("END 1st userEventHandler");
                             });
                         }
                         else
@@ -132,6 +146,9 @@ define(
             },
 
             clickSave: function(button) {
+                var cm = this.pvt.uccelloClt.getContextCM();
+                var self = this;
+                
                 console.log("Save clicked");
                 var self = this;
                 if (this._request_data_ds && this._object_ds) {
@@ -147,11 +164,15 @@ define(
 
                     this._object_ds.save({}, function (result) {
                         if (result.result === "OK") {
-                            self._request_data_ds.save({}, function (result) {
-                                if (result.result === "OK") {
-                                }
-                                else
-                                    alert("ERROR: " + result.message);
+                            cm.userEventHandler(self, function () {
+                                console.log("START 1st userEventHandler");
+                                self._request_data_ds.save({}, function (result) {
+                                    if (result.result === "OK") {
+                                    }
+                                    else
+                                        alert("ERROR: " + result.message);
+                                });
+                                console.log("END 1st userEventHandler");
                             });
                         }
                         else

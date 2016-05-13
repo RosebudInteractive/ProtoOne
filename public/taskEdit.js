@@ -6,13 +6,13 @@ define(
     [],
     function() {
         var TaskEditScripts = Class.extend({
-            init: function(uccelloClt) {
+            init: function (uccelloClt) {
                 this.pvt = {};
                 this.pvt.uccelloClt = uccelloClt;
                 this._process_params_ds = null;
                 this._object_ds = null;
             },
-
+            
             paramModify: function (parameter) {
                 var cm = this.pvt.uccelloClt.getContextCM();
                 console.log("Param modify handler", parameter);
@@ -32,34 +32,47 @@ define(
                     }
                 };
             },
-
-            onDataInit: function(model) {
+            
+            onDataInit: function (model) {
                 var cm = this.pvt.uccelloClt.getContextCM();
+                var self = this;
                 console.log("OnDataInit", model);
-                    
+                
                 this._getDataSets(model);
                 var process_params_ds = this._process_params_ds;
                 var object_ds = this._object_ds;
                 var new_object = null;
-                    
+                
                 if (object_ds && process_params_ds) {
                     object_ds.cachedUpdates(true);
                     object_ds.edit(function (result) {
                         if (result.result === "OK") {
-                            object_ds.addObject({}, function (result) {
-                                if (result.result === "OK") {
-                                    new_object = object_ds.getCurrentDataObject();
-                                    process_params_ds.edit(function (result) {
-                                        if (result.result === "OK") {
-                                            var param_object = process_params_ds.getCurrentDataObject();
-                                            param_object.objId(new_object.id());
-                                        }
-                                        else
-                                            alert("ERROR: " + result.message);
-                                    });
-                                }
-                                else
-                                    alert("ERROR: " + result.message);
+                            cm.userEventHandler(self, function () {
+                                console.log("START 1st userEventHandler");
+                                object_ds.addObject({}, function (result) {
+                                    if (result.result === "OK") {
+                                        cm.userEventHandler(self, function () {
+                                            console.log("START 2nd userEventHandler");
+                                            new_object = object_ds.getCurrentDataObject();
+                                            process_params_ds.edit(function (result) {
+                                                if (result.result === "OK") {
+                                                    cm.userEventHandler(self, function () {
+                                                        console.log("START 3rd userEventHandler");
+                                                        var param_object = process_params_ds.getCurrentDataObject();
+                                                        param_object.objId(new_object.id());
+                                                        console.log("END 3rd userEventHandler");
+                                                    });
+                                                }
+                                                else
+                                                    alert("ERROR: " + result.message);
+                                            });
+                                            console.log("END 2nd userEventHandler");
+                                        });
+                                    }
+                                    else
+                                        alert("ERROR: " + result.message);
+                                });
+                                console.log("END 1st userEventHandler");
                             });
                         }
                         else
@@ -68,23 +81,30 @@ define(
                 };
             },
 
-            clickCancel: function(button) {
+            clickCancel: function (button) {
                 console.log ("Cancel clicked");
             },
 
             clickCreate: function(button) {
-                console.log ("Create clicked");
+                var cm = this.pvt.uccelloClt.getContextCM();
+                var self = this;
+                
+                console.log("Create clicked");
                 var process_params_ds = this._process_params_ds;
                 var object_ds = this._object_ds;
                 if (object_ds && process_params_ds) {
                     object_ds.save({}, function (result) {
                         if (result.result === "OK") {
-                            process_params_ds.save({}, function (result) {
-                                if (result.result === "OK") {
-                                    console.log("State: " + process_params_ds.getState());
-                                }
-                                else
-                                    alert("ERROR: " + result.message);
+                            cm.userEventHandler(self, function () {
+                                console.log("START 1st userEventHandler");
+                                process_params_ds.save({}, function (result) {
+                                    if (result.result === "OK") {
+                                        console.log("State: " + process_params_ds.getState());
+                                    }
+                                    else
+                                        alert("ERROR: " + result.message);
+                                });
+                                console.log("END 1st userEventHandler");
                             });
                         }
                         else
