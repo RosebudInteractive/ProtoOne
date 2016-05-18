@@ -51,8 +51,8 @@ define(
                                 console.log("START 1st userEventHandler");
                                 object_ds.addObject({}, function (result) {
                                     if (result.result === "OK") {
-                                        cm.userEventHandler(self, function () {
-                                            console.log("START 2nd userEventHandler");
+                                        //cm.userEventHandler(self, function () {
+                                        //    console.log("START 2nd userEventHandler");
                                             new_object = object_ds.getCurrentDataObject();
                                             process_params_ds.edit(function (result) {
                                                 if (result.result === "OK") {
@@ -66,8 +66,8 @@ define(
                                                 else
                                                     alert("ERROR: " + result.message);
                                             });
-                                            console.log("END 2nd userEventHandler");
-                                        });
+                                         //   console.log("END 2nd userEventHandler");
+                                        //});
                                     }
                                     else
                                         alert("ERROR: " + result.message);
