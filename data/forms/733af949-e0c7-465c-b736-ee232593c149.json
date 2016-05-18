@@ -237,8 +237,8 @@
                           "fields": {
                             "Id": "6",
                             "ObjectTree": {
-                              "guidRes": "9f0b6229-8f5f-afd3-661b-71f92b156061",
-                              "guidElem": "fb885ef3-839d-9595-283b-9481207fd96d"
+                              "guidRes": "204b755e-2b46-dc5e-704b-feda3c90abfd",
+                              "guidElem": "255f3823-bb52-f8ad-5bde-71ce53ca5c1b"
                             },
                             "Name": "DatasetCompany",
                             "ObjType": "5f9e649d-43c4-d1e6-2778-ff4f58cd7c53",
@@ -314,8 +314,8 @@
                           "fields": {
                             "Id": "21",
                             "ObjectTree": {
-                              "guidRes": "9f0b6229-8f5f-afd3-661b-71f92b156061",
-                              "guidElem": "43c67ee5-370b-cba3-212e-0dca31ed45a1"
+                              "guidRes": "204b755e-2b46-dc5e-704b-feda3c90abfd",
+                              "guidElem": "0ca73319-ce39-408c-3ce4-93ba66ac4e8c"
                             },
                             "Name": "DatasetContract",
                             "ObjType": "8583ee1d-6936-19da-5ef0-9025fb7d1d8d",

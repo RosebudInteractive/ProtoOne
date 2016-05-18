@@ -1,0 +1,139 @@
+{
+    "$sys": {
+        "guid": "204b755e-2b46-dc5e-704b-feda3c90abfd", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 0, 
+    "fields": {
+        "ResName": "EditCompany", 
+        "_Counter": 1
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "255f3823-bb52-f8ad-5bde-71ce53ca5c1b", 
+                    "typeGuid": "f0138eab-8a62-4cb8-b9f5-33917bec1f59"
+                }, 
+                "ver": 0, 
+                "fields": {
+                    "ResElemName": "DataCompanyTree", 
+                    "Alias": "DataCompanyTree", 
+                    "ModelRef": {
+                        "guidRes": "326979e6-52b2-5605-6ae6-ea7e538c6eab", 
+                        "guidElem": "326979e6-52b2-5605-6ae6-ea7e538c6eab", 
+                        "resName": "DataTstCompany"
+                    }
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "0ca73319-ce39-408c-3ce4-93ba66ac4e8c", 
+                                "typeGuid": "85f03964-5ea7-4743-9c8e-549110f1c154"
+                            }, 
+                            "ver": 0, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "DataContract", 
+                                "ModelRef": {
+                                    "guidRes": "beac05bd-59ab-4b0e-2caf-21d8a71b38e9", 
+                                    "guidElem": "beac05bd-59ab-4b0e-2caf-21d8a71b38e9", 
+                                    "resName": "DataContract"
+                                }, 
+                                "FieldRef": {
+                                    "guidRes": "beac05bd-59ab-4b0e-2caf-21d8a71b38e9", 
+                                    "guidElem": "cf56da40-808a-3357-fcbf-e231dc960aae", 
+                                    "resName": "DataContract", 
+                                    "elemName": "parent"
+                                }
+                            }, 
+                            "collections": {
+                                "Childs": { }, 
+                                "Filter": { }
+                            }
+                        }
+                    }, 
+                    "Filter": {
+                        "0": {
+                            "$sys": {
+                                "guid": "2467e3de-a767-56f2-b60a-0c377bb735fe", 
+                                "typeGuid": "bc76f187-982a-4f22-a2be-980a67bb5a69"
+                            }, 
+                            "ver": 0, 
+                            "fields": { }, 
+                            "collections": {
+                                "Aliases": { }, 
+                                "Parameters": {
+                                    "0": {
+                                        "$sys": {
+                                            "guid": "c92dce30-eff8-2549-3d63-7ccc788bf00f", 
+                                            "typeGuid": "7981dc4d-3c4d-496a-9c0f-979d86a19181"
+                                        }, 
+                                        "ver": 0, 
+                                        "fields": {
+                                            "Name": "ObjId", 
+                                            "Value": {
+                                                "type": {
+                                                    "type": "int"
+                                                }, 
+                                                "value": -1
+                                            }
+                                        }, 
+                                        "collections": { }
+                                    }
+                                }, 
+                                "Conditions": {
+                                    "0": {
+                                        "$sys": {
+                                            "guid": "619b94a5-17c0-dd65-c5ee-5d2c475ceb2a", 
+                                            "typeGuid": "c3fa769d-321e-4bf5-80de-5e979bc933eb"
+                                        }, 
+                                        "ver": 0, 
+                                        "fields": {
+                                            "IsNegative": false, 
+                                            "Op": "="
+                                        }, 
+                                        "collections": {
+                                            "LeftValues": {
+                                                "0": {
+                                                    "$sys": {
+                                                        "guid": "9bad7308-c844-c4dd-3c0e-d82d41db6993", 
+                                                        "typeGuid": "81ce1383-7e57-461b-9a36-ce82171bc1a7"
+                                                    }, 
+                                                    "ver": 0, 
+                                                    "fields": {
+                                                        "Name": "Id", 
+                                                        "AliasRef": {
+                                                            "guidElem": null
+                                                        }
+                                                    }, 
+                                                    "collections": { }
+                                                }
+                                            }, 
+                                            "RightValues": {
+                                                "0": {
+                                                    "$sys": {
+                                                        "guid": "a14819fb-f839-45a3-c254-8b408af62003", 
+                                                        "typeGuid": "7c0eb8fd-b9cc-4f52-8342-dee930e08745"
+                                                    }, 
+                                                    "ver": 0, 
+                                                    "fields": {
+                                                        "Ref": {
+                                                            "guidElem": "c92dce30-eff8-2549-3d63-7ccc788bf00f"
+                                                        }
+                                                    }, 
+                                                    "collections": { }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
