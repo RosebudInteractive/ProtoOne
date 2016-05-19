@@ -29,7 +29,15 @@ define(
                             if (param)
                                 params_tree.setParameter(param_name, parameter.value());
                         }
-                    }
+
+                        var object_ds = this._object_ds;
+                        var object_tree = object_ds ? object_ds.objectTree() : null;
+                        if (object_tree) {
+                            param = object_tree.getParameter("ObjId");
+                            if (param)
+                                object_tree.setParameter("ObjId", -1);
+                        }
+                    };
                 };
             },
             
