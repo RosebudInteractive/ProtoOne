@@ -108,6 +108,9 @@ define(
                                 process_params_ds.save({}, function (result) {
                                     if (result.result === "OK") {
                                         console.log("State: " + process_params_ds.getState());
+                                        setTimeout(function () {
+                                            self._closeForm(button);
+                                        }, 5000);
                                     }
                                     else
                                         alert("ERROR: " + result.message);
@@ -152,6 +155,14 @@ define(
                     this._object_ds = object_ds;
                     this._process_params_ds = process_params_ds;
                 };
+            },
+
+            _closeForm: function(button) {
+                var form = button.getForm();
+                form.close({
+                    param1: "value1",
+                    param2: "value2"
+                });
             }
         });
         return TaskEditScripts;

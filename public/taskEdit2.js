@@ -168,6 +168,9 @@ define(
                                 console.log("START 1st userEventHandler");
                                 self._request_data_ds.save({}, function (result) {
                                     if (result.result === "OK") {
+                                        setTimeout(function () {
+                                            self._closeForm(button);
+                                        }, 5000);
                                     }
                                     else
                                         alert("ERROR: " + result.message);
@@ -181,8 +184,15 @@ define(
                 }
                 else
                     alert("ERROR: Missing Request or/and Object dataset(s)!");
-            }
+            },
 
+            _closeForm: function(button) {
+                var form = button.getForm();
+                form.close({
+                    param1: "value1",
+                    param2: "value2"
+                });
+            }
         });
         return TaskEditScripts;
     }

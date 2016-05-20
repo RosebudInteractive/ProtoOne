@@ -9,6 +9,7 @@ define(
             init: function(uccelloClt) {
                 this.pvt = {};
                 this.pvt.uccelloClt = uccelloClt;
+                this.pvt.enableShowForms = true;
             },
 
             clickNewTask1: function () {
@@ -31,9 +32,38 @@ define(
             },
 
             onMoveCursor: function(dataset, newVal) {
+                if (!this.pvt.enableShowForms) return;
                 var cm = this.pvt.uccelloClt.getContextCM();
                 cm.getByName('FormParam1').value(newVal);
                 this.clickNewTask2();
+            },
+
+            formClosed: function(event, container) {
+                console.log("Subform closed. Event args:", event);
+                var self = this;
+                var cm = this.pvt.uccelloClt.getContextCM();
+                var ds = cm.getByName('DatasetTasks');
+
+                function callback() {
+                    self.pvt.enableShowForms = true;
+                    ds.last();
+                    ds.event.off({
+                            type: 'refreshData',
+                            subscriber: this,
+                            callback: callback
+                        });
+                }
+
+                ds.event.on({
+                    type: 'refreshData',
+                    subscriber: this,
+                    callback: callback
+                });
+
+                cm.userEventHandler(self, function () {
+                    self.pvt.enableShowForms = false;
+                    ds.refreshData();
+                });
             }
         });
         return TaskListScripts;
