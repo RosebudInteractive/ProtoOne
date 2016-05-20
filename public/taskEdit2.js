@@ -161,7 +161,8 @@ define(
                         if (curr_next)
                             curr_master.selectedNode(curr_next.value());
                     }
-
+                    
+                    var objId= this._object_ds.getCurrentDataObject().id();
                     this._object_ds.save({}, function (result) {
                         if (result.result === "OK") {
                             cm.userEventHandler(self, function () {
@@ -169,7 +170,7 @@ define(
                                 self._request_data_ds.save({}, function (result) {
                                     if (result.result === "OK") {
                                         setTimeout(function () {
-                                            self._closeForm(button);
+                                            self._closeForm(button.getForm(), { objId: objId });
                                         }, 5000);
                                     }
                                     else
@@ -186,12 +187,8 @@ define(
                     alert("ERROR: Missing Request or/and Object dataset(s)!");
             },
 
-            _closeForm: function(button) {
-                var form = button.getForm();
-                form.close({
-                    param1: "value1",
-                    param2: "value2"
-                });
+            _closeForm: function(form, params) {
+                form.close(params);
             }
         });
         return TaskEditScripts;
