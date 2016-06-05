@@ -8,63 +8,73 @@ if (typeof define !== 'function') {
 }
 
 define(
-    [UCCELLO_CONFIG.uccelloPath+'system/uobject'],
-    function(UObject) {
+    [UCCELLO_CONFIG.uccelloPath + 'system/uobject'],
+    function (UObject) {
         return class ProcessVar extends UObject {
             get className() {
                 return "ProcessVar"
             }
-
+            
             get classGuid() {
                 return UCCELLO_CONFIG.classGuids.ProcessVar;
             }
-
+            
             get metaFields() {
                 return [
-                    {fname: 'Name', ftype: 'string'},
-                    {fname: 'TaskNumber', ftype: 'string'},
-                    {fname: 'Specification', ftype: 'string'},
-                    {fname: 'ObjId', ftype: 'integer'}
+                    { fname: 'Name', ftype: 'string' },
+                    { fname: 'TaskNumber', ftype: 'string' },
+                    { fname: 'Specification', ftype: 'string' },
+                    { fname: 'ObjId', ftype: 'integer' },
+                    { fname: 'TaskId', ftype: 'integer' },
+                    { fname: 'TaskGuid', ftype: 'guid' }
                 ]
             }
-
+            
             get metaCols() {
                 return [
-                    {'cname': 'TaskStages', 'ctype': 'TaskStage'}
+                    { 'cname': 'TaskStages', 'ctype': 'TaskStage' }
                 ]
             }
-
+            
             name(value) {
                 return this._genericSetter("Name", value);
             }
-
+            
             taskNumber(value) {
                 return this._genericSetter("TaskNumber", value);
             }
-
+            
             specification(value) {
                 return this._genericSetter("Specification", value);
             }
-
+            
             objId(value) {
                 return this._genericSetter("ObjId", value);
             }
-
+            
+            taskId(value) {
+                return this._genericSetter("TaskId", value);
+            }
+            
+            taskGuid(value) {
+                return this._genericSetter("TaskGuid", value);
+            }
+            
             taskStages() {
                 return this.getCol('TaskStages');
             }
-
+            
             getControlManager() {
                 return this.pvt.controlMgr;
             }
-
+            
             copy(source) {
                 this.name(source.name());
                 this.taskNumber(source.taskNumber());
                 this.specification(source.specification());
                 this.objId(source.objId());
                 
-                for (var i = 0; i < source.taskStages().count(); i++){
+                for (var i = 0; i < source.taskStages().count(); i++) {
                     source.taskStages().get(i).addNewCopyTo(this)
                 }
             }

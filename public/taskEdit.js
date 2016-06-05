@@ -106,14 +106,16 @@ define(
                             cm.userEventHandler(self, function () {
                                 console.log("START 1st userEventHandler");
                                 process_params_ds.save({}, function (result) {
+                                    var params = {};
                                     if (result.result === "OK") {
                                         console.log("State: " + process_params_ds.getState());
-                                        setTimeout(function () {
-                                            self._closeForm(button);
-                                        }, 5000);
+                                        params.taskId = result.requestInfo.processId;
                                     }
                                     else
                                         alert("ERROR: " + result.message);
+                                    setTimeout(function () {
+                                        self._closeForm(button.getForm(), params);
+                                    }, 0);
                                 });
                                 console.log("END 1st userEventHandler");
                             });
@@ -157,12 +159,8 @@ define(
                 };
             },
 
-            _closeForm: function(button) {
-                var form = button.getForm();
-                form.close({
-                    param1: "value1",
-                    param2: "value2"
-                });
+            _closeForm: function(form, params) {
+                form.close(params);
             }
         });
         return TaskEditScripts;
