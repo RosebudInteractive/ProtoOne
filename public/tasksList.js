@@ -48,12 +48,12 @@ define(
                     self.pvt.enableShowForms = true;
                     var old_cursor = ds.cursor();
                     var new_cursor = null;
-                    if (event.data && event.data.objId) {
+                    if (event.data && event.data.taskId) {
                         var data_col = ds.getDataCollection();
                         if (data_col) {
                             for (var i = 0; data_col.count(); i++) {
                                 var task_info = data_col.get(i);
-                                if (task_info.objId() === event.data.objId) {
+                                if (task_info.taskId() === event.data.taskId) {
                                     new_cursor = task_info.getGuid();
                                     break;
                                 };

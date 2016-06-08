@@ -168,13 +168,16 @@ define(
                             cm.userEventHandler(self, function () {
                                 console.log("START 1st userEventHandler");
                                 self._request_data_ds.save({}, function (result) {
+                                    var params = {};
                                     if (result.result === "OK") {
-                                        setTimeout(function () {
-                                            self._closeForm(button.getForm(), { objId: objId });
-                                        }, 5000);
+                                        params.objId = objId;
+                                        params.taskId = result.requestInfo.processId;
                                     }
                                     else
                                         alert("ERROR: " + result.message);
+                                    setTimeout(function () {
+                                        self._closeForm(button.getForm(), params);
+                                    }, 0);
                                 });
                                 console.log("END 1st userEventHandler");
                             });
