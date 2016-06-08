@@ -36,6 +36,20 @@
           "CurrVerId": 2
         },
         "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "0fead0ba-e64b-4c6b-aecd-8a51f6e9c2af",
+          "typeGuid": "846ff96f-c85e-4ae3-afad-7d4fd7e78144"
+        },
+        "fields": {
+          "Id": 3,
+          "Code": "Genetix",
+          "Name": "Genetix",
+          "Description": "проект Genetix",
+          "CurrVerId": 3
+        },
+        "collections": {}
       }
     ]
   }

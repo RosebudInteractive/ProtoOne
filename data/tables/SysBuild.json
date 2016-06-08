@@ -36,6 +36,20 @@
           "VersionId": 2
         },
         "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "ce9f5b33-56bf-468c-a1e1-00c5b8dcd80c",
+          "typeGuid": "7099d28d-1d32-425a-b95f-5c8e793d9763"
+        },
+        "fields": {
+          "Id": 3,
+          "BuildNum": 1,
+          "IsConfirmed": true,
+          "Description": "первая сборка Genetix",
+          "VersionId": 3
+        },
+        "collections": {}
       }
     ]
   }

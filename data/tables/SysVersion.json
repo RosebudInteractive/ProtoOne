@@ -20,7 +20,7 @@
           "Name": "Uccello v.1.0.0.1",
           "Description": "первая версия Uccello",
           "ProdId": 1,
-		  "CurrBuildId" : 1
+          "CurrBuildId": 1
         },
         "collections": {}
       },
@@ -35,7 +35,22 @@
           "Name": "ProtoOne v.1.0.0.1",
           "Description": "первая версия ProtoOne",
           "ProdId": 2,
-		  "CurrBuildId" : 2
+          "CurrBuildId": 2
+        },
+        "collections": {}
+      },
+      {
+        "$sys": {
+          "guid": "2e4d4e41-b668-45b3-aa36-75706c1f2943",
+          "typeGuid": "627ba345-dee0-46c8-8b0d-873f828e875c"
+        },
+        "fields": {
+          "Id": 3,
+          "Code": "1.0.0.1",
+          "Name": "Genetix v.1.0.0.1",
+          "Description": "первая версия Genetix",
+          "ProdId": 3,
+          "CurrBuildId": 3
         },
         "collections": {}
       }
