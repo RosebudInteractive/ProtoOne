@@ -1,5 +1,20 @@
 // Использовать подключение к MSSQL, иначе к MySql
-var USE_MSSQL_SERVER = false;
+// Настройки соединения могут быть указаны в переменных процесса, например
+// DB_TYPE=ms_sql;
+// Для MS_SQL
+// MS_HOST=localhost;
+// MS_USER=sa;
+// MS_PASSWORD=system;
+// MS_DB=genetix_test;
+// MS_INST=SQLEXPRESS;
+// Для My_SQL
+// MY_HOST=localhost;
+// MY_USER=sa;
+// MY_PASSWORD=system;
+// MY_DB=uccello
+
+
+var USE_MSSQL_SERVER = (process.env.DB_TYPE == 'ms_sql');
 
 // дирректория где лежит Uccello
 var uccelloDir = process.argv[2]&&process.argv[2][0]!='-'?process.argv[2]:'Uccello';
@@ -95,26 +110,26 @@ function fakeAuthenticate(user, pass, done) {
 }
 
 var mssql_connection = { //MSSQL
-    host: "10.1.1.3", // "SQL-SERVER"
+    host: process.env.MS_HOST ||  "10.1.1.3", // "SQL-SERVER"
     port: 1435,       // instanceName: "SQL2008R2"
-    username: "sa",
-    password: "system",
-    database: "genetix_test",
+    username: process.env.MS_USER || "sa",
+    password: process.env.MS_PASSWORD !== undefined ? process.env.MS_PASSWORD : "system",
+    database: process.env.MS_DB || "genetix_test",
     provider: "mssql",
-    connection_options: { instanceName: "SQL2008R2", requestTimeout: 0 },
+    connection_options: { instanceName: process.env.MS_INST || "SQL2008R2", requestTimeout: 0 },
     provider_options: {},
     pool: {
         max: 5,
         min: 0,
         idle: 10000
-    },
+    }
 };
 
 var mysql_connection = { //MySql
-    host: "localhost",
-    username: "root",
-    password: "masterkey",
-    database: "uccello",
+    host: process.env.MY_HOST ||  "localhost",
+    username: process.env.MY_USER || "root",
+    password: process.env.MY_PASSWORD || "masterkey",
+    database: process.env.MY_DB || "uccello",
     provider: "mysql",
     connection_options: {},
     provider_options: {},
@@ -122,7 +137,7 @@ var mysql_connection = { //MySql
         max: 5,
         min: 0,
         idle: 10000
-    },
+    }
 };
 
 var config = {
@@ -184,7 +199,7 @@ var config = {
         connection: USE_MSSQL_SERVER ? mssql_connection : mysql_connection,
 
         importData: {
-            autoimport: false,
+            autoimport: true,
             dir: "./data/tables"
         },
         trace: {
@@ -201,7 +216,7 @@ var config = {
                 path: __dirname + "/data/processDefinitions/", type: "PR_DEF",
                 generator: __dirname + '/../' + uccelloDir + '/system/resourceBuilder/generators/processDefGenerator.js'
             }
-        ],
+        ]
     },
     resourceBuilder : {
         types: [
