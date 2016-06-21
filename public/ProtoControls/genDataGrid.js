@@ -3,9 +3,17 @@ if (typeof define !== 'function') {
     var UccelloClass = require(UCCELLO_CONFIG.uccelloPath + '/system/uccello-class');
 }
 
+/**
+ * A module representing a GenDataGrid.
+ * @module ProtoControls/genDataGrid
+ */
 define(
     [UCCELLO_CONFIG.uccelloPath+'controls/dataGrid'],
     function(DataGrid) {
+        /**
+         * @constructor
+         * @alias module:ProtoControls/genDataGrid
+         */
         var GenDataGrid = DataGrid.extend({
 
             className: "GenDataGrid",
@@ -24,8 +32,8 @@ define(
 
             /**
              * Инициализация объекта
-             * @param cm на контрол менеджер
-             * @param guid гуид объекта
+             * @param cm {ControlMgr} на контрол менеджер
+             * @param params{*} параметры инициализации
              */
             init: function(cm, params) {
                 UccelloClass.super.apply(this, [cm, params]);

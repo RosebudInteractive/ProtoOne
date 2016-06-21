@@ -3,6 +3,10 @@ define(
     function(template, tpl) {
         var vForm = {};
         vForm._templates = template.parseTemplate(tpl);
+        /**
+         * Рендер форм
+         * @param options {*}
+         */
         vForm.render = function(options) {
             var item = $('#' + this.getLid());
             if (item.length == 0) {
