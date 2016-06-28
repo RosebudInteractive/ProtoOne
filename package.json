@@ -1,0 +1,40 @@
+{
+  "name": "ProtoOne",
+  "version": "1.0.0",
+  "description": "ProtoOne\r ========",
+  "main": "memserver.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "amdefine": "^0.1.0",
+    "compression": "^1.6.0",
+    "ejs": "^2.1.4",
+    "express": "^4.11.0",
+    "generic-pool": "^2.2.1",
+    "mysql": "^2.10.2",
+    "socket.io": "^1.3.5",
+    "bluebird": "^2.10.2",
+    "tedious": "^1.13.1",
+    "winston": "^1.0.0",
+    "ws": "^0.6.5",
+    "lodash": "^3.10.1",
+    "string-format": "^0.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RosebudInteractive/ProtoOne.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RosebudInteractive/ProtoOne/issues"
+  },
+  "homepage": "https://github.com/RosebudInteractive/ProtoOne#readme"
+}
