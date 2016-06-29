@@ -17,11 +17,14 @@ $(document).ready( function() {
     require(['./uccello/config/config', './uccello/system/utils'], function(Config, Utils){
         var config = {
             controls: [
-                { className: 'TaskRequestParameter', component: '../processTypes/taskRequestParameter' },
-                { className: 'WfeParameter', component: '../processTypes/parameter' },
-                { className: 'ProcessVar', component: '../processTypes/processVar' },
-                { className: 'TaskParameter', component: '../processTypes/taskParameter' },
-                { className: 'TaskStage', component: '../processTypes/taskStage' },
+                // Типы данных WFE, должны подгружаться динамически по запросу (пока отсюда не удаляем, но они здесь уже не нужны !!!)
+                //
+                //{ className: 'TaskRequestParameter', component: '../processTypes/taskRequestParameter' },
+                //{ className: 'WfeParameter', component: '../processTypes/parameter' },
+                //{ className: 'ProcessVar', component: '../processTypes/processVar' },
+                //{ className: 'TaskParameter', component: '../processTypes/taskParameter' },
+                //{ className: 'TaskStage', component: '../processTypes/taskStage' },
+                //
                 { className: 'MemAddressTest', component: '../memTreeTest/memAddressTest' },
                 { className: 'MemContractTest', component: '../memTreeTest/memContractTest' },
                 { className: 'MemContactTest', component: '../memTreeTest/memContactTest' },
