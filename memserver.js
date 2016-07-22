@@ -188,6 +188,7 @@ var config = {
     dataPath: __dirname + '/../ProtoOne/data/',
     uccelloPath: __dirname + '/../' + uccelloDir + '/',
     masaccioPath: __dirname + '/../Masaccio/wfe/',
+    traceConfig : __dirname + '/traceConfig.cfg',
     
     wfe : {
         processStorage  : __dirname + '/../ProtoOne/data/wfeData/',
@@ -199,7 +200,7 @@ var config = {
         connection: USE_MSSQL_SERVER ? mssql_connection : mysql_connection,
 
         importData: {
-            autoimport: true,
+            autoimport: false,
             dir: "./data/tables"
         },
         trace: {
@@ -262,7 +263,8 @@ var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocke
 var uccelloServ = new UccelloServ({
     authenticate: fakeAuthenticate,
     commServer: communicationServer,
-    engineSingleton: EngineSingleton
+    engineSingleton: EngineSingleton,
+    traceConfigFile : UCCELLO_CONFIG.traceConfig
 });
 
 // запускаем http сервер
