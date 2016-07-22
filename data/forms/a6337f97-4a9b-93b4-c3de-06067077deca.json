@@ -1,0 +1,54 @@
+{
+    "$sys": {
+        "guid": "a6337f97-4a9b-93b4-c3de-06067077deca", 
+        "typeGuid": "c0d078c7-1c7b-4fd1-a8b0-b9f09eea31f8"
+    }, 
+    "ver": 1, 
+    "fields": {
+        "ResName": "DataGridDsgnDM", 
+        "_Counter": 1
+    }, 
+    "collections": {
+        "TreeRoot": {
+            "0": {
+                "$sys": {
+                    "guid": "15bcfc13-8824-9cd1-ad42-a98004aaabae", 
+                    "typeGuid": "d68225f7-75d2-4c10-a8cf-e6fbba4adbe4"
+                }, 
+                "ver": 1, 
+                "fields": {
+                    "ResElemName": "DataGridDsgnTree", 
+                    "Alias": "DataGridDsgnTree", 
+                    "_EditSet": "", 
+                    "_ChildEdCnt": 0, 
+                    "_CurrState": 0, 
+                    "_PrevState": 0, 
+                    "RootClassGuid": "548f00fd-e74c-487f-90a9-34c4f84d86cd"
+                }, 
+                "collections": {
+                    "Childs": {
+                        "0": {
+                            "$sys": {
+                                "guid": "e68e017d-1124-35e1-b165-e6386cdd744c", 
+                                "typeGuid": "adcd9519-ced3-449d-aa2c-67416bd5a334"
+                            }, 
+                            "ver": 1, 
+                            "fields": {
+                                "ResElemName": "DataSource1", 
+                                "Alias": "Columns", 
+                                "_EditSet": "", 
+                                "_ChildEdCnt": 0, 
+                                "_CurrState": 0, 
+                                "_PrevState": 0, 
+                                "ParentCollection": "Columns"
+                            }, 
+                            "collections": {
+                                "Childs": { }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
