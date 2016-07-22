@@ -1,0 +1,20 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": ["./", "./../Uccello"],
+    "exclude": [ "system", "out", "jsdoc", "docs", "data", "form", "db", "node_modules", "system", "tests", "public/libs" ],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "docs"
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "destination": "docs",
+    "default": {
+      "outputSourceFiles": true
+    }
+  }
+}
