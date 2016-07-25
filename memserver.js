@@ -188,7 +188,10 @@ var config = {
     dataPath: __dirname + '/../ProtoOne/data/',
     uccelloPath: __dirname + '/../' + uccelloDir + '/',
     masaccioPath: __dirname + '/../Masaccio/wfe/',
-    traceConfig : __dirname + '/traceConfig.cfg',
+    trace : {
+        configFile : __dirname + '/traceConfig.cfg',
+        watchTimeout : 1000
+    },
     
     wfe : {
         processStorage  : __dirname + '/../ProtoOne/data/wfeData/',
@@ -264,7 +267,7 @@ var uccelloServ = new UccelloServ({
     authenticate: fakeAuthenticate,
     commServer: communicationServer,
     engineSingleton: EngineSingleton,
-    traceConfigFile : UCCELLO_CONFIG.traceConfig
+    traceConfigFile : UCCELLO_CONFIG.trace.configFile
 });
 
 // запускаем http сервер
