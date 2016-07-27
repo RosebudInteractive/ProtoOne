@@ -1,0 +1,11 @@
+set DB_TYPE=ms_sql
+set MS_HOST=localhost
+set MS_USER=test
+set MS_PASSWORD=test
+set MS_DB=genetix_test
+set MS_INST=SQLEXPRESS
+set MY_HOST=localhost
+set MY_USER=sa
+set MY_PASSWORD=system
+set MY_DB=uccello
+node memserver.js
