@@ -111,7 +111,7 @@ function fakeAuthenticate(user, pass, done) {
 
 var mssql_connection = { //MSSQL
     host: process.env.MS_HOST ||  "10.1.1.3", // "SQL-SERVER"
-    port: 1435,       // instanceName: "SQL2008R2"
+    port: process.env.MS_PORT || 1435,       // instanceName: "SQL2008R2"
     username: process.env.MS_USER || "sa",
     password: process.env.MS_PASSWORD !== undefined ? process.env.MS_PASSWORD : "system",
     database: process.env.MS_DB || "genetix_test",
@@ -252,11 +252,17 @@ if (UCCELLO_CONFIG.logger.clearOnStart) {
 
 // модуль сервера
 var UccelloServ = require('../'+uccelloDir+'/uccelloServ');
+var TraceManager = require('../' + uccelloDir + '/system/tracer/manager');
 var CommunicationServer = require('../' + uccelloDir + '/connection/commServer');
 var EngineSingleton;
 
 if (fs.existsSync(UCCELLO_CONFIG.masaccioPath + 'engineSingleton.js'))
     EngineSingleton = require(UCCELLO_CONFIG.masaccioPath + 'engineSingleton');
+
+if (UCCELLO_CONFIG.trace.configFile) {
+    TraceManager.getInstance().loadFromFile(UCCELLO_CONFIG.trace.configFile);
+    GLOBAL.$tracer = TraceManager.getInstance();
+};
 
 // комуникационный модуль
 UCCELLO_CONFIG.webSocketServer = UCCELLO_CONFIG.webSocketServer ? UCCELLO_CONFIG.webSocketServer : {};
@@ -266,8 +272,7 @@ var communicationServer = new CommunicationServer.Server(UCCELLO_CONFIG.webSocke
 var uccelloServ = new UccelloServ({
     authenticate: fakeAuthenticate,
     commServer: communicationServer,
-    engineSingleton: EngineSingleton,
-    traceConfigFile : UCCELLO_CONFIG.trace.configFile
+    engineSingleton: EngineSingleton
 });
 
 // запускаем http сервер
